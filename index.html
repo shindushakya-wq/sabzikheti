@@ -58,7 +58,7 @@
     .stories-wrapper { display: flex; gap: 12px; overflow-x: auto; padding: 12px 14px; background: #ffffff; border-bottom: 1px solid #e5e7eb; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
     .stories-wrapper::-webkit-scrollbar { display: none; }
     .story-item { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; text-align: center; }
-    .story-ring { width: 62px; height: 62px; border-radius: 50%; padding: 2.5px; background: linear-gradient(45deg, #16a34a, #84cc16, #22c55e); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.08); font-size: 26px; background-color: #f0fdf4; }
+    .story-ring { width: 62px; height: 62px; border-radius: 50%; padding: 2.5px; background: linear-gradient(45deg, #16a34a, #f59e0b, #ef4444); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.08); font-size: 26px; background-color: #f0fdf4; cursor: pointer; }
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* मौसम कार्ड */
@@ -162,6 +162,41 @@
     .nav-tab { text-align: center; font-size: 10px; color: #6b7280; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
     .nav-tab.active { color: #1b5e20; font-weight: bold; }
     .nav-tab span:first-child { font-size: 18px; }
+
+    /* ==========================================================
+       फ़ुल-स्क्रीन Instagram/Reel स्टाइल स्टोरी प्लेयर
+       ========================================================== */
+    .story-fullscreen-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #000000;
+      z-index: 5000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .story-fullscreen-modal.active { display: flex; }
+    .story-top-bar {
+      position: absolute; top: 10px; left: 10px; right: 10px;
+      display: flex; flex-direction: column; gap: 8px; z-index: 5010;
+    }
+    .story-progress-bg {
+      width: 100%; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden;
+    }
+    .story-progress-fill {
+      width: 0%; height: 100%; background: #22c55e; transition: width 0.1s linear;
+    }
+    .story-header-info {
+      display: flex; justify-content: space-between; align-items: center; color: white;
+    }
+    .story-close-btn {
+      background: rgba(0,0,0,0.5); border: none; color: white; font-size: 24px;
+      width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .story-media-view {
+      width: 100%; height: 100%; object-fit: contain; max-height: 90vh;
+    }
   </style>
 </head>
 <body>
@@ -274,6 +309,30 @@
     </div>
   </div>
 
+  <!-- ==========================================================
+       फ़ुल-स्क्रीन स्टोरी व रील प्लेयर मोडल
+       ========================================================== -->
+  <div class="story-fullscreen-modal" id="storyPlayerModal">
+    <div class="story-top-bar">
+      <div class="story-progress-bg">
+        <div class="story-progress-fill" id="storyProgressBar"></div>
+      </div>
+      <div class="story-header-info">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:20px;" id="storyTopIcon">🌱</span>
+          <b style="font-size:14px;" id="storyTopTitle">ताज़ा स्टोरी</b>
+        </div>
+        <button class="story-close-btn" onclick="closeStoryPlayer()">✕</button>
+      </div>
+    </div>
+    
+    <!-- फोटो स्टोरी -->
+    <img id="storyImageDisplay" class="story-media-view" style="display:none;" src="" alt="Story">
+    
+    <!-- रील / वीडियो स्टोरी -->
+    <video id="storyVideoDisplay" class="story-media-view" style="display:none;" playsinline controls></video>
+  </div>
+
   <!-- SCREEN 1: होम स्क्रीन -->
   <div id="screen-home" class="screen active">
 
@@ -286,28 +345,9 @@
       </span>
     </div>
 
-    <!-- गोल स्टोरी बार -->
-    <div class="stories-wrapper">
-      <div class="story-item" onclick="showAllCropsScreen()">
-        <div class="story-ring">🥬</div>
-        <span class="story-name" id="stCrop">सब्जी किस्में</span>
-      </div>
-      <div class="story-item" onclick="showScheduleCropsList()">
-        <div class="story-ring">🗓️</div>
-        <span class="story-name" id="stSched">स्प्रे चार्ट</span>
-      </div>
-      <div class="story-item" onclick="openSolutionModal()">
-        <div class="story-ring">⚡</div>
-        <span class="story-name" id="stDoc">AI डॉक्टर</span>
-      </div>
-      <div class="story-item" onclick="showCompaniesList()">
-        <div class="story-ring">🏢</div>
-        <span class="story-name" id="stComp">सीड कंपनी</span>
-      </div>
-      <div class="story-item" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')">
-        <div class="story-ring">▶️</div>
-        <span class="story-name" id="stVid">ताज़ा वीडियो</span>
-      </div>
+    <!-- गोल स्टोरी बार (रोज़ न्यू फोटो व रील) -->
+    <div class="stories-wrapper" id="storiesBarContainer">
+      <!-- जावास्क्रिप्ट से डायनामिक लोड होंगी -->
     </div>
 
     <!-- मौसम कार्ड -->
@@ -542,8 +582,128 @@
     const navHistory = ['screen-home'];
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/export?format=csv';
     let currentImgElement = null;
+    let storyTimer = null;
 
-    // भाषा शब्दकोश (Hindi / English)
+    // ==========================================================
+    // रोज़ नई स्टोरी डेटाबेस (Photo और Reel/Video दोनों सपोर्टेड)
+    // ==========================================================
+    const dailyStories = [
+      {
+        title: "आज का स्प्रे",
+        icon: "💧",
+        type: "photo",
+        url: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=800",
+        desc: "टमाटर व मिर्च में फूल झड़ने से रोकने के लिए बोरॉन 20% का स्प्रे करें।"
+      },
+      {
+        title: "मिर्च रील",
+        icon: "🌶️",
+        type: "reel",
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        desc: "मिर्च में थ्रिप्स व मरोड़िया की 100% रोकथाम।"
+      },
+      {
+        title: "मंडी भाव",
+        icon: "📈",
+        type: "photo",
+        url: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=800",
+        desc: "आज जयपुर व मुहाना मंडी में टमाटर व खीरा के ताज़ा भाव।"
+      },
+      {
+        title: "रोग निदान रील",
+        icon: "🔬",
+        type: "reel",
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        desc: "पौधे की पत्ती मुड़ने पर तुरंत यह 1 स्प्रे करें।"
+      },
+      {
+        title: "ताज़ा वीडियो",
+        icon: "▶️",
+        type: "link",
+        url: "https://www.youtube.com/@NMGKISAN"
+      }
+    ];
+
+    function renderStoriesBar() {
+      const container = document.getElementById('storiesBarContainer');
+      container.innerHTML = '';
+
+      dailyStories.forEach((st, index) => {
+        container.innerHTML += `
+          <div class="story-item" onclick="handleStoryClick(${index})">
+            <div class="story-ring">${st.icon}</div>
+            <span class="story-name">${st.title}</span>
+          </div>
+        `;
+      });
+    }
+
+    function handleStoryClick(index) {
+      const st = dailyStories[index];
+      if (st.type === 'link') {
+        window.open(st.url, '_blank');
+        return;
+      }
+      openStoryPlayer(st);
+    }
+
+    function openStoryPlayer(st) {
+      const modal = document.getElementById('storyPlayerModal');
+      const imgView = document.getElementById('storyImageDisplay');
+      const vidView = document.getElementById('storyVideoDisplay');
+      const progFill = document.getElementById('storyProgressBar');
+
+      document.getElementById('storyTopIcon').innerText = st.icon;
+      document.getElementById('storyTopTitle').innerText = st.title;
+      modal.classList.add('active');
+
+      clearInterval(storyTimer);
+      progFill.style.width = '0%';
+
+      if (st.type === 'reel') {
+        imgView.style.display = 'none';
+        vidView.style.display = 'block';
+        vidView.src = st.url;
+        vidView.play();
+
+        vidView.ontimeupdate = () => {
+          if (vidView.duration) {
+            const pct = (vidView.currentTime / vidView.duration) * 100;
+            progFill.style.width = pct + '%';
+          }
+        };
+
+        vidView.onended = () => { closeStoryPlayer(); };
+      } else {
+        vidView.pause();
+        vidView.style.display = 'none';
+        imgView.style.display = 'block';
+        imgView.src = st.url;
+
+        let cur = 0;
+        storyTimer = setInterval(() => {
+          cur += 2;
+          progFill.style.width = cur + '%';
+          if (cur >= 100) {
+            clearInterval(storyTimer);
+            closeStoryPlayer();
+          }
+        }, 100); // 5 सेकंड तक फ़ोटो दिखेगी
+      }
+    }
+
+    function closeStoryPlayer() {
+      const modal = document.getElementById('storyPlayerModal');
+      const vidView = document.getElementById('storyVideoDisplay');
+      clearInterval(storyTimer);
+      if (vidView) {
+        vidView.pause();
+        vidView.src = '';
+      }
+      modal.classList.remove('active');
+    }
+
+    // भाषा शब्दकोश
     const i18n = {
       hi: {
         title: "सब्जी फसल और बीज जानकारी",
@@ -574,11 +734,7 @@
         navSched: "शेड्यूल",
         navProt: "सुरक्षा",
         navHelp: "हेल्पलाइन",
-        searchPlaceholder: "🔍 खीरा, तरबूज या बीज लिखें...",
-        selectCrop: "सब्जी फसल चुनें:",
-        selectSchedCrop: "स्प्रे शेड्यूल हेतु सब्जी चुनें:",
-        selectProtCrop: "रोग निदान हेतु फसल चुनें:",
-        selectCompany: "सीड कंपनी चुनें:"
+        searchPlaceholder: "🔍 खीरा, तरबूज या बीज लिखें..."
       },
       en: {
         title: "Vegetable Crops & Seeds Info",
@@ -609,11 +765,7 @@
         navSched: "Schedule",
         navProt: "Protection",
         navHelp: "Helpline",
-        searchPlaceholder: "🔍 Search Cucumber, Tomato, Seeds...",
-        selectCrop: "Select Vegetable Crop:",
-        selectSchedCrop: "Select Crop for Schedule:",
-        selectProtCrop: "Select Crop for Disease Cure:",
-        selectCompany: "Select Seed Company:"
+        searchPlaceholder: "🔍 Search Cucumber, Tomato, Seeds..."
       }
     };
 
@@ -627,11 +779,6 @@
       const t = i18n[currentLang];
       document.getElementById('headerTitle').innerText = t.title;
       document.getElementById('langBtn').innerText = t.langBtn;
-      document.getElementById('stCrop').innerText = t.stCrop;
-      document.getElementById('stSched').innerText = t.stSched;
-      document.getElementById('stDoc').innerText = t.stDoc;
-      document.getElementById('stComp').innerText = t.stComp;
-      document.getElementById('stVid').innerText = t.stVid;
       document.getElementById('btnCrops').innerText = t.btnCrops;
       document.getElementById('btnProt').innerText = t.btnProt;
       document.getElementById('btnSched').innerText = t.btnSched;
@@ -657,7 +804,7 @@
       updateProfileUI();
     }
 
-    // इनबिल्ट बैकअप डेटा (ऑफ़लाइन व ऑनलाइन दोनों स्थिति में तुरंत काम करेगा)
+    // इनबिल्ट डेटाबेस
     const builtinRecords = [
       { company: "सिंजेंटा (Syngenta)", crop: "टमाटर", variety: "साहो (TO 3251)", segment: "गर्मी/बरसात", features: "ऊंचा तापमान सहने की क्षमता, बहुत सख्त फल, लंबी दूरी के ट्रांसपोर्ट के लिए बेस्ट।", weight: "80-100 ग्राम", maturity: "60-65 दिन", resistance: "TYLCV (मरोड़िया रोग) और झुलसा के प्रति सहनशील" },
       { company: "सिंजेंटा (Syngenta)", crop: "टमाटर", variety: "हिमसोना", segment: "सर्दी/बरसात", features: "ठंडे और गीले मौसम के लिए, फल बहुत ठोस और गहरे लाल।", weight: "90-110 ग्राम", maturity: "70-75 दिन", resistance: "बैक्टीरियल विल्ट (उकठा) के प्रति मजबूत" },
@@ -681,33 +828,31 @@
 
     let sheetRecords = builtinRecords;
 
-    // स्प्रे शेड्यूल डेटाबेस
     const cropSchedules = {
       'टमाटर': [
-        { time: '1. बेसल डोज (रोपाई पूर्व खेत तैयारी)', med: '50 किलो DAP + 30 किलो पोटाश + 10 किलो जिंक सल्फेट प्रति एकड़ डालें।', purpose: 'जड़ों की मजबूती व संतुलित पोषण' },
+        { time: '1. बेसल डोज (रोपाई पूर्व खेत तैयारी)', med: '50 किलो DAP + 30 किलो पोटाश + 10 किलो जिंक सल्फेट प्रति एकड़ डालें।', purpose: 'जड़ों की मजबूती व पोषण' },
         { time: '2. पहला स्प्रे (रोपाई के 12-15 दिन बाद)', med: 'साफ (SAAF) 30 ग्राम + कॉनफिडोर 8 मिली + 19:19:19 50 ग्राम प्रति पंप।', purpose: 'जड़ विकास व रस चूसक कीटों से बचाव' },
-        { time: '3. दूसरा स्प्रे (रोपाई के 25-30 दिन बाद)', med: 'टाटा ताकत 30 ग्राम + प्रोक्लेम 10 ग्राम + बोरॉन 20 ग्राम प्रति पंप।', purpose: 'पत्ती धब्बा व नई टहनियों का विकास' },
-        { time: '4. तीसरा स्प्रे (फूल आते समय)', med: 'कवच (Kavach) 35 ग्राम + कोराजन 6 मिली + 0:52:34 70 ग्राम प्रति पंप।', purpose: 'फल छेदक सुंडी नियंत्रण व फूलों की संख्या बढ़ाना' },
-        { time: '5. चौथा स्प्रे (फल विकास व तुड़ाई के समय)', med: '13:0:45 (80 ग्राम) + चीलेटेड कैल्शियम (15 ग्राम) प्रति पंप।', purpose: 'फलों का वजन, आकार, चमक व कड़ापन बढ़ाना' }
+        { time: '3. दूसरा स्प्रे (रोपाई के 25-30 दिन बाद)', med: 'टाटा ताकत 30 ग्राम + प्रोक्लेम 10 ग्राम + बोरॉन 20 ग्राम प्रति पंप।', purpose: 'पत्ती धब्बा व टहनियों का विकास' },
+        { time: '4. तीसरा स्प्रे (फूल आते समय)', med: 'कवच (Kavach) 35 ग्राम + कोराजन 6 मिली + 0:52:34 70 ग्राम प्रति पंप।', purpose: 'फल छेदक सुंडी नियंत्रण व फूल बढ़ाना' },
+        { time: '5. चौथा स्प्रे (फल विकास व तुड़ाई के समय)', med: '13:0:45 (80 ग्राम) + चीलेटेड कैल्शियम (15 ग्राम) प्रति पंप।', purpose: 'फल वजन व चमक बढ़ाना' }
       ],
       'मिर्च': [
-        { time: '1. बेसल डोज (रोपाई पूर्व)', med: '50 किलो DAP + 25 किलो पोटाश + 5 किलो रीजेंट प्रति एकड़।', purpose: 'दीमक से बचाव व मिट्टी पोषण' },
+        { time: '1. बेसल डोज (रोपाई पूर्व)', med: '50 किलो DAP + 25 किलो पोटाश + 5 किलो रीजेंट प्रति एकड़।', purpose: 'शुरुआती पोषण' },
         { time: '2. पहला स्प्रे (15-18 दिन बाद)', med: 'कॉनफिडोर 8 मिली + बाविस्टिन 25 ग्राम + 19:19:19 50 ग्राम प्रति पंप।', purpose: 'थ्रिप्स व जड़ गलन से सुरक्षा' },
-        { time: '3. दूसरा स्प्रे (मरोड़िया/थ्रिप्स रोकथाम)', med: 'पेगासस 25 ग्राम + रोको 25 ग्राम + सूक्ष्म पोषक तत्व प्रति पंप।', purpose: 'पत्ती मरोड़िया (Churda Murda) से बचाव' },
-        { time: '4. तीसरा स्प्रे (फूल व फल बनते समय)', med: 'डेलिगेट 15 मिली + स्कोर 10 मिली + 0:52:34 70 ग्राम प्रति पंप।', purpose: 'फूल झड़ने से रोकथाम' },
-        { time: '5. चौथा स्प्रे (फल तुड़ाई के दौरान)', med: '13:0:45 (75 ग्राम) + बोरॉन 20% (15 ग्राम) प्रति पंप।', purpose: 'मिर्च की लंबाई, हरापन व तीखापन बढ़ाना' }
+        { time: '3. दूसरा स्प्रे (मरोड़िया रोकथाम)', med: 'पेगासस 25 ग्राम + रोको 25 ग्राम + सूक्ष्म पोषक तत्व प्रति पंप।', purpose: 'पत्ती मरोड़िया से बचाव' },
+        { time: '4. तीसरा स्प्रे (फूल व फल बनते समय)', med: 'डेलिगेट 15 मिली + स्कोर 10 मिली + 0:52:34 70 ग्राम प्रति पंप।', purpose: 'फूल झड़ने से रोकथाम' }
       ],
       'खीरा': [
-        { time: '1. बेसल डोज', med: '40 किलो DAP + 25 किलो पोटाश प्रति एकड़ बेड बनाते समय।', purpose: 'बेल की मजबूत पकड़' },
+        { time: '1. बेसल डोज', med: '40 किलो DAP + 25 किलो पोटाश प्रति एकड़।', purpose: 'बेल की मजबूत पकड़' },
         { time: '2. पहला स्प्रे (12-15 दिन बाद)', med: 'एम-45 35 ग्राम + एक्टारा 10 ग्राम + 19:19:19 50 ग्राम प्रति पंप।', purpose: 'कीड़े व डैंपिंग ऑफ से सुरक्षा' },
-        { time: '3. दूसरा स्प्रे (25-30 दिन बाद)', med: 'एलियट 30 ग्राम + पेगासस 20 ग्राम + चमत्कार 10 मिली प्रति पंप।', purpose: 'डाउनी मिल्ड्यू रोकथाम व बढ़वार' },
-        { time: '4. तीसरा स्प्रे (तुड़ाई के समय)', med: 'रिडोमिल गोल्ड 35 ग्राम + कोराजन 6 मिली + 0:52:34 60 ग्राम प्रति पंप।', purpose: 'फलों की चमक व लंबाई बढ़ाना' }
+        { time: '3. दूसरा स्प्रे (25-30 दिन बाद)', med: 'एलियट 30 ग्राम + पेगासस 20 ग्राम + चमत्कार 10 मिली प्रति पंप।', purpose: 'डाउनी मिल्ड्यू रोकथाम' },
+        { time: '4. तीसरा स्प्रे (तुड़ाई के समय)', med: 'रिडोमिल गोल्ड 35 ग्राम + कोराजन 6 मिली + 0:52:34 60 ग्राम प्रति पंप।', purpose: 'फलों की चमक व लंबाई' }
       ],
       'फूलगोभी / पत्तागोभी': [
-        { time: '1. बेसल डोज', med: '50 किलो DAP + 30 किलो पोटाश + 10 किलो सल्फर 90% प्रति एकड़।', purpose: 'फूलों की गुणवत्ता' },
+        { time: '1. बेसल डोज', med: '50 किलो DAP + 30 किलो पोटाश + 10 किलो सल्फर 90% प्रति एकड़।', purpose: 'ठोसपन' },
         { time: '2. पहला स्प्रे', med: 'बाविस्टिन 25 ग्राम + प्रोफेक्स सुपर 30 मिली प्रति पंप।', purpose: 'तना गलन से बचाव' },
-        { time: '3. दूसरा स्प्रे (सुंडी रोकथाम)', med: 'कोराजन 6 मिली + साफ 30 ग्राम प्रति पंप।', purpose: 'DBM व हरी सुंडी नियंत्रण' },
-        { time: '4. तीसरा स्प्रे (फूल बनते समय)', med: 'बोरॉन 25 ग्राम + 0:52:34 70 ग्राम प्रति पंप।', purpose: 'सफेद, ठोस व भारी फूल' }
+        { time: '3. दूसरा स्प्रे (सुंडी रोकथाम)', med: 'कोराजन 6 मिली + साफ 30 ग्राम प्रति पंप।', purpose: 'हरी सुंडी नियंत्रण' },
+        { time: '4. तीसरा स्प्रे (फूल बनते समय)', med: 'बोरॉन 25 ग्राम + 0:52:34 70 ग्राम प्रति पंप।', purpose: 'सफेद व ठोस फूल' }
       ],
       'भिंडी': [
         { time: '1. बेसल डोज', med: '35 किलो DAP + 20 किलो पोटाश प्रति एकड़।', purpose: 'आरंभिक बढ़वार' },
@@ -716,17 +861,16 @@
       ]
     };
 
-    // रोग व सुरक्षा डेटाबेस
     const cropDiseasesDatabase = {
       'टमाटर': [
-        { name: 'पत्ती मरोड़िया व लीफ कर्ल', icon: '🍃', symptoms: 'पत्तियां ऊपर मुड़कर सिकुड़ जाती हैं और पौधों का विकास रुक जाता है।', cure: 'उलाला 6 ग्राम या पेगासस 25 ग्राम प्रति 15 लीटर पंप।' },
+        { name: 'पत्ती मरोड़िया व लीफ कर्ल', icon: '🍃', symptoms: 'पत्तियां ऊपर मुड़कर सिकुड़ जाती हैं और बढ़वार रुक जाती है।', cure: 'उलाला 6 ग्राम या पेगासस 25 ग्राम प्रति 15 लीटर पंप।' },
         { name: 'अगेती व पछेती झुलसा', icon: '🍂', symptoms: 'पत्तियों और तने पर भूरे-काले छल्लेदार धब्बे बनते हैं।', cure: 'रिडोमिल गोल्ड 35 ग्राम या कैब्रियो टॉप 35 ग्राम प्रति 15 लीटर पानी।' },
         { name: 'फल छेदक सुंडी', icon: '🐛', symptoms: 'सुंडी फलों में छेद करके अंदर का गूदा खा जाती है।', cure: 'कोराजन 6 मिली या फेम 5 मिली प्रति पंप।' }
       ],
       'मिर्च': [
         { name: 'थ्रिप्स व पत्ती मरोड़िया', icon: '🍃', symptoms: 'पत्तियां ऊपर नाव की तरह मुड़ती हैं और कलियां जल जाती हैं।', cure: 'डेलीगेट 18 मिली या जंप 2 ग्राम + पेगासस 25 ग्राम प्रति पंप।' },
         { name: 'पीली माइट्स (Mites)', icon: '🕷️', symptoms: 'पत्तियां नीचे की तरफ मुड़ती हैं और तना कड़ा हो जाता है।', cure: 'ओमाइट 30 मिली प्रति 15 लीटर पंप।' },
-        { name: 'डाई-बैक व फल सड़न', icon: '🍂', symptoms: 'टहनियां ऊपर से नीचे सूखती हैं और मिर्च पर काले धब्बे पड़ते हैं।', cure: 'कस्टोडिया 25 मिली या स्कोर 15 मिली प्रति पंप।' }
+        { name: 'डाई-बैक व फल सड़न', icon: '🍂', symptoms: 'टहनियां ऊपर से नीचे सूखती हैं और मिर्च पर काले धब्बे पड़ते हैं।', cure: 'कस्टोडिया 25 मिली या स्कोर 15 मिली প্রতি पंप।' }
       ],
       'खीरा': [
         { name: 'डाउनी मिल्ड्यू (पीली चित्ती)', icon: '🟡', symptoms: 'पत्तियों पर पीले चौकोर धब्बे बनते हैं।', cure: 'एलियट 35 ग्राम या रिडोमिल गोल्ड 35 ग्राम प्रति पंप।' },
@@ -742,7 +886,6 @@
       ]
     };
 
-    // समय और दिनांक
     function updateDate() {
       const now = new Date();
       const days = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
@@ -752,7 +895,6 @@
       if (el) el.innerText = str;
     }
 
-    // स्क्रीन नेविगेशन
     function openScreen(screenId, title) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       const target = document.getElementById(screenId);
@@ -781,7 +923,7 @@
       window.scrollTo(0, 0);
     }
 
-    // 1. सब्जी फसल किस्म नेविगेशन
+    // 1. सब्जी फसल किस्में
     function showAllCropsScreen() {
       const crops = [...new Set(sheetRecords.map(r => r.crop))];
       const container = document.getElementById('cropsContainer');
@@ -822,7 +964,7 @@
       openScreen('screen-seeds', cropName);
     }
 
-    // 2. स्प्रे शेड्यूल नेविगेशन
+    // 2. स्प्रे शेड्यूल
     function showScheduleCropsList() {
       const container = document.getElementById('scheduleCropsContainer');
       container.innerHTML = '';
@@ -859,7 +1001,7 @@
       openScreen('screen-crop-schedule', cropName);
     }
 
-    // 3. फसल सुरक्षा नेविगेशन
+    // 3. फसल सुरक्षा
     function showProtectionCropsList() {
       const container = document.getElementById('protectionCropsContainer');
       container.innerHTML = '';
@@ -906,7 +1048,7 @@
       openScreen('screen-cure', name);
     }
 
-    // 4. All कंपनी बीज नेविगेशन
+    // 4. All कंपनी बीज
     function showCompaniesList() {
       const companies = [...new Set(sheetRecords.map(r => r.company))];
       const container = document.getElementById('companiesContainer');
@@ -939,31 +1081,7 @@
       openScreen('screen-company-crops', compName);
     }
 
-    // बोलकर सर्च (Voice Search)
-    function startVoiceSearch() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) { alert("आपके ब्राउज़र में वॉइस सर्च सपोर्ट नहीं करता।"); return; }
-      const recognition = new SpeechRecognition();
-      recognition.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
-      const voiceBtn = document.getElementById('voiceSearchBtn');
-      const searchInput = document.getElementById('homeSearch');
-
-      voiceBtn.classList.add('listening');
-      searchInput.placeholder = "🎙️ बोलिए, सुन रहा हूँ...";
-
-      recognition.onresult = function(e) {
-        const tr = e.results[0][0].transcript.replace(/[।.,]/g, '').trim();
-        searchInput.value = tr;
-        executeSearch(tr);
-      };
-      recognition.onerror = recognition.onend = function() {
-        voiceBtn.classList.remove('listening');
-        searchInput.placeholder = i18n[currentLang].searchPlaceholder;
-      };
-      recognition.start();
-    }
-
-    // सर्च निष्पादन
+    // सर्च
     function executeSearch(val) {
       if (!val || !val.trim()) return;
       const q = val.trim().toLowerCase();
@@ -986,7 +1104,31 @@
       }
     }
 
-    // AI रोग जांच (तुरंत समाधान)
+    // वॉइस सर्च
+    function startVoiceSearch() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) { alert("ब्राउज़र में वॉइस सर्च सपोर्ट नहीं करता।"); return; }
+      const recognition = new SpeechRecognition();
+      recognition.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
+      const voiceBtn = document.getElementById('voiceSearchBtn');
+      const searchInput = document.getElementById('homeSearch');
+
+      voiceBtn.classList.add('listening');
+      searchInput.placeholder = "🎙️ बोलिए...";
+
+      recognition.onresult = function(e) {
+        const tr = e.results[0][0].transcript.replace(/[।.,]/g, '').trim();
+        searchInput.value = tr;
+        executeSearch(tr);
+      };
+      recognition.onerror = recognition.onend = function() {
+        voiceBtn.classList.remove('listening');
+        searchInput.placeholder = i18n[currentLang].searchPlaceholder;
+      };
+      recognition.start();
+    }
+
+    // AI रोग जांच
     function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
     function closeSolutionModal() {
       document.getElementById('solutionModal').classList.remove('active');
@@ -1070,13 +1212,12 @@
       document.getElementById('profilePercentBadge').innerText = score + '% पूरी';
     }
 
-    // मेन्यू ड्रॉअर व अन्य
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
     function contactAdvisor() { window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20फसल%20सलाह%20चाहिए।', '_blank'); }
-    function openNotify() { alert("🔔 सूचना: रस चूसक कीटों से बचाव के लिए खेत में पीले चिपचिपे ट्रैप जरूर लगाएँ।"); }
+    function openNotify() { alert("🔔 सूचना: खेत में 15-20 पीले चिपचिपे ट्रैप जरूर लगाएँ।"); }
 
-    // Google Sheet से बैकग्राउंड में सुरक्षित अपडेट
+    // बैकग्राउंड ऑनलाइन शीट अपडेट
     async function loadOnlineSheet() {
       try {
         const res = await fetch(SHEET_URL);
@@ -1110,6 +1251,7 @@
     }
 
     window.onload = function() {
+      renderStoriesBar();
       applyLanguage();
       updateDate();
       loadOnlineSheet();
