@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+-<!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,7 @@
       -webkit-tap-highlight-color: transparent;
     }
     body {
-      background-color: #f4f6f8;
+      background-color: #f7f9fa;
       color: #24292f;
       padding-bottom: 85px;
     }
@@ -24,14 +24,14 @@
     header {
       background-color: #1b5e20;
       color: #ffffff;
-      padding: 14px 16px;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .header-left {
       display: flex;
@@ -58,24 +58,168 @@
       gap: 12px;
     }
     .lang-pill {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.25);
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.4);
       padding: 4px 10px;
       border-radius: 16px;
       font-size: 12px;
+      font-weight: 600;
     }
-    .header-icon {
-      font-size: 19px;
-      color: white;
+    .bell-icon {
+      font-size: 20px;
+      color: #facc15;
     }
 
-    /* Main Container */
+    /* Container */
     .container {
       padding: 14px 16px;
       max-width: 600px;
       margin: 0 auto;
     }
+
+    /* Weather Card */
+    .weather-card {
+      background: linear-gradient(135deg, #e8f5e9, #dcfce7);
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .weather-info h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 4px;
+    }
+    .weather-info p {
+      font-size: 12px;
+      font-weight: 600;
+      color: #15803d;
+    }
+    .weather-temp {
+      text-align: right;
+    }
+    .weather-temp .sun-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+    .weather-temp .temp-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #14532d;
+    }
+
+    /* Search Bar */
+    .search-box {
+      background: #ffffff;
+      border: 1.5px solid #d1d5db;
+      border-radius: 25px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .search-box input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+      color: #374151;
+    }
+    .search-icons {
+      display: flex;
+      gap: 10px;
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    /* 6 Home Buttons Grid */
+    .grid-menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .menu-card {
+      border-radius: 14px;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .menu-card .menu-icon {
+      font-size: 38px;
+      line-height: 1;
+    }
+    .menu-card .menu-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Custom Colors for 6 Buttons */
+    .btn-green  { background-color: #e8f8f0; color: #047857; }
+    .btn-blue   { background-color: #edf5ff; color: #1d4ed8; }
+    .btn-yellow { background-color: #fefce8; color: #a16207; }
+    .btn-purple { background-color: #f5f3ff; color: #6d28d9; }
+    .btn-orange { background-color: #fff7ed; color: #c2410c; }
+    .btn-slate  { background-color: #f1f5f9; color: #334155; }
+
+    /* Social Section */
+    .social-section {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 16px;
+    }
+    .social-title {
+      text-align: center;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 12px;
+    }
+    .social-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-yt {
+      background-color: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fee2e2;
+    }
+    .btn-fb {
+      background-color: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #dbeafe;
+    }
+
+    /* Section Header */
     .section-title {
       font-size: 16px;
       font-weight: 700;
@@ -96,8 +240,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-      border: 1px solid #e1e4e8;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid #e5e7eb;
       cursor: pointer;
     }
     .crop-card:active {
@@ -109,10 +253,10 @@
       gap: 12px;
       font-size: 16px;
       font-weight: 600;
-      color: #333333;
+      color: #1f2937;
     }
     .crop-arrow {
-      color: #8c959f;
+      color: #9ca3af;
       font-size: 18px;
       font-weight: bold;
     }
@@ -127,15 +271,15 @@
       background: #ffffff;
       border-radius: 14px;
       padding: 16px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-      border: 1px solid #e1e4e8;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border: 1px solid #e5e7eb;
     }
     .variety-badge {
       display: inline-block;
       background-color: #e8f5e9;
-      color: #2e7d32;
+      color: #1b5e20;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       padding: 3px 10px;
       border-radius: 6px;
       margin-bottom: 8px;
@@ -162,13 +306,33 @@
       border: none;
       padding: 11px;
       border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 14.5px;
+      font-weight: 700;
       margin-top: 12px;
       cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
     }
-    .order-btn:active {
-      background-color: #16a34a;
+
+    /* Info Content Blocks */
+    .info-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid #e5e7eb;
+    }
+    .info-card h3 {
+      font-size: 15px;
+      color: #1b5e20;
+      margin-bottom: 8px;
+    }
+    .info-card p {
+      font-size: 13.5px;
+      color: #4b5563;
+      line-height: 1.5;
+      margin-bottom: 6px;
     }
 
     /* Floating Instant Button */
@@ -176,14 +340,14 @@
       position: fixed;
       bottom: 74px;
       right: 16px;
-      background-color: #10b981;
+      background-color: #16a34a;
       color: white;
       padding: 10px 18px;
       border-radius: 24px;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       border: none;
-      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.4);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -191,7 +355,7 @@
       z-index: 999;
     }
 
-    /* Bottom Navigation */
+    /* Bottom Navigation Bar */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -221,44 +385,477 @@
       margin-bottom: 2px;
     }
 
-    /* Status Messages */
-    .status-msg {
-      text-align: center;
-      padding: 30px 16px;
-      color: #6b7280;
-      font-size: 14px;
+    /* Modal for Turant Samadhan */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      max-width: 450px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-close {
+      background: #1b5e20;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      float: right;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Top Header -->
   <header>
     <div class="header-left">
-      <button class="back-btn" id="backBtn" onclick="showCropsList()">←</button>
-      <h1 id="headerTitle">सब्जी फसल किस्म</h1>
+      <button class="back-btn" id="backBtn" onclick="renderHome()">←</button>
+      <h1 id="headerTitle">सब्जी फसल और बीज जानकारी</h1>
     </div>
     <div class="header-right">
-      <div class="lang-pill">🌐 English</div>
-      <div class="header-icon">🔔</div>
-      <div class="header-icon">☰</div>
+      <div class="lang-pill">🌐 ENG</div>
+      <div class="bell-icon">🔔</div>
     </div>
   </header>
 
-  <!-- Container -->
-  <div class="container">
-    <div class="section-title" id="pageTitle">सब्जी फसल चुनें:</div>
-    <div id="mainContent" class="crop-grid">
-      <div class="status-msg">डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...</div>
-    </div>
+  <!-- Dynamic Content Area -->
+  <div class="container" id="appBody">
+    <!-- Home / Crops render here -->
   </div>
 
   <!-- Floating Button -->
-  <button class="floating-btn" onclick="alert('तुरंत समाधान सहायता सक्रिय है')">
+  <button class="floating-btn" onclick="openSamadhanModal()">
     ⚡ तुरंत समाधान
   </button>
 
   <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-item active" id="nav-home" onclick="renderHome()">
+      <span class="nav-icon">🏠</span>होम
+    </div>
+    <div class="nav-item" id="nav-crops" onclick="showCropsList()">
+      <span class="nav-icon">🥬</span>फसलें
+    </div>
+    <div class="nav-item" id="nav-schedule" onclick="showSchedule()">
+      <span class="nav-icon">📅</span>शेड्यूल
+    </div>
+    <div class="nav-item" id="nav-security" onclick="showSecurity()">
+      <span class="nav-icon">🛡️</span>सुरक्षा
+    </div>
+    <div class="nav-item" id="nav-help" onclick="showHelpline()">
+      <span class="nav-icon">💬</span>हेल्पलाइन
+    </div>
+  </div>
+
+  <!-- Modal for Turant Samadhan -->
+  <div class="modal-overlay" id="samadhanModal">
+    <div class="modal-content">
+      <h3 style="color:#1b5e20; margin-bottom:12px;">⚡ आपातकालीन स्प्रे समाधान</h3>
+      <p style="font-size:13.5px; line-height:1.5; color:#333; margin-bottom:10px;">
+        <b>1. पत्ती मरोड़िया (थ्रिप्स व रस चूसक):</b><br>
+        पेगासस (Diafenthiuron 50% WP) 25 ग्राम प्रति 15 लीटर पंप या उलाला 6 ग्राम प्रति पंप।
+      </p>
+      <p style="font-size:13.5px; line-height:1.5; color:#333; margin-bottom:10px;">
+        <b>2. फफूंद व झुलसा (Blight):</b><br>
+        रेडोमिल गोल्ड 35-40 ग्राम प्रति 15 लीटर पानी में मिलाकर स्प्रे करें।
+      </p>
+      <p style="font-size:13.5px; line-height:1.5; color:#333; margin-bottom:10px;">
+        <b>3. फूल-फल झड़ने से रोक:</b><br>
+        बोरॉन (20%) 20 ग्राम + इसाबियन 30 मिली प्रति 15 लीटर पानी।
+      </p>
+      <button class="modal-close" onclick="closeSamadhanModal()">बंद करें</button>
+    </div>
+  </div>
+
+  <script>
+    // Google Sheets CSV Link
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQUrS.../pub?output=csv';
+
+    let allCrops = [];
+    let varietiesData = [];
+
+    // Fallback Data from Sheet
+    const defaultData = [
+      { crop: "टमाटर", variety: "साहो (TO 3251)", segment: "गर्मी/बरसात", features: "ऊंचा तापमान सहने की क्षमता, बहुत सख्त फल, लंबी दूरी के ट्रांसपोर्ट के लिए बेस्ट।", weight: "80-100 ग्राम", maturity: "60-65 दिन", disease: "TYLCV (मरोड़िया रोग) और झुलसा के प्रति सहनशील" },
+      { crop: "टमाटर", variety: "हिमसोना", segment: "सर्दी/बरसात", features: "ठंडे और गीले मौसम के लिए, फल बहुत ठोस और गहरे लाल।", weight: "90-110 ग्राम", maturity: "70-75 दिन", disease: "बैक्टीरियल विल्ट (उकठा) के प्रति मजबूत" },
+      { crop: "टमाटर", variety: "अविनाश-2", segment: "सदाबहार", features: "साल भर अधिक पैदावार, आकर्षक गोल फल।", weight: "80-90 ग्राम", maturity: "60-65 दिन", disease: "लीफ कर्ल वायरस के प्रति उच्च प्रतिरोधी" },
+      { crop: "मिर्च", variety: "HPH 5531", segment: "तीखी मिर्च", features: "बहुत तीखी, गहरा हरा रंग, मंडियों में सबसे ज्यादा मांग।", weight: "10-12 सेमी", maturity: "60-65 दिन", disease: "वायरस और चुसक कीटों के प्रति मजबूत" },
+      { crop: "मिर्च", variety: "HPH 1900", segment: "सूखी लाल मिर्च", features: "पतली और लंबी मिर्च, सूखने पर गहरा लाल रंग और चमक।", weight: "12-14 सेमी", maturity: "65-70 दिन", disease: "थ्रिप्स और झुलसा प्रतिरोधी" },
+      { crop: "फूलगोभी", variety: "CFL 1522", segment: "मध्यम सर्दी", features: "दूधिया सफेद और पत्थर जैसा ठोस फूल, अधिक वजन।", weight: "1-1.5 किलो", maturity: "60-70 दिन", disease: "काला सड़न (Black Rot) के प्रति सहनशील" },
+      { crop: "फूलगोभी", variety: "CFL 6067", segment: "अगेती (Early)", features: "जल्दी तैयार होने वाली, मध्यम तापमान के लिए सही।", weight: "700-900 ग्राम", maturity: "55-60 दिन", disease: "उमस भरे मौसम के लिए उपयुक्त" },
+      { crop: "पत्तागोभी", variety: "BC 79", segment: "साल भर", features: "बहुत ही चमकदार और ठोस गोल फल, लंबे समय तक खेत में रुकने वाला।", weight: "1-1.5 किलो", maturity: "60-65 दिन", disease: "सड़न और फटने की समस्या नहीं" },
+      { crop: "भिंडी", variety: "OH 102", segment: "बरसात/गर्मी", features: "गहरा हरा और कोमल फल, तुड़ाई में आसान।", weight: "12-14 सेमी", maturity: "40-45 दिन", disease: "YVMV वायरस से 100% सुरक्षा" },
+      { crop: "भिंडी", variety: "राधिका (Radhika)", segment: "हाइब्रिड भिंडी", features: "भारत की सबसे प्रसिद्ध भिंडी, गहरा हरा रंग, मंडियों में सबसे ऊँची कीमत।", weight: "12-14 सेमी", maturity: "42-45 दिन", disease: "YVMV और OLCV वायरस के प्रति 100% सुरक्षित" },
+      { crop: "खीरा", variety: "ग्लोसरी (Glossy)", segment: "देसी खीरा", features: "बिना धारी वाला गहरा हरा और बहुत चमकदार फल।", weight: "18-20 सेमी", maturity: "40-45 दिन", disease: "डाउनी मिल्ड्यू के प्रति मजबूत" },
+      { crop: "खीरा", variety: "मल्टीस्टार", segment: "पॉलीहाउस/नेटहाउस", features: "बिना परागण के हर गांठ पर फल, बहुत अधिक पैदावार।", weight: "19-21 सेमी", maturity: "42-45 दिन", disease: "पाउडरी मिल्ड्यू प्रतिरोधी" },
+      { crop: "स्वीट कॉर्न", variety: "Sugar 75", segment: "पीला मक्का", features: "बहुत मीठे और गहरे पीले दाने, दानों का भराव ऊपर तक।", weight: "8.5 इंच भुट्टा", maturity: "78-85 दिन", disease: "रस्ट और ब्लाइट प्रतिरोधी" },
+      { crop: "मटर", variety: "GS 10", segment: "सर्दी", features: "मीठे और बड़े दाने, एक फली में 9-11 दाने।", weight: "लंबी फली", maturity: "70-75 दिन", disease: "पाउडरी मिल्ड्यू प्रतिरोधी" },
+      { crop: "बैंगन", variety: "HBH 11", segment: "गोल बैंगनी", features: "गहरे बैंगनी चमकदार फल, कम बीज और बेहतरीन स्वाद।", weight: "250-300 ग्राम", maturity: "55-60 दिन", disease: "फोमोप्सिस ब्लाइट सहनशील" },
+      { crop: "तरबूज", variety: "सुगर बेबी", segment: "काला तरबूज", features: "गहरा काला छिलका, बहुत मीठा और लाल गूदा।", weight: "4-6 किलो", maturity: "75-80 दिन", disease: "ट्रांसपोर्ट में कम फूटता है" },
+      { crop: "कद्दू", variety: "मैजिक (Magic)", segment: "चपटा गोल", features: "गहरे नारंगी रंग का गूदा, अधिक दिनों तक स्टोर किया जा सकता है।", weight: "4-6 किलो", maturity: "85-90 दिन", disease: "वायरस सहनशील" }
+    ];
+
+    function parseCSVLine(text) {
+      let result = [];
+      let cur = '';
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        let c = text[i];
+        let next = text[i + 1];
+        if (c === '"') {
+          if (inQuotes && next === '"') { cur += '"'; i++; }
+          else { inQuotes = !inQuotes; }
+        } else if (c === ',' && !inQuotes) {
+          result.push(cur.trim());
+          cur = '';
+        } else {
+          cur += c;
+        }
+      }
+      result.push(cur.trim());
+      return result;
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch(SHEET_CSV_URL);
+        if (!res.ok) throw new Error();
+        const text = await res.text();
+        const rows = text.split(/\r?\n/);
+        allCrops = [];
+        varietiesData = [];
+
+        for (let i = 1; i < rows.length; i++) {
+          const line = rows[i].trim();
+          if (!line) continue;
+          const cols = parseCSVLine(line);
+          if (cols[0] && cols[0].toLowerCase() !== 'crop' && cols[0] !== 'Crop (फसल)') {
+            const crop = cols[0];
+            if (!allCrops.includes(crop)) allCrops.push(crop);
+            varietiesData.push({
+              crop: cols[0] || '',
+              variety: cols[1] || '',
+              segment: cols[2] || '',
+              features: cols[3] || '',
+              weight: cols[4] || '',
+              maturity: cols[5] || '',
+              disease: cols[6] || ''
+            });
+          }
+        }
+      } catch (e) {
+        varietiesData = defaultData;
+        allCrops = [...new Set(defaultData.map(d => d.crop))];
+      }
+      renderHome();
+    }
+
+    function setActiveNav(navId) {
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(navId);
+      if (target) target.classList.add('active');
+    }
+
+    // 1. Home Page View
+    function renderHome() {
+      setActiveNav('nav-home');
+      document.getElementById('headerTitle').innerText = "सब्जी फसल और बीज जानकारी";
+      document.getElementById('backBtn').style.display = "none";
+
+      const container = document.getElementById('appBody');
+      container.innerHTML = `
+        <!-- Weather Card -->
+        <div class="weather-card">
+          <div class="weather-info">
+            <h3>साफ़ आसमान</h3>
+            <p>स्प्रे व निराई-गुड़ाई हेतु उत्तम समय</p>
+          </div>
+          <div class="weather-temp">
+            <div class="sun-icon">☀️</div>
+            <div class="temp-val">23°C</div>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+          <span style="color:#6b7280;">🔍</span>
+          <input type="text" id="searchInput" placeholder="खीरा, तरबूज या बीज लिखें..." onkeyup="handleSearch(this.value)">
+          <div class="search-icons">
+            <span>🔎</span>
+            <span>🎙️</span>
+          </div>
+        </div>
+
+        <!-- 6 Main Grid Buttons -->
+        <div class="grid-menu">
+          <div class="menu-card btn-green" onclick="showCropsList()">
+            <div class="menu-icon">🥬</div>
+            <div class="menu-title">सब्जी फसल किस्म</div>
+          </div>
+          <div class="menu-card btn-blue" onclick="showSecurity()">
+            <div class="menu-icon">🛡️</div>
+            <div class="menu-title">फसल सुरक्षा</div>
+          </div>
+          <div class="menu-card btn-yellow" onclick="showSchedule()">
+            <div class="menu-icon">📅</div>
+            <div class="menu-title">स्प्रे शेड्यूल</div>
+          </div>
+          <div class="menu-card btn-purple" onclick="showAdvisor()">
+            <div class="menu-icon">📞</div>
+            <div class="menu-title">सलाहकार</div>
+          </div>
+          <div class="menu-card btn-orange" onclick="showAllCompanies()">
+            <div class="menu-icon">🏢</div>
+            <div class="menu-title">All कंपनी बीज</div>
+          </div>
+          <div class="menu-card btn-slate" onclick="showOtherServices()">
+            <div class="menu-icon">⚙️</div>
+            <div class="menu-title">Other</div>
+          </div>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="social-section">
+          <div class="social-title">हमारे साथ सोशल मीडिया पर जुड़ें</div>
+          <div class="social-buttons">
+            <a href="https://youtube.com" target="_blank" class="social-btn btn-yt">
+              <span>▶️</span> YouTube
+            </a>
+            <a href="https://facebook.com" target="_blank" class="social-btn btn-fb">
+              <span>🌐</span> Facebook
+            </a>
+          </div>
+        </div>
+      `;
+      window.scrollTo(0, 0);
+    }
+
+    // 2. सब्जी फसल किस्म दबाने पर फसलों की सूची
+    function showCropsList() {
+      setActiveNav('nav-crops');
+      document.getElementById('headerTitle').innerText = "सब्जी फसल किस्म";
+      document.getElementById('backBtn').style.display = "block";
+
+      const container = document.getElementById('appBody');
+      let html = `<div class="section-title">सब्जी फसल चुनें:</div><div class="crop-grid">`;
+
+      allCrops.forEach(crop => {
+        html += `
+          <div class="crop-card" onclick="showVarietiesForCrop('${crop}')">
+            <div class="crop-card-left">
+              <span style="font-size:22px;">🌱</span>
+              <span>${crop}</span>
+            </div>
+            <span class="crop-arrow">›</span>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+      window.scrollTo(0, 0);
+    }
+
+    // 3. किसी सब्जी पर क्लिक करने पर उसकी किस्में
+    function showVarietiesForCrop(selectedCrop) {
+      document.getElementById('headerTitle').innerText = selectedCrop;
+      document.getElementById('backBtn').style.display = "block";
+
+      const container = document.getElementById('appBody');
+      const filtered = varietiesData.filter(item => item.crop === selectedCrop);
+
+      let html = `
+        <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>${selectedCrop} की प्रमुख किस्में:</span>
+          <button onclick="showCropsList()" style="background:none; border:none; color:#1b5e20; font-weight:bold; cursor:pointer;">← अन्य फसलें</button>
+        </div>
+        <div class="variety-grid">
+      `;
+
+      filtered.forEach(item => {
+        html += `
+          <div class="variety-card">
+            ${item.segment ? `<div class="variety-badge">${item.segment}</div>` : ''}
+            <div class="variety-title">${item.variety} (${item.crop})</div>
+            ${item.features ? `<div class="detail-row"><b>विशेषता:</b> ${item.features}</div>` : ''}
+            ${item.weight ? `<div class="detail-row"><b>वजन/साइज:</b> ${item.weight}</div>` : ''}
+            ${item.maturity ? `<div class="detail-row"><b>पकने का समय:</b> ${item.maturity}</div>` : ''}
+            ${item.disease ? `<div class="detail-row"><b>रोग प्रतिरोध:</b> ${item.disease}</div>` : ''}
+            <a href="https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent('नमस्ते, मुझे ' + item.variety + ' (' + item.crop + ') के बीज चाहिए')}" class="order-btn">
+              🛒 बीज ऑर्डर करें
+            </a>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+      window.scrollTo(0, 0);
+    }
+
+    // फसल सुरक्षा
+    function showSecurity() {
+      setActiveNav('nav-security');
+      document.getElementById('headerTitle').innerText = "फसल सुरक्षा";
+      document.getElementById('backBtn').style.display = "block";
+      const container = document.getElementById('appBody');
+      container.innerHTML = `
+        <div class="section-title">प्रमुख कीट व रोग नियंत्रण:</div>
+        <div class="info-card">
+          <h3>🐛 थ्रिप्स व रस चूसक कीट</h3>
+          <p><b>पहचान:</b> पत्तियां ऊपर की तरफ मुड़ना (नाव के आकार की होना)।</p>
+          <p><b>दवा:</b> पेगासस 25 ग्राम या डेलीगेट 18 मिली प्रति 15 लीटर पंप स्प्रे करें।</p>
+        </div>
+        <div class="info-card">
+          <h3>🍄 झुलसा व फफूंद (Blight)</h3>
+          <p><b>पहचान:</b> पत्तियों पर गहरे कत्थई/काले गोल धब्बे।</p>
+          <p><b>दवा:</b> रेडोमिल गोल्ड 40 ग्राम या कस्टोडिया 25 मिली प्रति पंप स्प्रे करें।</p>
+        </div>
+      `;
+      window.scrollTo(0, 0);
+    }
+
+    // स्प्रे शेड्यूल
+    function showSchedule() {
+      setActiveNav('nav-schedule');
+      document.getElementById('headerTitle').innerText = "स्प्रे शेड्यूल";
+      document.getElementById('backBtn').style.display = "block";
+      const container = document.getElementById('appBody');
+      container.innerHTML = `
+        <div class="section-title">सब्जी फसल स्प्रे टाइम-टेबल:</div>
+        <div class="info-card">
+          <h3>1. रोपाई के 10-15 दिन बाद</h3>
+          <p>NPK 19:19:19 (75 ग्राम) + ह्यूमिक एसिड (30 मिली) प्रति 15 लीटर पंप (जड़ों का विकास)।</p>
+        </div>
+        <div class="info-card">
+          <h3>2. फूल आने की अवस्था पर (30-40 दिन)</h3>
+          <p>NPK 0:52:34 (75 ग्राम) + बोरॉन 20% (15 ग्राम) प्रति पंप (फूलों की संख्या व भराव)।</p>
+        </div>
+        <div class="info-card">
+          <h3>3. फल चमक व वजन हेतु (तुड़ाई के समय)</h3>
+          <p>NPK 13:0:45 (75 ग्राम) + चीलेटेड माइक्रोन्यूट्रिएंट्स प्रति पंप स्प्रे करें।</p>
+        </div>
+      `;
+      window.scrollTo(0, 0);
+    }
+
+    // सलाहकार
+    function showAdvisor() {
+      document.getElementById('headerTitle').innerText = "कृषि सलाहकार";
+      document.getElementById('backBtn').style.display = "block";
+      const container = document.getElementById('appBody');
+      container.innerHTML = `
+        <div class="section-title">कृषि विशेषज्ञ संपर्क:</div>
+        <div class="info-card">
+          <h3>📞 निःशुल्क किसान कॉल सेंटर</h3>
+          <p>सोमवार से शनिवार सुबह 6 से रात 10 बजे तक सरकारी कृषि विशेषज्ञों से सीधे बात करें।</p>
+          <a href="tel:18001801551" class="order-btn" style="background:#0284c7;">📞 1800-180-1551 पर कॉल करें</a>
+        </div>
+      `;
+      window.scrollTo(0, 0);
+    }
+
+    // All कंपनी बीज
+    function showAllCompanies() {
+      document.getElementById('headerTitle').innerText = "All कंपनी बीज";
+      document.getElementById('backBtn').style.display = "block";
+      const container = document.getElementById('appBody');
+      container.innerHTML = `
+        <div class="section-title">प्रमुख बीज उत्पादक कंपनियाँ:</div>
+        <div class="info-card">
+          <p>• <b>सिंजेंटा (Syngenta)</b> - साहो, हिमसोना, HPH 5531</p>
+          <p>• <b>ईस्ट वेस्ट (East-West)</b> - नागा, राधिका, अनघा</p>
+          <p>• <b>नामधारी सीड्स (Namdhari)</b> - NS 585, NS 426</p>
+          <p>• <b>सेमिनिस (Seminis)</b> - अभीलाष, शाइन</p>
+          <p>• <b>एडवांटा (Advanta)</b> - AK-47, गोल्डेन</p>
+        </div>
+      `;
+      window.scrollTo(0, 0);
+    }
+
+    // Other
+    function showOtherServices() {
+      document.getElementById('headerTitle').innerText = "अन्य सुविधाएँ";
+      document.getElementById('backBtn').style.display = "block";
+      const container = document.getElementById('appBody');
+      container.innerHTML = `
+        <div class="section-title">अतिरिक्त विकल्प:</div>
+        <div class="info-card">
+          <h3>🌿 जैविक खेती व वर्मीकम्पोस्ट</h3>
+          <p>नीम तेल, वेस्ट डीकंपोजर और जीवामृत तैयार करने की संपूर्ण जानकारी।</p>
+        </div>
+        <div class="info-card">
+          <h3>💧 ड्रिप व मल्चिंग तकनीक</h3>
+          <p>सब्जी फसलों में खरपतवार रोकथाम और पानी की 60% बचत की गाइड।</p>
+        </div>
+      `;
+      window.scrollTo(0, 0);
+    }
+
+    // हेल्पलाइन
+    function showHelpline() {
+      setActiveNav('nav-help');
+      showAdvisor();
+    }
+
+    // Search Box Function
+    function handleSearch(query) {
+      if (!query || query.trim() === '') return;
+      const q = query.toLowerCase().trim();
+      const matched = varietiesData.filter(item => 
+        item.crop.toLowerCase().includes(q) || 
+        item.variety.toLowerCase().includes(q)
+      );
+
+      if (matched.length > 0) {
+        document.getElementById('backBtn').style.display = "block";
+        const container = document.getElementById('appBody');
+        let html = `<div class="section-title">खोज परिणाम ("${query}"):</div><div class="variety-grid">`;
+        matched.forEach(item => {
+          html += `
+            <div class="variety-card">
+              ${item.segment ? `<div class="variety-badge">${item.segment}</div>` : ''}
+              <div class="variety-title">${item.variety} (${item.crop})</div>
+              ${item.features ? `<div class="detail-row"><b>विशेषता:</b> ${item.features}</div>` : ''}
+              ${item.weight ? `<div class="detail-row"><b>वजन/साइज:</b> ${item.weight}</div>` : ''}
+              ${item.maturity ? `<div class="detail-row"><b>पकने का समय:</b> ${item.maturity}</div>` : ''}
+              ${item.disease ? `<div class="detail-row"><b>रोग प्रतिरोध:</b> ${item.disease}</div>` : ''}
+            </div>
+          `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+      }
+    }
+
+    // Modal Controls
+    function openSamadhanModal() { document.getElementById('samadhanModal').style.display = 'flex'; }
+    function closeSamadhanModal() { document.getElementById('samadhanModal').style.display = 'none'; }
+
+    // Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>
+ Bottom Navigation -->
   <div class="bottom-nav">
     <div class="nav-item" onclick="showCropsList()">
       <span class="nav-icon">🏠</span>होम
