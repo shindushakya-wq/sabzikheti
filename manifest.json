@@ -9,15 +9,15 @@
   "description": "सब्जी खेती, बीज किस्में, रोग निदान व संपूर्ण स्प्रे गाइड",
   "icons": [
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "आइकन-192.png.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "आइकन-512.png.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
       "purpose": "any maskable"
     }
   ]
