@@ -62,7 +62,7 @@
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* मौसम कार्ड */
-    .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; }
+    .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; }
     .weather-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #a7f3d0; padding-bottom: 6px; margin-bottom: 8px; }
     .weather-card h4 { color: #1b5e20; font-size: 14px; font-weight: 700; }
     .weather-datetime { font-size: 11px; color: #166534; font-weight: 600; }
@@ -143,9 +143,11 @@
     .list-title { font-size: 15px; font-weight: 600; }
     .arrow { color: #9ca3af; font-weight: bold; }
 
+    /* वैरायटी कार्ड और फोटो स्टाइल */
     .variety-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
-    .badge-season { background: #e8f5e9; color: #1b5e20; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; display: inline-block; margin-bottom: 6px; }
-    .badge-company { background: #eff6ff; color: #1d4ed8; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; display: inline-block; margin-bottom: 6px; margin-left: 4px; }
+    .var-photo { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; background-color: #f3f4f6; display: block; }
+    .badge-variety { background: #e8f5e9; color: #1b5e20; font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 700; display: inline-block; margin-bottom: 6px; }
+    .badge-company { background: #eff6ff; color: #1d4ed8; font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 700; display: inline-block; margin-bottom: 6px; margin-left: 4px; }
     .var-title { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 6px; }
     .var-detail { font-size: 13px; color: #4b5563; margin-bottom: 5px; }
     .var-detail b { color: #1f2937; }
@@ -163,9 +165,7 @@
     .nav-tab.active { color: #1b5e20; font-weight: bold; }
     .nav-tab span:first-child { font-size: 18px; }
 
-    /* ==========================================================
-       फ़ुल-स्क्रीन Instagram/Reel स्टाइल स्टोरी प्लेयर
-       ========================================================== */
+    /* फ़ुल-स्क्रीन स्टोरी प्लेयर */
     .story-fullscreen-modal {
       display: none;
       position: fixed;
@@ -197,6 +197,12 @@
     .story-media-view {
       width: 100%; height: 100%; object-fit: contain; max-height: 90vh;
     }
+
+    /* मंडी भाव टेबल */
+    .mandi-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
+    .mandi-table th { background: #e8f5e9; color: #1b5e20; padding: 10px 8px; text-align: left; border: 1px solid #d1fae5; }
+    .mandi-table td { padding: 10px 8px; border: 1px solid #e5e7eb; color: #374151; }
+    .mandi-table tr:nth-child(even) { background: #f9fafb; }
   </style>
 </head>
 <body>
@@ -214,7 +220,7 @@
     </div>
   </div>
 
-  <!-- साइड मेन्यू (Drawer) -->
+  <!-- साइड मेन्यू -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
   <div class="drawer-content" id="drawerContent">
     <div class="drawer-header">
@@ -222,7 +228,6 @@
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
 
-    <!-- प्रोफाइल स्टेटस कार्ड -->
     <div class="profile-card-widget" onclick="openProfileScreen()">
       <h4>
         <span id="drawerUserName">👤 किसान प्रोफाइल</span>
@@ -234,7 +239,6 @@
       <p id="profileStatusHint">टैप करके अपनी प्रोफाइल पूरी करें &gt;</p>
     </div>
 
-    <!-- मेन्यू विकल्प -->
     <ul class="drawer-menu-list">
       <li class="drawer-item" onclick="openProfileScreen()">
         <span>👨‍🌾</span><span id="txtMenuProfile">मेरी प्रोफाइल / सेटिंग्स</span>
@@ -248,14 +252,14 @@
       <li class="drawer-item" onclick="closeDrawer(); showProtectionCropsList();">
         <span>🛡️</span><span id="txtMenuProtection">फसल सुरक्षा (रोग निदान)</span>
       </li>
+      <li class="drawer-item" onclick="closeDrawer(); showOtherServicesScreen();">
+        <span>⚙️</span><span>अन्य सेवाएं (मौसम, मंडी, अलर्ट)</span>
+      </li>
+      <li class="drawer-item" onclick="closeDrawer(); shareAppWithFriends();">
+        <span>📲</span><span>किसान साथियों को ऐप शेयर करें</span>
+      </li>
       <li class="drawer-item" onclick="closeDrawer(); contactAdvisor();">
         <span>💬</span><span id="txtMenuSupport">व्हाट्सएप हेल्पलाइन</span>
-      </li>
-      <li class="drawer-item" onclick="closeDrawer(); window.open('https://www.youtube.com/@NMGKISAN', '_blank');">
-        <span>▶️</span><span>YouTube (@NMGKISAN)</span>
-      </li>
-      <li class="drawer-item" onclick="closeDrawer(); window.open('https://www.facebook.com/share/19joE3v9ib/', '_blank');">
-        <span>🌐</span><span>Facebook</span>
       </li>
     </ul>
 
@@ -264,13 +268,13 @@
     </div>
   </div>
 
-  <!-- तैरता हुआ बटन: तुरंत समाधान -->
+  <!-- तुरंत समाधान बटन -->
   <button class="fab-solution" onclick="openSolutionModal()">
     <span>⚡</span>
     <span id="txtFab">तुरंत समाधान</span>
   </button>
 
-  <!-- पॉपअप: तुरंत समाधान (AI रोग जांच) -->
+  <!-- तुरंत समाधान मोडल -->
   <div class="modal-overlay" id="solutionModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -309,9 +313,7 @@
     </div>
   </div>
 
-  <!-- ==========================================================
-       फ़ुल-स्क्रीन स्टोरी व रील प्लेयर मोडल
-       ========================================================== -->
+  <!-- फ़ुल-स्क्रीन स्टोरी प्लेयर -->
   <div class="story-fullscreen-modal" id="storyPlayerModal">
     <div class="story-top-bar">
       <div class="story-progress-bg">
@@ -325,11 +327,7 @@
         <button class="story-close-btn" onclick="closeStoryPlayer()">✕</button>
       </div>
     </div>
-    
-    <!-- फोटो स्टोरी -->
     <img id="storyImageDisplay" class="story-media-view" style="display:none;" src="" alt="Story">
-    
-    <!-- रील / वीडियो स्टोरी -->
     <video id="storyVideoDisplay" class="story-media-view" style="display:none;" playsinline controls></video>
   </div>
 
@@ -345,15 +343,13 @@
       </span>
     </div>
 
-    <!-- गोल स्टोरी बार (रोज़ न्यू फोटो व रील) -->
-    <div class="stories-wrapper" id="storiesBarContainer">
-      <!-- जावास्क्रिप्ट से डायनामिक लोड होंगी -->
-    </div>
+    <!-- गोल स्टोरी बार -->
+    <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- मौसम कार्ड -->
-    <div class="weather-card">
+    <!-- मौसम कार्ड (शहर का नाम + दिनांक + तापमान) -->
+    <div class="weather-card" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
-        <h4 id="weatherPlace">📍 आज का मौसम</h4>
+        <h4 id="weatherPlace">📍 जयपुर, राजस्थान</h4>
         <span class="weather-datetime" id="weatherDateTime">लोड हो रहा है...</span>
       </div>
       <div class="weather-body-row">
@@ -362,8 +358,8 @@
           <p style="font-size:11px; color:#1b5e20; font-weight:bold; margin-top:3px;" id="weatherAdvice">स्प्रे व निराई-गुड़ाई हेतु उत्तम समय</p>
         </div>
         <div style="text-align:right;">
-          <span style="font-size:30px;">☀️</span>
-          <div class="weather-temp">28°C</div>
+          <span style="font-size:30px;" id="weatherIcon">☀️</span>
+          <div class="weather-temp" id="weatherTemp">28°C</div>
         </div>
       </div>
     </div>
@@ -399,19 +395,18 @@
         <div class="icon">🏢</div>
         <h3 id="btnComp">All कंपनी बीज</h3>
       </div>
-      <div class="menu-box card-other" onclick="contactAdvisor()">
+      <div class="menu-box card-other" onclick="showOtherServicesScreen()">
         <div class="icon">⚙️</div>
-        <h3 id="btnOther">Other</h3>
+        <h3 id="btnOther">Other (अन्य सेवाएं)</h3>
       </div>
     </div>
 
-    <!-- वीडियो स्लाइडर (Shorts) -->
+    <!-- वीडियो स्लाइडर -->
     <div class="video-section">
       <div class="video-header">
         <h4 id="txtVidTitle">🎥 आपके लिए वीडियो (Shorts)</h4>
         <a href="https://www.youtube.com/@NMGKISAN" target="_blank" class="see-all-link" id="txtSeeMore">और देखें &gt;</a>
       </div>
-      
       <div class="video-scroll-container">
         <div class="video-card" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')">
           <div class="video-thumb" style="background-image: url('https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=300');">
@@ -420,7 +415,6 @@
           </div>
           <p class="video-title">मिर्च में थ्रिप्स व मरोड़िया की रोकथाम</p>
         </div>
-
         <div class="video-card" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')">
           <div class="video-thumb" style="background-image: url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300');">
             <span class="video-play-btn">▶</span>
@@ -428,7 +422,6 @@
           </div>
           <p class="video-title">टमाटर में फल छेदक सुंडी का पक्का इलाज</p>
         </div>
-
         <div class="video-card" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')">
           <div class="video-thumb" style="background-image: url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=300');">
             <span class="video-play-btn">▶</span>
@@ -453,32 +446,202 @@
     </div>
   </div>
 
+  <!-- SCREEN 11: OTHERS स्क्रीन (मौसम, मंडी भाव, एक्सपर्ट सुझाव, कीट अलर्ट, शेयर) -->
+  <div id="screen-other-services" class="screen">
+    <div class="list-item" onclick="showWeatherDetailScreen()">
+      <div class="list-left">
+        <span class="list-icon">🌦️</span>
+        <span class="list-title">मौसम की पूरी जानकारी</span>
+      </div>
+      <span class="arrow">&gt;</span>
+    </div>
+
+    <div class="list-item" onclick="showMandiBhavScreen()">
+      <div class="list-left">
+        <span class="list-icon">📈</span>
+        <span class="list-title">ताज़ा मंडी भाव (आज के भाव)</span>
+      </div>
+      <span class="arrow">&gt;</span>
+    </div>
+
+    <div class="list-item" onclick="showExpertAdviceScreen()">
+      <div class="list-left">
+        <span class="list-icon">💡</span>
+        <span class="list-title">कृषि एक्सपर्ट सुझाव व सलाह</span>
+      </div>
+      <span class="arrow">&gt;</span>
+    </div>
+
+    <div class="list-item" onclick="showPestAlertScreen()">
+      <div class="list-left">
+        <span class="list-icon">🚨</span>
+        <span class="list-title" style="color:#b91c1c; font-weight:bold;">कीट व रोग अलर्ट (सावधानी)</span>
+      </div>
+      <span class="arrow">&gt;</span>
+    </div>
+
+    <div class="list-item" style="background:#f0fdf4; border:1.5px solid #86efac;" onclick="shareAppWithFriends()">
+      <div class="list-left">
+        <span class="list-icon">📲</span>
+        <span class="list-title" style="color:#166534; font-weight:bold;">किसान साथियों को लिंक भेजें (Share App)</span>
+      </div>
+      <span class="arrow">&gt;</span>
+    </div>
+  </div>
+
+  <!-- SCREEN: मौसम की पूरी जानकारी -->
+  <div id="screen-weather-detail" class="screen">
+    <div class="variety-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="color:#1b5e20; font-size:17px;" id="detailCity">📍 जयपुर, राजस्थान</h3>
+        <span style="font-size:12px; color:#166534; font-weight:bold;" id="detailDate">बुधवार, 28 अक्टूबर 2026</span>
+      </div>
+      <div style="text-align:center; padding:15px 0;">
+        <span style="font-size:45px;">☀️</span>
+        <div style="font-size:32px; font-weight:bold; color:#1b5e20;">28°C</div>
+        <p style="font-size:14px; color:#4b5563; font-weight:600; margin-top:4px;">साफ़ और खिली हुई धूप</p>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+        <div style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
+          <p style="font-size:11px; color:#166534;">हवा की गति</p>
+          <b style="font-size:14px; color:#15803d;">12 किमी/घंटा</b>
+        </div>
+        <div style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
+          <p style="font-size:11px; color:#166534;">नमी (Humidity)</p>
+          <b style="font-size:14px; color:#15803d;">42%</b>
+        </div>
+      </div>
+      <div style="margin-top:14px; background:#fefce8; border:1px solid #fef08a; padding:12px; border-radius:10px;">
+        <b style="color:#854d0e; font-size:13px; display:block; margin-bottom:4px;">🌾 कृषि मौसम सलाह:</b>
+        <p style="font-size:12.5px; color:#713f12; line-height:1.4;">आगामी 3 दिन मौसम पूरी तरह शुष्क रहेगा। सब्जियों में निराई-गुड़ाई, सिंचाई तथा कीटनाशक व टॉनिक का स्प्रे आसानी से कर सकते हैं।</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: मंडी भाव -->
+  <div id="screen-mandi-bhav" class="screen">
+    <div class="variety-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="color:#1b5e20; font-size:16px;">📈 आज के प्रमुख मंडी भाव</h3>
+        <span style="font-size:11px; color:#166534; font-weight:bold;">मुहाना मंडी (जयपुर)</span>
+      </div>
+      <p style="font-size:11px; color:#6b7280; margin-top:2px;">दैनिक थोक भाव (प्रति क्विंटल / प्रति किलो)</p>
+      
+      <table class="mandi-table">
+        <thead>
+          <tr>
+            <th>फसल</th>
+            <th>न्यूनतम</th>
+            <th>उच्चतम</th>
+            <th>औसत भाव</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🍅 टमाटर (देसी/हाइब्रिड)</td>
+            <td>₹14/किलो</td>
+            <td>₹22/किलो</td>
+            <td><b>₹18/किलो</b></td>
+          </tr>
+          <tr>
+            <td>🌶️ हरी मिर्च (तीखी)</td>
+            <td>₹25/किलो</td>
+            <td>₹35/किलो</td>
+            <td><b>₹30/किलो</b></td>
+          </tr>
+          <tr>
+            <td>🥒 खीरा (देसी/पॉलीहाउस)</td>
+            <td>₹16/किलो</td>
+            <td>₹28/किलो</td>
+            <td><b>₹22/किलो</b></td>
+          </tr>
+          <tr>
+            <td>🥦 फूलगोभी</td>
+            <td>₹18/किलो</td>
+            <td>₹26/किलो</td>
+            <td><b>₹22/किलो</b></td>
+          </tr>
+          <tr>
+            <td>🥒 भिंडी (हाइब्रिड)</td>
+            <td>₹20/किलो</td>
+            <td>₹32/किलो</td>
+            <td><b>₹26/किलो</b></td>
+          </tr>
+          <tr>
+            <td>🍆 बैंगन (गोल/लंबा)</td>
+            <td>₹12/किलो</td>
+            <td>₹18/किलो</td>
+            <td><b>₹15/किलो</b></td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20अन्य%20मंडियों%20के%20भाव%20जानने%20हैं।" target="_blank" class="btn-action btn-wa" style="margin-top:14px;">
+        💬 अन्य मंडी भाव पूछें
+      </a>
+    </div>
+  </div>
+
+  <!-- SCREEN: एक्सपर्ट सुझाव -->
+  <div id="screen-expert-advice" class="screen">
+    <div class="variety-card">
+      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">💡 कृषि वैज्ञानिकों के ताज़ा सुझाव</h3>
+      <div class="schedule-step">
+        <b>1. फूल व फल बढ़ाने का समय</b>
+        <p>टमाटर, मिर्च और खीरे में जब फूल आना शुरू हों, तब नाइट्रोजन (यूरिया) कम दें और NPK 0:52:34 (75 ग्राम) + बोरॉन 20% (20 ग्राम) प्रति पंप का छिड़काव करें।</p>
+      </div>
+      <div class="schedule-step">
+        <b>2. सिंचाई प्रबंधन</b>
+        <p>दोपहर की तेज़ धूप में फसलों को पानी न दें। शाम के समय ड्रिप से हल्की सिंचाई करें ताकि मिट्टी में ठंडक बनी रहे और पौधे मुरझाएं नहीं।</p>
+      </div>
+      <div class="schedule-step">
+        <b>3. रस चूसक कीटों की प्राकृतिक रोकथाम</b>
+        <p>रासायनिक दवा से पहले खेत में प्रति एकड़ 20 पीले व 10 नीले चिपचिपे कार्ड (Sticky Traps) लगाएं, इससे 60% कीट बिना दवा के नष्ट हो जाते हैं।</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: कीट अलर्ट (Pest Alert) -->
+  <div id="screen-pest-alert" class="screen">
+    <div class="variety-card" style="border-left:5px solid #dc2626;">
+      <h3 style="color:#dc2626; font-size:16px; margin-bottom:10px;">🚨 ताज़ा कीट व रोग चेतावनी (अलर्ट)</h3>
+      
+      <div style="background:#fef2f2; border:1px solid #fee2e2; border-radius:10px; padding:12px; margin-bottom:12px;">
+        <b style="color:#991b1b; font-size:14px; display:block; margin-bottom:4px;">⚠️ मिर्च व टमाटर में थ्रिप्स का प्रकोप:</b>
+        <p style="font-size:13px; color:#450a0a; line-height:1.45;">मौसम बदलने के कारण मिर्च की पत्तियां ऊपर की तरफ मुड़ रही हैं। तुरंत <b>डेलीगेट 18 मिली या पेगासस 25 ग्राम</b> प्रति 15 लीटर पंप स्प्रे करें।</p>
+      </div>
+
+      <div style="background:#fff7ed; border:1px solid #ffedd5; border-radius:10px; padding:12px; margin-bottom:12px;">
+        <b style="color:#9a3412; font-size:14px; display:block; margin-bottom:4px;">⚠️ खीरा व तोरई में पाउडरी मिल्ड्यू:</b>
+        <p style="font-size:13px; color:#7c2d12; line-height:1.45;">सुबह ओस गिरने से पत्तियों पर सफेद पाउडर जैसा जमाव दिख सकता है। रोकथाम हेतु <b>घुलनशील सल्फर 35 ग्राम या नेटिवो 10 ग्राम</b> प्रति पंप छिड़कें।</p>
+      </div>
+      
+      <a href="https://wa.me/916378475002?text=नमस्ते%20डॉक्टर%20साहब,%20मेरे%20खेत%20में%20कीट%20का%20प्रकोप%20हो%20गया%20है,%20मदद%20करें।" target="_blank" class="btn-action btn-wa">
+        💬 डॉक्टर से तुरंत सलाह लें
+      </a>
+    </div>
+  </div>
+
   <!-- SCREEN: प्रोफाइल स्क्रीन -->
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
       <p style="font-size:12px; color:#6b7280; margin-bottom:16px;">अपनी जानकारी भरें ताकि आपको सटीक फसल सलाह मिल सके।</p>
-      
       <div class="form-group">
         <label>आपका नाम:</label>
         <input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailender Kumar">
       </div>
-
       <div class="form-group">
         <label>मोबाइल नंबर:</label>
         <input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210">
       </div>
-
       <div class="form-group">
         <label>गाँव / ज़िला / राज्य:</label>
         <input type="text" id="profStateInput" class="form-control" placeholder="उदा. जयपुर, राजस्थान">
       </div>
-
       <div class="form-group">
         <label>मुख्य फसलें:</label>
         <input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा, तरबूज">
       </div>
-
       <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()">
         💾 प्रोफाइल सुरक्षित करें (Save Profile)
       </button>
@@ -529,30 +692,27 @@
   <div id="screen-cure" class="screen">
     <div class="variety-card">
       <h3 style="color:#b91c1c; font-size:17px; margin-bottom:10px;" id="cureName">रोग समाधान</h3>
-      
       <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:12px; margin-bottom:12px;">
         <b style="color:#991b1b; font-size:13.5px; display:block; margin-bottom:4px;">🔍 लक्षण व पहचान:</b>
         <p style="font-size:13px; color:#450a0a; line-height:1.45;" id="cureSymptoms"></p>
       </div>
-
       <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:12px; margin-bottom:14px;">
         <b style="color:#166534; font-size:13.5px; display:block; margin-bottom:4px;">💊 सटीक स्प्रे व दवा:</b>
         <p style="font-size:13px; color:#14532d; line-height:1.45;" id="cureDose"></p>
       </div>
-
       <a id="btnCureAsk" href="https://wa.me/916378475002" target="_blank" class="btn-action btn-wa">
         💬 डॉक्टर से WhatsApp पर सलाह लें
       </a>
     </div>
   </div>
 
-  <!-- SCREEN 6: All कंपनी सूची -->
+  <!-- SCREEN 6: 1. All कंपनी सूची -->
   <div id="screen-companies" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtSelectCompany">सीड कंपनी चुनें:</h3>
     <div id="companiesContainer"></div>
   </div>
 
-  <!-- SCREEN 7: चयनित कंपनी की फसलें -->
+  <!-- SCREEN 7: 2. चयनित कंपनी की फसलें -->
   <div id="screen-company-crops" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="compCropHeading">कंपनी की फसलें:</h3>
     <div id="companyCropsContainer"></div>
@@ -584,66 +744,30 @@
     let currentImgElement = null;
     let storyTimer = null;
 
-    // ==========================================================
-    // रोज़ नई स्टोरी डेटाबेस (Photo और Reel/Video दोनों सपोर्टेड)
-    // ==========================================================
+    // रोज़ नई स्टोरी डेटाबेस
     const dailyStories = [
-      {
-        title: "आज का स्प्रे",
-        icon: "💧",
-        type: "photo",
-        url: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=800",
-        desc: "टमाटर व मिर्च में फूल झड़ने से रोकने के लिए बोरॉन 20% का स्प्रे करें।"
-      },
-      {
-        title: "मिर्च रील",
-        icon: "🌶️",
-        type: "reel",
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        desc: "मिर्च में थ्रिप्स व मरोड़िया की 100% रोकथाम।"
-      },
-      {
-        title: "मंडी भाव",
-        icon: "📈",
-        type: "photo",
-        url: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=800",
-        desc: "आज जयपुर व मुहाना मंडी में टमाटर व खीरा के ताज़ा भाव।"
-      },
-      {
-        title: "रोग निदान रील",
-        icon: "🔬",
-        type: "reel",
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        desc: "पौधे की पत्ती मुड़ने पर तुरंत यह 1 स्प्रे करें।"
-      },
-      {
-        title: "ताज़ा वीडियो",
-        icon: "▶️",
-        type: "link",
-        url: "https://www.youtube.com/@NMGKISAN"
-      }
+      { title: "आज का स्प्रे", icon: "💧", type: "photo", url: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=800" },
+      { title: "मिर्च रील", icon: "🌶️", type: "reel", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
+      { title: "मंडी भाव", icon: "📈", type: "photo", url: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=800" },
+      { title: "रोग निदान रील", icon: "🔬", type: "reel", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" },
+      { title: "ताज़ा वीडियो", icon: "▶️", type: "link", url: "https://www.youtube.com/@NMGKISAN" }
     ];
 
     function renderStoriesBar() {
       const container = document.getElementById('storiesBarContainer');
       container.innerHTML = '';
-
       dailyStories.forEach((st, index) => {
         container.innerHTML += `
           <div class="story-item" onclick="handleStoryClick(${index})">
             <div class="story-ring">${st.icon}</div>
             <span class="story-name">${st.title}</span>
-          </div>
-        `;
+          </div>`;
       });
     }
 
     function handleStoryClick(index) {
       const st = dailyStories[index];
-      if (st.type === 'link') {
-        window.open(st.url, '_blank');
-        return;
-      }
+      if (st.type === 'link') { window.open(st.url, '_blank'); return; }
       openStoryPlayer(st);
     }
 
@@ -665,30 +789,21 @@
         vidView.style.display = 'block';
         vidView.src = st.url;
         vidView.play();
-
         vidView.ontimeupdate = () => {
-          if (vidView.duration) {
-            const pct = (vidView.currentTime / vidView.duration) * 100;
-            progFill.style.width = pct + '%';
-          }
+          if (vidView.duration) progFill.style.width = ((vidView.currentTime / vidView.duration) * 100) + '%';
         };
-
         vidView.onended = () => { closeStoryPlayer(); };
       } else {
         vidView.pause();
         vidView.style.display = 'none';
         imgView.style.display = 'block';
         imgView.src = st.url;
-
         let cur = 0;
         storyTimer = setInterval(() => {
           cur += 2;
           progFill.style.width = cur + '%';
-          if (cur >= 100) {
-            clearInterval(storyTimer);
-            closeStoryPlayer();
-          }
-        }, 100); // 5 सेकंड तक फ़ोटो दिखेगी
+          if (cur >= 100) { clearInterval(storyTimer); closeStoryPlayer(); }
+        }, 100);
       }
     }
 
@@ -696,10 +811,7 @@
       const modal = document.getElementById('storyPlayerModal');
       const vidView = document.getElementById('storyVideoDisplay');
       clearInterval(storyTimer);
-      if (vidView) {
-        vidView.pause();
-        vidView.src = '';
-      }
+      if (vidView) { vidView.pause(); vidView.src = ''; }
       modal.classList.remove('active');
     }
 
@@ -710,17 +822,12 @@
         langBtn: "🌐 English",
         welcome: "राम-राम, किसान भाई!",
         editProfile: "✏️ प्रोफाइल बदलें",
-        stCrop: "सब्जी किस्में",
-        stSched: "स्प्रे चार्ट",
-        stDoc: "AI डॉक्टर",
-        stComp: "सीड कंपनी",
-        stVid: "ताज़ा वीडियो",
         btnCrops: "सब्जी फसल किस्म",
         btnProt: "फसल सुरक्षा",
         btnSched: "स्प्रे शेड्यूल",
         btnAdv: "सलाहकार",
         btnComp: "All कंपनी बीज",
-        btnOther: "Other",
+        btnOther: "Other (अन्य सेवाएं)",
         txtVidTitle: "🎥 आपके लिए वीडियो (Shorts)",
         txtSeeMore: "और देखें >",
         txtSocialJoin: "हमारे साथ सोशल मीडिया पर जुड़ें",
@@ -741,17 +848,12 @@
         langBtn: "🌐 हिंदी",
         welcome: "Welcome, Farmer Friend!",
         editProfile: "✏️ Edit Profile",
-        stCrop: "Varieties",
-        stSched: "Spray Chart",
-        stDoc: "AI Doctor",
-        stComp: "Companies",
-        stVid: "Videos",
         btnCrops: "Vegetable Varieties",
         btnProt: "Crop Protection",
         btnSched: "Spray Schedule",
         btnAdv: "Advisor",
         btnComp: "All Seed Brands",
-        btnOther: "Other",
+        btnOther: "Other Services",
         txtVidTitle: "🎥 Recommended Videos",
         txtSeeMore: "View All >",
         txtSocialJoin: "Join Us On Social Media",
@@ -800,30 +902,29 @@
       document.getElementById('navHelp').innerText = t.navHelp;
       document.getElementById('homeSearch').placeholder = t.searchPlaceholder;
       document.getElementById('txtEditProfile').innerText = t.editProfile;
-
       updateProfileUI();
     }
 
-    // इनबिल्ट डेटाबेस
+    // इनबिल्ट रिकॉर्ड्स (फोटो सहित)
     const builtinRecords = [
-      { company: "सिंजेंटा (Syngenta)", crop: "टमाटर", variety: "साहो (TO 3251)", segment: "गर्मी/बरसात", features: "ऊंचा तापमान सहने की क्षमता, बहुत सख्त फल, लंबी दूरी के ट्रांसपोर्ट के लिए बेस्ट।", weight: "80-100 ग्राम", maturity: "60-65 दिन", resistance: "TYLCV (मरोड़िया रोग) और झुलसा के प्रति सहनशील" },
-      { company: "सिंजेंटा (Syngenta)", crop: "टमाटर", variety: "हिमसोना", segment: "सर्दी/बरसात", features: "ठंडे और गीले मौसम के लिए, फल बहुत ठोस और गहरे लाल।", weight: "90-110 ग्राम", maturity: "70-75 दिन", resistance: "बैक्टीरियल विल्ट (उकठा) के प्रति मजबूत" },
-      { company: "सेमिनिस (Seminis)", crop: "टमाटर", variety: "अविनाश-2", segment: "सदाबहार", features: "साल भर अधिक पैदावार, आकर्षक गोल फल।", weight: "80-90 ग्राम", maturity: "60-65 दिन", resistance: "लीफ कर्ल वायरस के प्रति उच्च प्रतिरोधी" },
-      { company: "सिंजेंटा (Syngenta)", crop: "मिर्च", variety: "HPH 5531", segment: "तीखी मिर्च", features: "बहुत तीखी, गहरा हरा रंग, मंडियों में सबसे ज्यादा मांग।", weight: "10-12 सेमी", maturity: "60-65 दिन", resistance: "वायरस और चुसक कीटों के प्रति मजबूत" },
-      { company: "सिंजेंटा (Syngenta)", crop: "मिर्च", variety: "HPH 1900", segment: "सूखी लाल मिर्च", features: "पतली और लंबी मिर्च, सूखने पर गहरा लाल रंग और चमक।", weight: "12-14 सेमी", maturity: "65-70 दिन", resistance: "थ्रिप्स और झुलसा प्रतिरोधी" },
-      { company: "एडवांटा (Advanta)", crop: "मिर्च", variety: "AK-47", segment: "तीखी मिर्च", features: "फल बहुत चमकदार, थ्रिप्स (Thrips) के प्रति सहनशील।", weight: "10-12 सेमी", maturity: "60-65 दिन", resistance: "व्हाइटफ्लाई और वायरस सहनशील" },
-      { company: "सिंजेंटा (Syngenta)", crop: "फूलगोभी", variety: "CFL 1522", segment: "मध्यम सर्दी", features: "दूधिया सफेद और पत्थर जैसा ठोस फूल, अधिक वजन।", weight: "1-1.5 किलो", maturity: "60-70 दिन", resistance: "काला सड़न (Black Rot) के प्रति सहनशील" },
-      { company: "सिंजेंटा (Syngenta)", crop: "फूलगोभी", variety: "CFL 6067", segment: "अगेती (Early)", features: "जल्दी तैयार होने वाली, मध्यम तापमान के लिए सही।", weight: "700-900 ग्राम", maturity: "55-60 दिन", resistance: "उमस भरे मौसम के लिए उपयुक्त" },
-      { company: "सेमिनिस (Seminis)", crop: "पत्तागोभी", variety: "BC 79", segment: "साल भर", features: "बहुत ही चमकदार और ठोस गोल फल, लंबे समय तक खेत में रुकने वाला।", weight: "1-1.5 किलो", maturity: "60-65 दिन", resistance: "सड़न और फटने की समस्या नहीं" },
-      { company: "एडवांटा (Advanta)", crop: "भिंडी", variety: "OH 102", segment: "बरसात/गर्मी", features: "गहरा हरा और कोमल फल, तुड़ाई में आसान।", weight: "12-14 सेमी", maturity: "40-45 दिन", resistance: "YVMV वायरस से 100% सुरक्षा" },
-      { company: "ईस्ट वेस्ट (East-West)", crop: "भिंडी", variety: "राधिका (Radhika)", segment: "हाइब्रिड भिंडी", features: "भारत की सबसे प्रसिद्ध भिंडी, गहरा हरा रंग, मंडियों में सबसे ऊँची कीमत।", weight: "12-14 सेमी", maturity: "42-45 दिन", resistance: "YVMV और OLCV वायरस के प्रति 100% सुरक्षित" },
-      { company: "ईस्ट वेस्ट (East-West)", crop: "खीरा", variety: "ग्लोसरी (Glossy)", segment: "देसी खीरा", features: "बिना धारी वाला गहरा हरा और बहुत चमकदार फल।", weight: "18-20 सेमी", maturity: "40-45 दिन", resistance: "डाउनी मिल्ड्यू के प्रति मजबूत" },
-      { company: "नुन्हेम्स (Nunhems)", crop: "खीरा", variety: "मल्टीस्टार", segment: "पॉलीहाउस/नेटहाउस", features: "बिना परागण के हर गांठ पर फल, बहुत अधिक पैदावार।", weight: "19-21 सेमी", maturity: "42-45 दिन", resistance: "पाउडरी मिल्ड्यू प्रतिरोधी" },
-      { company: "सिंजेंटा (Syngenta)", crop: "स्वीट कॉर्न", variety: "Sugar 75", segment: "पीला मक्का", features: "बहुत मीठे और गहरे पीले दाने, दानों का भराव ऊपर तक।", weight: "8.5 इंच भुट्टा", maturity: "78-85 दिन", resistance: "रस्ट और ब्लाइट प्रतिरोधी" },
-      { company: "एडवांटा (Advanta)", crop: "मटर", variety: "GS 10", segment: "सर्दी", features: "मीठे और बड़े दाने, एक फली में 9-11 दाने।", weight: "लंबी फली", maturity: "70-75 दिन", resistance: "पाउडरी मिल्ड्यू प्रतिरोधी" },
-      { company: "महिको (Mahyco)", crop: "बैंगन", variety: "HBH 11", segment: "गोल बैंगनी", features: "गहरे बैंगनी चमकदार फल, कम बीज और बेहतरीन स्वाद।", weight: "250-300 ग्राम", maturity: "55-60 दिन", resistance: "फोमोप्सिस ब्लाइट सहनशील" },
-      { company: "नुन्हेम्स (Nunhems)", crop: "तरबूज", variety: "सुगर बेबी", segment: "काला तरबूज", features: "गहरा काला छिलका, बहुत मीठा और लाल गूदा।", weight: "4-6 किलो", maturity: "75-80 दिन", resistance: "ट्रांसपोर्ट में कम फूटता है" },
-      { company: "सेमिनिस (Seminis)", crop: "कद्दू", variety: "मैजिक (Magic)", segment: "चपटा गोल", features: "गहरे नारंगी रंग का गूदा, अधिक दिनों तक स्टोर किया जा सकता है।", weight: "4-6 किलो", maturity: "85-90 दिन", resistance: "वायरस सहनशील" }
+      { company: "सिंजेंटा (Syngenta)", crop: "टमाटर", variety: "साहो (TO 3251)", segment: "गर्मी/बरसात", features: "ऊंचा तापमान सहने की क्षमता, बहुत सख्त फल, लंबी दूरी के ट्रांसपोर्ट के लिए बेस्ट।", weight: "80-100 ग्राम", maturity: "60-65 दिन", resistance: "TYLCV (मरोड़िया रोग) और झुलसा के प्रति सहनशील", photo: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400" },
+      { company: "सिंजेंटा (Syngenta)", crop: "टमाटर", variety: "हिमसोना", segment: "सर्दी/बरसात", features: "ठंडे और गीले मौसम के लिए, फल बहुत ठोस और गहरे लाल।", weight: "90-110 ग्राम", maturity: "70-75 दिन", resistance: "बैक्टीरियल विल्ट (उकठा) के प्रति मजबूत", photo: "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=400" },
+      { company: "सेमिनिस (Seminis)", crop: "टमाटर", variety: "अविनाश-2", segment: "सदाबहार", features: "साल भर अधिक पैदावार, आकर्षक गोल फल।", weight: "80-90 ग्राम", maturity: "60-65 दिन", resistance: "लीफ कर्ल वायरस के प्रति उच्च प्रतिरोधी", photo: "" },
+      { company: "सिंजेंटा (Syngenta)", crop: "मिर्च", variety: "HPH 5531", segment: "तीखी मिर्च", features: "बहुत तीखी, गहरा हरा रंग, मंडियों में सबसे ज्यादा मांग।", weight: "10-12 सेमी", maturity: "60-65 दिन", resistance: "वायरस और चुसक कीटों के प्रति मजबूत", photo: "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=400" },
+      { company: "सिंजेंटा (Syngenta)", crop: "मिर्च", variety: "HPH 1900", segment: "सूखी लाल मिर्च", features: "पतली और लंबी मिर्च, सूखने पर गहरा लाल रंग और चमक।", weight: "12-14 सेमी", maturity: "65-70 दिन", resistance: "थ्रिप्स और झुलसा प्रतिरोधी", photo: "" },
+      { company: "एडवांटा (Advanta)", crop: "मिर्च", variety: "AK-47", segment: "तीखी मिर्च", features: "फल बहुत चमकदार, थ्रिप्स (Thrips) के प्रति सहनशील।", weight: "10-12 सेमी", maturity: "60-65 दिन", resistance: "व्हाइटफ्लाई और वायरस सहनशील", photo: "" },
+      { company: "सिंजेंटा (Syngenta)", crop: "फूलगोभी", variety: "CFL 1522", segment: "मध्यम सर्दी", features: "दूधिया सफेद और पत्थर जैसा ठोस फूल, अधिक वजन।", weight: "1-1.5 किलो", maturity: "60-70 दिन", resistance: "काला सड़न (Black Rot) के प्रति सहनशील", photo: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=400" },
+      { company: "सिंजेंटा (Syngenta)", crop: "फूलगोभी", variety: "CFL 6067", segment: "अगेती (Early)", features: "जल्दी तैयार होने वाली, मध्यम तापमान के लिए सही।", weight: "700-900 ग्राम", maturity: "55-60 दिन", resistance: "उमस भरे मौसम के लिए उपयुक्त", photo: "" },
+      { company: "सेमिनिस (Seminis)", crop: "पत्तागोभी", variety: "BC 79", segment: "साल भर", features: "बहुत ही चमकदार और ठोस गोल फल, लंबे समय तक खेत में रुकने वाला।", weight: "1-1.5 किलो", maturity: "60-65 दिन", resistance: "सड़न और फटने की समस्या नहीं", photo: "" },
+      { company: "एडवांटा (Advanta)", crop: "भिंडी", variety: "OH 102", segment: "बरसात/गर्मी", features: "गहरा हरा और कोमल फल, तुड़ाई में आसान।", weight: "12-14 सेमी", maturity: "40-45 दिन", resistance: "YVMV वायरस से 100% सुरक्षा", photo: "" },
+      { company: "ईस्ट वेस्ट (East-West)", crop: "भिंडी", variety: "राधिका (Radhika)", segment: "हाइब्रिड भिंडी", features: "भारत की सबसे प्रसिद्ध भिंडी, गहरा हरा रंग, मंडियों में सबसे ऊँची कीमत।", weight: "12-14 सेमी", maturity: "42-45 दिन", resistance: "YVMV और OLCV वायरस के प्रति 100% सुरक्षित", photo: "https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?w=400" },
+      { company: "ईस्ट वेस्ट (East-West)", crop: "खीरा", variety: "ग्लोसरी (Glossy)", segment: "देसी खीरा", features: "बिना धारी वाला गहरा हरा और बहुत चमकदार फल।", weight: "18-20 सेमी", maturity: "40-45 दिन", resistance: "डाउनी मिल्ड्यू के प्रति मजबूत", photo: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=400" },
+      { company: "नुन्हेम्स (Nunhems)", crop: "खीरा", variety: "मल्टीस्टार", segment: "पॉलीहाउस/नेटहाउस", features: "बिना परागण के हर गांठ पर फल, बहुत अधिक पैदावार।", weight: "19-21 सेमी", maturity: "42-45 दिन", resistance: "पाउडरी मिल्ड्यू प्रतिरोधी", photo: "" },
+      { company: "सिंजेंटा (Syngenta)", crop: "स्वीट कॉर्न", variety: "Sugar 75", segment: "पीला मक्का", features: "बहुत मीठे और गहरे पीले दाने, दानों का भराव ऊपर तक।", weight: "8.5 इंच भुट्टा", maturity: "78-85 दिन", resistance: "रस्ट और ब्लाइट प्रतिरोधी", photo: "" },
+      { company: "एडवांटा (Advanta)", crop: "मटर", variety: "GS 10", segment: "सर्दी", features: "मीठे और बड़े दाने, एक फली में 9-11 दाने।", weight: "लंबी फली", maturity: "70-75 दिन", resistance: "पाउडरी मिल्ड्यू प्रतिरोधी", photo: "" },
+      { company: "महिको (Mahyco)", crop: "बैंगन", variety: "HBH 11", segment: "गोल बैंगनी", features: "गहरे बैंगनी चमकदार फल, कम बीज और बेहतरीन स्वाद।", weight: "250-300 ग्राम", maturity: "55-60 दिन", resistance: "फोमोप्सिस ब्लाइट सहनशील", photo: "" },
+      { company: "नुन्हेम्स (Nunhems)", crop: "तरबूज", variety: "सुगर बेबी", segment: "काला तरबूज", features: "गहरा काला छिलका, बहुत मीठा और लाल गूदा।", weight: "4-6 किलो", maturity: "75-80 दिन", resistance: "ट्रांसपोर्ट में कम फूटता है", photo: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400" },
+      { company: "सेमिनिस (Seminis)", crop: "कद्दू", variety: "मैजिक (Magic)", segment: "चपटा गोल", features: "गहरे नारंगी रंग का गूदा, अधिक दिनों तक स्टोर किया जा सकता है।", weight: "4-6 किलो", maturity: "85-90 दिन", resistance: "वायरस सहनशील", photo: "" }
     ];
 
     let sheetRecords = builtinRecords;
@@ -886,13 +987,27 @@
       ]
     };
 
-    function updateDate() {
+    // समय, शहर का नाम और लाइव दिनांक
+    function updateDateAndCity() {
       const now = new Date();
       const days = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
       const months = ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
-      const str = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
+      const str = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+      
       const el = document.getElementById('weatherDateTime');
       if (el) el.innerText = str;
+
+      const detailDateEl = document.getElementById('detailDate');
+      if (detailDateEl) detailDateEl.innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+      // किसान के सेव किए राज्य/जिले से शहर का नाम उठाना
+      const userState = localStorage.getItem('farmer_state');
+      if (userState && userState.trim() !== '') {
+        const placeEl = document.getElementById('weatherPlace');
+        const detailCityEl = document.getElementById('detailCity');
+        if (placeEl) placeEl.innerText = `📍 ${userState}`;
+        if (detailCityEl) detailCityEl.innerText = `📍 ${userState}`;
+      }
     }
 
     function openScreen(screenId, title) {
@@ -923,9 +1038,9 @@
       window.scrollTo(0, 0);
     }
 
-    // 1. सब्जी फसल किस्में
+    // 1. सब्जी फसल किस्म नेविगेशन
     function showAllCropsScreen() {
-      const crops = [...new Set(sheetRecords.map(r => r.crop))];
+      const crops = [...new Set(sheetRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))];
       const container = document.getElementById('cropsContainer');
       container.innerHTML = '';
       const icons = { 'टमाटर': '🍅', 'मिर्च': '🌶️', 'फूलगोभी': '🥦', 'पत्तागोभी': '🥬', 'भिंडी': '🥒', 'खीरा': '🥒', 'स्वीट कॉर्न': '🌽', 'मटर': '🌱', 'बैंगन': '🍆', 'तरबूज': '🍉', 'कद्दू': '🎃' };
@@ -944,24 +1059,34 @@
     }
 
     function filterByCrop(cropName) {
-      const list = sheetRecords.filter(r => r.crop === cropName);
+      const list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase());
+      renderVarietiesList(list, cropName);
+    }
+
+    // कार्ड रेंडर फंक्शन (फ़ोटो लिंक सहित)
+    function renderVarietiesList(list, title) {
       const container = document.getElementById('varietiesContainer');
       container.innerHTML = '';
 
       list.forEach(v => {
+        const photoHtml = (v.photo && v.photo.trim().startsWith('http')) 
+          ? `<img src="${v.photo.trim()}" class="var-photo" alt="${v.variety}" onerror="this.style.display='none'">` 
+          : '';
+
         container.innerHTML += `
           <div class="variety-card">
-            <span class="badge-season">${v.segment || 'हाइब्रिड'}</span>
+            ${photoHtml}
+            <span class="badge-variety">${v.variety}</span>
             <span class="badge-company">${v.company}</span>
             <div class="var-title">${v.variety} (${v.crop})</div>
-            <div class="var-detail"><b>विशेषता:</b> ${v.features}</div>
-            <div class="var-detail"><b>वजन/साइज:</b> ${v.weight}</div>
-            <div class="var-detail"><b>पकने का समय:</b> ${v.maturity}</div>
-            <div class="var-detail"><b>रोग प्रतिरोध:</b> ${v.resistance}</div>
-            <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20${encodeURIComponent(v.variety)}%20(${encodeURIComponent(v.crop)})%20के%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">🛒 बीज ऑर्डर करें</a>
+            <div class="var-detail"><b>विशेषता:</b> ${v.features || 'उत्तम पैदावार'}</div>
+            <div class="var-detail"><b>वजन/साइज:</b> ${v.weight || 'मानक'}</div>
+            <div class="var-detail"><b>पकने का समय:</b> ${v.maturity || 'समय अनुसार'}</div>
+            <div class="var-detail"><b>रोग प्रतिरोध:</b> ${v.resistance || 'मध्यम'}</div>
+            <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20${encodeURIComponent(v.company)}%20की%20${encodeURIComponent(v.variety)}%20(${encodeURIComponent(v.crop)})%20के%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">🛒 बीज ऑर्डर करें</a>
           </div>`;
       });
-      openScreen('screen-seeds', cropName);
+      openScreen('screen-seeds', title);
     }
 
     // 2. स्प्रे शेड्यूल
@@ -1048,16 +1173,19 @@
       openScreen('screen-cure', name);
     }
 
-    // 4. All कंपनी बीज
+    // 4. All कंपनी बीज नेविगेशन
     function showCompaniesList() {
-      const companies = [...new Set(sheetRecords.map(r => r.company))];
+      const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== ''))];
       const container = document.getElementById('companiesContainer');
       container.innerHTML = '';
 
       companies.forEach(comp => {
         container.innerHTML += `
           <div class="list-item" onclick="selectCompany('${comp}')">
-            <div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${comp}</span></div>
+            <div class="list-left">
+              <span class="list-icon">🏢</span>
+              <span class="list-title">${comp}</span>
+            </div>
             <span class="arrow">&gt;</span>
           </div>`;
       });
@@ -1065,42 +1193,76 @@
     }
 
     function selectCompany(compName) {
-      const compRecords = sheetRecords.filter(r => r.company === compName);
-      const cropsInComp = [...new Set(compRecords.map(r => r.crop))];
+      const compRecords = sheetRecords.filter(r => r.company.toLowerCase() === compName.toLowerCase());
+      const cropsInComp = [...new Set(compRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))];
       const container = document.getElementById('companyCropsContainer');
-      document.getElementById('compCropHeading').innerText = compName + ':';
+      document.getElementById('compCropHeading').innerText = `${compName} की फसलें:`;
       container.innerHTML = '';
+
+      const icons = { 'टमाटर': '🍅', 'मिर्च': '🌶️', 'फूलगोभी': '🥦', 'पत्तागोभी': '🥬', 'भिंडी': '🥒', 'खीरा': '🥒', 'स्वीट कॉर्न': '🌽', 'मटर': '🌱', 'बैंगन': '🍆', 'तरबूज': '🍉', 'कद्दू': '🎃' };
 
       cropsInComp.forEach(crop => {
         container.innerHTML += `
-          <div class="list-item" onclick="filterByCrop('${crop}')">
-            <div class="list-left"><span class="list-icon">🌱</span><span class="list-title">${crop}</span></div>
+          <div class="list-item" onclick="filterByCompanyAndCrop('${compName}', '${crop}')">
+            <div class="list-left">
+              <span class="list-icon">${icons[crop] || '🌱'}</span>
+              <span class="list-title">${crop}</span>
+            </div>
             <span class="arrow">&gt;</span>
           </div>`;
       });
       openScreen('screen-company-crops', compName);
     }
 
+    function filterByCompanyAndCrop(compName, cropName) {
+      const list = sheetRecords.filter(r => 
+        r.company.toLowerCase() === compName.toLowerCase() && 
+        r.crop.toLowerCase() === cropName.toLowerCase()
+      );
+      renderVarietiesList(list, `${compName} - ${cropName}`);
+    }
+
+    // ==========================================================
+    // 5. OTHERS (अन्य सेवाएं) नेविगेशन
+    // ==========================================================
+    function showOtherServicesScreen() {
+      openScreen('screen-other-services', 'अन्य सेवाएं (Services)');
+    }
+
+    function showWeatherDetailScreen() {
+      updateDateAndCity();
+      openScreen('screen-weather-detail', 'मौसम पूर्वानुमान व सलाह');
+    }
+
+    function showMandiBhavScreen() {
+      openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव');
+    }
+
+    function showExpertAdviceScreen() {
+      openScreen('screen-expert-advice', 'कृषि एक्सपर्ट सुझाव');
+    }
+
+    function showPestAlertScreen() {
+      openScreen('screen-pest-alert', 'कीट व रोग चेतावनी');
+    }
+
+    function shareAppWithFriends() {
+      const appUrl = window.location.href;
+      const shareMsg = `राम-राम किसान भाइयों! 🌾\nसब्जी खेती, हाइब्रिड बीज किस्में, वैज्ञानिक स्प्रे शेड्यूल, मंडी भाव और फसल रोग पहचान के लिए यह बेहतरीन ऐप देखें:\n${appUrl}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareMsg)}`, '_blank');
+    }
+
     // सर्च
     function executeSearch(val) {
       if (!val || !val.trim()) return;
       const q = val.trim().toLowerCase();
-      const filtered = sheetRecords.filter(r => r.variety.toLowerCase().includes(q) || r.crop.toLowerCase().includes(q));
+      const filtered = sheetRecords.filter(r => 
+        (r.variety && r.variety.toLowerCase().includes(q)) || 
+        (r.crop && r.crop.toLowerCase().includes(q)) ||
+        (r.company && r.company.toLowerCase().includes(q))
+      );
       if (filtered.length > 0) {
-        const container = document.getElementById('varietiesContainer');
-        container.innerHTML = '';
-        filtered.forEach(v => {
-          container.innerHTML += `
-            <div class="variety-card">
-              <span class="badge-season">${v.segment}</span>
-              <span class="badge-company">${v.company}</span>
-              <div class="var-title">${v.variety} (${v.crop})</div>
-              <div class="var-detail"><b>विशेषता:</b> ${v.features}</div>
-              <div class="var-detail"><b>वजन/साइज:</b> ${v.weight}</div>
-              <a href="https://wa.me/916378475002?text=नमस्ते%20मुझे%20${encodeURIComponent(v.variety)}%20के%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">🛒 बीज ऑर्डर करें</a>
-            </div>`;
-        });
-        openScreen('screen-seeds', 'खोज: ' + val);
+        renderVarietiesList(filtered, 'खोज: ' + val);
       }
     }
 
@@ -1176,7 +1338,7 @@
       closeDrawer();
       document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || 'Shailender Kumar';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
-      document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'राजस्थान';
+      document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'जयपुर, राजस्थान';
       document.getElementById('profCropsInput').value = localStorage.getItem('farmer_crops') || 'टमाटर, मिर्च, खीरा';
       openScreen('screen-profile', 'किसान प्रोफाइल');
     }
@@ -1195,6 +1357,7 @@
       localStorage.setItem('farmer_crops', crops);
 
       updateProfileUI();
+      updateDateAndCity();
       alert("✅ प्रोफाइल सुरक्षित हो गई है!");
       goBack();
     }
@@ -1217,7 +1380,7 @@
     function contactAdvisor() { window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20फसल%20सलाह%20चाहिए।', '_blank'); }
     function openNotify() { alert("🔔 सूचना: खेत में 15-20 पीले चिपचिपे ट्रैप जरूर लगाएँ।"); }
 
-    // बैकग्राउंड ऑनलाइन शीट अपडेट
+    // Google Sheets से डेटा लोड करना
     async function loadOnlineSheet() {
       try {
         const res = await fetch(SHEET_URL);
@@ -1226,34 +1389,30 @@
         let newRec = [];
         for (let i = 1; i < rows.length; i++) {
           const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-          if (cols.length >= 2 && cols[0] && cols[0].toLowerCase() !== 'crop') {
-            let comp = "सामान्य";
-            const vName = cols[1] || '';
-            if (vName.includes('साहो') || vName.includes('हिमसोना') || vName.includes('HPH') || vName.includes('CFL')) comp = "सिंजेंटा (Syngenta)";
-            else if (vName.includes('अविनाश') || vName.includes('BC')) comp = "सेमिनिस (Seminis)";
-            else if (vName.includes('राधिका') || vName.includes('ग्लोसरी')) comp = "ईस्ट वेस्ट (East-West)";
-            else if (vName.includes('AK-47') || vName.includes('OH') || vName.includes('GS')) comp = "एडवांटा (Advanta)";
-
+          if (cols.length >= 3 && cols[1] && cols[1].toLowerCase() !== 'crop') {
             newRec.push({
-              company: comp,
-              crop: cols[0],
-              variety: cols[1] || '',
-              segment: cols[2] || 'हाइब्रिड',
-              features: cols[3] || '',
-              weight: cols[4] || '',
-              maturity: cols[5] || '',
-              resistance: cols[6] || ''
+              company: cols[0] || 'अन्य कंपनी',    // Column A: Company
+              crop: cols[1] || '',                 // Column B: Crop
+              variety: cols[2] || '',              // Column C: Variety
+              segment: cols[3] || 'हाइब्रिड',      // Column D: Segment
+              features: cols[4] || '',             // Column E: Key Features
+              weight: cols[5] || '',               // Column F: Fruit Weight
+              maturity: cols[6] || '',             // Column G: Maturity
+              resistance: cols[7] || '',           // Column H: Disease Resistance
+              photo: cols[8] || ''                 // Column I: photo link
             });
           }
         }
         if (newRec.length > 0) sheetRecords = newRec;
-      } catch (e) {}
+      } catch (e) {
+        console.log("Sheet load error", e);
+      }
     }
 
     window.onload = function() {
       renderStoriesBar();
       applyLanguage();
-      updateDate();
+      updateDateAndCity();
       loadOnlineSheet();
     };
   </script>
