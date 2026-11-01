@@ -54,7 +54,7 @@
     .screen { display: none; padding: 14px; max-width: 480px; margin: auto; }
     .screen.active { display: block; }
 
-    /* गोल स्टोरी बार (Google Sheets से संचालित) */
+    /* गोल स्टोरी बार */
     .stories-wrapper { display: flex; gap: 12px; overflow-x: auto; padding: 12px 4px; background: #ffffff; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); -webkit-overflow-scrolling: touch; }
     .stories-wrapper::-webkit-scrollbar { display: none; }
     .story-item { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; text-align: center; }
@@ -88,7 +88,7 @@
     .voice-btn.listening { animation: pulse 1s infinite alternate; background: #fee2e2; }
     @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-    /* 7 मुख्य बटन ग्रिड (प्रोफेशनल लुक) */
+    /* 7 मुख्य बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
     .menu-box { padding: 18px 12px; border-radius: 16px; text-align: center; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
     .menu-box .icon { font-size: 32px; margin-bottom: 6px; }
@@ -298,7 +298,7 @@
     <div class="story-caption-box" id="storyCaptionText"></div>
   </div>
 
-  <!-- SCREEN 1: होम स्क्रीन (प्रोफेशनल लुक) -->
+  <!-- SCREEN 1: होम स्क्रीन -->
   <div id="screen-home" class="screen active">
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -350,7 +350,7 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
     </div>
 
-    <!-- 7 मुख्य बटन ग्रिड (Google Sheets डेटा से जुड़े हुए) -->
+    <!-- 7 मुख्य बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
@@ -494,7 +494,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: एक्सपर्ट सुझाव (Tips टैब से लाइव) -->
+  <!-- SCREEN: एक्सपर्ट सुझाव -->
   <div id="screen-expert-advice" class="screen">
     <div class="variety-card">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">💡 कृषि एक्सपर्ट सुझाव व सलाह</h3>
@@ -502,7 +502,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: कीट अलर्ट (Alerts टैब से लाइव) -->
+  <!-- SCREEN: कीट अलर्ट -->
   <div id="screen-pest-alert" class="screen">
     <div class="variety-card" style="border-left:5px solid #dc2626;">
       <h3 style="color:#dc2626; font-size:16px; margin-bottom:10px;">🚨 कीट व रोग चेतावनी (अलर्ट)</h3>
@@ -533,7 +533,7 @@
     <div id="varietiesContainer"></div>
   </div>
 
-  <!-- SCREEN 4: स्प्रे शेड्यूल - फसलें (Schedule टैब से लाइव) -->
+  <!-- SCREEN 4: स्प्रे शेड्यूल - फसलें -->
   <div id="screen-schedule-crops" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtSelectSchedCrop">स्प्रे शेड्यूल हेतु सब्जी चुनें:</h3>
     <div id="scheduleCropsContainer"></div>
@@ -548,7 +548,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 8A: फसल सुरक्षा - फसल सूची (Protection टैब से लाइव) -->
+  <!-- SCREEN 8A: फसल सुरक्षा - फसल सूची -->
   <div id="screen-protection-crops" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtSelectProtCrop">रोग निदान हेतु फसल चुनें:</h3>
     <div id="protectionCropsContainer"></div>
@@ -597,7 +597,6 @@
     let currentImgElement = null;
     let storyTimer = null;
 
-    // गूगल शीट के सभी टैब से डेटा लोड करने का यूनिवर्सल फंक्शन
     async function loadAllSheetsData() {
       try {
         // 1. Varietes (Sheet1)
@@ -696,7 +695,6 @@
       }
     }
 
-    // CSV पार्सर जो कॉमा और कोट्स को सही से मैनेज करता है
     function parseCSV(text) {
       const rows = text.split(/\r?\n/);
       return rows.map(row => {
@@ -1002,7 +1000,7 @@
       openScreen('screen-seeds', title);
     }
 
-    // 2. फसल सुरक्षा बटन (Protection टैब)
+    // 2. फसल सुरक्षा बटन
     function showProtectionCropsList() {
       const container = document.getElementById('protectionCropsContainer');
       container.innerHTML = '';
@@ -1037,7 +1035,7 @@
       openScreen('screen-crop-diseases', cropName);
     }
 
-    // 3. स्प्रे शेड्यूल बटन (Schedule टैब)
+    // 3. स्प्रे शेड्यूल बटन
     function showScheduleCropsList() {
       const container = document.getElementById('scheduleCropsContainer');
       container.innerHTML = '';
@@ -1119,7 +1117,7 @@
       renderVarietiesList(list, `${compName} - ${cropName}`);
     }
 
-    // 6. दवाइयाँ (Chemicals टैब)
+    // 6. दवाइयाँ (Chemicals)
     function showChemicalsScreen() {
       const container = document.getElementById('chemicalsContainer');
       container.innerHTML = '';
@@ -1289,7 +1287,7 @@
 
     function updateProfileUI() {
       const name = localStorage.getItem('farmer_name') || 'Shailender Kumar';
-      const phone = localStorage.getItem('farmer_phone'] || '';
+      const phone = localStorage.getItem('farmer_phone') || '';
       let score = 30;
       if (phone) score += 40;
       if (localStorage.getItem('farmer_crops')) score += 30;
