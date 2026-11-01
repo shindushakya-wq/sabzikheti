@@ -54,7 +54,7 @@
     .screen { display: none; padding: 14px; max-width: 480px; margin: auto; }
     .screen.active { display: block; }
 
-    /* गोल स्टोरी बार */
+    /* गोल स्टोरी बार (बिल्कुल 7 स्टोरीज) */
     .stories-wrapper { display: flex; gap: 12px; overflow-x: auto; padding: 12px 4px; background: #ffffff; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); -webkit-overflow-scrolling: touch; }
     .stories-wrapper::-webkit-scrollbar { display: none; }
     .story-item { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; text-align: center; }
@@ -230,7 +230,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      सब्जी खेती बाड़ी की बातें • v3.2
+      सब्जी खेती बाड़ी की बातें • v3.3
     </div>
   </div>
 
@@ -310,18 +310,18 @@
       </span>
     </div>
 
-    <!-- गोल स्टोरी बार (Google Sheets के Stories टैब से लाइव) -->
+    <!-- गोल स्टोरी बार (ठीक 7 स्टोरीज) -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- लाइव मौसम कार्ड -->
+    <!-- लाइव मौसम कार्ड (किसान की लोकेशन / GPS या प्रोफाइल शहर के आधार पर) -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
-        <h4 id="weatherPlace">📍 श्रीगंगानगर, राजस्थान</h4>
-        <span class="weather-datetime" id="weatherDateTime">लोड हो रहा है...</span>
+        <h4 id="weatherPlace">📍 मौसम लोड हो रहा है...</h4>
+        <span class="weather-datetime" id="weatherDateTime">--:-- --</span>
       </div>
       <div class="weather-body-row">
         <div>
-          <p style="font-size:13px; font-weight:600;" id="weatherDesc">मौसम लोड हो रहा है...</p>
+          <p style="font-size:13px; font-weight:600;" id="weatherDesc">कृपया प्रतीक्षा करें...</p>
           <p style="font-size:11px; font-weight:bold; margin-top:3px;" id="weatherAdvice">स्प्रे व निराई-गुड़ाई हेतु उत्तम समय</p>
         </div>
         <div style="text-align:right;">
@@ -331,9 +331,9 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
+    <!-- सर्च बार (लिखकर या बोलकर सर्च करने की सुविधा) -->
     <div class="search-wrapper">
-      <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, तरबूज या बीज लिखें..." onkeyup="executeSearch(this.value)">
+      <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या बीज लिखें..." onkeyup="executeSearch(this.value)">
       <div class="search-actions">
         <button class="search-icon-btn" onclick="executeSearch(document.getElementById('homeSearch').value)">🔍</button>
         <button class="voice-btn" id="voiceSearchBtn" onclick="startVoiceSearch()" title="बोलकर सर्च करें">🎙️</button>
@@ -453,8 +453,8 @@
   <div id="screen-weather-detail" class="screen">
     <div class="variety-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 style="color:#1b5e20; font-size:17px;" id="detailCity">📍 श्रीगंगानगर, राजस्थान</h3>
-        <span style="font-size:12px; color:#166534; font-weight:bold;" id="detailDate">बुधवार, 28 अक्टूबर 2026</span>
+        <h3 style="color:#1b5e20; font-size:17px;" id="detailCity">📍 स्थान लोड हो रहा है...</h3>
+        <span style="font-size:12px; color:#166534; font-weight:bold;" id="detailDate">--:-- --</span>
       </div>
       <div style="text-align:center; padding:15px 0;">
         <span style="font-size:45px;" id="detailWeatherIcon">☀️</span>
@@ -516,7 +516,7 @@
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
       <div class="form-group"><label>आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailender Kumar"></div>
       <div class="form-group"><label>मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
-      <div class="form-group"><label>गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. श्रीगंगानगर, राजस्थान"></div>
+      <div class="form-group"><label>गाँव / ज़िला / राज्य (शहर का नाम):</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar या Jaipur"></div>
       <div class="form-group"><label>मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
       <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()">💾 प्रोफाइल सुरक्षित करें</button>
     </div>
@@ -596,10 +596,10 @@
 
     let currentImgElement = null;
     let storyTimer = null;
+    let userCurrentCity = localStorage.getItem('farmer_state') || '';
 
     async function loadAllSheetsData() {
       try {
-        // 1. Varietes (Sheet1)
         const res1 = await fetch(BASE_SHEET_URL + 'Sheet1');
         const text1 = await res1.text();
         sheetRecords = parseCSV(text1).map(cols => ({
@@ -614,7 +614,6 @@
           photo: cols[8] || ''
         })).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)');
 
-        // 2. Schedule
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
         const schedRows = parseCSV(text2);
@@ -623,15 +622,10 @@
           const crop = cols[0];
           if(crop && crop !== 'Column A (Crop)') {
             if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
-            scheduleRecords[crop].push({
-              time: cols[1] || '',
-              med: cols[2] || '',
-              purpose: cols[3] || ''
-            });
+            scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
           }
         });
 
-        // 3. Protection
         const res3 = await fetch(BASE_SHEET_URL + 'Protection');
         const text3 = await res3.text();
         const protRows = parseCSV(text3);
@@ -640,53 +634,32 @@
           const crop = cols[0];
           if(crop && crop !== 'A (Crop)') {
             if(!protectionRecords[crop]) protectionRecords[crop] = [];
-            protectionRecords[crop].push({
-              name: cols[1] || '',
-              symptoms: cols[2] || '',
-              cure: cols[3] || '',
-              icon: cols[4] || '🛡️'
-            });
+            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', icon: cols[4] || '🛡️' });
           }
         });
 
-        // 4. Chemicals
         const res4 = await fetch(BASE_SHEET_URL + 'Chemicals');
         const text4 = await res4.text();
         chemicalsRecords = parseCSV(text4).map(cols => ({
-          name: cols[0] || '',
-          type: cols[1] || '',
-          tech: cols[2] || '',
-          use: cols[3] || '',
-          dose: cols[4] || ''
+          name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || ''
         })).filter(r => r.name && r.name !== 'A (दवा का नाम)');
 
-        // 5. Alerts
         const res5 = await fetch(BASE_SHEET_URL + 'Alerts');
         const text5 = await res5.text();
         alertsRecords = parseCSV(text5).map(cols => ({
-          title: cols[0] || '',
-          desc: cols[1] || '',
-          type: cols[2] || 'alert'
+          title: cols[0] || '', desc: cols[1] || '', type: cols[2] || 'alert'
         })).filter(r => r.title && r.title !== 'A (title / शीर्षक)');
 
-        // 6. Tips
         const res6 = await fetch(BASE_SHEET_URL + 'Tips');
         const text6 = await res6.text();
         tipsRecords = parseCSV(text6).map(cols => ({
-          title: cols[0] || '',
-          desc: cols[1] || '',
-          source: cols[2] || ''
+          title: cols[0] || '', desc: cols[1] || '', source: cols[2] || ''
         })).filter(r => r.title && r.title !== 'A (Title)');
 
-        // 7. Stories
         const res7 = await fetch(BASE_SHEET_URL + 'Stories');
         const text7 = await res7.text();
         dailyStories = parseCSV(text7).map(cols => ({
-          title: cols[0] || 'स्टोरी',
-          type: cols[1] || 'photo',
-          url: cols[2] || '',
-          icon: cols[3] || '🌱',
-          desc: cols[4] || ''
+          title: cols[0] || 'स्टोरी', type: cols[1] || 'photo', url: cols[2] || '', icon: cols[3] || '🌱', desc: cols[4] || ''
         })).filter(r => r.title && r.title !== 'Title');
 
         renderStoriesBar();
@@ -717,15 +690,20 @@
       }).filter(r => r.length > 0);
     }
 
+    // ठीक 7 स्टोरीज दिखाने के लिए सुनिश्चित करना
     function renderStoriesBar() {
       const container = document.getElementById('storiesBarContainer');
       if(!container) return;
       container.innerHTML = '';
-      if(dailyStories.length === 0) {
-        container.innerHTML = `<div style="font-size:12px; color:#6b7280; padding:10px;">स्टोरीज लोड हो रही हैं...</div>`;
-        return;
+      
+      // यदि शीट में स्टोरीज कम या ज्यादा हैं, तो सटीक 7 मैनेज करना
+      let storiesToRender = dailyStories.slice(0, 7);
+      while(storiesToRender.length < 7) {
+        let defaultIndex = storiesToRender.length + 1;
+        storiesToRender.push({ title: `स्टोरी ${defaultIndex}`, type: 'photo', url: 'https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400', icon: '🌱', desc: 'कृषि संबंधी उपयोगी जानकारी।' });
       }
-      dailyStories.forEach((st, index) => {
+
+      storiesToRender.forEach((st, index) => {
         let thumbContent = st.icon || '🌱';
         if (st.url && (st.url.endsWith('.jpg') || st.url.endsWith('.png') || st.url.includes('http'))) {
           thumbContent = `<img src="${st.url}" alt="Story">`;
@@ -736,10 +714,11 @@
             <span class="story-name">${st.title}</span>
           </div>`;
       });
+      window.activeStories = storiesToRender;
     }
 
     function handleStoryClick(index) {
-      const st = dailyStories[index];
+      const st = window.activeStories[index];
       if (st.type === 'link') { window.open(st.url, '_blank'); return; }
       openStoryPlayer(st);
     }
@@ -790,110 +769,69 @@
       modal.classList.remove('active');
     }
 
-    const i18n = {
-      hi: {
-        title: "सब्जी खेती बाड़ी की बातें",
-        langBtn: "🌐 English",
-        welcome: "राम-राम, किसान भाई!",
-        editProfile: "✏️ प्रोफाइल बदलें",
-        btnCrops: "सब्जी फसल किस्म",
-        btnProt: "फसल सुरक्षा",
-        btnSched: "स्प्रे शेड्यूल",
-        btnAdv: "सलाहकार",
-        btnComp: "All कंपनी बीज",
-        btnOther: "Other (अन्य सेवाएं)",
-        txtFab: "तुरंत समाधान",
-        txtModalTitle: "⚡ तुरंत समाधान (AI रोग जांच)",
-        txtCamBtn: "कैमरा से फोटो लें",
-        txtGalBtn: "गैलरी से चुनें",
-        btnDiagnose: "🔍 रोग पहचानें व उपचार पाएं",
-        navHome: "होम",
-        navCrops: "फसलें",
-        navSched: "शेड्यूल",
-        navProt: "सुरक्षा",
-        navHelp: "हेल्पलाइन",
-        searchPlaceholder: "🔍 खीरा, तरबूज या बीज लिखें..."
-      },
-      en: {
-        title: "Sabzi Kheti Badi Ki Batein",
-        langBtn: "🌐 हिंदी",
-        welcome: "Welcome, Farmer Friend!",
-        editProfile: "✏️ Edit Profile",
-        btnCrops: "Vegetable Varieties",
-        btnProt: "Crop Protection",
-        btnSched: "Spray Schedule",
-        btnAdv: "Advisor",
-        btnComp: "All Seed Brands",
-        btnOther: "Other Services",
-        txtFab: "Instant Cure",
-        txtModalTitle: "⚡ Instant Cure (AI Diagnosis)",
-        txtCamBtn: "Camera Photo",
-        txtGalBtn: "Select From Gallery",
-        btnDiagnose: "🔍 Analyze & Get Medicine",
-        navHome: "Home",
-        navCrops: "Crops",
-        navSched: "Schedule",
-        navProt: "Protection",
-        navHelp: "Helpline",
-        searchPlaceholder: "🔍 Search Cucumber, Tomato, Seeds..."
-      }
-    };
-
-    function toggleLanguage() {
-      currentLang = currentLang === 'hi' ? 'en' : 'hi';
-      localStorage.setItem('app_lang', currentLang);
-      applyLanguage();
-    }
-
-    function applyLanguage() {
-      const t = i18n[currentLang];
-      document.getElementById('headerTitle').innerText = t.title;
-      document.getElementById('langBtn').innerText = t.langBtn;
-      document.getElementById('btnCrops').innerText = t.btnCrops;
-      document.getElementById('btnProt').innerText = t.btnProt;
-      document.getElementById('btnSched').innerText = t.btnSched;
-      document.getElementById('btnAdv').innerText = t.btnAdv;
-      document.getElementById('btnComp').innerText = t.btnComp;
-      document.getElementById('btnOther').innerText = t.btnOther;
-      document.getElementById('txtFab').innerText = t.txtFab;
-      document.getElementById('txtModalTitle').innerText = t.txtModalTitle;
-      document.getElementById('txtCamBtn').innerText = t.txtCamBtn;
-      document.getElementById('txtGalBtn').innerText = t.txtGalBtn;
-      document.getElementById('btnDiagnose').innerText = t.btnDiagnose;
-      document.getElementById('navHome').innerText = t.navHome;
-      document.getElementById('navCrops').innerText = t.navCrops;
-      document.getElementById('navSched').innerText = t.navSched;
-      document.getElementById('navProt').innerText = t.navProt;
-      document.getElementById('navHelp').innerText = t.navHelp;
-      document.getElementById('homeSearch').placeholder = t.searchPlaceholder;
-      document.getElementById('txtEditProfile').innerText = t.editProfile;
-      updateProfileUI();
-    }
-
+    // 12-घंटे (AM/PM) समय और लाइव मौसम प्राप्त करने का फंक्शन
     async function fetchLiveWeather() {
-      const userCity = localStorage.getItem('farmer_state') || 'श्रीगंगानगर';
       const apiKey = 'b6907d289e10d714a6e88b30761fae22'; 
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(userCity)}&units=metric&appid=${apiKey}&lang=hi`;
+      
+      function fetchWeatherForCity(cityName) {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)}&units=metric&appid=${apiKey}&lang=hi`;
+        updateDateTimeAndWeather(url, cityName);
+      }
 
+      if (!userCurrentCity) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            try {
+              const geoRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}&lang=hi`);
+              const geoData = await geoRes.json();
+              if (geoData.name) {
+                userCurrentCity = geoData.name;
+                localStorage.setItem('farmer_state', userCurrentCity);
+                updateDateTimeAndWeather(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}&lang=hi`, userCurrentCity);
+                return;
+              }
+            } catch(e) { console.log(e); }
+            fetchWeatherForCity('Sri Ganganagar');
+          }, () => {
+            fetchWeatherForCity('Sri Ganganagar');
+          });
+        } else {
+          fetchWeatherForCity('Sri Ganganagar');
+        }
+      } else {
+        fetchWeatherForCity(userCurrentCity);
+      }
+    }
+
+    async function updateDateTimeAndWeather(apiUrl, cityName) {
       const now = new Date();
-      const hours = now.getHours();
-      const isNight = hours < 6 || hours >= 19;
+      const hours24 = now.getHours();
+      const isNight = hours24 < 6 || hours >= 19;
+      
+      // 12-घंटे (AM/PM) फॉर्मेट
+      let hours12 = hours24 % 12;
+      hours12 = hours12 ? hours12 : 12;
+      const ampm = hours24 >= 12 ? 'PM' : 'AM';
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeStr12 = `${hours12}:${minutes} ${ampm}`;
+
       const days = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
       const months = ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      document.getElementById('weatherDateTime').innerText = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} | ${timeStr}`;
-      document.getElementById('detailDate').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} (${timeStr})`;
-      document.getElementById('weatherPlace').innerText = `📍 ${userCity}`;
-      document.getElementById('detailCity').innerText = `📍 ${userCity}`;
+      
+      const fullDateStr = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} | ${timeStr12}`;
+      document.getElementById('weatherDateTime').innerText = fullDateStr;
+      document.getElementById('detailDate').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} (${timeStr12})`;
 
       const cardMain = document.getElementById('weatherCardMain');
       if (isNight) cardMain.classList.add('night-mode'); else cardMain.classList.remove('night-mode');
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(apiUrl);
         const data = await response.json();
         if (data.cod === 200) {
+          const actualCityName = data.name || cityName;
           const temp = Math.round(data.main.temp);
           const desc = data.weather[0].description;
           const wind = (data.wind.speed * 3.6).toFixed(1);
@@ -902,6 +840,8 @@
           if (desc.includes('बादल')) icon = isNight ? '☁️' : '⛅';
           if (desc.includes('वर्षा')) icon = '🌧️';
 
+          document.getElementById('weatherPlace').innerText = `📍 ${actualCityName}`;
+          document.getElementById('detailCity').innerText = `📍 ${actualCityName}`;
           document.getElementById('weatherTemp').innerText = `${temp}°C`;
           document.getElementById('weatherDesc').innerText = `${desc}`;
           document.getElementById('weatherIcon').innerText = icon;
@@ -912,6 +852,8 @@
           document.getElementById('detailHumidity').innerText = `${humidity}%`;
         }
       } catch (err) {
+        document.getElementById('weatherPlace').innerText = `📍 ${cityName}`;
+        document.getElementById('detailCity').innerText = `📍 ${cityName}`;
         document.getElementById('weatherTemp').innerText = '26°C';
         document.getElementById('weatherDesc').innerText = 'साफ़ आसमान';
       }
@@ -940,12 +882,11 @@
       document.getElementById(prevScreen).classList.add('active');
       if (prevScreen === 'screen-home') {
         document.getElementById('headerBack').style.display = 'none';
-        document.getElementById('headerTitle').innerText = i18n[currentLang].title;
+        document.getElementById('headerTitle').innerText = "सब्जी खेती बाड़ी की बातें";
       }
       window.scrollTo(0, 0);
     }
 
-    // 1. सब्जी फसल किस्में बटन
     function showAllCropsScreen() {
       const crops = [...new Set(sheetRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))];
       const container = document.getElementById('cropsContainer');
@@ -962,7 +903,7 @@
             <span class="arrow">&gt;</span>
           </div>`;
       });
-      openScreen('screen-crops', i18n[currentLang].btnCrops);
+      openScreen('screen-crops', "सब्जी फसल किस्म");
     }
 
     function filterByCrop(cropName) {
@@ -1000,7 +941,6 @@
       openScreen('screen-seeds', title);
     }
 
-    // 2. फसल सुरक्षा बटन
     function showProtectionCropsList() {
       const container = document.getElementById('protectionCropsContainer');
       container.innerHTML = '';
@@ -1015,7 +955,7 @@
             <span class="arrow">&gt;</span>
           </div>`;
       });
-      openScreen('screen-protection-crops', i18n[currentLang].btnProt);
+      openScreen('screen-protection-crops', "फसल सुरक्षा");
     }
 
     function showCropDiseasesList(cropName) {
@@ -1035,7 +975,6 @@
       openScreen('screen-crop-diseases', cropName);
     }
 
-    // 3. स्प्रे शेड्यूल बटन
     function showScheduleCropsList() {
       const container = document.getElementById('scheduleCropsContainer');
       container.innerHTML = '';
@@ -1050,7 +989,7 @@
             <span class="arrow">&gt;</span>
           </div>`;
       });
-      openScreen('screen-schedule-crops', i18n[currentLang].btnSched);
+      openScreen('screen-schedule-crops', "स्प्रे शेड्यूल");
     }
 
     function openCropScheduleDetail(cropName) {
@@ -1069,12 +1008,10 @@
       openScreen('screen-crop-schedule', cropName);
     }
 
-    // 4. सलाहकार बटन
     function contactAdvisor() {
       window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20सब्जी%20खेती%20बारे%20में%20सलाह%20चाहिए।', '_blank');
     }
 
-    // 5. All कंपनी बीज बटन
     function showCompaniesList() {
       const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== ''))];
       const container = document.getElementById('companiesContainer');
@@ -1089,7 +1026,7 @@
             <span class="arrow">&gt;</span>
           </div>`;
       });
-      openScreen('screen-companies', i18n[currentLang].btnComp);
+      openScreen('screen-companies', "All कंपनी बीज");
     }
 
     function selectCompany(compName) {
@@ -1117,7 +1054,6 @@
       renderVarietiesList(list, `${compName} - ${cropName}`);
     }
 
-    // 6. दवाइयाँ (Chemicals)
     function showChemicalsScreen() {
       const container = document.getElementById('chemicalsContainer');
       container.innerHTML = '';
@@ -1137,7 +1073,6 @@
       openScreen('screen-chemicals', 'कृषि दवाइयाँ (Chemicals)');
     }
 
-    // 7. अन्य सेवाएं बटन
     function showOtherServicesScreen() { openScreen('screen-other-services', 'अन्य सेवाएं'); }
     function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', 'मौसम पूर्वानुमान'); }
     function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); }
@@ -1200,7 +1135,7 @@
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) { alert("ब्राउज़र में वॉइस सर्च सपोर्ट नहीं करता।"); return; }
       const recognition = new SpeechRecognition();
-      recognition.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
+      recognition.lang = 'hi-IN';
       const voiceBtn = document.getElementById('voiceSearchBtn');
       const searchInput = document.getElementById('homeSearch');
       voiceBtn.classList.add('listening');
@@ -1213,7 +1148,7 @@
       };
       recognition.onerror = recognition.onend = function() {
         voiceBtn.classList.remove('listening');
-        searchInput.placeholder = i18n[currentLang].searchPlaceholder;
+        searchInput.placeholder = "🔍 खीरा, टमाटर या बीज लिखें...";
       };
       recognition.start();
     }
@@ -1262,7 +1197,7 @@
       closeDrawer();
       document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || 'Shailender Kumar';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
-      document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'श्रीगंगानगर, राजस्थान';
+      document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || '';
       document.getElementById('profCropsInput').value = localStorage.getItem('farmer_crops') || 'टमाटर, मिर्च, खीरा';
       openScreen('screen-profile', 'किसान प्रोफाइल');
     }
@@ -1279,9 +1214,10 @@
       localStorage.setItem('farmer_state', state);
       localStorage.setItem('farmer_crops', crops);
 
+      userCurrentCity = state;
       updateProfileUI();
       fetchLiveWeather();
-      alert("✅ प्रोफाइल सुरक्षित हो गई है!");
+      alert("✅ प्रोफाइल और स्थान सुरक्षित हो गया है!");
       goBack();
     }
 
@@ -1302,7 +1238,7 @@
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
 
     window.onload = function() {
-      applyLanguage();
+      updateProfileUI();
       fetchLiveWeather();
       loadAllSheetsData();
     };
