@@ -157,6 +157,16 @@
     .schedule-step b { color: #15803d; font-size: 14px; display: block; margin-bottom: 6px; }
     .schedule-step p { font-size: 13.5px; color: #374151; margin-bottom: 6px; line-height: 1.45; }
 
+    /* फोटो के अनुसार सुंदर कलर-कोडेड दवा कार्ड (टेक्निकल, नियंत्रण, डोज़ अलग रंग) */
+    .chem-card { background: white; border-radius: 14px; padding: 16px; margin-bottom: 14px; border: 1px solid #e2e8f0; box-shadow: 0 3px 8px rgba(0,0,0,0.04); }
+    .chem-title { font-size: 17px; font-weight: bold; color: #1b5e20; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e8f5e9; padding-bottom: 8px; }
+    .chem-label-tech { font-size: 13px; font-weight: bold; color: #1d4ed8; margin-top: 6px; display: block; } /* नीला रंग टेक्निकल के लिए */
+    .chem-val-tech { font-size: 14px; color: #1e3a8a; font-weight: 600; margin-bottom: 6px; }
+    .chem-label-work { font-size: 13px; font-weight: bold; color: #166534; margin-top: 6px; display: block; } /* हरा रंग नियंत्रण/काम के लिए */
+    .chem-val-work { font-size: 14px; color: #14532d; margin-bottom: 6px; }
+    .chem-label-dose { font-size: 13px; font-weight: bold; color: #c2410c; margin-top: 6px; display: block; } /* केसरिया/नारंगी रंग 15L पंप डोज़ के लिए */
+    .chem-val-dose { font-size: 14px; font-weight: bold; color: #9a3412; background: #fff7ed; padding: 6px 10px; border-radius: 6px; border: 1px solid #ffedd5; display: inline-block; margin-top: 2px; }
+
     .btn-action { display: block; width: 100%; padding: 11px; border-radius: 8px; text-align: center; text-decoration: none; font-size: 14px; font-weight: bold; border: none; cursor: pointer; }
     .btn-wa { background: #25d366; color: white; }
 
@@ -199,7 +209,7 @@
     </div>
   </div>
 
-  <!-- साइड मेन्यू ड्रॉअर (सुरक्षा व कानूनी अधिकार सहित) -->
+  <!-- साइड मेन्यू ड्रॉअर -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
   <div class="drawer-content" id="drawerContent">
     <div class="drawer-header">
@@ -232,7 +242,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      सब्जी खेती बाड़ी की बातें • v3.6 (सुरक्षित संस्करण)
+      सब्जी खेती बाड़ी की बातें • v3.8 (सुरक्षित संस्करण)
     </div>
   </div>
 
@@ -312,7 +322,7 @@
       </span>
     </div>
 
-    <!-- गोल स्टोरी बार (बिल्कुल 7 स्टोरीज) -->
+    <!-- गोल स्टोरी बार (ठीक 7 स्टोरीज) -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
     <!-- लाइव मौसम कार्ड -->
@@ -333,7 +343,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार (खीरा, टमाटर पूरा लिखने पर और बोलकर सर्च करने की सुविधा) -->
+    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या बीज पूरा लिखें..." onkeyup="executeSearch(this.value)">
       <div class="search-actions">
@@ -352,7 +362,7 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
     </div>
 
-    <!-- 7 मुख्य बटन ग्रिड (फोटो के बिल्कुल समान) -->
+    <!-- 7 मुख्य बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
@@ -409,7 +419,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: दवाइयाँ श्रेणियां (Categories) -->
+  <!-- SCREEN: दवाइयाँ श्रेणियां -->
   <div id="screen-chemicals" class="screen">
     <div class="variety-card" style="border-left:5px solid #be185d;">
       <h3 style="color:#be185d; font-size:16px; margin-bottom:6px;">🧪 कृषि दवाइयाँ व टॉनिक</h3>
@@ -434,7 +444,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: चयनित श्रेणी की दवाइयां सूची -->
+  <!-- SCREEN: चयनित श्रेणी की दवाइयां सूची (रंग-बिरंगे लेआउट के साथ) -->
   <div id="screen-chemical-list" class="screen">
     <h3 style="font-size:16px; margin-bottom:12px; color:#be185d;" id="chemicalListTitle">दवाइयों की सूची:</h3>
     <div id="chemicalListContainer"></div>
@@ -571,7 +581,7 @@
     <div id="cropsContainer"></div>
   </div>
 
-  <!-- SCREEN 3: किस्में सूची -->
+  <!-- SCREEN 3: किस्में सूची (इमोजी सहित) -->
   <div id="screen-seeds" class="screen">
     <div id="varietiesContainer"></div>
   </div>
@@ -597,7 +607,7 @@
     <div id="protectionCropsContainer"></div>
   </div>
 
-  <!-- SCREEN 8B: फसल के रोग -->
+  <!-- SCREEN 8B: फसल के रोग (इमोजी सहित) -->
   <div id="screen-crop-diseases" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="cropDiseaseHeading">फसल के रोग व कीट:</h3>
     <div id="cropDiseasesContainer"></div>
@@ -641,7 +651,7 @@
     let storyTimer = null;
     let userCurrentCity = localStorage.getItem('farmer_state') || '';
 
-    // फसल और रोग के अनुसार सटीक इमोजी मैपिंग
+    // फसल और सब्जी के अनुसार सटीक इमोजी मैपिंग
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
@@ -673,7 +683,7 @@
           maturity: cols[6] || '',
           resistance: cols[7] || '',
           photo: cols[8] || ''
-        })).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)');
+        })).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)' && r.crop.toLowerCase() !== 'crop');
 
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
@@ -681,7 +691,7 @@
         scheduleRecords = {};
         schedRows.forEach(cols => {
           const crop = cols[0];
-          if(crop && crop !== 'Column A (Crop)') {
+          if(crop && crop !== 'Column A (Crop)' && crop !== 'A (Crop)') {
             if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
             scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
           }
@@ -703,7 +713,7 @@
         const text4 = await res4.text();
         chemicalsRecords = parseCSV(text4).map(cols => ({
           name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || ''
-        })).filter(r => r.name && r.name !== 'A (दवा का नाम)');
+        })).filter(r => r.name && r.name !== 'A (दवा का नाम)' && r.name !== 'दवा का नाम');
 
         const res5 = await fetch(BASE_SHEET_URL + 'Alerts');
         const text5 = await res5.text();
@@ -751,7 +761,7 @@
       }).filter(r => r.length > 0);
     }
 
-    // बिल्कुल ठीक 7 स्टोरीज दिखाना
+    // ठीक 7 स्टोरीज दिखाना
     function renderStoriesBar() {
       const container = document.getElementById('storiesBarContainer');
       if(!container) return;
@@ -946,7 +956,6 @@
       window.scrollTo(0, 0);
     }
 
-    // सब्जी फसल सूची (हर फसल के साथ उसकी सटीक इमोजी)
     function showAllCropsScreen() {
       const crops = [...new Set(sheetRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))];
       const container = document.getElementById('cropsContainer');
@@ -999,7 +1008,7 @@
             <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20${encodeURIComponent(v.company)}%20की%20${encodeURIComponent(v.variety)}%20(${encodeURIComponent(v.crop)})%20के%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">🛒 बीज ऑर्डर करें</a>
           </div>`;
       });
-      openScreen('screen-seeds', `${emoji || ''} ${title}`);
+      openScreen('screen-seeds', `${getCropEmoji(title)} ${title}`);
     }
 
     function showProtectionCropsList() {
@@ -1038,7 +1047,6 @@
       openScreen('screen-crop-diseases', `${emoji} ${cropName}`);
     }
 
-    // स्प्रे शेड्यूल फसल सूची (इमोजी सहित)
     function showScheduleCropsList() {
       const container = document.getElementById('scheduleCropsContainer');
       container.innerHTML = '';
@@ -1125,7 +1133,6 @@
       openScreen('screen-chemicals', 'दवाइयाँ Chemicals');
     }
 
-    // फंगस साइड, कीटनाशक, खरपतवार या टॉनिक पर क्लिक करने पर केवल उसी की लिस्ट आना
     function filterChemicalsByCategory(catType) {
       const container = document.getElementById('chemicalListContainer');
       document.getElementById('chemicalListTitle').innerText = `🧪 ${catType} की सूची:`;
@@ -1146,11 +1153,17 @@
       } else {
         filtered.forEach(c => {
           container.innerHTML += `
-            <div class="schedule-step" style="border-left:4px solid #be185d;">
-              <b style="color:#be185d; font-size:15px;">🧪 ${c.name} (${c.type})</b>
-              <p style="margin-top:4px;"><b>टेक्निकल:</b> ${c.tech}</p>
-              <p><b>नियंत्रण / काम:</b> ${c.use}</p>
-              <p style="color:#15803d;"><b>15L पंप डोज:</b> ${c.dose}</p>
+            <div class="chem-card">
+              <div class="chem-title">🧪 ${c.name} <span style="font-size:12px; font-weight:normal; background:#f1f5f9; padding:2px 6px; border-radius:4px; color:#475569;">(${c.type})</span></div>
+              
+              <span class="chem-label-tech">टेक्निकल:</span>
+              <div class="chem-val-tech">${c.tech}</div>
+              
+              <span class="chem-label-work">नियंत्रण / काम:</span>
+              <div class="chem-val-work">${c.use}</div>
+              
+              <span class="chem-label-dose">15L पंप डोज़:</span>
+              <div><span class="chem-val-dose">💧 ${c.dose}</span></div>
             </div>`;
         });
       }
@@ -1205,7 +1218,6 @@
       }
     }
 
-    // सर्च बार में लिखकर सर्च करना (खीरा, टमाटर पूरा लिखने पर काम करेगा)
     function executeSearch(val) {
       if (!val || !val.trim()) return;
       const q = val.trim().toLowerCase();
@@ -1217,7 +1229,6 @@
       renderVarietiesList(filtered, 'खोज परिणाम: ' + val);
     }
 
-    // बोलकर सर्च करने की सुविधा (Voice Search)
     function startVoiceSearch() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) { alert("आपका ब्राउज़र वॉइस सर्च सपोर्ट नहीं करता।"); return; }
