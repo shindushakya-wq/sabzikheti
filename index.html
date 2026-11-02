@@ -278,16 +278,14 @@
     </div>
   </div>
 
-  <!-- टॉप हेडर (भाषा बदलने के बटन के साथ) -->
+  <!-- टॉप हेडर -->
   <div class="app-header">
     <div style="display:flex; align-items:center;">
       <span class="back-btn" id="headerBack" onclick="goBack()">←</span>
       <span class="header-title" id="headerTitle">सब्जी खेती बाड़ी की बातें</span>
     </div>
     <div class="header-actions">
-      <!-- भाषा टॉगल बटन -->
       <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 English</button>
-      
       <div class="bell-wrapper" onclick="openNotificationModal()" title="नोटिफिकेशन">
         <span class="bell-icon">🔔</span>
         <span class="notification-badge" id="notifBadge">1</span>
@@ -346,7 +344,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      सब्जी खेती बाड़ी की बातें • v4.5 (रात का मौसम व नियम जोड़े गए)
+      सब्जी खेती बाड़ी की बातें • v4.5
     </div>
   </div>
 
@@ -520,11 +518,12 @@
         <p>1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> (Sabzi kheti) केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है[span_0](start_span)[span_0](end_span).</p>
         <p>2. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा (डोज़) और रोग निदान की जानकारी केवल सुझाव के रूप में हैं[span_1](start_span)[span_1](end_span).</p>
         <p>3. किसी भी रासायनिक कीटनाशक, फफूंदनाशक या उर्वरक का उपयोग करने से पहले दवा के डिब्बे पर छपे निर्देशों को अच्छी तरह पढ़ लें या अपने नजदीकी कृषि विशेषज्ञों / अधिकृत दुकानदारों की सलाह अवश्य लें.</p>
+        <p>4. मौसम, मिट्टी और स्थानीय परिस्थितियों के भिन्न होने के कारण फसल के परिणाम अलग हो सकते हैं। इस ऐप पर दी गई जानकारी के उपयोग से होने वाले किसी भी फसल या आर्थिक नुकसान के लिए ऐप डेवलपर सीधे तौर पर जिम्मेदार नहीं होंगे.</p>
       </div>
 
       <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0; margin-top:12px;">
         <b style="color:#166534;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है.</p>
+        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है। इसे किसी भी थर्ड पार्टी (Third Party) के साथ साझा नहीं किया जाता है.</p>
       </div>
     </div>
   </div>
@@ -757,7 +756,6 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // भाषा डेटा (हिंदी और इंग्लिश)
     const langData = {
       hi: {
         headerTitle: "सब्जी खेती बाड़ी की बातें",
@@ -840,7 +838,6 @@
       document.getElementById('navHelp').innerText = d.navHelp;
       document.getElementById('langToggleBtn').innerText = d.langBtn;
 
-      // लॉगिन स्क्रीन टेक्स्ट
       document.getElementById('loginTitleText').innerText = d.loginTitle;
       document.getElementById('loginSubText').innerText = d.loginSub;
       document.getElementById('lblPhoneText').innerText = d.lblPhone;
@@ -853,12 +850,12 @@
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
-      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
-      if (c.includes('मिर्च') || c.includes('chili')) return '🫑';
-      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
-      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
-      if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
-      if (c.includes('भिंडी') || c.includes('okra')) return '🟢';
+      if (c.includes('टमाटर')) return '🍅';
+      if (c.includes('मिर्च')) return '🫑';
+      if (c.includes('खीरा')) return '🥒';
+      if (c.includes('तरबूज')) return '🍉';
+      if (c.includes('फूलगोभी')) return '🥦';
+      if (c.includes('भिंडी')) return '🟢';
       return '🌱';
     }
 
@@ -1396,14 +1393,12 @@
       }
     }
 
-    // कीबोर्ड पर Enter दबाने पर सर्च हो
     function handleSearchKeyPress(e) {
       if (e.key === 'Enter') {
         triggerManualSearch();
       }
     }
 
-    // लिखकर या सर्च बटन (🔍) दबाकर सर्च करने का पक्का तरीका
     function triggerManualSearch() {
       const searchInput = document.getElementById('homeSearch');
       const val = searchInput.value ? searchInput.value.trim() : '';
@@ -1433,7 +1428,6 @@
       }
     }
 
-    // वॉयस सर्च: माइक पर क्लिक करने पर स्क्रीन पर लिखा आएगा "मैं आपकी बात सुन रहा हूँ, बोलिए..." और बोलते ही सर्च हो जाएगा
     function startVoiceSearch() {
       const searchInput = document.getElementById('homeSearch');
       const voiceBtn = document.getElementById('voiceSearchBtn');
@@ -1462,15 +1456,12 @@
           searchInput.value = cleanText;
           voiceBtn.classList.remove('listening');
           searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-          
-          // बोलते ही अपने आप सर्च का परिणाम आ जाएगा
           triggerManualSearch();
         };
         
         recognition.onerror = function(event) {
           voiceBtn.classList.remove('listening');
           searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-          console.error("Voice search error: ", event.error);
           alert("आवाज़ साफ नहीं आई या माइक्रोफोन की अनुमति नहीं मिली। कृपया पुनः प्रयास करें।");
         };
 
@@ -1490,7 +1481,6 @@
       }
     }
 
-    // लॉगिन और OTP ऑटो-फिल सिस्टम
     function sendOtpCode() {
       const phone = document.getElementById('loginPhone').value.trim();
       if (phone.length !== 10) {
