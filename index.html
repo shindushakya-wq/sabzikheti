@@ -23,12 +23,15 @@
     /* टॉप हेडर */
     .app-header { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); color: white; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .back-btn { font-size: 22px; cursor: pointer; margin-right: 10px; display: none; }
-    .header-title { font-size: 16px; font-weight: bold; letter-spacing: 0.3px; }
-    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .header-title { font-size: 15px; font-weight: bold; letter-spacing: 0.3px; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    
+    /* भाषा बदलने का बटन */
+    .lang-toggle-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); color: white; padding: 5px 9px; border-radius: 14px; font-size: 11px; font-weight: bold; cursor: pointer; }
     
     /* घंटी नोटिफिकेशन बैज */
-    .bell-wrapper { position: relative; cursor: pointer; }
-    .bell-icon { font-size: 20px; }
+    .bell-wrapper { position: relative; cursor: pointer; padding: 2px; }
+    .bell-icon { font-size: 18px; }
     .notification-badge { position: absolute; top: -4px; right: -4px; background: #dc2626; color: white; font-size: 9px; font-weight: bold; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1.5px solid white; animation: pulseBadge 1.5s infinite; }
     @keyframes pulseBadge { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
 
@@ -245,43 +248,46 @@
     <div class="login-card">
       <div style="text-align:center; margin-bottom:16px;">
         <span style="font-size:40px;">🌾</span>
-        <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;">सब्जी खेती बाड़ी की बातें</h3>
-        <p style="font-size:12px; color:#6b7280; margin-top:4px;">कृषि सहायता ऐप में आपका स्वागत है</p>
+        <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;" id="loginTitleText">सब्जी खेती बाड़ी की बातें</h3>
+        <p style="font-size:12px; color:#6b7280; margin-top:4px;" id="loginSubText">कृषि सहायता ऐप में आपका स्वागत है</p>
       </div>
 
       <!-- मोबाइल नंबर इनपुट -->
       <div class="form-group" id="phoneInputGroup">
-        <label>अपना मोबाइल नंबर दर्ज करें:</label>
+        <label id="lblPhoneText">अपना मोबाइल नंबर दर्ज करें:</label>
         <div style="display:flex; gap:8px;">
           <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
           <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
         </div>
-        <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()">📲 ओटीपी (OTP) भेजें</button>
+        <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="btnSendOtp">📲 ओटीपी (OTP) भेजें</button>
       </div>
 
       <!-- OTP ऑटो-फिल स्क्रीन -->
       <div class="form-group" id="otpInputGroup" style="display:none;">
-        <label style="color:#16a34a; font-weight:bold;">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
+        <label style="color:#16a34a; font-weight:bold;" id="lblOtpText">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
         <input type="text" id="loginOtp" class="form-control" style="text-align:center; font-size:18px; letter-spacing:4px; font-weight:bold; background:#f0fdf4;" readonly>
-        <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
+        <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;" id="lblOtpSuccess">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
       </div>
 
       <!-- स्किप (Skip) बटन -->
       <div style="text-align:center; margin-top:14px; border-top:1px solid #f3f4f6; padding-top:12px;">
-        <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;">
+        <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="btnSkipText">
           ⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें
         </button>
       </div>
     </div>
   </div>
 
-  <!-- टॉप हेडर -->
+  <!-- टॉप हेडर (भाषा बदलने के बटन के साथ) -->
   <div class="app-header">
     <div style="display:flex; align-items:center;">
       <span class="back-btn" id="headerBack" onclick="goBack()">←</span>
       <span class="header-title" id="headerTitle">सब्जी खेती बाड़ी की बातें</span>
     </div>
     <div class="header-actions">
+      <!-- भाषा टॉगल बटन -->
+      <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 English</button>
+      
       <div class="bell-wrapper" onclick="openNotificationModal()" title="नोटिफिकेशन">
         <span class="bell-icon">🔔</span>
         <span class="notification-badge" id="notifBadge">1</span>
@@ -441,7 +447,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार (सर्च बटन और वॉयस माइक बटन के साथ) -->
+    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -666,12 +672,12 @@
   <!-- SCREEN: प्रोफाइल स्क्रीन -->
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
-      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
-      <div class="form-group"><label>आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailender Kumar"></div>
-      <div class="form-group"><label>मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
-      <div class="form-group"><label>गाँव / ज़िला / राज्य (शहर का नाम):</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar या Jaipur"></div>
-      <div class="form-group"><label>मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
-      <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()">💾 प्रोफाइल सुरक्षित करें</button>
+      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;" id="profTitleText">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
+      <div class="form-group"><label id="lblProfName">आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailender Kumar"></div>
+      <div class="form-group"><label id="lblProfPhone">मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
+      <div class="form-group"><label id="lblProfState">गाँव / ज़िला / राज्य (शहर का नाम):</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar या Jaipur"></div>
+      <div class="form-group"><label id="lblProfCrops">मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
+      <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾 प्रोफाइल सुरक्षित करें</button>
     </div>
   </div>
 
@@ -697,7 +703,7 @@
     <div class="variety-card">
       <h3 style="color:#15803d; font-size:17px; margin-bottom:10px;" id="scheduleCropTitle">स्प्रे शेड्यूल</h3>
       <div id="scheduleStepsContainer"></div>
-      <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20स्प्रे%20शेड्यूल%20के%20बारे%20में%20सलाह%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">💬 डॉक्टर से स्प्रे सलाह लें</a>
+      <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20स्प्रे%20शेड्यूल%20के%20बारे%20में%20सलाह%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;" id="btnDocSched">💬 डॉक्टर से स्प्रे सलाह लें</a>
     </div>
   </div>
 
@@ -749,21 +755,110 @@
     let currentImgElement = null;
     let storyTimer = null;
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
+    let currentLang = localStorage.getItem('app_lang') || 'hi';
+
+    // भाषा डेटा (हिंदी और इंग्लिश)
+    const langData = {
+      hi: {
+        headerTitle: "सब्जी खेती बाड़ी की बातें",
+        welcomeMsg: "राम-राम, किसान भाई!",
+        editProfile: "✏️ प्रोफाइल बदलें",
+        searchPlaceholder: "🔍 खीरा, टमाटर या तरबूज लिखें...",
+        btnCrops: "सब्जी फसल किस्म",
+        btnProt: "फसल सुरक्षा",
+        btnSched: "स्प्रे शेड्यूल",
+        btnAdv: "सलाहकार",
+        btnComp: "All कंपनी बीज",
+        btnChem: "दवाइयाँ Chemicals",
+        otherServices: "Other सेवाएं (मौसम, मंडी, अलर्ट)",
+        socialJoin: "हमारे साथ सोशल मीडिया पर जुड़ें",
+        navHome: "होम",
+        navCrops: "फसलें",
+        navSched: "शेड्यूल",
+        navProt: "सुरक्षा",
+        navHelp: "हेल्पलाइन",
+        langBtn: "🌐 English",
+        loginTitle: "सब्जी खेती बाड़ी की बातें",
+        loginSub: "कृषि सहायता ऐप में आपका स्वागत है",
+        lblPhone: "अपना मोबाइल नंबर दर्ज करें:",
+        btnOtp: "📲 ओटीपी (OTP) भेजें",
+        lblOtp: "🔐 ओटीपी (OTP) दर्ज हो रहा है...",
+        lblSuccess: "सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!",
+        btnSkip: "⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें"
+      },
+      en: {
+        headerTitle: "Sabzi Kheti Badi ki Baatein",
+        welcomeMsg: "Ram-Ram, Farmer Brother!",
+        editProfile: "✏️ Edit Profile",
+        searchPlaceholder: "🔍 Search Cucumber, Tomato, etc...",
+        btnCrops: "Vegetable Crops",
+        btnProt: "Crop Protection",
+        btnSched: "Spray Schedule",
+        btnAdv: "Advisor",
+        btnComp: "All Company Seeds",
+        btnChem: "Chemicals & Tonics",
+        otherServices: "Other Services (Weather, Mandi)",
+        socialJoin: "Connect with us on Social Media",
+        navHome: "Home",
+        navCrops: "Crops",
+        navSched: "Schedule",
+        navProt: "Protection",
+        navHelp: "Helpline",
+        langBtn: "🌐 हिंदी",
+        loginTitle: "Sabzi Kheti Badi ki Baatein",
+        loginSub: "Welcome to Agriculture Support App",
+        lblPhone: "Enter your mobile number:",
+        btnOtp: "📲 Send OTP",
+        lblOtp: "🔐 Verifying OTP...",
+        lblSuccess: "Successfully Auto-Verified!",
+        btnSkip: "⏩ Skip Login & Continue"
+      }
+    };
+
+    function toggleAppLanguage() {
+      currentLang = currentLang === 'hi' ? 'en' : 'hi';
+      localStorage.setItem('app_lang', currentLang);
+      applyLanguageUI();
+    }
+
+    function applyLanguageUI() {
+      const d = langData[currentLang];
+      document.getElementById('headerTitle').innerText = d.headerTitle;
+      document.getElementById('welcomeMsg').innerText = d.welcomeMsg;
+      document.getElementById('txtEditProfile').innerText = d.editProfile;
+      document.getElementById('homeSearch').placeholder = d.searchPlaceholder;
+      document.getElementById('btnCrops').innerText = d.btnCrops;
+      document.getElementById('btnProt').innerText = d.btnProt;
+      document.getElementById('btnSched').innerText = d.btnSched;
+      document.getElementById('btnAdv').innerText = d.btnAdv;
+      document.getElementById('btnComp').innerText = d.btnComp;
+      document.getElementById('txtSocialJoin').innerText = d.socialJoin;
+      document.getElementById('navHome').innerText = d.navHome;
+      document.getElementById('navCrops').innerText = d.navCrops;
+      document.getElementById('navSched').innerText = d.navSched;
+      document.getElementById('navProt').innerText = d.navProt;
+      document.getElementById('navHelp').innerText = d.navHelp;
+      document.getElementById('langToggleBtn').innerText = d.langBtn;
+
+      // लॉगिन स्क्रीन टेक्स्ट
+      document.getElementById('loginTitleText').innerText = d.loginTitle;
+      document.getElementById('loginSubText').innerText = d.loginSub;
+      document.getElementById('lblPhoneText').innerText = d.lblPhone;
+      document.getElementById('btnSendOtp').innerText = d.btnOtp;
+      document.getElementById('lblOtpText').innerText = d.lblOtp;
+      document.getElementById('lblOtpSuccess').innerText = d.lblSuccess;
+      document.getElementById('btnSkipText').innerText = d.btnSkip;
+    }
 
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
-      if (c.includes('टमाटर')) return '🍅';
-      if (c.includes('मिर्च') || c.includes('शिमला')) return '🫑';
-      if (c.includes('खीरा')) return '🥒';
-      if (c.includes('तरबूज')) return '🍉';
-      if (c.includes('फूलगोभी') || c.includes('गोभी')) return '🥦';
-      if (c.includes('पत्तागोभी')) return '🥬';
-      if (c.includes('भिंडी')) return '🟢';
-      if (c.includes('बैंगन')) return '🍆';
-      if (c.includes('मटर')) return '🟢';
-      if (c.includes('कद्दू') || c.includes('लौकी') || c.includes('तोरई') || c.includes('करेला')) return '🥒';
-      if (c.includes('मक्का') || c.includes('स्वीट कॉर्न')) return '🌽';
+      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
+      if (c.includes('मिर्च') || c.includes('chili')) return '🫑';
+      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
+      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
+      if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
+      if (c.includes('भिंडी') || c.includes('okra')) return '🟢';
       return '🌱';
     }
 
@@ -781,7 +876,7 @@
           maturity: cols[6] || '',
           resistance: cols[7] || '',
           photo: cols[8] || ''
-        })).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)' && r.crop.toLowerCase() !== 'crop' && r.crop.toLowerCase() !== 'column a (crop)');
+        })).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)' && r.crop.toLowerCase() !== 'crop');
 
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
@@ -789,7 +884,7 @@
         scheduleRecords = {};
         schedRows.forEach(cols => {
           const crop = cols[0];
-          if(crop && crop !== 'Column A (Crop)' && crop !== 'A (Crop)') {
+          if(crop && crop !== 'Column A (Crop)') {
             if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
             scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
           }
@@ -811,7 +906,7 @@
         const text4 = await res4.text();
         chemicalsRecords = parseCSV(text4).map(cols => ({
           name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || ''
-        })).filter(r => r.name && r.name !== 'A (दवा का नाम)' && r.name !== 'दवा का नाम');
+        })).filter(r => r.name && r.name !== 'A (दवा का नाम)');
 
         const res5 = await fetch(BASE_SHEET_URL + 'Alerts');
         const text5 = await res5.text();
@@ -1033,7 +1128,7 @@
       document.getElementById(prevScreen).classList.add('active');
       if (prevScreen === 'screen-home') {
         document.getElementById('headerBack').style.display = 'none';
-        document.getElementById('headerTitle').innerText = "सब्जी खेती बाड़ी की बातें";
+        document.getElementById('headerTitle').innerText = langData[currentLang].headerTitle;
       }
       window.scrollTo(0, 0);
     }
@@ -1436,6 +1531,7 @@
       } else {
         document.getElementById('loginScreenModal').classList.remove('active');
       }
+      applyLanguageUI();
     });
 
     function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
