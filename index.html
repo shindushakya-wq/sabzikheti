@@ -401,7 +401,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार (सर्च बटन 🔍 और वॉयस बटन 🎙️ के साथ) -->
+    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -471,14 +471,14 @@
       
       <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5;">
         <b style="color:#991b1b;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-        <p>1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> (Sabzi kheti) केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
-        <p>2. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा (डोज़) और रोग निदान की जानकारी केवल सुझाव के रूप में हैं।</p>
-        <p>3. किसी भी रासायनिक कीटनाशक, फफूंदनाशक या उर्वरक का उपयोग करने से पहले दवा के डिब्बे पर छपे निर्देशों को अच्छी तरह पढ़ लें या अपने नजदीकी कृषि विशेषज्ञों / अधिकृत दुकानदारों की सलाह अवश्य लें।</p>
+        <p>1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> (Sabzi kheti) केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है[span_0](start_span)[span_0](end_span).</p>
+        <p>2. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा (डोज़) और रोग निदान की जानकारी केवल सुझाव के रूप में हैं[span_1](start_span)[span_1](end_span).</p>
+        <p>3. किसी भी रासायनिक कीटनाशक, फफूंदनाशक या उर्वरक का उपयोग करने से पहले दवा के डिब्बे पर छपे निर्देशों को अच्छी तरह पढ़ लें या अपने नजदीकी कृषि विशेषज्ञों / अधिकृत दुकानदारों की सलाह अवश्य लें.</p>
       </div>
 
       <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0; margin-top:12px;">
         <b style="color:#166534;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है।</p>
+        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है.</p>
       </div>
     </div>
   </div>
@@ -1298,11 +1298,15 @@
       }
     }
 
-    // वॉयस सर्च: स्क्रीन पर लिखा आएगा "मैं आपकी बात सुन रहा हूँ, किसान भाई..." और फोन की कोई आवाज नहीं बजेगी
+    // वॉइस सर्च: स्क्रीन पर लिखा आएगा "मैं आपकी बात सुन रहा हूँ, बोलिए..." और एरर हटाई गई
     function startVoiceSearch() {
+      const searchInput = document.getElementById('homeSearch');
+      const voiceBtn = document.getElementById('voiceSearchBtn');
+      
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      
       if (!SpeechRecognition) { 
-        alert("आपका ब्राउज़र वॉइस सर्च सपोर्ट नहीं करता। कृपया गूगल क्रोम (Chrome) का उपयोग करें।"); 
+        alert("आपका ब्राउज़र वॉइस सर्च सपोर्ट नहीं करता। कृपया कीबोर्ड के माइक (🎤) का उपयोग करें।"); 
         return; 
       }
       
@@ -1310,13 +1314,10 @@
       recognition.lang = 'hi-IN';
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
-
-      const voiceBtn = document.getElementById('voiceSearchBtn');
-      const searchInput = document.getElementById('homeSearch');
       
       voiceBtn.classList.add('listening');
       searchInput.value = "";
-      searchInput.placeholder = "🎙️ मैं आपकी बात सुन रहा हूँ, किसान भाई...";
+      searchInput.placeholder = "🎙️ मैं आपकी बात सुन रहा हूँ, बोलिए...";
 
       recognition.onresult = function(e) {
         let spokenText = e.results[0][0].transcript;
@@ -1332,8 +1333,8 @@
       recognition.onerror = function(event) {
         voiceBtn.classList.remove('listening');
         searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        console.error("Speech recognition error", event.error);
-        alert("आवाज़ स्पष्ट नहीं आई, कृपया दोबारा माइक दबाकर बोलें।");
+        // बिना किसी रुकावट के कीबोर्ड माइक उपयोग करने का सुझाव
+        console.log("Speech recognition error: ", event.error);
       };
 
       recognition.onend = function() {
@@ -1347,7 +1348,7 @@
         recognition.start();
       } catch (err) {
         voiceBtn.classList.remove('listening');
-        alert("माइक्रोफोन की अनुमति (Permission) दें या क्रोम ब्राउज़र में खोलें।");
+        alert("कृपया अपने मोबाइल कीबोर्ड पर दिए गए माइक (🎤) से बोलकर सर्च करें।");
       }
     }
 
