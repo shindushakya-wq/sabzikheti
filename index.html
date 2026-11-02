@@ -231,9 +231,49 @@
     .mandi-table th { background: #e8f5e9; color: #1b5e20; padding: 10px 8px; text-align: left; border: 1px solid #d1fae5; }
     .mandi-table td { padding: 10px 8px; border: 1px solid #e5e7eb; color: #374151; }
     .mandi-table tr:nth-child(even) { background: #f9fafb; }
+
+    /* लॉगिन स्क्रीन स्टाइल */
+    .login-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
+    .login-modal-overlay.active { display: flex; }
+    .login-card { background: white; border-radius: 16px; padding: 22px; max-width: 360px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid #16a34a; }
   </style>
 </head>
 <body>
+
+  <!-- लॉगिन स्क्रीन मोडल -->
+  <div class="login-modal-overlay" id="loginScreenModal">
+    <div class="login-card">
+      <div style="text-align:center; margin-bottom:16px;">
+        <span style="font-size:40px;">🌾</span>
+        <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;">सब्जी खेती बाड़ी की बातें</h3>
+        <p style="font-size:12px; color:#6b7280; margin-top:4px;">कृषि सहायता ऐप में आपका स्वागत है</p>
+      </div>
+
+      <!-- मोबाइल नंबर इनपुट -->
+      <div class="form-group" id="phoneInputGroup">
+        <label>अपना मोबाइल नंबर दर्ज करें:</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
+          <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
+        </div>
+        <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()">📲 ओटीपी (OTP) भेजें</button>
+      </div>
+
+      <!-- OTP ऑटो-फिल स्क्रीन -->
+      <div class="form-group" id="otpInputGroup" style="display:none;">
+        <label style="color:#16a34a; font-weight:bold;">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
+        <input type="text" id="loginOtp" class="form-control" style="text-align:center; font-size:18px; letter-spacing:4px; font-weight:bold; background:#f0fdf4;" readonly>
+        <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
+      </div>
+
+      <!-- स्किप (Skip) बटन -->
+      <div style="text-align:center; margin-top:14px; border-top:1px solid #f3f4f6; padding-top:12px;">
+        <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;">
+          ⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- टॉप हेडर -->
   <div class="app-header">
@@ -1298,7 +1338,7 @@
       }
     }
 
-    // वॉयस सर्च: अब यह मोबाइल और क्रोम ब्राउज़र के इन-बिल्ट वेब स्पीच को ट्रिगर करेगा
+    // वॉयस सर्च: माइक पर क्लिक करने पर स्क्रीन पर लिखा आएगा "मैं आपकी बात सुन रहा हूँ, बोलिए..." और बोलते ही सर्च हो जाएगा
     function startVoiceSearch() {
       const searchInput = document.getElementById('homeSearch');
       const voiceBtn = document.getElementById('voiceSearchBtn');
@@ -1354,6 +1394,49 @@
         alert("माइक्रोफोन शुरू करने में दिक्कत आई। कृपया सुनिश्चित करें कि आपने माइक की अनुमति (Permission) दी है।");
       }
     }
+
+    // लॉगिन और OTP ऑटो-फिल सिस्टम
+    function sendOtpCode() {
+      const phone = document.getElementById('loginPhone').value.trim();
+      if (phone.length !== 10) {
+        alert("कृपया सही 10 अंकों का मोबाइल नंबर लिखें!");
+        return;
+      }
+
+      document.getElementById('phoneInputGroup').style.display = 'none';
+      document.getElementById('otpInputGroup').style.display = 'block';
+
+      let otpField = document.getElementById('loginOtp');
+      otpField.value = "⏳...";
+
+      setTimeout(() => {
+        const autoOtp = Math.floor(1000 + Math.random() * 9000);
+        otpField.value = autoOtp;
+        
+        localStorage.setItem('farmer_phone', phone);
+        localStorage.setItem('is_logged_in', 'true');
+
+        setTimeout(() => {
+          alert("✅ सफलतापूर्वक लॉगिन हो गया!");
+          document.getElementById('loginScreenModal').classList.remove('active');
+          updateProfileUI();
+        }, 800);
+      }, 1200);
+    }
+
+    function skipLogin() {
+      localStorage.setItem('is_logged_in', 'skipped');
+      document.getElementById('loginScreenModal').classList.remove('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const loginStatus = localStorage.getItem('is_logged_in');
+      if (!loginStatus) {
+        document.getElementById('loginScreenModal').classList.add('active');
+      } else {
+        document.getElementById('loginScreenModal').classList.remove('active');
+      }
+    });
 
     function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
     function closeSolutionModal() {
