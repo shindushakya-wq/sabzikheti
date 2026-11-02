@@ -25,7 +25,6 @@
     .back-btn { font-size: 22px; cursor: pointer; margin-right: 10px; display: none; }
     .header-title { font-size: 16px; font-weight: bold; letter-spacing: 0.3px; }
     .header-actions { display: flex; align-items: center; gap: 12px; }
-    .lang-toggle-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); color: white; padding: 5px 10px; border-radius: 14px; font-size: 11px; font-weight: bold; cursor: pointer; }
     
     /* घंटी नोटिफिकेशन बैज */
     .bell-wrapper { position: relative; cursor: pointer; }
@@ -1262,13 +1261,13 @@
       }
     }
 
-    // अपडेटेड सर्च: सिंगल अक्षर ('k' आदि) टाइप करने पर रिजल्ट नहीं खुलेगा, पूरा नाम (उदा. खीरा, टमाटर, तरबूज) लिखने पर ही वैरायटी आएगी
+    // सर्च फ़ंक्शन: कम से कम 2 अक्षर या पूरा नाम (जैसे खीरा, टमाटर, तरबूज) लिखने पर ही वैरायटी आएगी
     function executeSearch(val) {
       if (!val || !val.trim()) return;
       
       const q = val.trim().toLowerCase();
       if (q.length < 2) {
-        return; // एक अक्षर से सर्च नहीं होगा
+        return; 
       }
 
       if (sheetRecords.length === 0) {
@@ -1286,7 +1285,7 @@
       renderVarietiesList(filtered, 'खोज परिणाम: ' + val);
     }
 
-    // अपडेटेड वॉइस सर्च: किसान को बोलकर और लिखकर बताएगा "मैं आपकी बात सुन रहा हूँ, किसान भाई..."
+    // वॉइस सर्च: केवल स्क्रीन पर टेक्स्ट दिखेगा (फोन की कोई वॉइस नहीं बोलेगी)
     function startVoiceSearch() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) { 
@@ -1302,13 +1301,6 @@
       voiceBtn.classList.add('listening');
       searchInput.value = "";
       searchInput.placeholder = "🎙️ मैं आपकी बात सुन रहा हूँ, किसान भाई...";
-
-      // फोन के स्पीकर से बोलकर संदेश सुनाना
-      if ('speechSynthesis' in window) {
-        const speechMsg = new SpeechSynthesisUtterance("मैं आपकी बात सुन रहा हूँ, किसान भाई। बोलिए...");
-        speechMsg.lang = 'hi-IN';
-        window.speechSynthesis.speak(speechMsg);
-      }
 
       recognition.onresult = function(e) {
         let spokenText = e.results[0][0].transcript;
