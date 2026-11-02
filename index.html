@@ -88,8 +88,8 @@
     .voice-btn.listening { animation: pulse 1s infinite alternate; background: #fee2e2; }
     @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-    /* 7 मुख्य बटन ग्रिड */
-    .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
+    /* 6 मुख्य बटन ग्रिड (ऊपर वाले) */
+    .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
     .menu-box { padding: 18px 12px; border-radius: 16px; text-align: center; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
     .menu-box .icon { font-size: 32px; margin-bottom: 6px; }
     .menu-box h3 { font-size: 14px; font-weight: 700; }
@@ -106,8 +106,43 @@
     .card-companies h3 { color: #c2410c; }
     .card-chemicals { background: #fce7f3; border-color: #fbcfe8; }
     .card-chemicals h3 { color: #be185d; }
-    .card-other { background: #f1f5f9; border-color: #e2e8f0; grid-column: span 2; }
-    .card-other h3 { color: #334155; }
+
+    /* फोटो के बिल्कुल समान 3D Neumorphic "Other सेवाएं" वाला चौड़ा बटन */
+    .other-3d-btn {
+      width: 100%;
+      background: linear-gradient(145deg, #ffffff, #e6e6e6);
+      border: 1px solid #d1d5db;
+      border-radius: 24px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08), inset 0 1px 2px rgba(255,255,255,0.8);
+      margin-bottom: 15px;
+      transition: all 0.15s ease;
+    }
+    .other-3d-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1), inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .other-3d-icon {
+      font-size: 26px;
+      background: #e2e8f0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .other-3d-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #1f2937;
+      letter-spacing: 0.2px;
+    }
 
     /* सोशल मीडिया कार्ड */
     .social-box { background: white; border-radius: 14px; padding: 14px; margin-top: 15px; text-align: center; border: 1px solid #e5e7eb; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
@@ -234,7 +269,7 @@
       <li class="drawer-item" onclick="closeDrawer(); showScheduleCropsList();"><span>🗓️</span><span id="txtMenuSchedule">स्प्रे शेड्यूल</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showProtectionCropsList();"><span>🛡️</span><span id="txtMenuProtection">फसल सुरक्षा (रोग निदान)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showChemicalsScreen();"><span>🧪</span><span>दवाइयाँ Chemicals</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showOtherServicesScreen();"><span>⚙️</span><span>Other अन्य सेवाएं</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showOtherServicesScreen();"><span>⚙️</span><span>Other सेवाएं (मौसम, मंडी, अलर्ट)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showPrivacyPolicyScreen();" style="color:#0369a1; border-top:1px solid #e0f2fe; margin-top:6px;"><span>⚖️</span><span>गोपनीयता नीति व कानूनी सुरक्षा (Terms)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); shareAppWithFriends();"><span>📲</span><span>किसान साथियों को ऐप शेयर करें</span></li>
       <li class="drawer-item" onclick="closeDrawer(); contactAdvisor();"><span>💬</span><span id="txtMenuSupport">व्हाट्सएप हेल्पलाइन</span></li>
@@ -242,7 +277,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      सब्जी खेती बाड़ी की बातें • v3.9 (सुरक्षित संस्करण)
+      सब्जी खेती बाड़ी की बातें • v4.0 (3D डिज़ाइन संस्करण)
     </div>
   </div>
 
@@ -343,7 +378,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार (पूरा लिखने और बोलकर सर्च करने की सुविधा) -->
+    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या बीज पूरा लिखें..." onkeyup="executeSearch(this.value)">
       <div class="search-actions">
@@ -362,7 +397,7 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
     </div>
 
-    <!-- 7 मुख्य बटन ग्रिड -->
+    <!-- 6 मुख्य बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
@@ -388,10 +423,12 @@
         <div class="icon">🧪</div>
         <h3 style="font-size:13px;">दवाइयाँ Chemicals</h3>
       </div>
-      <div class="menu-box card-other" onclick="showOtherServicesScreen()">
-        <div class="icon">⚙️</div>
-        <h3 id="btnOther">Other अन्य सेवाएं</h3>
-      </div>
+    </div>
+
+    <!-- 3D Neumorphic "Other सेवाएं" बटन (फोटो के बिल्कुल समान) -->
+    <div class="other-3d-btn" onclick="showOtherServicesScreen()">
+      <div class="other-3d-icon">⚙️</div>
+      <div class="other-3d-text">Other सेवाएं (मौसम, मंडी, अलर्ट)</div>
     </div>
 
     <!-- सोशल मीडिया कार्ड -->
@@ -989,9 +1026,10 @@
       }
       list.forEach(v => {
         let emoji = getCropEmoji(v.crop);
-        const photoHtml = (v.photo && v.photo.trim().startsWith('http')) 
-          ? `<img src="${v.photo.trim()}" class="var-photo" alt="${v.variety}" onerror="this.style.display='none'">` 
-          : `<img src="https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400" class="var-photo" alt="Variety">`;
+        let photoHtml = '';
+        if (v.photo && v.photo.trim().startsWith('http')) {
+          photoHtml = `<img src="${v.photo.trim()}" class="var-photo" alt="${v.variety}" onerror="this.parentElement.style.display='none'">`;
+        }
 
         container.innerHTML += `
           <div class="variety-card">
@@ -1007,7 +1045,7 @@
             <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20${encodeURIComponent(v.company)}%20की%20${encodeURIComponent(v.variety)}%20(${encodeURIComponent(v.crop)})%20के%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">🛒 बीज ऑर्डर करें</a>
           </div>`;
       });
-      openScreen('screen-seeds', `${getCropEmoji(title)} ${title}`);
+      openScreen('screen-seeds', title);
     }
 
     function showProtectionCropsList() {
@@ -1169,7 +1207,7 @@
       openScreen('screen-chemical-list', catType);
     }
 
-    function showOtherServicesScreen() { openScreen('screen-other-services', 'Other अन्य सेवाएं'); }
+    function showOtherServicesScreen() { openScreen('screen-other-services', 'Other सेवाएं (मौसम, मंडी, अलर्ट)'); }
     function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', 'मौसम पूर्वानुमान'); }
     function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); }
     function showPrivacyPolicyScreen() { openScreen('screen-privacy', 'गोपनीयता नीति व कानूनी सुरक्षा'); }
@@ -1217,7 +1255,6 @@
       }
     }
 
-    // सर्च बार में लिखकर सर्च करना (खीरा, टमाटर पूरा लिखने पर सही परिणाम देना)
     function executeSearch(val) {
       if (!val || !val.trim()) return;
       const q = val.trim().toLowerCase();
@@ -1229,7 +1266,6 @@
       renderVarietiesList(filtered, 'खोज परिणाम: ' + val);
     }
 
-    // बोलकर सर्च करने की सुविधा (Voice Search)
     function startVoiceSearch() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) { alert("आपका ब्राउज़र वॉइस सर्च सपोर्ट नहीं करता।"); return; }
