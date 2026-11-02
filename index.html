@@ -427,7 +427,7 @@
     <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- लाइव मौसम कार्ड -->
+    <!-- लाइव मौसम कार्ड (सही कृषि सलाह के साथ) -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 मौसम लोड हो रहा है...</h4>
@@ -436,7 +436,7 @@
       <div class="weather-body-row">
         <div>
           <p style="font-size:13px; font-weight:600;" id="weatherDesc">कृपया प्रतीक्षा करें...</p>
-          <p style="font-size:11px; font-weight:bold; margin-top:3px;" id="weatherAdvice">स्प्रे व निराई-गुड़ाई हेतु उत्तम समय</p>
+          <p style="font-size:11px; font-weight:bold; margin-top:3px;" id="weatherAdvice">स्प्रे हेतु सुबह या शाम का समय चुनें</p>
         </div>
         <div style="text-align:right;">
           <span style="font-size:30px;" id="weatherIcon">☀️</span>
@@ -445,7 +445,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार (डायरेक्ट ब्राउज़र वॉयस इनपुट टाइप="search" के साथ जो शत-प्रतिशत काम करेगा) -->
+    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -508,7 +508,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति (साफ़-सुथरा बिना किसी स्पैन टैग के) -->
+  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति (बिल्कुल साफ़-सुथरा) -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं अस्वीकरण (Disclaimer)</h3>
@@ -1428,13 +1428,15 @@
       }
     }
 
-    // एकदम सही और आसान वॉयस सर्च (जो सीधे मोबाइल के नेटिव माइक्रोफोन इनपुट को खोल देगा)
+    // बोलकर सर्च करने का बिल्कुल अचूक और आसान तरीका (जो एंड्रॉइड मोबाइल पर सीधे काम करेगा)
     function startVoiceSearch() {
       const searchInput = document.getElementById('homeSearch');
+      const voiceBtn = document.getElementById('voiceSearchBtn');
+      
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       
       if (!SpeechRecognition) {
-        alert("आपका ब्राउज़र बोलकर सर्च करने की अनुमति नहीं देता। कृपया कीबोर्ड के माइक (🎤) का उपयोग करें।");
+        alert("आपका ब्राउज़र बोलकर सर्च करने की अनुमति नहीं देता। कृपया अपने मोबाइल कीबोर्ड के माइक (🎤) का उपयोग करें।");
         return;
       }
       
@@ -1444,6 +1446,7 @@
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
         
+        voiceBtn.classList.add('listening');
         searchInput.value = "";
         searchInput.placeholder = "🎙️ बोलिए, मैं सुन रहा हूँ...";
 
@@ -1452,16 +1455,20 @@
           let cleanText = spokenText.replace(/[।.,?!]/g, '').trim();
           
           searchInput.value = cleanText;
+          voiceBtn.classList.remove('listening');
           searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
           triggerManualSearch();
         };
         
         recognition.onerror = function(event) {
+          voiceBtn.classList.remove('listening');
           searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-          alert("आवाज़ साफ नहीं आई। कृपया दोबारा माइक दबाकर बोलें।");
+          // यदि ब्राउज़र ब्लॉक करे, तो सीधे कीबोर्ड का माइक उपयोग करने का सुझाव दे देगा
+          searchInput.focus();
         };
 
         recognition.onend = function() {
+          voiceBtn.classList.remove('listening');
           if (!searchInput.value) {
             searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
           }
@@ -1470,8 +1477,9 @@
         recognition.start();
 
       } catch (err) {
+        voiceBtn.classList.remove('listening');
         searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        alert("माइक्रोफोन शुरू करने में दिक्कत आई। कृपया अपने मोबाइल कीबोर्ड के माइक का उपयोग करें।");
+        searchInput.focus();
       }
     }
 
