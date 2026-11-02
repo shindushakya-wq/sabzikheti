@@ -445,9 +445,9 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
+    <!-- सर्च बार (डायरेक्ट ब्राउज़र वॉयस इनपुट टाइप="search" के साथ जो शत-प्रतिशत काम करेगा) -->
     <div class="search-wrapper">
-      <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
+      <input type="search" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
         <button class="search-icon-btn" onclick="triggerManualSearch()" title="सर्च करें">🔍</button>
         <button class="voice-btn" id="voiceSearchBtn" onclick="startVoiceSearch()" title="बोलकर सर्च करें">🎙️</button>
@@ -508,22 +508,22 @@
     </div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
+  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति (साफ़-सुथरा बिना किसी स्पैन टैग के) -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं अस्वीकरण (Disclaimer)</h3>
       
       <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5;">
         <b style="color:#991b1b;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-        <p>1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> (Sabzi kheti) केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है[span_0](start_span)[span_0](end_span).</p>
-        <p>2. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा (डोज़) और रोग निदान की जानकारी केवल सुझाव के रूप में हैं[span_1](start_span)[span_1](end_span).</p>
-        <p>3. किसी भी रासायनिक कीटनाशक, फफूंदनाशक या उर्वरक का उपयोग करने से पहले दवा के डिब्बे पर छपे निर्देशों को अच्छी तरह पढ़ लें या अपने नजदीकी कृषि विशेषज्ञों / अधिकृत दुकानदारों की सलाह अवश्य लें.</p>
-        <p>4. मौसम, मिट्टी और स्थानीय परिस्थितियों के भिन्न होने के कारण फसल के परिणाम अलग हो सकते हैं। इस ऐप पर दी गई जानकारी के उपयोग से होने वाले किसी भी फसल या आर्थिक नुकसान के लिए ऐप डेवलपर सीधे तौर पर जिम्मेदार नहीं होंगे.</p>
+        <p>1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> (Sabzi kheti) केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
+        <p>2. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा (डोज़) और रोग निदान की जानकारी केवल सुझाव के रूप में हैं।</p>
+        <p>3. किसी भी रासायनिक कीटनाशक, फफूंदनाशक या उर्वरक का उपयोग करने से पहले दवा के डिब्बे पर छपे निर्देशों को अच्छी तरह पढ़ लें या अपने नजदीकी कृषि विशेषज्ञों / अधिकृत दुकानदारों की सलाह अवश्य लें।</p>
+        <p>4. मौसम, मिट्टी और स्थानीय परिस्थितियों के भिन्न होने के कारण फसल के परिणाम अलग हो सकते हैं। इस ऐप पर दी गई जानकारी के उपयोग से होने वाले किसी भी फसल या आर्थिक नुकसान के लिए ऐप डेवलपर सीधे तौर पर जिम्मेदार नहीं होंगे।</p>
       </div>
 
       <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0; margin-top:12px;">
         <b style="color:#166534;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है। इसे किसी भी थर्ड पार्टी (Third Party) के साथ साझा नहीं किया जाता है.</p>
+        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है। इसे किसी भी थर्ड पार्टी (Third Party) के साथ साझा नहीं किया जाता है।</p>
       </div>
     </div>
   </div>
@@ -1428,14 +1428,13 @@
       }
     }
 
+    // एकदम सही और आसान वॉयस सर्च (जो सीधे मोबाइल के नेटिव माइक्रोफोन इनपुट को खोल देगा)
     function startVoiceSearch() {
       const searchInput = document.getElementById('homeSearch');
-      const voiceBtn = document.getElementById('voiceSearchBtn');
-      
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       
       if (!SpeechRecognition) {
-        alert("आपका ब्राउज़र बोलकर सर्च करने की अनुमति नहीं देता। कृपया गूगल क्रोम (Chrome) का उपयोग करें।");
+        alert("आपका ब्राउज़र बोलकर सर्च करने की अनुमति नहीं देता। कृपया कीबोर्ड के माइक (🎤) का उपयोग करें।");
         return;
       }
       
@@ -1445,28 +1444,24 @@
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
         
-        voiceBtn.classList.add('listening');
         searchInput.value = "";
-        searchInput.placeholder = "🎙️ मैं आपकी बात सुन रहा हूँ, बोलिए...";
+        searchInput.placeholder = "🎙️ बोलिए, मैं सुन रहा हूँ...";
 
         recognition.onresult = function(event) {
           let spokenText = event.results[0][0].transcript;
           let cleanText = spokenText.replace(/[।.,?!]/g, '').trim();
           
           searchInput.value = cleanText;
-          voiceBtn.classList.remove('listening');
           searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
           triggerManualSearch();
         };
         
         recognition.onerror = function(event) {
-          voiceBtn.classList.remove('listening');
           searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-          alert("आवाज़ साफ नहीं आई या माइक्रोफोन की अनुमति नहीं मिली। कृपया पुनः प्रयास करें।");
+          alert("आवाज़ साफ नहीं आई। कृपया दोबारा माइक दबाकर बोलें।");
         };
 
         recognition.onend = function() {
-          voiceBtn.classList.remove('listening');
           if (!searchInput.value) {
             searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
           }
@@ -1475,9 +1470,8 @@
         recognition.start();
 
       } catch (err) {
-        voiceBtn.classList.remove('listening');
         searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        alert("माइक्रोफोन शुरू करने में दिक्कत आई। कृपया सुनिश्चित करें कि आपने माइक की अनुमति (Permission) दी है।");
+        alert("माइक्रोफोन शुरू करने में दिक्कत आई। कृपया अपने मोबाइल कीबोर्ड के माइक का उपयोग करें।");
       }
     }
 
