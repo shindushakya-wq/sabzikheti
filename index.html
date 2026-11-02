@@ -11,11 +11,11 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; }
 
-    button, .menu-box, .list-item, .other-3d-btn, .social-link, .btn-action, .fab-solution, .story-item {
+    button, .menu-box, .list-item, .other-3d-btn, .social-link, .btn-action, .fab-solution, .story-item, .video-card-item {
       transition: transform 0.15s ease, opacity 0.15s ease;
       cursor: pointer;
     }
-    button:active, .menu-box:active, .list-item:active, .other-3d-btn:active, .social-link:active, .btn-action:active, .fab-solution:active, .story-item:active {
+    button:active, .menu-box:active, .list-item:active, .other-3d-btn:active, .social-link:active, .btn-action:active, .fab-solution:active, .story-item:active, .video-card-item:active {
       transform: scale(0.96);
       opacity: 0.85;
     }
@@ -150,6 +150,13 @@
       color: #1f2937;
       letter-spacing: 0.2px;
     }
+
+    /* 4 वीडियो ग्रिड कार्ड स्टाइल ("Other सेवाएं" के ठीक नीचे) */
+    .video-card-item { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    .video-thumb-box { position: relative; width: 100%; height: 95px; background: #000; }
+    .video-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
+    .video-play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .video-card-title { font-size: 11.5px; font-weight: bold; color: #1f2937; padding: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* सोशल मीडिया कार्ड */
     .social-box { background: white; border-radius: 14px; padding: 14px; margin-top: 15px; text-align: center; border: 1px solid #e5e7eb; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
@@ -498,6 +505,17 @@
       <div class="other-3d-text">Other सेवाएं (मौसम, मंडी, अलर्ट)</div>
     </div>
 
+    <!-- 4 वीडियो / रील्स सेक्शन (Other सेवाएं बटन के ठीक नीचे) -->
+    <div style="margin-bottom: 15px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700;" id="videoSectionTitle">📺 ताज़ा कृषि वीडियो व रील्स</h3>
+        <span style="font-size: 11px; color: #16a34a; font-weight: bold; cursor: pointer;" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')">सभी देखें &gt;</span>
+      </div>
+      <div id="dynamicVideosContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <!-- गूगल शीट से आने वाले 4 वीडियो यहाँ दिखेंगे -->
+      </div>
+    </div>
+
     <!-- सोशल मीडिया कार्ड -->
     <div class="social-box">
       <p style="font-size:13px; font-weight:bold; color:#374151;" id="txtSocialJoin">हमारे साथ सोशल मीडिया पर जुड़ें</p>
@@ -508,7 +526,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति (बिल्कुल साफ़-सुथरा) -->
+  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं अस्वीकरण (Disclaimer)</h3>
@@ -523,7 +541,7 @@
 
       <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0; margin-top:12px;">
         <b style="color:#166534;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है। इसे किसी भी थर्ड पार्टी (Third Party) के साथ साझा नहीं किया जाता है।</p>
+        <p>आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है। इसे किसी भी थर्ड पार्टी (Third Party) के साथ साझा नहीं किया जाता है.</p>
       </div>
     </div>
   </div>
@@ -750,6 +768,7 @@
     let alertsRecords = [];
     let tipsRecords = [];
     let dailyStories = [];
+    let videoRecords = [];
 
     let currentImgElement = null;
     let storyTimer = null;
@@ -769,6 +788,7 @@
         btnComp: "All कंपनी बीज",
         btnChem: "दवाइयाँ Chemicals",
         otherServices: "Other सेवाएं (मौसम, मंडी, अलर्ट)",
+        videoSectionTitle: "📺 ताज़ा कृषि वीडियो व रील्स",
         socialJoin: "हमारे साथ सोशल मीडिया पर जुड़ें",
         navHome: "होम",
         navCrops: "फसलें",
@@ -796,6 +816,7 @@
         btnComp: "All Company Seeds",
         btnChem: "Chemicals & Tonics",
         otherServices: "Other Services (Weather, Mandi)",
+        videoSectionTitle: "📺 Latest Agri Videos & Reels",
         socialJoin: "Connect with us on Social Media",
         navHome: "Home",
         navCrops: "Crops",
@@ -830,6 +851,7 @@
       document.getElementById('btnSched').innerText = d.btnSched;
       document.getElementById('btnAdv').innerText = d.btnAdv;
       document.getElementById('btnComp').innerText = d.btnComp;
+      document.getElementById('videoSectionTitle').innerText = d.videoSectionTitle;
       document.getElementById('txtSocialJoin').innerText = d.socialJoin;
       document.getElementById('navHome').innerText = d.navHome;
       document.getElementById('navCrops').innerText = d.navCrops;
@@ -923,7 +945,21 @@
           title: cols[0] || 'स्टोरी', type: cols[1] || 'photo', url: cols[2] || '', icon: cols[3] || '🌱', desc: cols[4] || ''
         })).filter(r => r.title && r.title !== 'Title');
 
+        // गूगल शीट से वीडियो लोड करना
+        try {
+          const res8 = await fetch(BASE_SHEET_URL + 'Videos');
+          const text8 = await res8.text();
+          videoRecords = parseCSV(text8).map(cols => ({
+            title: cols[0] || 'कृषि वीडियो',
+            thumbnail: cols[1] || 'https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400',
+            videoUrl: cols[2] || 'https://www.youtube.com/@NMGKISAN'
+          })).filter(r => r.title && r.title !== 'Title' && r.title !== 'A (Title)');
+        } catch(err) {
+          console.log("Videos sheet error:", err);
+        }
+
         renderStoriesBar();
+        renderDynamicVideos();
       } catch (e) {
         console.log("Google Sheets load error:", e);
       }
@@ -974,6 +1010,33 @@
           </div>`;
       });
       window.activeStories = storiesToRender;
+    }
+
+    function renderDynamicVideos() {
+      const container = document.getElementById('dynamicVideosContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      let videosToShow = videoRecords.slice(0, 4);
+      if (videosToShow.length === 0) {
+        videosToShow = [
+          { title: "टमाटर की उन्नत खेती", thumbnail: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400", videoUrl: "https://www.youtube.com/@NMGKISAN" },
+          { title: "मिर्च में थ्रिप्स नियंत्रण", thumbnail: "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?w=400", videoUrl: "https://www.youtube.com/@NMGKISAN" },
+          { title: "खीरा की वैज्ञानिक खेती", thumbnail: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400", videoUrl: "https://www.youtube.com/@NMGKISAN" },
+          { title: "तरबूज की बम्पर पैदावार", thumbnail: "https://images.unsplash.com/photo-1587049352847-4a222e784d38?w=400", videoUrl: "https://www.youtube.com/@NMGKISAN" }
+        ];
+      }
+
+      videosToShow.forEach(v => {
+        container.innerHTML += `
+          <div class="video-card-item" onclick="window.open('${v.videoUrl}', '_blank')">
+            <div class="video-thumb-box">
+              <img src="${v.thumbnail}" alt="${v.title}" onerror="this.src='https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400'">
+              <div class="video-play-icon">▶</div>
+            </div>
+            <div class="video-card-title">${v.title}</div>
+          </div>`;
+      });
     }
 
     function handleStoryClick(index) {
@@ -1428,7 +1491,6 @@
       }
     }
 
-    // बोलकर सर्च करने का बिल्कुल अचूक और आसान तरीका (जो एंड्रॉइड मोबाइल पर सीधे काम करेगा)
     function startVoiceSearch() {
       const searchInput = document.getElementById('homeSearch');
       const voiceBtn = document.getElementById('voiceSearchBtn');
@@ -1463,7 +1525,6 @@
         recognition.onerror = function(event) {
           voiceBtn.classList.remove('listening');
           searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-          // यदि ब्राउज़र ब्लॉक करे, तो सीधे कीबोर्ड का माइक उपयोग करने का सुझाव दे देगा
           searchInput.focus();
         };
 
