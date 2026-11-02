@@ -151,7 +151,7 @@
       letter-spacing: 0.2px;
     }
 
-    /* 4 वीडियो ग्रिड कार्ड स्टाइल ("Other सेवाएं" के ठीक नीचे) */
+    /* 4 वीडियो ग्रिड कार्ड स्टाइल */
     .video-card-item { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
     .video-thumb-box { position: relative; width: 100%; height: 95px; background: #000; }
     .video-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -434,7 +434,7 @@
     <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- लाइव मौसम कार्ड (सही कृषि सलाह के साथ) -->
+    <!-- लाइव मौसम कार्ड -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 मौसम लोड हो रहा है...</h4>
@@ -885,17 +885,25 @@
       try {
         const res1 = await fetch(BASE_SHEET_URL + 'Sheet1');
         const text1 = await res1.text();
-        sheetRecords = parseCSV(text1).map(cols => ({
-          company: cols[0] || 'अन्य कंपनी',
-          crop: cols[1] || '',
-          variety: cols[2] || '',
-          segment: cols[3] || 'हाइब्रिड',
-          features: cols[4] || '',
-          weight: cols[5] || '',
-          maturity: cols[6] || '',
-          resistance: cols[7] || '',
-          photo: cols[8] || ''
-        })).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)' && r.crop.toLowerCase() !== 'crop');
+        sheetRecords = parseCSV(text1).map(cols => {
+          let foundPhoto = '';
+          for(let i = 0; i < cols.length; i++) {
+            if(cols[i] && cols[i].trim().startsWith('http')) {
+              foundPhoto = cols[i].trim();
+            }
+          }
+          return {
+            company: cols[0] || 'अन्य कंपनी',
+            crop: cols[1] || '',
+            variety: cols[2] || '',
+            segment: cols[3] || 'हाइब्रिड',
+            features: cols[4] || '',
+            weight: cols[5] || '',
+            maturity: cols[6] || '',
+            resistance: cols[7] || '',
+            photo: foundPhoto
+          };
+        }).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)' && r.crop.toLowerCase() !== 'crop');
 
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
@@ -945,7 +953,6 @@
           title: cols[0] || 'स्टोरी', type: cols[1] || 'photo', url: cols[2] || '', icon: cols[3] || '🌱', desc: cols[4] || ''
         })).filter(r => r.title && r.title !== 'Title');
 
-        // गूगल शीट से वीडियो लोड करना
         try {
           const res8 = await fetch(BASE_SHEET_URL + 'Videos');
           const text8 = await res8.text();
