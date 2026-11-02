@@ -401,7 +401,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
+    <!-- सर्च बार (सर्च बटन और वॉयस माइक बटन के साथ) -->
     <div class="search-wrapper">
       <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -1298,57 +1298,60 @@
       }
     }
 
-    // वॉइस सर्च: स्क्रीन पर लिखा आएगा "मैं आपकी बात सुन रहा हूँ, बोलिए..." और एरर हटाई गई
+    // वॉयस सर्च: अब यह मोबाइल और क्रोम ब्राउज़र के इन-बिल्ट वेब स्पीच को ट्रिगर करेगा
     function startVoiceSearch() {
       const searchInput = document.getElementById('homeSearch');
       const voiceBtn = document.getElementById('voiceSearchBtn');
       
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       
-      if (!SpeechRecognition) { 
-        alert("आपका ब्राउज़र वॉइस सर्च सपोर्ट नहीं करता। कृपया कीबोर्ड के माइक (🎤) का उपयोग करें।"); 
-        return; 
+      if (!SpeechRecognition) {
+        alert("आपका ब्राउज़र बोलकर सर्च करने की अनुमति नहीं देता। कृपया गूगल क्रोम (Chrome) का उपयोग करें।");
+        return;
       }
       
-      const recognition = new SpeechRecognition();
-      recognition.lang = 'hi-IN';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-      
-      voiceBtn.classList.add('listening');
-      searchInput.value = "";
-      searchInput.placeholder = "🎙️ मैं आपकी बात सुन रहा हूँ, बोलिए...";
-
-      recognition.onresult = function(e) {
-        let spokenText = e.results[0][0].transcript;
-        let cleanText = spokenText.replace(/[।.,?!]/g, '').trim();
-        searchInput.value = cleanText;
-        voiceBtn.classList.remove('listening');
-        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        
-        // बोलते ही अपने आप सर्च चल जाए
-        triggerManualSearch();
-      };
-      
-      recognition.onerror = function(event) {
-        voiceBtn.classList.remove('listening');
-        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        // बिना किसी रुकावट के कीबोर्ड माइक उपयोग करने का सुझाव
-        console.log("Speech recognition error: ", event.error);
-      };
-
-      recognition.onend = function() {
-        voiceBtn.classList.remove('listening');
-        if (!searchInput.value) {
-          searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        }
-      };
-
       try {
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'hi-IN';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        
+        voiceBtn.classList.add('listening');
+        searchInput.value = "";
+        searchInput.placeholder = "🎙️ मैं आपकी बात सुन रहा हूँ, बोलिए...";
+
+        recognition.onresult = function(event) {
+          let spokenText = event.results[0][0].transcript;
+          let cleanText = spokenText.replace(/[।.,?!]/g, '').trim();
+          
+          searchInput.value = cleanText;
+          voiceBtn.classList.remove('listening');
+          searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+          
+          // बोलते ही अपने आप सर्च का परिणाम आ जाएगा
+          triggerManualSearch();
+        };
+        
+        recognition.onerror = function(event) {
+          voiceBtn.classList.remove('listening');
+          searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+          console.error("Voice search error: ", event.error);
+          alert("आवाज़ साफ नहीं आई या माइक्रोफोन की अनुमति नहीं मिली। कृपया पुनः प्रयास करें।");
+        };
+
+        recognition.onend = function() {
+          voiceBtn.classList.remove('listening');
+          if (!searchInput.value) {
+            searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+          }
+        };
+
         recognition.start();
+
       } catch (err) {
         voiceBtn.classList.remove('listening');
-        alert("कृपया अपने मोबाइल कीबोर्ड पर दिए गए माइक (🎤) से बोलकर सर्च करें।");
+        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+        alert("माइक्रोफोन शुरू करने में दिक्कत आई। कृपया सुनिश्चित करें कि आपने माइक की अनुमति (Permission) दी है।");
       }
     }
 
