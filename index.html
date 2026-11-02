@@ -87,7 +87,7 @@
 
     /* सर्च बार */
     .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
-    .search-box { width: 100%; padding: 13px 80px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+    .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
     .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; border-radius: 50%; }
     .voice-btn.listening { animation: pulse 1s infinite alternate; background: #fee2e2; }
@@ -401,11 +401,11 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
+    <!-- सर्च बार (सर्च बटन 🔍 और वॉयस बटन 🎙️ के साथ) -->
     <div class="search-wrapper">
-      <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज पूरा लिखें..." oninput="executeSearch(this.value)">
+      <input type="text" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
-        <button class="search-icon-btn" onclick="executeSearch(document.getElementById('homeSearch').value)">🔍</button>
+        <button class="search-icon-btn" onclick="triggerManualSearch()" title="सर्च करें">🔍</button>
         <button class="voice-btn" id="voiceSearchBtn" onclick="startVoiceSearch()" title="बोलकर सर्च करें">🎙️</button>
       </div>
     </div>
@@ -1261,20 +1261,29 @@
       }
     }
 
-    // सर्च फ़ंक्शन: कम से कम 2 अक्षर या पूरा नाम (जैसे खीरा, टमाटर, तरबूज) लिखने पर ही वैरायटी आएगी
-    function executeSearch(val) {
-      if (!val || !val.trim()) return;
-      
-      const q = val.trim().toLowerCase();
-      if (q.length < 2) {
-        return; 
+    // कीबोर्ड पर Enter दबाने पर सर्च हो
+    function handleSearchKeyPress(e) {
+      if (e.key === 'Enter') {
+        triggerManualSearch();
       }
+    }
 
-      if (sheetRecords.length === 0) {
-        alert("⚠️ डेटा अभी लोड हो रहा है, कृपया 2 सेकंड बाद सर्च करें।");
+    // लिखकर या सर्च बटन (🔍) दबाकर सर्च करने का पक्का तरीका
+    function triggerManualSearch() {
+      const searchInput = document.getElementById('homeSearch');
+      const val = searchInput.value ? searchInput.value.trim() : '';
+      
+      if (!val) {
+        alert("कृपया सर्च बॉक्स में फसल या वैरायटी का नाम लिखें (उदा. टमाटर, खीरा)!");
         return;
       }
 
+      if (sheetRecords.length === 0) {
+        alert("⚠️ डेटा अभी लोड हो रहा है, कृपया 2 सेकंड रुककर दोबारा कोशिश करें।");
+        return;
+      }
+
+      const q = val.toLowerCase();
       const filtered = sheetRecords.filter(r => {
         const variety = (r.variety || '').toLowerCase();
         const crop = (r.crop || '').toLowerCase();
@@ -1282,10 +1291,14 @@
         return variety.includes(q) || crop.includes(q) || company.includes(q);
       });
 
-      renderVarietiesList(filtered, 'खोज परिणाम: ' + val);
+      if (filtered.length === 0) {
+        alert(`"${val}" से संबंधित कोई वैरायटी नहीं मिली। कृपया सही नाम (टमाटर, खीरा, तरबूज) लिखें।`);
+      } else {
+        renderVarietiesList(filtered, 'खोज परिणाम: ' + val);
+      }
     }
 
-    // वॉइस सर्च: केवल स्क्रीन पर टेक्स्ट दिखेगा (फोन की कोई वॉइस नहीं बोलेगी)
+    // वॉयस सर्च: स्क्रीन पर लिखा आएगा "मैं आपकी बात सुन रहा हूँ, किसान भाई..." और फोन की कोई आवाज नहीं बजेगी
     function startVoiceSearch() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) { 
@@ -1295,6 +1308,9 @@
       
       const recognition = new SpeechRecognition();
       recognition.lang = 'hi-IN';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
       const voiceBtn = document.getElementById('voiceSearchBtn');
       const searchInput = document.getElementById('homeSearch');
       
@@ -1306,22 +1322,33 @@
         let spokenText = e.results[0][0].transcript;
         let cleanText = spokenText.replace(/[।.,?!]/g, '').trim();
         searchInput.value = cleanText;
-        executeSearch(cleanText);
+        voiceBtn.classList.remove('listening');
+        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+        
+        // बोलते ही अपने आप सर्च चल जाए
+        triggerManualSearch();
       };
       
       recognition.onerror = function(event) {
         voiceBtn.classList.remove('listening');
-        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज पूरा लिखें...";
+        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+        console.error("Speech recognition error", event.error);
+        alert("आवाज़ स्पष्ट नहीं आई, कृपया दोबारा माइक दबाकर बोलें।");
       };
 
       recognition.onend = function() {
         voiceBtn.classList.remove('listening');
         if (!searchInput.value) {
-          searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज पूरा लिखें...";
+          searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
         }
       };
 
-      recognition.start();
+      try {
+        recognition.start();
+      } catch (err) {
+        voiceBtn.classList.remove('listening');
+        alert("माइक्रोफोन की अनुमति (Permission) दें या क्रोम ब्राउज़र में खोलें।");
+      }
     }
 
     function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
