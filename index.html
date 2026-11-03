@@ -193,9 +193,10 @@
     .list-title { font-size: 15px; font-weight: 600; }
     .arrow { color: #9ca3af; font-weight: bold; }
 
-    /* वैरायटी कार्ड और फोटो स्टाइल */
+    /* वैरायटी कार्ड और मल्टी-फोटो गैलरी स्टाइल */
     .variety-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
-    .var-photo { width: 100%; height: 190px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; background-color: #f3f4f6; display: block; }
+    .var-photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 10px; }
+    .var-photo { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; background-color: #f3f4f6; display: block; border: 1px solid #e5e7eb; }
     .badge-variety { background: #e8f5e9; color: #1b5e20; font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 700; display: inline-block; margin-bottom: 6px; }
     .badge-company { background: #eff6ff; color: #1d4ed8; font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 700; display: inline-block; margin-bottom: 6px; margin-left: 4px; }
     .var-title { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 6px; }
@@ -886,10 +887,16 @@
         const res1 = await fetch(BASE_SHEET_URL + 'Sheet1');
         const text1 = await res1.text();
         sheetRecords = parseCSV(text1).map(cols => {
-          let foundPhoto = '';
+          let photoList = [];
           for(let i = 0; i < cols.length; i++) {
-            if(cols[i] && cols[i].trim().startsWith('http')) {
-              foundPhoto = cols[i].trim();
+            if(cols[i] && cols[i].trim().includes('http')) {
+              let parts = cols[i].split(',');
+              parts.forEach(p => {
+                let cleanUrl = p.trim();
+                if(cleanUrl.startsWith('http')) {
+                  photoList.push(cleanUrl);
+                }
+              });
             }
           }
           return {
@@ -901,7 +908,7 @@
             weight: cols[5] || '',
             maturity: cols[6] || '',
             resistance: cols[7] || '',
-            photo: foundPhoto
+            photos: photoList
           };
         }).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)' && r.crop.toLowerCase() !== 'crop');
 
@@ -1234,14 +1241,18 @@
       }
       list.forEach(v => {
         let emoji = getCropEmoji(v.crop);
-        let photoHtml = '';
-        if (v.photo && v.photo.trim().startsWith('http')) {
-          photoHtml = `<img src="${v.photo.trim()}" class="var-photo" alt="${v.variety}" onerror="this.style.display='none'">`;
+        let photosHtml = '';
+        if (v.photos && v.photos.length > 0) {
+          photosHtml += '<div class="var-photo-grid">';
+          v.photos.slice(0, 3).forEach(imgUrl => {
+            photosHtml += `<img src="${imgUrl}" class="var-photo" alt="${v.variety}" onerror="this.style.display='none'">`;
+          });
+          photosHtml += '</div>';
         }
 
         container.innerHTML += `
           <div class="variety-card">
-            ${photoHtml}
+            ${photosHtml}
             <span class="badge-variety">${emoji} ${v.variety}</span>
             <span class="badge-company">${v.company}</span>
             <div class="var-title">${emoji} ${v.variety} (${v.crop})</div>
