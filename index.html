@@ -757,7 +757,7 @@
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     
     // आपका नवीनतम Apps Script Web App URL
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3ntUtBsQ4vcQBm4z7zNEfiS7lHwsR9Rbn2DQuxhFPm01NKMXKoo2nAAvzqNyY6k4/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxt8dzs0Wxz1EnSbjUAUyGk6uuDmQhtOHhFif5ppxKmh5dyz9xn7gkVZTV4OTb1KwU/exec";
 
     let sheetRecords = [];
     let scheduleRecords = {};
@@ -775,12 +775,17 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // फसल के नामों को एक समान करने का फंक्शन
+    // फसल के नामों को एक समान करने और फालतू टेक्स्ट को फिल्टर करने का फंक्शन
     function getStandardCropName(raw) {
       if (!raw) return '';
       let c = raw.trim();
       let low = c.toLowerCase();
       
+      // AI रिपोर्ट या लंबे पैराग्राफ को तुरंत रिजेक्ट करें
+      if (c.length > 35 || c.includes('।') || c.includes('उपचार') || c.includes('लक्षण') || c.includes('सावधानियां') || c.includes('दवा')) {
+        return '';
+      }
+
       if (low.includes('टमाटर') || low.includes('tomato')) return 'टमाटर';
       if (low.includes('शिमला') || low.includes('capsicum')) return 'शिमला मिर्च';
       if (low.includes('मिर्च') || low.includes('chilli') || low.includes('chili') || low.includes('pepper')) return 'मिर्च';
@@ -938,9 +943,10 @@
             }
           }
           let rawCrop = cols[1] || '';
+          let cleanedName = getStandardCropName(rawCrop);
           return {
             company: cols[0] || 'अन्य कंपनी',
-            crop: getStandardCropName(rawCrop),
+            crop: cleanedName,
             rawCrop: rawCrop,
             variety: cols[2] || '',
             segment: cols[3] || 'हाइब्रिड',
@@ -950,7 +956,7 @@
             resistance: cols[7] || '',
             photos: photoList
           };
-        }).filter(r => r.crop && r.crop.toLowerCase() !== 'crop' && !r.crop.includes('crop (फसल)'));
+        }).filter(r => r.crop && r.crop.length > 0 && r.crop.toLowerCase() !== 'crop' && !r.crop.includes('crop (फसल)'));
 
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
@@ -960,8 +966,10 @@
           const rawC = cols[0];
           if(rawC && !rawC.includes('Column A')) {
             const crop = getStandardCropName(rawC);
-            if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
-            scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
+            if(crop) {
+              if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
+              scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
+            }
           }
         });
 
@@ -973,8 +981,10 @@
           const rawC = cols[0];
           if(rawC && !rawC.includes('Crop')) {
             const crop = getStandardCropName(rawC);
-            if(!protectionRecords[crop]) protectionRecords[crop] = [];
-            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', icon: getCropEmoji(crop) });
+            if(crop) {
+              if(!protectionRecords[crop]) protectionRecords[crop] = [];
+              protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', icon: getCropEmoji(crop) });
+            }
           }
         });
 
