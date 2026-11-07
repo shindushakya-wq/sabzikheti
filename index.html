@@ -26,10 +26,10 @@
     .header-title { font-size: 15px; font-weight: bold; letter-spacing: 0.3px; }
     .header-actions { display: flex; align-items: center; gap: 8px; }
     
-    /* भाषा बटन */
+    /* भाषा बदलने का बटन */
     .lang-toggle-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); color: white; padding: 5px 9px; border-radius: 14px; font-size: 11px; font-weight: bold; cursor: pointer; }
     
-    /* घंटी नोटिफिकेशन */
+    /* घंटी नोटिफिकेशन बैज */
     .bell-wrapper { position: relative; cursor: pointer; padding: 2px; }
     .bell-icon { font-size: 18px; }
     .notification-badge { position: absolute; top: -4px; right: -4px; background: #dc2626; color: white; font-size: 9px; font-weight: bold; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1.5px solid white; animation: pulseBadge 1.5s infinite; }
@@ -70,7 +70,7 @@
     .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* मौसम कार्ड */
+    /* लाइव मौसम कार्ड */
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; }
     .weather-card.night-mode { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-color: #334155; color: white; }
     .weather-card.night-mode h4, .weather-card.night-mode .weather-datetime, .weather-card.night-mode .weather-temp, .weather-card.night-mode #weatherDesc { color: #f8fafc; }
@@ -115,7 +115,7 @@
     .card-chemicals { background: #fce7f3; border-color: #fbcfe8; }
     .card-chemicals h3 { color: #be185d; }
 
-    /* 3D Other सेवाएं बटन */
+    /* 3D Neumorphic Other सेवाएं बटन */
     .other-3d-btn {
       width: 100%;
       background: linear-gradient(145deg, #ffffff, #e6e6e6);
@@ -151,7 +151,7 @@
       letter-spacing: 0.2px;
     }
 
-    /* वीडियो ग्रिड कार्ड */
+    /* 4 वीडियो ग्रिड कार्ड स्टाइल */
     .video-card-item { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
     .video-thumb-box { position: relative; width: 100%; height: 95px; background: #000; }
     .video-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -165,7 +165,7 @@
     .link-yt { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
     .link-fb { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
 
-    /* फ्लोटिंग बटन व मोडल */
+    /* फ़्लोटिंग बटन व मोडल */
     .fab-solution { position: fixed; right: 16px; bottom: 75px; background: #16a34a; color: white; border: none; border-radius: 30px; padding: 12px 18px; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45); z-index: 1001; }
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.active { display: flex; }
@@ -181,7 +181,7 @@
     .preview-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; display: none; }
     .doc-result-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-top: 12px; display: none; }
 
-    /* फॉर्म इनपुट */
+    /* फॉर्म इनपुट्स */
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 4px; }
     .form-control { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-size: 14px; }
@@ -522,19 +522,21 @@
     </div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें -->
+  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
-    <div class="variety-card" style="border-left:5px solid #0369a1;">
+    <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं अस्वीकरण (Disclaimer)</h3>
-      <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5;">
-        <b style="color:#991b1b;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-        <p>1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> केवल किसानों के मार्गदर्शन और सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
-        <p>2. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा और रोग निदान की जानकारी केवल सुझाव के रूप में हैं।</p>
-        <p>3. किसी भी रासायनिक दवा के उपयोग से पहले डिब्बे पर दिए निर्देश अवश्य पढ़ें।</p>
+      <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
+        <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
+        <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
+        <p style="margin-bottom:8px;">2. इस ऐप में दी गई बीज वैरायटी की जानकारी किसानों की मदद और मार्गदर्शन के लिए है। सभी ब्रांड व नाम संबंधित कंपनियों के ट्रेडमार्क हैं। हमारा यह ऐप किसी भी कंपनी से आधिकारिक तौर पर जुड़ा हुआ नहीं है।</p>
+        <p style="margin-bottom:8px;">3. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा (डोज़) और रोग निदान की जानकारी केवल सुझाव के रूप में हैं।</p>
+        <p style="margin-bottom:8px;">4. किसी भी रासायनिक कीटनाशक, फफूंदनाशक या उर्वरक का उपयोग करने से पहले दवा के डिब्बे पर छपे निर्देशों को अच्छी तरह पढ़ लें या अपने नजदीकी कृषि विशेषज्ञों / अधिकृत दुकानदारों की सलाह अवश्य लें।</p>
+        <p style="margin-bottom:0px;">5. मौसम, मिट्टी और स्थानीय परिस्थितियों के भिन्न होने के कारण फसल के परिणाम अलग हो सकते हैं। इस ऐप पर दी गई जानकारी के उपयोग से होने वाले किसी भी फसल या आर्थिक नुकसान के लिए ऐप डेवलपर सीधे तौर पर जिम्मेदार नहीं होंगे।</p>
       </div>
-      <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0; margin-top:12px;">
-        <b style="color:#166534;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-        <p>आपका व्यक्तिगत डेटा पूरी तरह सुरक्षित है और किसी थर्ड पार्टी के साथ साझा नहीं किया जाता।</p>
+      <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
+        <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
+        <p style="margin-bottom:0px;">आपके द्वारा ऐप में दर्ज किया जाने वाला नाम या मोबाइल नंबर सुरक्षित रखा जाता है। इस डेटा का उपयोग केवल आपको कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है। इसे किसी भी थर्ड पार्टी (Third Party) के साथ साझा नहीं किया जाता है।</p>
       </div>
     </div>
   </div>
@@ -770,7 +772,7 @@
     const navHistory = ['screen-home'];
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     
-    // आपका नवीनतम Apps Script Web App URL
+    // नवीनतम Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJCMcfZAfZHvbFRXxx2F7YzmNUV52__MFCBidlC588Yh4NRL2nkULgGyawdibU-uA/exec";
 
     let sheetRecords = [];
@@ -961,7 +963,6 @@
           let rawCrop = cols[1] || '';
           let cleanedCrop = getStandardCropName(rawCrop);
 
-          // यदि कंपनी कॉलम में गलती से तारीख आ रही हो तो उसे रिजेक्ट करें
           if (rawCompany.includes('/') && rawCompany.includes(':')) {
             cleanedCrop = '';
           }
