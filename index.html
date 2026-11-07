@@ -799,6 +799,7 @@
       let c = raw.trim();
       let low = c.toLowerCase();
       
+      // AI रिपोर्ट या लंबे पैराग्राफ को तुरंत रिजेक्ट करें
       if (c.length > 35 || c.includes('।') || c.includes('उपचार') || c.includes('लक्षण') || c.includes('सावधानियां') || c.includes('दवा') || c.includes('पत्ती') || c.includes('कीड़े')) {
         return '';
       }
