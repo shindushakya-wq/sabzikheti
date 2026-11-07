@@ -598,9 +598,26 @@
       <div class="list-left"><span class="list-icon">⚖️</span><span class="list-title" style="color:#0369a1; font-weight:bold;">नियम व शर्तें</span></div>
       <span class="arrow">&gt;</span>
     </div>
-    <div class="list-item" style="background:#f0fdf4; border:1.5px solid #86efac;" onclick="shareAppWithFriends()">
-      <div class="list-left"><span class="list-icon">📲</span><span class="list-title" style="color:#166534; font-weight:bold;">किसान साथियों को शेयर करें</span></div>
+    <div class="list-item" style="background:#f0fdf4; border:1.5px solid #86efac;" onclick="showAiReportsScreen()">
+      <div class="list-left"><span class="list-icon">🌿</span><span class="list-title" style="color:#166534; font-weight:bold;">मेरी AI रोग जांच रिपोर्ट</span></div>
       <span class="arrow">&gt;</span>
+    </div>
+    <div class="list-item" onclick="shareAppWithFriends()">
+      <div class="list-left"><span class="list-icon">📲</span><span class="list-title">किसान साथियों को शेयर करें</span></div>
+      <span class="arrow">&gt;</span>
+    </div>
+  </div>
+
+  <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
+  <div id="screen-ai-reports" class="screen">
+    <div class="variety-card" style="border-left:5px solid #16a34a; margin-bottom:12px;">
+      <h3 style="color:#166534; font-size:16px; margin-bottom:6px;">🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड</h3>
+      <p style="font-size:12px; color:#6b7280;">गूगल शीट से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
+    </div>
+    <div id="aiReportsContainer">
+      <div class="variety-card" style="text-align:center; padding:20px; color:#6b7280;">
+        ⏳ रिपोर्ट लोड हो रही है...
+      </div>
     </div>
   </div>
 
@@ -757,7 +774,7 @@
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     
     // आपका नवीनतम Apps Script Web App URL
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxt8dzs0Wxz1EnSbjUAUyGk6uuDmQhtOHhFif5ppxKmh5dyz9xn7gkVZTV4OTb1KwU/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJCMcfZAfZHvbFRXxx2F7YzmNUV52__MFCBidlC588Yh4NRL2nkULgGyawdibU-uA/exec";
 
     let sheetRecords = [];
     let scheduleRecords = {};
@@ -767,6 +784,7 @@
     let tipsRecords = [];
     let dailyStories = [];
     let videoRecords = [];
+    let diagnosisHistoryRecords = [];
 
     let currentImgElement = null;
     let base64ImageRaw = "";
@@ -781,7 +799,6 @@
       let c = raw.trim();
       let low = c.toLowerCase();
       
-      // AI रिपोर्ट या लंबे पैराग्राफ को तुरंत रिजेक्ट करें
       if (c.length > 35 || c.includes('।') || c.includes('उपचार') || c.includes('लक्षण') || c.includes('सावधानियां') || c.includes('दवा') || c.includes('पत्ती') || c.includes('कीड़े')) {
         return '';
       }
@@ -946,7 +963,6 @@
           let rawCrop = cols[1] || '';
           let cleanedCrop = getStandardCropName(rawCrop);
           
-          // अगर कंपनी में तारीख/समय आ रहा हो तो उसे रिजेक्ट करें
           let isDateCompany = rawCompany.includes('/') && rawCompany.includes(':');
           if (isDateCompany) {
             cleanedCrop = '';
@@ -1019,6 +1035,18 @@
         dailyStories = parseCSV(text7).map(cols => ({
           title: cols[0] || 'स्टोरी', type: cols[1] || 'photo', url: cols[2] || '', icon: cols[3] || '🌱', desc: cols[4] || ''
         })).filter(r => r.title && r.title !== 'Title');
+
+        try {
+          const resDiag = await fetch(BASE_SHEET_URL + 'Diagnosis');
+          const textDiag = await resDiag.text();
+          diagnosisHistoryRecords = parseCSV(textDiag).map(cols => ({
+            timestamp: cols[0] || '',
+            notes: cols[1] || '',
+            result: cols[2] || ''
+          })).filter(r => r.result && !r.timestamp.includes('तारीख'));
+        } catch(eDiag) {
+          console.log("Diagnosis sheet load error:", eDiag);
+        }
 
         try {
           const res8 = await fetch(BASE_SHEET_URL + 'Videos');
@@ -1403,7 +1431,6 @@
     }
 
     function showCompaniesList() {
-      // तारीख या समय वाले अमान्य नामों को कंपनियों की सूची से हटाना
       const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== '' && !c.includes('/')))].sort();
       const container = document.getElementById('companiesContainer');
       container.innerHTML = '';
@@ -1488,6 +1515,44 @@
     function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', 'मौसम पूर्वानुमान'); }
     function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); }
     function showPrivacyPolicyScreen() { openScreen('screen-privacy', 'नियम व शर्तें एवं गोपनीयता नीति'); }
+
+    function showAiReportsScreen() {
+      const container = document.getElementById('aiReportsContainer');
+      container.innerHTML = '';
+
+      if (!diagnosisHistoryRecords || diagnosisHistoryRecords.length === 0) {
+        container.innerHTML = `
+          <div class="variety-card" style="text-align:center; padding:24px;">
+            <span style="font-size:36px; display:block; margin-bottom:8px;">📋</span>
+            <b style="color:#374151; font-size:15px; display:block; margin-bottom:6px;">अभी कोई AI जांच रिकॉर्ड नहीं है</b>
+            <p style="font-size:13px; color:#6b7280; margin-bottom:14px;">जब आप 'तुरंत समाधान' से किसी पौधे की फोटो स्कैन करेंगे, तो उसकी रिपोर्ट यहाँ अपने आप सुरक्षित रहेगी।</p>
+            <button class="btn-action btn-wa" style="background:#1b5e20;" onclick="openSolutionModal()">⚡ अभी नई जांच करें</button>
+          </div>`;
+      } else {
+        const reversed = [...diagnosisHistoryRecords].reverse();
+        reversed.forEach((rep, idx) => {
+          const formattedText = (rep.result || '').replace(/\n/g, '<br>');
+          const waText = `नमस्ते डॉक्टर साहब, मेरी पुरानी AI जांच रिपोर्ट:\nतारीख: ${rep.timestamp}\nसवाल: ${rep.notes}\nरिपोर्ट:\n${rep.result}`;
+          container.innerHTML += `
+            <div class="variety-card" style="border-left:4px solid #16a34a; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px dashed #bbf7d0; padding-bottom:6px;">
+                <span style="font-size:12px; font-weight:bold; color:#166534;">📅 ${rep.timestamp || 'जांच रिपोर्ट'}</span>
+                <span style="font-size:11px; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-weight:bold;">जांच #${reversed.length - idx}</span>
+              </div>
+              <div style="font-size:13px; color:#1f2937; margin-bottom:6px;"><b>किसान का सवाल / नोट:</b> ${rep.notes || 'कोई सवाल नहीं'}</div>
+              <div style="font-size:13.5px; color:#374151; line-height:1.6; background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0; margin-bottom:10px;">
+                ${formattedText}
+              </div>
+              <a href="https://wa.me/916378475002?text=${encodeURIComponent(waText)}" target="_blank" class="btn-action btn-wa">
+                💬 डॉक्टर को WhatsApp पर भेजें
+              </a>
+            </div>`;
+        });
+      }
+      openScreen('screen-ai-reports', 'मेरी AI रोग जांच रिपोर्ट');
+    }
+    
+    function showGovSchemesScreen() { openScreen('screen-gov-schemes', 'सरकारी योजनाएं'); }
     
     function showExpertAdviceScreen() {
       const container = document.getElementById('tipsContainer');
@@ -1515,8 +1580,6 @@
       });
       openScreen('screen-pest-alert', 'कीट व रोग चेतावनी');
     }
-
-    function showGovSchemesScreen() { openScreen('screen-gov-schemes', 'सरकारी योजनाएं'); }
 
     function shareAppWithFriends() {
       const appUrl = window.location.href;
@@ -1699,7 +1762,9 @@
           const waMsg = `नमस्ते डॉक्टर साहब, मेरी फसल की फोटो AI से जांची गई है:\n\n${data.result}\n\nकृपया मार्गदर्शन करें।`;
           document.getElementById('btnDocWhatsapp').href = `https://wa.me/916378475002?text=${encodeURIComponent(waMsg)}`;
 
-          document.getElementById('docResultCard').style.display = 'block';
+          document.getElementById('docResultCard').style.display = "block";
+          const nowStr = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+          diagnosisHistoryRecords.push({ timestamp: nowStr, notes: "पौधे में रोग की जांच", result: data.result });
         } else {
           alert("AI से कोई परिणाम नहीं मिला, कृपया साफ फोटो अपलोड करें।");
         }
