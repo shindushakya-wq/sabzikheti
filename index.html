@@ -775,14 +775,14 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // फसल के नामों को एक समान करने और फालतू टेक्स्ट को फिल्टर करने का फंक्शन
+    // फसल के नामों को एक समान करने और फालतू टेक्स्ट को फ़िल्टर करने का फ़ंक्शन
     function getStandardCropName(raw) {
       if (!raw) return '';
       let c = raw.trim();
       let low = c.toLowerCase();
       
       // AI रिपोर्ट या लंबे पैराग्राफ को तुरंत रिजेक्ट करें
-      if (c.length > 35 || c.includes('।') || c.includes('उपचार') || c.includes('लक्षण') || c.includes('सावधानियां') || c.includes('दवा')) {
+      if (c.length > 35 || c.includes('।') || c.includes('उपचार') || c.includes('लक्षण') || c.includes('सावधानियां') || c.includes('दवा') || c.includes('पत्ती') || c.includes('कीड़े')) {
         return '';
       }
 
@@ -942,11 +942,19 @@
               });
             }
           }
+          let rawCompany = cols[0] || '';
           let rawCrop = cols[1] || '';
-          let cleanedName = getStandardCropName(rawCrop);
+          let cleanedCrop = getStandardCropName(rawCrop);
+          
+          // अगर कंपनी में तारीख/समय आ रहा हो तो उसे रिजेक्ट करें
+          let isDateCompany = rawCompany.includes('/') && rawCompany.includes(':');
+          if (isDateCompany) {
+            cleanedCrop = '';
+          }
+
           return {
-            company: cols[0] || 'अन्य कंपनी',
-            crop: cleanedName,
+            company: rawCompany || 'अन्य कंपनी',
+            crop: cleanedCrop,
             rawCrop: rawCrop,
             variety: cols[2] || '',
             segment: cols[3] || 'हाइब्रिड',
@@ -1395,7 +1403,8 @@
     }
 
     function showCompaniesList() {
-      const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== ''))].sort();
+      // तारीख या समय वाले अमान्य नामों को कंपनियों की सूची से हटाना
+      const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== '' && !c.includes('/')))].sort();
       const container = document.getElementById('companiesContainer');
       container.innerHTML = '';
       companies.forEach(comp => {
