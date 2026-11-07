@@ -757,7 +757,7 @@
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     
     // आपका नवीनतम Apps Script Web App URL
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzaNxMkkAGtssVgNwi1ZmVuydRJ7IoIxAHipExDoezSmMBYeLR-n1HTKi_gip5rRT4uoQ/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3ntUtBsQ4vcQBm4z7zNEfiS7lHwsR9Rbn2DQuxhFPm01NKMXKoo2nAAvzqNyY6k4/exec";
 
     let sheetRecords = [];
     let scheduleRecords = {};
@@ -774,6 +774,39 @@
     let storyTimer = null;
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
+
+    // फसल के नामों को एक समान करने का फंक्शन
+    function getStandardCropName(raw) {
+      if (!raw) return '';
+      let c = raw.trim();
+      let low = c.toLowerCase();
+      
+      if (low.includes('टमाटर') || low.includes('tomato')) return 'टमाटर';
+      if (low.includes('शिमला') || low.includes('capsicum')) return 'शिमला मिर्च';
+      if (low.includes('मिर्च') || low.includes('chilli') || low.includes('chili') || low.includes('pepper')) return 'मिर्च';
+      if (low.includes('फूलगोभी') || low.includes('cauliflower')) return 'फूलगोभी';
+      if (low.includes('पत्तागोभी') || low.includes('cabbage')) return 'पत्तागोभी';
+      if (low.includes('खीरा') || low.includes('cucumber')) return 'खीरा';
+      if (low.includes('तरबूज') || low.includes('watermelon')) return 'तरबूज';
+      if (low.includes('खरबूजा') || low.includes('muskmelon') || low.includes('melon')) return 'खरबूजा';
+      if (low.includes('भिंडी') || low.includes('okra')) return 'भिंडी';
+      if (low.includes('बैंगन') || low.includes('brinjal') || low.includes('egg plant')) return 'बैंगन';
+      if (low.includes('कद्दू') || low.includes('pumpkin')) return 'कद्दू';
+      if (low.includes('लौकी') || low.includes('bottle gourd')) return 'लौकी';
+      if (low.includes('करेला') || low.includes('bitter gourd')) return 'करेला';
+      if (low.includes('तोरई') || low.includes('तोरी') || low.includes('ridge gourd') || low.includes('sponge gourd')) return 'तोरी / तोरई';
+      if (low.includes('मटर') || low.includes('pea')) return 'मटर';
+      if (low.includes('स्वीट कॉर्न') || low.includes('मक्का') || low.includes('भुट्टा') || low.includes('sweet corn') || low.includes('corn')) return 'स्वीट कॉर्न / मक्का';
+      if (low.includes('मूली') || low.includes('radish')) return 'मूली';
+      if (low.includes('गाजर') || low.includes('carrot')) return 'गाजर';
+      if (low.includes('प्याज') || low.includes('onion')) return 'प्याज';
+      if (low.includes('टिंडा') || low.includes('tinda')) return 'टिंडा';
+      if (low.includes('चुकंदर') || low.includes('beetroot')) return 'चुकंदर';
+      if (low.includes('बाजरा')) return 'बाजरा';
+      if (low.includes('सरसों')) return 'सरसों';
+
+      return c.split('(')[0].split('-')[0].split('/')[0].trim();
+    }
 
     const langData = {
       hi: {
@@ -871,11 +904,21 @@
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
       if (c.includes('टमाटर')) return '🍅';
-      if (c.includes('मिर्च')) return '🫑';
+      if (c.includes('शिमला')) return '🫑';
+      if (c.includes('मिर्च')) return '🌶️';
       if (c.includes('खीरा')) return '🥒';
       if (c.includes('तरबूज')) return '🍉';
+      if (c.includes('खरबूजा')) return '🍈';
       if (c.includes('फूलगोभी')) return '🥦';
+      if (c.includes('पत्तागोभी')) return '🥬';
       if (c.includes('भिंडी')) return '🟢';
+      if (c.includes('बैंगन')) return '🍆';
+      if (c.includes('मटर')) return '🟢';
+      if (c.includes('कद्दू')) return '🎃';
+      if (c.includes('गाजर')) return '🥕';
+      if (c.includes('मूली')) return '🌱';
+      if (c.includes('प्याज')) return '🧅';
+      if (c.includes('कॉर्न') || c.includes('मक्का')) return '🌽';
       return '🌱';
     }
 
@@ -894,9 +937,11 @@
               });
             }
           }
+          let rawCrop = cols[1] || '';
           return {
             company: cols[0] || 'अन्य कंपनी',
-            crop: cols[1] || '',
+            crop: getStandardCropName(rawCrop),
+            rawCrop: rawCrop,
             variety: cols[2] || '',
             segment: cols[3] || 'हाइब्रिड',
             features: cols[4] || '',
@@ -905,15 +950,16 @@
             resistance: cols[7] || '',
             photos: photoList
           };
-        }).filter(r => r.crop && r.crop.toLowerCase() !== 'crop (फसल)' && r.crop.toLowerCase() !== 'crop');
+        }).filter(r => r.crop && r.crop.toLowerCase() !== 'crop' && !r.crop.includes('crop (फसल)'));
 
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
         const schedRows = parseCSV(text2);
         scheduleRecords = {};
         schedRows.forEach(cols => {
-          const crop = cols[0];
-          if(crop && crop !== 'Column A (Crop)') {
+          const rawC = cols[0];
+          if(rawC && !rawC.includes('Column A')) {
+            const crop = getStandardCropName(rawC);
             if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
             scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
           }
@@ -924,8 +970,9 @@
         const protRows = parseCSV(text3);
         protectionRecords = {};
         protRows.forEach(cols => {
-          const crop = cols[0];
-          if(crop && crop !== 'A (Crop)') {
+          const rawC = cols[0];
+          if(rawC && !rawC.includes('Crop')) {
+            const crop = getStandardCropName(rawC);
             if(!protectionRecords[crop]) protectionRecords[crop] = [];
             protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', icon: getCropEmoji(crop) });
           }
@@ -935,19 +982,19 @@
         const text4 = await res4.text();
         chemicalsRecords = parseCSV(text4).map(cols => ({
           name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || ''
-        })).filter(r => r.name && r.name !== 'A (दवा का नाम)');
+        })).filter(r => r.name && !r.name.includes('दवा का नाम'));
 
         const res5 = await fetch(BASE_SHEET_URL + 'Alerts');
         const text5 = await res5.text();
         alertsRecords = parseCSV(text5).map(cols => ({
           title: cols[0] || '', desc: cols[1] || '', type: cols[2] || 'alert'
-        })).filter(r => r.title && r.title !== 'A (title / शीर्षक)');
+        })).filter(r => r.title && !r.title.includes('शीर्षक'));
 
         const res6 = await fetch(BASE_SHEET_URL + 'Tips');
         const text6 = await res6.text();
         tipsRecords = parseCSV(text6).map(cols => ({
           title: cols[0] || '', desc: cols[1] || '', source: cols[2] || ''
-        })).filter(r => r.title && r.title !== 'A (Title)');
+        })).filter(r => r.title && !r.title.includes('Title'));
 
         const res7 = await fetch(BASE_SHEET_URL + 'Stories');
         const text7 = await res7.text();
@@ -962,7 +1009,7 @@
             title: cols[0] || 'कृषि वीडियो',
             thumbnail: cols[1] || 'https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400',
             videoUrl: cols[2] || 'https://www.youtube.com/@NMGKISAN'
-          })).filter(r => r.title && r.title !== 'Title' && r.title !== 'A (Title)');
+          })).filter(r => r.title && !r.title.includes('Title'));
         } catch(err) {
           console.log("Videos sheet error:", err);
         }
@@ -1203,7 +1250,7 @@
     }
 
     function showAllCropsScreen() {
-      const crops = [...new Set(sheetRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))];
+      const crops = [...new Set(sheetRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))].sort();
       const container = document.getElementById('cropsContainer');
       container.innerHTML = '';
 
@@ -1265,7 +1312,7 @@
     function showProtectionCropsList() {
       const container = document.getElementById('protectionCropsContainer');
       container.innerHTML = '';
-      const crops = Object.keys(protectionRecords);
+      const crops = Object.keys(protectionRecords).sort();
       crops.forEach(crop => {
         let emoji = getCropEmoji(crop);
         container.innerHTML += `
@@ -1301,7 +1348,7 @@
     function showScheduleCropsList() {
       const container = document.getElementById('scheduleCropsContainer');
       container.innerHTML = '';
-      const crops = Object.keys(scheduleRecords);
+      const crops = Object.keys(scheduleRecords).sort();
       crops.forEach(crop => {
         let emoji = getCropEmoji(crop);
         container.innerHTML += `
@@ -1338,7 +1385,7 @@
     }
 
     function showCompaniesList() {
-      const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== ''))];
+      const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== ''))].sort();
       const container = document.getElementById('companiesContainer');
       container.innerHTML = '';
       companies.forEach(comp => {
@@ -1356,7 +1403,7 @@
 
     function selectCompany(compName) {
       const compRecords = sheetRecords.filter(r => r.company.toLowerCase() === compName.toLowerCase());
-      const cropsInComp = [...new Set(compRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))];
+      const cropsInComp = [...new Set(compRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))].sort();
       const container = document.getElementById('companyCropsContainer');
       document.getElementById('compCropHeading').innerText = `${compName} की फसलें:`;
       container.innerHTML = '';
@@ -1477,7 +1524,7 @@
 
       const q = val.toLowerCase();
       const filtered = sheetRecords.filter(r => {
-        return (r.variety || '').toLowerCase().includes(q) || (r.crop || '').toLowerCase().includes(q) || (r.company || '').toLowerCase().includes(q);
+        return (r.variety || '').toLowerCase().includes(q) || (r.crop || '').toLowerCase().includes(q) || (r.rawCrop || '').toLowerCase().includes(q) || (r.company || '').toLowerCase().includes(q);
       });
 
       if (filtered.length === 0) {
