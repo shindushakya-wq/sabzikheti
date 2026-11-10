@@ -988,7 +988,7 @@
           if(rawC && !rawC.includes('Column A')) {
             const crop = getStandardCropName(rawC);
             if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
-            scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
+            scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '', photo: cols[4] || '' });
           }
         });
 
@@ -1001,14 +1001,14 @@
           if(rawC && !rawC.includes('Crop')) {
             const crop = getStandardCropName(rawC);
             if(!protectionRecords[crop]) protectionRecords[crop] = [];
-            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', icon: getCropEmoji(crop) });
+            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', photo: cols[4] || '', icon: getCropEmoji(crop) });
           }
         });
 
         const res4 = await fetch(BASE_SHEET_URL + 'Chemicals');
         const text4 = await res4.text();
         chemicalsRecords = parseCSV(text4).map(cols => ({
-          name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || ''
+          name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || '', photo: cols[5] || ''
         })).filter(r => r.name && !r.name.includes('दवा का नाम'));
 
         const res5 = await fetch(BASE_SHEET_URL + 'Alerts');
@@ -1373,12 +1373,17 @@
       container.innerHTML = '';
       const list = protectionRecords[cropName] || [];
       list.forEach(d => {
+        let photoHtml = '';
+        if (d.photo && d.photo.trim().startsWith('http')) {
+          photoHtml = `<div style="margin-top:10px; text-align:center;"><img src="${d.photo.trim()}" alt="${d.name}" style="max-height:160px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #fca5a5; cursor:pointer;" onclick="openImageModal('${d.photo.trim()}')" title="बड़ा देखने के लिए टैप करें"></div>`;
+        }
         container.innerHTML += `
           <div class="variety-card" style="border-left:4px solid #b91c1c;">
             <div style="font-size:16px; font-weight:bold; color:#b91c1c; margin-bottom:6px;">${emoji} ${d.name}</div>
             <p style="font-size:13px; color:#374151; margin-bottom:6px;"><b>लक्षण:</b> ${d.symptoms}</p>
             <p style="font-size:13px; color:#15803d; margin-bottom:10px; background:#f0fdf4; padding:8px; border-radius:6px;"><b>सटीक दवा:</b> ${d.cure}</p>
-            <a href="https://wa.me/916378475002?text=नमस्ते%20डॉक्टर%20साहब,%20मेरी%20${encodeURIComponent(cropName)}%20में%20${encodeURIComponent(d.name)}%20की समस्या है।" target="_blank" class="btn-action btn-wa">💬 डॉक्टर से सलाह लें</a>
+            ${photoHtml}
+            <a href="https://wa.me/916378475002?text=नमस्ते%20डॉक्टर%20साहब,%20मेरी%20${encodeURIComponent(cropName)}%20में%20${encodeURIComponent(d.name)}%20की समस्या है।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">💬 डॉक्टर से सलाह लें</a>
           </div>`;
       });
       openScreen('screen-crop-diseases', `${emoji} ${cropName}`);
@@ -1409,11 +1414,16 @@
       container.innerHTML = '';
       const list = scheduleRecords[cropName] || [];
       list.forEach(step => {
+        let photoHtml = '';
+        if (step.photo && step.photo.trim().startsWith('http')) {
+          photoHtml = `<div style="margin-top:8px; text-align:center;"><img src="${step.photo.trim()}" alt="Schedule Photo" style="max-height:150px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #bbf7d0; cursor:pointer;" onclick="openImageModal('${step.photo.trim()}')" title="बड़ा देखने के लिए टैप करें"></div>`;
+        }
         container.innerHTML += `
           <div class="schedule-step">
             <b>${emoji} ${step.time}</b>
             <p><b>दवा व मात्रा:</b> ${step.med}</p>
             <p style="color:#166534; font-size:12.5px;"><b>उद्देश्य:</b> ${step.purpose}</p>
+            ${photoHtml}
           </div>`;
       });
       openScreen('screen-crop-schedule', `${emoji} ${cropName}`);
@@ -1489,6 +1499,10 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center; padding:20px;">इस श्रेणी की दवाइयाँ उपलब्ध नहीं हैं।</div>`;
       } else {
         filtered.forEach(c => {
+          let photoHtml = '';
+          if (c.photo && c.photo.trim().startsWith('http')) {
+            photoHtml = `<div style="margin-top:10px; text-align:center;"><img src="${c.photo.trim()}" alt="${c.name}" style="max-height:160px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #e2e8f0; cursor:pointer;" onclick="openImageModal('${c.photo.trim()}')" title="बड़ा देखने के लिए टैप करें"></div>`;
+          }
           container.innerHTML += `
             <div class="chem-card">
               <div class="chem-title">🧪 ${c.name} <span style="font-size:12px; font-weight:normal; background:#f1f5f9; padding:2px 6px; border-radius:4px; color:#475569;">(${c.type})</span></div>
@@ -1498,6 +1512,7 @@
               <div class="chem-val-work">${c.use}</div>
               <span class="chem-label-dose">15L पंप डोज़:</span>
               <div><span class="chem-val-dose">💧 ${c.dose}</span></div>
+              ${photoHtml}
             </div>`;
         });
       }
