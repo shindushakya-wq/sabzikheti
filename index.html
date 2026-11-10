@@ -115,7 +115,7 @@
     .card-chemicals { background: #fce7f3; border-color: #fbcfe8; }
     .card-chemicals h3 { color: #be185d; }
 
-    /* 3D Neumorphic Other सेवाएं बटन */
+    /* 3D Neumorphic "Other सेवाएं" बटन */
     .other-3d-btn {
       width: 100%;
       background: linear-gradient(145deg, #ffffff, #e6e6e6);
@@ -193,7 +193,7 @@
     .list-title { font-size: 15px; font-weight: 600; }
     .arrow { color: #9ca3af; font-weight: bold; }
 
-    /* वैरायटी कार्ड */
+    /* वैरायटी कार्ड और मल्टी-फोटो गैलरी स्टाइल */
     .variety-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
     .var-photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 10px; }
     .var-photo { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; background-color: #f3f4f6; display: block; border: 1px solid #e5e7eb; }
@@ -207,7 +207,7 @@
     .schedule-step b { color: #15803d; font-size: 14px; display: block; margin-bottom: 6px; }
     .schedule-step p { font-size: 13.5px; color: #374151; margin-bottom: 6px; line-height: 1.45; }
 
-    /* दवा कार्ड */
+    /* रंग-बिरंगे दवा कार्ड */
     .chem-card { background: white; border-radius: 14px; padding: 16px; margin-bottom: 14px; border: 1px solid #e2e8f0; box-shadow: 0 3px 8px rgba(0,0,0,0.04); }
     .chem-title { font-size: 17px; font-weight: bold; color: #1b5e20; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e8f5e9; padding-bottom: 8px; }
     .chem-label-tech { font-size: 13px; font-weight: bold; color: #1d4ed8; margin-top: 6px; display: block; }
@@ -226,7 +226,7 @@
     .nav-tab.active { color: #1b5e20; font-weight: bold; }
     .nav-tab span:first-child { font-size: 18px; }
 
-    /* स्टोरी प्लेयर */
+    /* फ़ुल-स्क्रीन स्टोरी प्लेयर */
     .story-fullscreen-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000000; z-index: 5000; flex-direction: column; align-items: center; justify-content: center; }
     .story-fullscreen-modal.active { display: flex; }
     .story-top-bar { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; flex-direction: column; gap: 8px; z-index: 5010; }
@@ -243,10 +243,17 @@
     .mandi-table td { padding: 10px 8px; border: 1px solid #e5e7eb; color: #374151; }
     .mandi-table tr:nth-child(even) { background: #f9fafb; }
 
-    /* लॉगिन मोडल */
+    /* लॉगिन स्क्रीन स्टाइल */
     .login-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
     .login-modal-overlay.active { display: flex; }
     .login-card { background: white; border-radius: 16px; padding: 22px; max-width: 360px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid #16a34a; }
+
+    /* फुल-स्क्रीन इमेज प्रीव्यू मोडल */
+    .image-preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 6000; align-items: center; justify-content: center; padding: 20px; }
+    .image-preview-modal.active { display: flex; }
+    .image-preview-content { max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: 12px; border: 2px solid white; }
+    .image-preview-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.3); border: none; color: white; font-size: 26px; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
   </style>
 </head>
 <body>
@@ -260,6 +267,7 @@
         <p style="font-size:12px; color:#6b7280; margin-top:4px;" id="loginSubText">कृषि सहायता ऐप में आपका स्वागत है</p>
       </div>
 
+      <!-- मोबाइल नंबर इनपुट -->
       <div class="form-group" id="phoneInputGroup">
         <label id="lblPhoneText">अपना मोबाइल नंबर दर्ज करें:</label>
         <div style="display:flex; gap:8px;">
@@ -269,12 +277,14 @@
         <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="btnSendOtp">📲 ओटीपी (OTP) भेजें</button>
       </div>
 
+      <!-- OTP ऑटो-फिल स्क्रीन -->
       <div class="form-group" id="otpInputGroup" style="display:none;">
         <label style="color:#16a34a; font-weight:bold;" id="lblOtpText">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
         <input type="text" id="loginOtp" class="form-control" style="text-align:center; font-size:18px; letter-spacing:4px; font-weight:bold; background:#f0fdf4;" readonly>
         <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;" id="lblOtpSuccess">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
       </div>
 
+      <!-- स्किप (Skip) बटन -->
       <div style="text-align:center; margin-top:14px; border-top:1px solid #f3f4f6; padding-top:12px;">
         <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="btnSkipText">
           ⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें
@@ -398,7 +408,7 @@
     </div>
   </div>
 
-  <!-- स्टोरी प्लेयर -->
+  <!-- फ़ुल-स्क्रीन स्टोरी प्लेयर -->
   <div class="story-fullscreen-modal" id="storyPlayerModal">
     <div class="story-top-bar">
       <div class="story-progress-bg">
@@ -429,10 +439,10 @@
       </span>
     </div>
 
-    <!-- स्टोरी बार -->
+    <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- मौसम कार्ड -->
+    <!-- लाइव मौसम कार्ड -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 मौसम लोड हो रहा है...</h4>
@@ -497,13 +507,13 @@
       </div>
     </div>
 
-    <!-- 3D Other सेवाएं बटन -->
+    <!-- 3D Neumorphic "Other सेवाएं" बटन -->
     <div class="other-3d-btn" onclick="showOtherServicesScreen()">
       <div class="other-3d-icon">⚙️</div>
       <div class="other-3d-text">Other सेवाएं (मौसम, मंडी, अलर्ट)</div>
     </div>
 
-    <!-- वीडियो सेक्शन -->
+    <!-- 4 वीडियो / रील्स सेक्शन -->
     <div style="margin-bottom: 15px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
         <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700;" id="videoSectionTitle">📺 ताज़ा कृषि वीडियो व रील्स</h3>
@@ -522,7 +532,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
+    <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं अस्वीकरण (Disclaimer)</h3>
@@ -565,7 +575,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: दवाइयां सूची -->
+  <!-- SCREEN: चयनित श्रेणी की दवाइयां सूची -->
   <div id="screen-chemical-list" class="screen">
     <h3 style="font-size:16px; margin-bottom:12px; color:#be185d;" id="chemicalListTitle">दवाइयों की सूची:</h3>
     <div id="chemicalListContainer"></div>
@@ -607,11 +617,11 @@
     </div>
   </div>
 
-  <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
+    <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
   <div id="screen-ai-reports" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; margin-bottom:12px;">
       <h3 style="color:#166534; font-size:16px; margin-bottom:6px;">🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड</h3>
-      <p style="font-size:12px; color:#6b7280;">गूगल शीट (Diagnosis) से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
+      <p style="font-size:12px; color:#6b7280;">गूगल शीट से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
     </div>
     <div id="aiReportsContainer">
       <div class="variety-card" style="text-align:center; padding:20px; color:#6b7280;">
@@ -620,7 +630,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: सरकारी योजनाएं -->
+<!-- SCREEN: सरकारी योजनाएं -->
   <div id="screen-gov-schemes" class="screen">
     <div class="variety-card">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">🏛️ प्रमुख सरकारी योजनाएं</h3>
@@ -636,7 +646,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: मौसम विवरण -->
+  <!-- SCREEN: मौसम -->
   <div id="screen-weather-detail" class="screen">
     <div class="variety-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -772,7 +782,7 @@
     const navHistory = ['screen-home'];
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     
-    // नवीनतम Apps Script Web App URL
+    // आपका नवीनतम Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJCMcfZAfZHvbFRXxx2F7YzmNUV52__MFCBidlC588Yh4NRL2nkULgGyawdibU-uA/exec";
 
     let sheetRecords = [];
@@ -792,17 +802,12 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // फसल के नामों को एक समान करने का आसान व सुरक्षित फ़ंक्शन
+    // फसल के नामों को एक समान करने का फंक्शन
     function getStandardCropName(raw) {
       if (!raw) return '';
       let c = raw.trim();
       let low = c.toLowerCase();
       
-      // यदि AI की कोई रिपोर्ट शीट1 में आ गई हो तो उसे छोड़ें
-      if (c.length > 35 || c.includes('उपचार') || c.includes('लक्षण') || c.includes('सावधानियां') || c.includes('दवा') || c.includes('पत्ती') || c.includes('कीड़े')) {
-        return '';
-      }
-
       if (low.includes('टमाटर') || low.includes('tomato')) return 'टमाटर';
       if (low.includes('शिमला') || low.includes('capsicum')) return 'शिमला मिर्च';
       if (low.includes('मिर्च') || low.includes('chilli') || low.includes('chili') || low.includes('pepper')) return 'मिर्च';
@@ -959,18 +964,11 @@
               });
             }
           }
-          let rawCompany = cols[0] || '';
           let rawCrop = cols[1] || '';
-          let cleanedCrop = getStandardCropName(rawCrop);
-
-          if (rawCompany.includes('/') && rawCompany.includes(':')) {
-            cleanedCrop = '';
-          }
-
           return {
-            company: rawCompany.trim() || 'अन्य कंपनी',
-            crop: cleanedCrop,
-            rawCrop: rawCrop.trim(),
+            company: cols[0] || 'अन्य कंपनी',
+            crop: getStandardCropName(rawCrop),
+            rawCrop: rawCrop,
             variety: cols[2] || '',
             segment: cols[3] || 'हाइब्रिड',
             features: cols[4] || '',
@@ -979,7 +977,7 @@
             resistance: cols[7] || '',
             photos: photoList
           };
-        }).filter(r => r.crop && r.crop.length > 0 && r.crop.toLowerCase() !== 'crop' && !r.crop.includes('crop (फसल)'));
+        }).filter(r => r.crop && r.crop.toLowerCase() !== 'crop' && !r.crop.includes('crop (फसल)'));
 
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
@@ -989,10 +987,8 @@
           const rawC = cols[0];
           if(rawC && !rawC.includes('Column A')) {
             const crop = getStandardCropName(rawC);
-            if(crop) {
-              if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
-              scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
-            }
+            if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
+            scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
           }
         });
 
@@ -1004,10 +1000,8 @@
           const rawC = cols[0];
           if(rawC && !rawC.includes('Crop')) {
             const crop = getStandardCropName(rawC);
-            if(crop) {
-              if(!protectionRecords[crop]) protectionRecords[crop] = [];
-              protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', icon: getCropEmoji(crop) });
-            }
+            if(!protectionRecords[crop]) protectionRecords[crop] = [];
+            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', icon: getCropEmoji(crop) });
           }
         });
 
@@ -1036,18 +1030,6 @@
         })).filter(r => r.title && r.title !== 'Title');
 
         try {
-          const resDiag = await fetch(BASE_SHEET_URL + 'Diagnosis');
-          const textDiag = await resDiag.text();
-          diagnosisHistoryRecords = parseCSV(textDiag).map(cols => ({
-            timestamp: cols[0] || '',
-            notes: cols[1] || '',
-            result: cols[2] || ''
-          })).filter(r => r.result && !r.timestamp.includes('तारीख'));
-        } catch(eDiag) {
-          console.log("Diagnosis sheet load error:", eDiag);
-        }
-
-        try {
           const res8 = await fetch(BASE_SHEET_URL + 'Videos');
           const text8 = await res8.text();
           videoRecords = parseCSV(text8).map(cols => ({
@@ -1057,6 +1039,18 @@
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(err) {
           console.log("Videos sheet error:", err);
+        }
+
+                try {
+          const resDiag = await fetch(BASE_SHEET_URL + 'Diagnosis');
+          const textDiag = await resDiag.text();
+          diagnosisHistoryRecords = parseCSV(textDiag).map(cols => ({
+            timestamp: cols[0] || '',
+            notes: cols[1] || '',
+            result: cols[2] || ''
+          })).filter(r => r.result && !r.timestamp.includes('तारीख'));
+        } catch(eDiag) {
+          console.log("Diagnosis sheet load error:", eDiag);
         }
 
         renderStoriesBar();
@@ -1294,31 +1288,25 @@
       window.scrollTo(0, 0);
     }
 
-    /* 1. सभी फसलें दिखाने का फंक्शन */
     function showAllCropsScreen() {
       const crops = [...new Set(sheetRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))].sort();
       const container = document.getElementById('cropsContainer');
       container.innerHTML = '';
 
-      if (crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; padding:20px;">फसलों की जानकारी लोड हो रही है, कृपया 2 सेकंड प्रतीक्षा करें...</div>`;
-      } else {
-        crops.forEach(crop => {
-          let emoji = getCropEmoji(crop);
-          container.innerHTML += `
-            <div class="list-item" onclick="filterByCrop('${crop}')">
-              <div class="list-left">
-                <span class="list-icon">${emoji}</span>
-                <span class="list-title">${crop}</span>
-              </div>
-              <span class="arrow">&gt;</span>
-            </div>`;
-        });
-      }
+      crops.forEach(crop => {
+        let emoji = getCropEmoji(crop);
+        container.innerHTML += `
+          <div class="list-item" onclick="filterByCrop('${crop}')">
+            <div class="list-left">
+              <span class="list-icon">${emoji}</span>
+              <span class="list-title">${crop}</span>
+            </div>
+            <span class="arrow">&gt;</span>
+          </div>`;
+      });
       openScreen('screen-crops', "सब्जी फसल किस्म");
     }
 
-    /* किसी एक फसल पर टैप करने पर उसकी सभी वैरायटी दिखाना */
     function filterByCrop(cropName) {
       const list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase());
       renderVarietiesList(list, cropName);
@@ -1338,7 +1326,7 @@
         if (v.photos && v.photos.length > 0) {
           photosHtml += '<div class="var-photo-grid">';
           v.photos.slice(0, 3).forEach(imgUrl => {
-            photosHtml += `<img src="${imgUrl}" class="var-photo" alt="${v.variety}" onerror="this.style.display='none'">`;
+            photosHtml += `<img src="${imgUrl}" class="var-photo" alt="${v.variety}" onerror="this.style.display='none'" onclick="openImageModal('${imgUrl}')" style="cursor:pointer;" title="बड़ा देखने के लिए टैप करें">`;
           });
           photosHtml += '</div>';
         }
@@ -1358,57 +1346,6 @@
           </div>`;
       });
       openScreen('screen-seeds', title);
-    }
-
-    /* 2. सभी कंपनियां दिखाने का फंक्शन */
-    function showCompaniesList() {
-      const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== '' && !c.includes('/')))].sort();
-      const container = document.getElementById('companiesContainer');
-      container.innerHTML = '';
-
-      if (companies.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; padding:20px;">कंपनियों की जानकारी लोड हो रही है, कृपया 2 सेकंड प्रतीक्षा करें...</div>`;
-      } else {
-        companies.forEach(comp => {
-          container.innerHTML += `
-            <div class="list-item" onclick="selectCompany('${comp}')">
-              <div class="list-left">
-                <span class="list-icon">🏢</span>
-                <span class="list-title">${comp}</span>
-              </div>
-              <span class="arrow">&gt;</span>
-            </div>`;
-        });
-      }
-      openScreen('screen-companies', "All कंपनी बीज");
-    }
-
-    /* कंपनी पर टैप करने पर उस कंपनी की फसलें दिखाना */
-    function selectCompany(compName) {
-      const compRecords = sheetRecords.filter(r => r.company.toLowerCase() === compName.toLowerCase());
-      const cropsInComp = [...new Set(compRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))].sort();
-      const container = document.getElementById('companyCropsContainer');
-      document.getElementById('compCropHeading').innerText = `${compName} की फसलें:`;
-      container.innerHTML = '';
-
-      cropsInComp.forEach(crop => {
-        let emoji = getCropEmoji(crop);
-        container.innerHTML += `
-          <div class="list-item" onclick="filterByCompanyAndCrop('${compName}', '${crop}')">
-            <div class="list-left">
-              <span class="list-icon">${emoji}</span>
-              <span class="list-title">${crop}</span>
-            </div>
-            <span class="arrow">&gt;</span>
-          </div>`;
-      });
-      openScreen('screen-company-crops', compName);
-    }
-
-    /* कंपनी और फसल पर टैप करने पर उस फसल की वैरायटी दिखाना */
-    function filterByCompanyAndCrop(compName, cropName) {
-      const list = sheetRecords.filter(r => r.company.toLowerCase() === compName.toLowerCase() && r.crop.toLowerCase() === cropName.toLowerCase());
-      renderVarietiesList(list, `${compName} - ${cropName}`);
     }
 
     function showProtectionCropsList() {
@@ -1486,6 +1423,49 @@
       window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20मुझे%20सब्जी%20खेती%20बारे%20में%20सलाह%20चाहिए।', '_blank');
     }
 
+    function showCompaniesList() {
+      const companies = [...new Set(sheetRecords.map(r => r.company).filter(c => c && c.trim() !== ''))].sort();
+      const container = document.getElementById('companiesContainer');
+      container.innerHTML = '';
+      companies.forEach(comp => {
+        container.innerHTML += `
+          <div class="list-item" onclick="selectCompany('${comp}')">
+            <div class="list-left">
+              <span class="list-icon">🏢</span>
+              <span class="list-title">${comp}</span>
+            </div>
+            <span class="arrow">&gt;</span>
+          </div>`;
+      });
+      openScreen('screen-companies', "All कंपनी बीज");
+    }
+
+    function selectCompany(compName) {
+      const compRecords = sheetRecords.filter(r => r.company.toLowerCase() === compName.toLowerCase());
+      const cropsInComp = [...new Set(compRecords.map(r => r.crop).filter(c => c && c.trim() !== ''))].sort();
+      const container = document.getElementById('companyCropsContainer');
+      document.getElementById('compCropHeading').innerText = `${compName} की फसलें:`;
+      container.innerHTML = '';
+
+      cropsInComp.forEach(crop => {
+        let emoji = getCropEmoji(crop);
+        container.innerHTML += `
+          <div class="list-item" onclick="filterByCompanyAndCrop('${compName}', '${crop}')">
+            <div class="list-left">
+              <span class="list-icon">${emoji}</span>
+              <span class="list-title">${crop}</span>
+            </div>
+            <span class="arrow">&gt;</span>
+          </div>`;
+      });
+      openScreen('screen-company-crops', compName);
+    }
+
+    function filterByCompanyAndCrop(compName, cropName) {
+      const list = sheetRecords.filter(r => r.company.toLowerCase() === compName.toLowerCase() && r.crop.toLowerCase() === cropName.toLowerCase());
+      renderVarietiesList(list, `${compName} - ${cropName}`);
+    }
+
     function showChemicalsScreen() {
       openScreen('screen-chemicals', 'दवाइयाँ Chemicals');
     }
@@ -1528,46 +1508,7 @@
     function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', 'मौसम पूर्वानुमान'); }
     function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); }
     function showPrivacyPolicyScreen() { openScreen('screen-privacy', 'नियम व शर्तें एवं गोपनीयता नीति'); }
-
-    /* 3. 7वें नंबर पर AI रोग जांच रिपोर्ट देखने का फंक्शन */
-    function showAiReportsScreen() {
-      const container = document.getElementById('aiReportsContainer');
-      container.innerHTML = '';
-
-      if (!diagnosisHistoryRecords || diagnosisHistoryRecords.length === 0) {
-        container.innerHTML = `
-          <div class="variety-card" style="text-align:center; padding:24px;">
-            <span style="font-size:36px; display:block; margin-bottom:8px;">📋</span>
-            <b style="color:#374151; font-size:15px; display:block; margin-bottom:6px;">अभी कोई AI जांच रिकॉर्ड नहीं है</b>
-            <p style="font-size:13px; color:#6b7280; margin-bottom:14px;">जब आप 'तुरंत समाधान' से किसी पौधे की फोटो स्कैन करेंगे, तो उसकी रिपोर्ट यहाँ अपने आप सुरक्षित रहेगी।</p>
-            <button class="btn-action btn-wa" style="background:#1b5e20;" onclick="openSolutionModal()">⚡ अभी नई जांच करें</button>
-          </div>`;
-      } else {
-        const reversed = [...diagnosisHistoryRecords].reverse();
-        reversed.forEach((rep, idx) => {
-          const formattedText = (rep.result || '').replace(/\n/g, '<br>');
-          const waText = `नमस्ते डॉक्टर साहब, मेरी पुरानी AI जांच रिपोर्ट:\nतारीख: ${rep.timestamp}\nसवाल: ${rep.notes}\nरिपोर्ट:\n${rep.result}`;
-          container.innerHTML += `
-            <div class="variety-card" style="border-left:4px solid #16a34a; margin-bottom:14px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px dashed #bbf7d0; padding-bottom:6px;">
-                <span style="font-size:12px; font-weight:bold; color:#166534;">📅 ${rep.timestamp || 'जांच रिपोर्ट'}</span>
-                <span style="font-size:11px; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-weight:bold;">जांच #${reversed.length - idx}</span>
-              </div>
-              <div style="font-size:13px; color:#1f2937; margin-bottom:6px;"><b>किसान का सवाल / नोट:</b> ${rep.notes || 'कोई सवाल नहीं'}</div>
-              <div style="font-size:13.5px; color:#374151; line-height:1.6; background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0; margin-bottom:10px;">
-                ${formattedText}
-              </div>
-              <a href="https://wa.me/916378475002?text=${encodeURIComponent(waText)}" target="_blank" class="btn-action btn-wa">
-                💬 डॉक्टर को WhatsApp पर भेजें
-              </a>
-            </div>`;
-        });
-      }
-      openScreen('screen-ai-reports', 'मेरी AI रोग जांच रिपोर्ट');
-    }
-
-    function showGovSchemesScreen() { openScreen('screen-gov-schemes', 'सरकारी योजनाएं'); }
-
+    
     function showExpertAdviceScreen() {
       const container = document.getElementById('tipsContainer');
       container.innerHTML = '';
@@ -1594,6 +1535,45 @@
       });
       openScreen('screen-pest-alert', 'कीट व रोग चेतावनी');
     }
+
+        function showAiReportsScreen() {
+      const container = document.getElementById('aiReportsContainer');
+      container.innerHTML = '';
+
+      if (!diagnosisHistoryRecords || diagnosisHistoryRecords.length === 0) {
+        container.innerHTML = `
+          <div class="variety-card" style="text-align:center; padding:24px;">
+            <span style="font-size:36px; display:block; margin-bottom:8px;">📋</span>
+            <b style="color:#374151; font-size:15px; display:block; margin-bottom:6px;">अभी कोई AI जांच रिकॉर्ड नहीं है</b>
+            <p style="font-size:13px; color:#6b7280; margin-bottom:14px;">जब आप 'तुरंत समाधान' से किसी पौधे की फोटो स्कैन करेंगे, तो उसकी रिपोर्ट यहाँ अपने आप सुरक्षित रहेगी।</p>
+            <button class="btn-action btn-wa" style="background:#1b5e20;" onclick="openSolutionModal()">⚡ अभी नई जांच करें</button>
+          </div>`;
+      } else {
+        // ताज़ा रिपोर्ट सबसे ऊपर (Reversed)
+        const reversed = [...diagnosisHistoryRecords].reverse();
+        reversed.forEach((rep, idx) => {
+          const formattedText = (rep.result || '').replace(/\n/g, '<br>');
+          const waText = `नमस्ते डॉक्टर साहब, मेरी पुरानी AI जांच रिपोर्ट:\nतारीख: ${rep.timestamp}\nसवाल: ${rep.notes}\nरिपोर्ट:\n${rep.result}`;
+          container.innerHTML += `
+            <div class="variety-card" style="border-left:4px solid #16a34a; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px dashed #bbf7d0; padding-bottom:6px;">
+                <span style="font-size:12px; font-weight:bold; color:#166534;">📅 ${rep.timestamp || 'जांच रिपोर्ट'}</span>
+                <span style="font-size:11px; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-weight:bold;">जांच #${reversed.length - idx}</span>
+              </div>
+              <div style="font-size:13px; color:#1f2937; margin-bottom:6px;"><b>किसान का सवाल / नोट:</b> ${rep.notes || 'कोई सवाल नहीं'}</div>
+              <div style="font-size:13.5px; color:#374151; line-height:1.6; background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0; margin-bottom:10px;">
+                ${formattedText}
+              </div>
+              <a href="https://wa.me/916378475002?text=${encodeURIComponent(waText)}" target="_blank" class="btn-action btn-wa">
+                💬 डॉक्टर को WhatsApp पर भेजें
+              </a>
+            </div>`;
+        });
+      }
+      openScreen('screen-ai-reports', 'मेरी AI रोग जांच रिपोर्ट');
+    }
+
+    function showGovSchemesScreen() { openScreen('screen-gov-schemes', 'सरकारी योजनाएं'); }
 
     function shareAppWithFriends() {
       const appUrl = window.location.href;
@@ -1732,7 +1712,7 @@
       }
     }
 
-    /* Google Apps Script AI लाइव स्कैन */
+    // Google Apps Script के जरिए AI लाइव स्कैन फंक्शन
     async function runSmartDiagnosis() {
       if (!base64ImageRaw) {
         alert("कृपया पहले पौधे की फोटो लें या गैलरी से चुनें!");
@@ -1750,6 +1730,7 @@
           notes: "पौधे में रोग की जांच"
         };
 
+        // Apps Script Web App को डेटा भेजना
         const response = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: {
@@ -1775,9 +1756,7 @@
           const waMsg = `नमस्ते डॉक्टर साहब, मेरी फसल की फोटो AI से जांची गई है:\n\n${data.result}\n\nकृपया मार्गदर्शन करें।`;
           document.getElementById('btnDocWhatsapp').href = `https://wa.me/916378475002?text=${encodeURIComponent(waMsg)}`;
 
-          document.getElementById('docResultCard').style.display = "block";
-          const nowStr = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-          diagnosisHistoryRecords.push({ timestamp: nowStr, notes: "पौधे में रोग की जांच", result: data.result });
+          document.getElementById('docResultCard').style.display = 'block';
         } else {
           alert("AI से कोई परिणाम नहीं मिला, कृपया साफ फोटो अपलोड करें।");
         }
@@ -1834,11 +1813,31 @@
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
 
+
+    function openImageModal(imgUrl) {
+      const modal = document.getElementById('imagePreviewModal');
+      const fullImg = document.getElementById('fullScreenPreviewImg');
+      fullImg.src = imgUrl;
+      modal.classList.add('active');
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imagePreviewModal');
+      modal.classList.remove('active');
+    }
+
     window.onload = function() {
       updateProfileUI();
       fetchLiveWeather();
       loadAllSheetsData();
     };
   </script>
+
+  <!-- फुल-स्क्रीन इमेज प्रीव्यू मोडल -->
+  <div class="image-preview-modal" id="imagePreviewModal" onclick="closeImageModal()">
+    <button class="image-preview-close" onclick="closeImageModal()">✕</button>
+    <img id="fullScreenPreviewImg" class="image-preview-content" src="" alt="Full Preview">
+  </div>
+
 </body>
 </html>
