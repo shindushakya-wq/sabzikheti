@@ -810,11 +810,13 @@
       
       tbody.innerHTML = '';
       records.forEach(r => {
+        let commName = r.commodity || '-';
+        let emoji = getCropEmoji(commName);
         tbody.innerHTML += `
           <tr>
             <td>${r.state || '-'}<br><small style="color:#6b7280;">${r.district || ''}</small></td>
             <td><b>${r.market || '-'}</b></td>
-            <td>🍅 <b>${r.commodity || '-'}</b></td>
+            <td>${emoji} <b>${commName}</b></td>
             <td>₹${r.min_price || '-'}</td>
             <td><span style="color:#16a34a; font-weight:bold;">₹${r.max_price || '-'}</span></td>
           </tr>`;
@@ -974,21 +976,24 @@
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
-      if (c.includes('टमाटर')) return '🍅';
-      if (c.includes('शिमला')) return '🫑';
-      if (c.includes('मिर्च')) return '🌶️';
-      if (c.includes('खीरा')) return '🥒';
-      if (c.includes('तरबूज')) return '🍉';
-      if (c.includes('खरबूजा')) return '🍈';
-      if (c.includes('फूलगोभी')) return '🥦';
-      if (c.includes('पत्तागोभी')) return '🥬';
-      if (c.includes('भिंडी')) return '🟢';
-      if (c.includes('बैंगन')) return '🍆';
-      if (c.includes('मटर')) return '🟢';
-      if (c.includes('कद्दू')) return '🎃';
-      if (c.includes('गाजर')) return '🥕';
-      if (c.includes('मूली')) return '🌱';
-      if (c.includes('प्याज')) return '🧅';
+      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
+      if (c.includes('शिमला') || c.includes('capsicum')) return '🫑';
+      if (c.includes('मिर्च') || c.includes('chilli') || c.includes('chili') || c.includes('pepper')) return '🌶️';
+      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
+      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
+      if (c.includes('खरबूजा') || c.includes('muskmelon') || c.includes('melon')) return '🍈';
+      if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
+      if (c.includes('पत्तागोभी') || c.includes('cabbage')) return '🥬';
+      if (c.includes('भिंडी') || c.includes('okra') || c.includes('bhindi')) return '🟢';
+      if (c.includes('बैंगन') || c.includes('brinjal') || c.includes('egg plant')) return '🍆';
+      if (c.includes('मटर') || c.includes('pea')) return '🟢';
+      if (c.includes('कद्दू') || c.includes('pumpkin')) return '🎃';
+      if (c.includes('गाजर') || c.includes('carrot')) return '🥕';
+      if (c.includes('मूली') || c.includes('raddish') || c.includes('radish')) return '🌱';
+      if (c.includes('प्याज') || c.includes('onion')) return '🧅';
+      if (c.includes('अदरक') || c.includes('ginger')) return '🫚';
+      if (c.includes('लौकी') || c.includes('bottle gourd')) return '🥒';
+      if (c.includes('करेला') || c.includes('bitter gourd')) return '🥒';
       if (c.includes('कॉर्न') || c.includes('मक्का')) return '🌽';
       return '🌱';
     }
@@ -1576,7 +1581,10 @@
 
     function showOtherServicesScreen() { openScreen('screen-other-services', 'Other सेवाएं (मौसम, मंडी, अलर्ट)'); }
     function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', 'मौसम पूर्वानुमान'); }
-    function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); fetchLiveMandiPrices(); }
+    function showMandiBhavScreen() { 
+      openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); 
+      fetchLiveMandiPrices();
+    }
     function showPrivacyPolicyScreen() { openScreen('screen-privacy', 'नियम व शर्तें एवं गोपनीयता नीति'); }
     
     function showExpertAdviceScreen() {
@@ -1719,7 +1727,7 @@
 
     function sendOtpCode() {
       const phone = document.getElementById('loginPhone').value.trim();
-      if (phone.length !== 10) { alert("कृपया 10 अंकों का मोबाइल नंबर लिखें तालमेल के लिए!"); return; }
+      if (phone.length !== 10) { alert("कृपया 10 अंकों का मोबाइल नंबर लिखें!"); return; }
 
       document.getElementById('phoneInputGroup').style.display = 'none';
       document.getElementById('otpInputGroup').style.display = 'block';
