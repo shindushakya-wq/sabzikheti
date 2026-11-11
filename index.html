@@ -96,54 +96,65 @@
     .voice-btn.listening { animation: pulse 1s infinite alternate; background: #fee2e2; }
     @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-    /* 3D न्यूमॉर्फिक ग्रिड मेनू बटन (दूसरी तस्वीर जैसा आकर्षक लुक)[span_3](start_span)[span_3](end_span) */
+    /* 3D Neumorphic 6 मुख्य बटन ग्रिड (इमेज के अनुसार अपडेटेड) */
     .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    .menu-box { padding: 18px 12px; border-radius: 20px; text-align: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06), inset 0 2px 3px rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; }
-    .menu-box:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(0, 0, 0, 0.1); }
-    .menu-box .icon { font-size: 38px; margin-bottom: 8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08)); }
-    .menu-box h3 { font-size: 14.5px; font-weight: 700; letter-spacing: 0.2px; }
+    .menu-box { 
+      padding: 22px 14px; 
+      border-radius: 20px; 
+      text-align: center; 
+      cursor: pointer; 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06), inset 0 1px 2px rgba(255,255,255,0.8); 
+      border: 1px solid rgba(255,255,255,0.6); 
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .menu-box:active { 
+      transform: scale(0.96); 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08); 
+    }
+    .menu-box .icon { font-size: 38px; margin-bottom: 8px; }
+    .menu-box h3 { font-size: 15px; font-weight: 700; margin: 0; }
     
-    .card-crops { background: linear-gradient(145deg, #e8f8f0, #c8e6c9); border-color: #a3e635; }
+    .card-crops { background: linear-gradient(145deg, #dcfce7, #bbf7d0); }
     .card-crops h3 { color: #166534; }
-    .card-protection { background: linear-gradient(145deg, #e0f2fe, #bae6fd); border-color: #7dd3fc; }
+    .card-protection { background: linear-gradient(145deg, #e0f2fe, #bae6fd); }
     .card-protection h3 { color: #0369a1; }
-    .card-schedule { background: linear-gradient(145deg, #fefce8, #fef08a); border-color: #fde047; }
+    .card-schedule { background: linear-gradient(145deg, #fef9c3, #fef08a); }
     .card-schedule h3 { color: #854d0e; }
-    .card-advisor { background: linear-gradient(145deg, #f3e8ff, #e9d5ff); border-color: #d8b4fe; }
+    .card-advisor { background: linear-gradient(145deg, #f3e8ff, #e9d5ff); }
     .card-advisor h3 { color: #6b21a8; }
-    .card-companies { background: linear-gradient(145deg, #ffedd5, #fed7aa); border-color: #fdba74; }
+    .card-companies { background: linear-gradient(145deg, #ffedd5, #fed7aa); }
     .card-companies h3 { color: #c2410c; }
-    .card-chemicals { background: linear-gradient(145deg, #fce7f3, #fbcfe8); border-color: #f472b6; }
+    .card-chemicals { background: linear-gradient(145deg, #fce7f3, #fbcfe8); }
     .card-chemicals h3 { color: #be185d; }
 
     /* 3D Neumorphic Other सेवाएं बटन */
     .other-3d-btn {
       width: 100%;
-      background: linear-gradient(145deg, #ffffff, #e6e6e6);
+      background: linear-gradient(145deg, #ffffff, #f1f5f9);
       border: 1px solid #d1d5db;
       border-radius: 24px;
-      padding: 14px 20px;
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       gap: 14px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08), inset 0 1px 2px rgba(255,255,255,0.8);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.06), inset 0 1px 2px rgba(255,255,255,0.9);
       margin-bottom: 15px;
+      transition: transform 0.15s ease;
     }
     .other-3d-btn:active {
       transform: scale(0.98);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1), inset 0 2px 4px rgba(0,0,0,0.1);
     }
     .other-3d-icon {
       font-size: 26px;
       background: #e2e8f0;
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
     }
     .other-3d-text {
       font-size: 16px;
@@ -264,8 +275,8 @@
     <div class="login-card">
       <div style="text-align:center; margin-bottom:16px;">
         <span style="font-size:40px;">🌾</span>
-        <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;" id="loginTitleText">सब्जी खेती बाड़ी की बातें</h3>
-        <p style="font-size:12px; color:#6b7280; margin-top:4px;" id="loginSubText">कृषि सहायता ऐप में आपका स्वागत है</p>
+        <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;" id="loginTitleText">किसान साथी</h3>
+        <p style="font-size:12px; color:#6b7280; margin-top:4px;" id="loginSubText">किसान के लिए आसान समाधान</p>
       </div>
 
       <!-- मोबाइल नंबर इनपुट -->
@@ -298,7 +309,7 @@
   <div class="app-header">
     <div style="display:flex; align-items:center;">
       <span class="back-btn" id="headerBack" onclick="goBack()">←</span>
-      <span class="header-title" id="headerTitle">सब्जी खेती बाड़ी की बातें</span>
+      <span class="header-title" id="headerTitle">किसान साथी</span>
     </div>
     <div class="header-actions">
       <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 English</button>
@@ -360,7 +371,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      सब्जी खेती बाड़ी की बातें • v4.5
+      किसान साथी • v4.5
     </div>
   </div>
 
@@ -480,7 +491,7 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
     </div>
 
-    <!-- 6 मुख्य बटन ग्रिड (3D न्यूमॉर्फिक स्टाइल) -->
+    <!-- 3D Neumorphic 6 मुख्य बटन ग्रिड (इमेज के अनुसार) -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
@@ -531,15 +542,19 @@
         <a href="https://www.facebook.com/share/19joE3v9ib/" target="_blank" class="social-link link-fb"><span>🌐</span> Facebook</a>
       </div>
     </div>
+    
+    <div style="text-align:center; margin-top: 15px; font-size:11px; color:#6b7280;">
+      ताज़ा जानकारी • विश्वसनीय • किसानों के लिए
+    </div>
   </div>
 
-    <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
+  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं अस्वीकरण (Disclaimer)</h3>
       <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
         <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-        <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
+        <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"किसान साथी"</b> केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
         <p style="margin-bottom:8px;">2. इस ऐप में दी गई बीज वैरायटी की जानकारी किसानों की मदद और मार्गदर्शन के लिए है। सभी ब्रांड व नाम संबंधित कंपनियों के ट्रेडमार्क हैं। हमारा यह ऐप किसी भी कंपनी से आधिकारिक तौर पर जुड़ा हुआ नहीं है।</p>
         <p style="margin-bottom:8px;">3. ऐप पर दी जाने वाली फसल की किस्में, स्प्रे शेड्यूल, दवाइयों की मात्रा (डोज़) और रोग निदान की जानकारी केवल सुझाव के रूप में हैं।</p>
         <p style="margin-bottom:8px;">4. किसी भी रासायनिक कीटनाशक, फफूंदनाशक या उर्वरक का उपयोग करने से पहले दवा के डिब्बे पर छपे निर्देशों को अच्छी तरह पढ़ लें या अपने नजदीकी कृषि विशेषज्ञों / अधिकृत दुकानदारों की सलाह अवश्य लें।</p>
@@ -618,7 +633,7 @@
     </div>
   </div>
 
-    <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
+  <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
   <div id="screen-ai-reports" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; margin-bottom:12px;">
       <h3 style="color:#166534; font-size:16px; margin-bottom:6px;">🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड</h3>
@@ -631,7 +646,7 @@
     </div>
   </div>
 
-<!-- SCREEN: सरकारी योजनाएं -->
+  <!-- SCREEN: सरकारी योजनाएं -->
   <div id="screen-gov-schemes" class="screen">
     <div class="variety-card">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">🏛️ प्रमुख सरकारी योजनाएं</h3>
@@ -769,7 +784,7 @@
 
   <!-- बॉटम नेविगेशन -->
   <div class="bottom-nav">
-    <div class="nav-tab active" onclick="openScreen('screen-home', 'सब्जी खेती बाड़ी की बातें')"><span>🏠</span><span id="navHome">होम</span></div>
+    <div class="nav-tab active" onclick="openScreen('screen-home', 'किसान साथी')"><span>🏠</span><span id="navHome">होम</span></div>
     <div class="nav-tab" onclick="showAllCropsScreen()"><span>🥬</span><span id="navCrops">फसलें</span></div>
     <div class="nav-tab" onclick="showScheduleCropsList()"><span>🗓️</span><span id="navSched">शेड्यूल</span></div>
     <div class="nav-tab" onclick="showProtectionCropsList()"><span>🛡️</span><span id="navProt">सुरक्षा</span></div>
@@ -828,8 +843,6 @@
 
     const navHistory = ['screen-home'];
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    
-    // आपका नवीनतम Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJCMcfZAfZHvbFRXxx2F7YzmNUV52__MFCBidlC588Yh4NRL2nkULgGyawdibU-uA/exec";
 
     let sheetRecords = [];
@@ -849,7 +862,6 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // फसल के नामों को एक समान करने का फंक्शन
     function getStandardCropName(raw) {
       if (!raw) return '';
       let c = raw.trim();
@@ -884,7 +896,7 @@
 
     const langData = {
       hi: {
-        headerTitle: "सब्जी खेती बाड़ी की बातें",
+        headerTitle: "किसान साथी",
         welcomeMsg: "राम-राम, किसान भाई!",
         editProfile: "✏️ प्रोफाइल बदलें",
         searchPlaceholder: "🔍 खीरा, टमाटर या तरबूज लिखें...",
@@ -902,8 +914,8 @@
         navProt: "सुरक्षा",
         navHelp: "हेल्पलाइन",
         langBtn: "🌐 English",
-        loginTitle: "सब्जी खेती बाड़ी की बातें",
-        loginSub: "कृषि सहायता ऐप में आपका स्वागत है",
+        loginTitle: "किसान साथी",
+        loginSub: "किसान के लिए आसान समाधान",
         lblPhone: "अपना मोबाइल नंबर दर्ज करें:",
         btnOtp: "📲 ओटीपी (OTP) भेजें",
         lblOtp: "🔐 ओटीपी (OTP) दर्ज हो रहा है...",
@@ -911,7 +923,7 @@
         btnSkip: "⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें"
       },
       en: {
-        headerTitle: "Sabzi Kheti Badi ki Baatein",
+        headerTitle: "Kisan Sathi",
         welcomeMsg: "Ram-Ram, Farmer Brother!",
         editProfile: "✏️ Edit Profile",
         searchPlaceholder: "🔍 Search Cucumber, Tomato, etc...",
@@ -929,8 +941,8 @@
         navProt: "Protection",
         navHelp: "Helpline",
         langBtn: "🌐 हिंदी",
-        loginTitle: "Sabzi Kheti Badi ki Baatein",
-        loginSub: "Welcome to Agriculture Support App",
+        loginTitle: "Kisan Sathi",
+        loginSub: "Easy Solutions for Farmers",
         lblPhone: "Enter your mobile number:",
         btnOtp: "📲 Send OTP",
         lblOtp: "🔐 Verifying OTP...",
@@ -972,6 +984,31 @@
       document.getElementById('lblOtpText').innerText = d.lblOtp;
       document.getElementById('lblOtpSuccess').innerText = d.lblSuccess;
       document.getElementById('btnSkipText').innerText = d.btnSkip;
+    }
+
+    function getCropEmoji(cropName) {
+      if (!cropName) return '🌱';
+      let c = cropName.trim().toLowerCase();
+      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
+      if (c.includes('शिमला') || c.includes('capsicum')) return '🫑';
+      if (c.includes('मिर्च') || c.includes('chilli') || c.includes('chili') || c.includes('pepper')) return '🌶️';
+      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
+      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
+      if (c.includes('खरबूजा') || c.includes('muskmelon') || c.includes('melon')) return '🍈';
+      if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
+      if (c.includes('पत्तागोभी') || c.includes('cabbage')) return '🥬';
+      if (c.includes('भिंडी') || c.includes('okra') || c.includes('bhindi')) return '🟢';
+      if (c.includes('बैंगन') || c.includes('brinjal') || c.includes('egg plant')) return '🍆';
+      if (c.includes('मटर') || c.includes('pea')) return '🟢';
+      if (c.includes('कद्दू') || c.includes('pumpkin')) return '🎃';
+      if (c.includes('गाजर') || c.includes('carrot')) return '🥕';
+      if (c.includes('मूली') || c.includes('raddish') || c.includes('radish')) return '🌱';
+      if (c.includes('प्याज') || c.includes('onion')) return '🧅';
+      if (c.includes('अदरक') || c.includes('ginger')) return '🫚';
+      if (c.includes('लौकी') || c.includes('bottle gourd')) return '🥒';
+      if (c.includes('करेला') || c.includes('bitter gourd')) return '🥒';
+      if (c.includes('कॉर्न') || c.includes('मक्का')) return '🌽';
+      return '🌱';
     }
 
     async function loadAllSheetsData() {
@@ -1066,7 +1103,7 @@
           console.log("Videos sheet error:", err);
         }
 
-                try {
+        try {
           const resDiag = await fetch(BASE_SHEET_URL + 'Diagnosis');
           const textDiag = await resDiag.text();
           diagnosisHistoryRecords = parseCSV(textDiag).map(cols => ({
@@ -1590,7 +1627,7 @@
       openScreen('screen-pest-alert', 'कीट व रोग चेतावनी');
     }
 
-        function showAiReportsScreen() {
+    function showAiReportsScreen() {
       const container = document.getElementById('aiReportsContainer');
       container.innerHTML = '';
 
@@ -1603,7 +1640,6 @@
             <button class="btn-action btn-wa" style="background:#1b5e20;" onclick="openSolutionModal()">⚡ अभी नई जांच करें</button>
           </div>`;
       } else {
-        // ताज़ा रिपोर्ट सबसे ऊपर (Reversed)
         const reversed = [...diagnosisHistoryRecords].reverse();
         reversed.forEach((rep, idx) => {
           const formattedText = (rep.result || '').replace(/\n/g, '<br>');
@@ -1766,7 +1802,6 @@
       }
     }
 
-    // Google Apps Script के जरिए AI लाइव स्कैन फंक्शन
     async function runSmartDiagnosis() {
       if (!base64ImageRaw) {
         alert("कृपया पहले पौधे की फोटो लें या गैलरी से चुनें!");
@@ -1784,7 +1819,6 @@
           notes: "पौधे में रोग की जांच"
         };
 
-        // Apps Script Web App को डेटा भेजना
         const response = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: {
@@ -1866,7 +1900,6 @@
 
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
-
 
     function openImageModal(imgUrl) {
       const modal = document.getElementById('imagePreviewModal');
