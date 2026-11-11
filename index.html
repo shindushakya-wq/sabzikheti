@@ -96,23 +96,24 @@
     .voice-btn.listening { animation: pulse 1s infinite alternate; background: #fee2e2; }
     @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-    /* 6 मुख्य बटन ग्रिड */
-    .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-    .menu-box { padding: 18px 12px; border-radius: 16px; text-align: center; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
-    .menu-box .icon { font-size: 32px; margin-bottom: 6px; }
-    .menu-box h3 { font-size: 14px; font-weight: 700; }
+    /* 3D न्यूमॉर्फिक ग्रिड मेनू बटन */
+    .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .menu-box { padding: 16px 10px; border-radius: 20px; text-align: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06), inset 0 2px 3px rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    .menu-box:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .menu-box .icon { font-size: 38px; margin-bottom: 8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08)); }
+    .menu-box h3 { font-size: 14.5px; font-weight: 700; letter-spacing: 0.2px; }
     
-    .card-crops { background: #dcfce7; border-color: #bbf7d0; }
+    .card-crops { background: linear-gradient(145deg, #e8f8f0, #c8e6c9); border-color: #a3e635; }
     .card-crops h3 { color: #166534; }
-    .card-protection { background: #e0f2fe; border-color: #bae6fd; }
+    .card-protection { background: linear-gradient(145deg, #e0f2fe, #bae6fd); border-color: #7dd3fc; }
     .card-protection h3 { color: #0369a1; }
-    .card-schedule { background: #fef9c3; border-color: #fef08a; }
+    .card-schedule { background: linear-gradient(145deg, #fefce8, #fef08a); border-color: #fde047; }
     .card-schedule h3 { color: #854d0e; }
-    .card-advisor { background: #f3e8ff; border-color: #e9d5ff; }
+    .card-advisor { background: linear-gradient(145deg, #f3e8ff, #e9d5ff); border-color: #d8b4fe; }
     .card-advisor h3 { color: #6b21a8; }
-    .card-companies { background: #ffedd5; border-color: #fed7aa; }
+    .card-companies { background: linear-gradient(145deg, #ffedd5, #fed7aa); border-color: #fdba74; }
     .card-companies h3 { color: #c2410c; }
-    .card-chemicals { background: #fce7f3; border-color: #fbcfe8; }
+    .card-chemicals { background: linear-gradient(145deg, #fce7f3, #fbcfe8); border-color: #f472b6; }
     .card-chemicals h3 { color: #be185d; }
 
     /* 3D Neumorphic Other सेवाएं बटन */
@@ -479,7 +480,7 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
     </div>
 
-    <!-- 6 मुख्य बटन ग्रिड -->
+    <!-- 6 मुख्य बटन ग्रिड (3D न्यूमॉर्फिक स्टाइल) -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
@@ -971,31 +972,6 @@
       document.getElementById('lblOtpText').innerText = d.lblOtp;
       document.getElementById('lblOtpSuccess').innerText = d.lblSuccess;
       document.getElementById('btnSkipText').innerText = d.btnSkip;
-    }
-
-    function getCropEmoji(cropName) {
-      if (!cropName) return '🌱';
-      let c = cropName.trim().toLowerCase();
-      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
-      if (c.includes('शिमला') || c.includes('capsicum')) return '🫑';
-      if (c.includes('मिर्च') || c.includes('chilli') || c.includes('chili') || c.includes('pepper')) return '🌶️';
-      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
-      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
-      if (c.includes('खरबूजा') || c.includes('muskmelon') || c.includes('melon')) return '🍈';
-      if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
-      if (c.includes('पत्तागोभी') || c.includes('cabbage')) return '🥬';
-      if (c.includes('भिंडी') || c.includes('okra') || c.includes('bhindi')) return '🟢';
-      if (c.includes('बैंगन') || c.includes('brinjal') || c.includes('egg plant')) return '🍆';
-      if (c.includes('मटर') || c.includes('pea')) return '🟢';
-      if (c.includes('कद्दू') || c.includes('pumpkin')) return '🎃';
-      if (c.includes('गाजर') || c.includes('carrot')) return '🥕';
-      if (c.includes('मूली') || c.includes('raddish') || c.includes('radish')) return '🌱';
-      if (c.includes('प्याज') || c.includes('onion')) return '🧅';
-      if (c.includes('अदरक') || c.includes('ginger')) return '🫚';
-      if (c.includes('लौकी') || c.includes('bottle gourd')) return '🥒';
-      if (c.includes('करेला') || c.includes('bitter gourd')) return '🥒';
-      if (c.includes('कॉर्न') || c.includes('मक्का')) return '🌽';
-      return '🌱';
     }
 
     async function loadAllSheetsData() {
@@ -1668,7 +1644,7 @@
     }
 
     function handleSearchKeyPress(e) {
-      if (e.key === 'Enter') triggerManualSearch();
+      if (e.key === 'Enter') triggerMethodSearch();
     }
 
     function triggerManualSearch() {
