@@ -115,7 +115,7 @@
     .card-chemicals { background: #fce7f3; border-color: #fbcfe8; }
     .card-chemicals h3 { color: #be185d; }
 
-    /* 3D Neumorphic "Other सेवाएं" बटन */
+    /* 3D Neumorphic Other सेवाएं बटन */
     .other-3d-btn {
       width: 100%;
       background: linear-gradient(145deg, #ffffff, #e6e6e6);
@@ -1500,19 +1500,30 @@
       } else {
         filtered.forEach(c => {
           let photoHtml = '';
+          let layoutStyle = 'display: block;';
+          let leftStyle = 'width: 100%;';
           if (c.photo && c.photo.trim().startsWith('http')) {
-            photoHtml = `<div style="margin-top:10px; text-align:center;"><img src="${c.photo.trim()}" alt="${c.name}" style="max-height:160px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #e2e8f0; cursor:pointer;" onclick="openImageModal('${c.photo.trim()}')" title="बड़ा देखने के लिए टैप करें"></div>`;
+            layoutStyle = 'display: flex; gap: 12px; align-items: flex-start; justify-content: space-between;';
+            leftStyle = 'flex: 1;';
+            photoHtml = `<div style="flex: 0 0 100px; text-align: center;"><img src="${c.photo.trim()}" alt="${c.name}" style="width: 100px; height: 120px; object-fit: contain; border-radius: 8px; border: 1px solid #e2e8f0; background: #fafafa; cursor: pointer;" onclick="openImageModal('${c.photo.trim()}')" title="बड़ा देखने के लिए टैप करें"></div>`;
           }
           container.innerHTML += `
             <div class="chem-card">
-              <div class="chem-title">🧪 ${c.name} <span style="font-size:12px; font-weight:normal; background:#f1f5f9; padding:2px 6px; border-radius:4px; color:#475569;">(${c.type})</span></div>
-              <span class="chem-label-tech">टेक्निकल:</span>
-              <div class="chem-val-tech">${c.tech}</div>
-              <span class="chem-label-work">नियंत्रण / काम:</span>
-              <div class="chem-val-work">${c.use}</div>
-              <span class="chem-label-dose">15L पंप डोज़:</span>
-              <div><span class="chem-val-dose">💧 ${c.dose}</span></div>
-              ${photoHtml}
+              <div class="chem-title" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e8f5e9; padding-bottom: 8px; margin-bottom: 10px;">
+                <span>🧪 ${c.name}</span>
+                <span style="font-size: 11.5px; font-weight: normal; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: #475569;">(${c.type})</span>
+              </div>
+              <div style="${layoutStyle}">
+                <div style="${leftStyle}">
+                  <span class="chem-label-tech">टेक्निकल:</span>
+                  <div class="chem-val-tech">${c.tech}</div>
+                  <span class="chem-label-work">नियंत्रण / काम:</span>
+                  <div class="chem-val-work">${c.use}</div>
+                  <span class="chem-label-dose">15L पंप डोज़:</span>
+                  <div style="margin-top:2px;"><span class="chem-val-dose">💧 ${c.dose}</span></div>
+                </div>
+                ${photoHtml}
+              </div>
             </div>`;
         });
       }
