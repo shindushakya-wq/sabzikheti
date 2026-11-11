@@ -96,9 +96,9 @@
     .voice-btn.listening { animation: pulse 1s infinite alternate; background: #fee2e2; }
     @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-    /* 3D न्यूमॉर्फिक ग्रिड मेनू बटन */
+    /* 3D न्यूमॉर्फिक ग्रिड मेनू बटन (दूसरी तस्वीर जैसा आकर्षक लुक)[span_3](start_span)[span_3](end_span) */
     .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    .menu-box { padding: 16px 10px; border-radius: 20px; text-align: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06), inset 0 2px 3px rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    .menu-box { padding: 18px 12px; border-radius: 20px; text-align: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06), inset 0 2px 3px rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.15s ease, box-shadow 0.15s ease; }
     .menu-box:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(0, 0, 0, 0.1); }
     .menu-box .icon { font-size: 38px; margin-bottom: 8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08)); }
     .menu-box h3 { font-size: 14.5px; font-weight: 700; letter-spacing: 0.2px; }
@@ -1644,7 +1644,7 @@
     }
 
     function handleSearchKeyPress(e) {
-      if (e.key === 'Enter') triggerMethodSearch();
+      if (e.key === 'Enter') triggerManualSearch();
     }
 
     function triggerManualSearch() {
