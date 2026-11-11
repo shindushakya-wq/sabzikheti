@@ -258,6 +258,27 @@
 </head>
 <body>
 
+  <!-- भाषा चयन स्क्रीन मोडल (ऐप खुलते ही सबसे पहले आएगा) -->
+  <div class="login-modal-overlay" id="languageSelectModal">
+    <div class="login-card" style="max-width: 380px;">
+      <div style="text-align:center; margin-bottom:14px;">
+        <span style="font-size:38px;">🌾</span>
+        <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;">सब्जी खेती बाड़ी की बातें</h3>
+        <p style="font-size:12px; color:#6b7280; margin-top:4px;">कृपया अपनी भाषा चुनें / Please select your language</p>
+      </div>
+
+      <!-- भाषा विकल्प बटन ग्रिड -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+        <button class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('hi')">🇮🇳 हिंदी</button>
+        <button class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('en')">🇬🇧 English</button>
+        <button class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('pa')">🇵🇦 ਪੰਜਾਬੀ</button>
+        <button class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('rj')">🐪 राजस्थानी</button>
+        <button class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('gu')">🦁 ગુજરાતી</button>
+        <button class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('mr')">🚩 मराठी</button>
+      </div>
+    </div>
+  </div>
+
   <!-- लॉगिन स्क्रीन मोडल -->
   <div class="login-modal-overlay" id="loginScreenModal">
     <div class="login-card">
@@ -300,7 +321,7 @@
       <span class="header-title" id="headerTitle">सब्जी खेती बाड़ी की बातें</span>
     </div>
     <div class="header-actions">
-      <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 English</button>
+      <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 भाषा बदलें</button>
       <div class="bell-wrapper" onclick="openNotificationModal()" title="नोटिफिकेशन">
         <span class="bell-icon">🔔</span>
         <span class="notification-badge" id="notifBadge">1</span>
@@ -532,7 +553,7 @@
     </div>
   </div>
 
-    <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
+  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं अस्वीकरण (Disclaimer)</h3>
@@ -617,7 +638,7 @@
     </div>
   </div>
 
-    <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
+  <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
   <div id="screen-ai-reports" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; margin-bottom:12px;">
       <h3 style="color:#166534; font-size:16px; margin-bottom:6px;">🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड</h3>
@@ -630,7 +651,7 @@
     </div>
   </div>
 
-<!-- SCREEN: सरकारी योजनाएं -->
+  <!-- SCREEN: सरकारी योजनाएं -->
   <div id="screen-gov-schemes" class="screen">
     <div class="variety-card">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">🏛️ प्रमुख सरकारी योजनाएं</h3>
@@ -827,8 +848,6 @@
 
     const navHistory = ['screen-home'];
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    
-    // आपका नवीनतम Apps Script Web App URL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJCMcfZAfZHvbFRXxx2F7YzmNUV52__MFCBidlC588Yh4NRL2nkULgGyawdibU-uA/exec";
 
     let sheetRecords = [];
@@ -848,7 +867,6 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // फसल के नामों को एक समान करने का फंक्शन
     function getStandardCropName(raw) {
       if (!raw) return '';
       let c = raw.trim();
@@ -900,7 +918,7 @@
         navSched: "शेड्यूल",
         navProt: "सुरक्षा",
         navHelp: "हेल्पलाइन",
-        langBtn: "🌐 English",
+        langBtn: "🌐 भाषा बदलें",
         loginTitle: "सब्जी खेती बाड़ी की बातें",
         loginSub: "कृषि सहायता ऐप में आपका स्वागत है",
         lblPhone: "अपना मोबाइल नंबर दर्ज करें:",
@@ -927,7 +945,7 @@
         navSched: "Schedule",
         navProt: "Protection",
         navHelp: "Helpline",
-        langBtn: "🌐 हिंदी",
+        langBtn: "🌐 Language",
         loginTitle: "Sabzi Kheti Badi ki Baatein",
         loginSub: "Welcome to Agriculture Support App",
         lblPhone: "Enter your mobile number:",
@@ -935,17 +953,165 @@
         lblOtp: "🔐 Verifying OTP...",
         lblSuccess: "Successfully Auto-Verified!",
         btnSkip: "⏩ Skip Login & Continue"
+      },
+      pa: {
+        headerTitle: "ਸਬਜ਼ੀ ਖੇਤੀ ਬਾੜੀ ਦੀਆਂ ਗੱਲਾਂ",
+        welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!",
+        editProfile: "✏️ ਪ੍ਰੋਫਾਈਲ ਬਦلو",
+        searchPlaceholder: "🔍 ਖੀਰਾ, ਟਮਾਟਰ ਜਾਂ ਤਰਬੂਜ਼ ਲਿਖੋ...",
+        btnCrops: "ਸਬਜ਼ੀ ਫਸਲ ਕਿਸਮ",
+        btnProt: "ਫਸਲ ਸੁਰੱਖਿਆ",
+        btnSched: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ",
+        btnAdv: "ਸਲਾਹਕਾਰ",
+        btnComp: "All ਕੰਪਨੀ ਬੀਜ",
+        btnChem: "ਦਵਾਈਆਂ Chemicals",
+        videoSectionTitle: "📺 ਤਾਜ਼ਾ ਖੇਤੀ ਵੀਡੀਓ",
+        socialJoin: "ਸਾਡੇ ਨਾਲ ਸੋਸ਼ਲ ਮੀਡੀਆ 'ਤੇ ਜੁੜੋ",
+        navHome: "ਹੋਮ",
+        navCrops: "ਫਸਲਾਂ",
+        navSched: "ਸ਼ਡਿਊਲ",
+        navProt: "ਸੁਰੱਖਿਆ",
+        navHelp: "ਹੈਲਪਲਾਈਨ",
+        langBtn: "🌐 ਭਾਸ਼ਾ",
+        loginTitle: "ਸਬਜ਼ੀ ਖੇਤੀ ਬਾੜੀ ਦੀਆਂ ਗੱਲਾਂ",
+        loginSub: "ਖੇਤੀਬਾੜੀ ਸਹਾਇਤਾ ਐਪ ਵਿੱਚ ਜੀ ਆਇਆ ਨੂੰ",
+        lblPhone: "ਆਪਣਾ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ:",
+        btnOtp: "📲 ਓ.ਟੀ.ਪੀ. ਭੇਜੋ",
+        lblOtp: "🔐 ਓ.ਟੀ.ਪੀ. ਦرਜ ਹੋ ਰਿਹਾ ਹੈ...",
+        lblSuccess: "ਸਫਲਤਾਪੂਰਵਕ ਵੇਰਫਾਈ ਹੋ ਗਿਆ!",
+        btnSkip: "⏩ ਛੱਡੋ ਅਤੇ ਅੱਗੇ ਵਧੋ"
+      },
+      rj: {
+        headerTitle: "सब्जी खेती बाड़ी री बाता",
+        welcomeMsg: "राम-राम, किसान भाई!",
+        editProfile: "✏️ प्रोफाइल बदलो",
+        searchPlaceholder: "🔍 खीरा, टमाटर या तरबूज लिखो...",
+        btnCrops: "सब्जी फसल किस्म",
+        btnProt: "फसल सुरक्षा",
+        btnSched: "स्प्रे शेड्यूल",
+        btnAdv: "सलाहकार",
+        btnComp: "All कंपनी बीज",
+        btnChem: "दवाइयाँ Chemicals",
+        videoSectionTitle: "📺 ताज़ा कृषि वीडियो",
+        socialJoin: "सोशल मीडिया पर जुड़ो",
+        navHome: "होम",
+        navCrops: "फसल",
+        navSched: "शेड्यूल",
+        navProt: "सुरक्षा",
+        navHelp: "हेल्पलाइन",
+        langBtn: "🌐 भाषा",
+        loginTitle: "सब्जी खेती बाड़ी री बाता",
+        loginSub: "कृषि सहायता ऐप में स्वागत है",
+        lblPhone: "थारो मोबाइल नंबर लिखो:",
+        btnOtp: "📲 ओटीपी भेजो",
+        lblOtp: "🔐 ओटीपी आ रह्यो है...",
+        lblSuccess: "सफलतापूर्वक हो गयो!",
+        btnSkip: "⏩ आगे बढ़ो"
+      },
+      gu: {
+        headerTitle: "સબ્જી ખેતી વાડી ની વાતો",
+        welcomeMsg: "રામ-રામ, ખેડૂત ભાઈ!",
+        editProfile: "✏️પ્રોફાઈલ બદલો",
+        searchPlaceholder: "🔍 કાકડી, ટમેટા અથવા તડબૂચ લખો...",
+        btnCrops: "શાકભાજી પાક જાતો",
+        btnProt: "પાક સુરક્ષા",
+        btnSched: "સ્પ્રે શેડ્યુલ",
+        btnAdv: "સલાહકાર",
+        btnComp: "All કંપની બીજ",
+        btnChem: "દવાઓ Chemicals",
+        videoSectionTitle: "📺 તાજા કૃષિ વિડિયો",
+        socialJoin: "સોશિયલ મીડિયા પર જોડાઓ",
+        navHome: "હોમ",
+        navCrops: "પાક",
+        navSched: "શેડ્યુલ",
+        navProt: "સુરક્ષા",
+        navHelp: "હેલ્પલાઈન",
+        langBtn: "🌐 ભાષા",
+        loginTitle: "સબ્જી ખેતી વાડી ની વાતો",
+        loginSub: "કૃષિ સહાયતા એપમાં સ્વાગત છે",
+        lblPhone: "તમારો મોબાઈલ નંબર દાખલ કરો:",
+        btnOtp: "📲 ઓટીપી મોકલો",
+        lblOtp: "🔐 ઓટીપી ચકાસાઈ રહ્યો છે...",
+        lblSuccess: "સફળતાપૂર્વક ચકાસાય ગયું!",
+        btnSkip: "⏩ છોડો અને આગળ વધો"
+      },
+      mr: {
+        headerTitle: "भाजी शेतीवाडीच्या गप्पा",
+        welcomeMsg: "राम-राम, शेतकरी बंधू!",
+        editProfile: "✏️ प्रोफाईल बदला",
+        searchPlaceholder: "🔍 काकडी, टोमॅटो किंवा टरबूज लिहा...",
+        btnCrops: "भाजीपाला पिके",
+        btnProt: "पीक सुरक्षा",
+        btnSched: "फवारणी वेळापत्रक",
+        btnAdv: "सल्लागार",
+        btnComp: "All कंपनी बियाणे",
+        btnChem: "औषधे Chemicals",
+        videoSectionTitle: "📺 ताज्या कृषी व्हिडिओ",
+        socialJoin: "सोशल मीडियावर जोडा",
+        navHome: "होम",
+        navCrops: "पिके",
+        navSched: "वेळापत्रक",
+        navProt: "सुरक्षा",
+        navHelp: "हेल्पलाईन",
+        langBtn: "🌐 भाषा",
+        loginTitle: "भाजी शेतीवाडीच्या गप्पा",
+        loginSub: "कृषी सहाय्य App मध्ये आपले स्वागत आहे",
+        lblPhone: "तुमचा मोबाईल नंबर प्रविष्ट करा:",
+        btnOtp: "📲 OTP पाठवा",
+        lblOtp: "🔐 OTP तपासून घेत आहे...",
+        lblSuccess: "यशस्वीरित्या सत्यापित झाले!",
+        btnSkip: "⏩ पुढे जा"
       }
     };
 
-    function toggleAppLanguage() {
-      currentLang = currentLang === 'hi' ? 'en' : 'hi';
-      localStorage.setItem('app_lang', currentLang);
+    // भाषा चुनने और सहेजने का फंक्शन
+    function setAppLanguage(langCode) {
+      currentLang = langCode;
+      localStorage.setItem('app_lang', langCode);
+      document.getElementById('languageSelectModal').classList.remove('active');
+      
       applyLanguageUI();
+
+      // आवाज में स्वागत संदेश (Voice Greeting)
+      let welcomeText = "";
+      if (langCode === 'hi') welcomeText = "सब्जी खेती बाड़ी की बातें ऐप में आपका स्वागत है।";
+      else if (langCode === 'en') welcomeText = "Welcome to Sabzi Kheti Badi ki Baatein app.";
+      else if (langCode === 'pa') welcomeText = "ਸਬਜ਼ੀ ਖੇਤੀ ਬਾੜੀ ਦੀਆਂ ਗੱਲਾਂ ਐਪ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ।";
+      else if (langCode === 'rj') welcomeText = "सब्जी खेती बाड़ी री बाता एप माथे आप रो स्वागत है।";
+      else if (langCode === 'gu') welcomeText = "સબ્જી ખેતી વાડી ની વાતો એપ માં તમારું સ્વાગત છે.";
+      else if (langCode === 'mr') welcomeText = "भाजी शेतीवाडीच्या गप्पा ॲपमध्ये आपले स्वागत आहे.";
+
+      speakWelcomeMessage(welcomeText, langCode);
+
+      // भाषा चुनने के बाद लॉगिन या होम स्क्रीन दिखाएं
+      const loginStatus = localStorage.getItem('is_logged_in');
+      if (!loginStatus) {
+        document.getElementById('loginScreenModal').classList.add('active');
+      }
+    }
+
+    function toggleAppLanguage() {
+      // ऐप के भीतर भाषा बदलने के लिए सीधे भाषा मोडल खोलें
+      document.getElementById('languageSelectModal').classList.add('active');
+    }
+
+    function speakWelcomeMessage(text, lang) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        if (lang === 'hi' || lang === 'rj') utterance.lang = 'hi-IN';
+        else if (lang === 'en') utterance.lang = 'en-IN';
+        else if (lang === 'pa') utterance.lang = 'pa-IN';
+        else if (lang === 'gu') utterance.lang = 'gu-IN';
+        else if (lang === 'mr') utterance.lang = 'mr-IN';
+        else utterance.lang = 'hi-IN';
+
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
     }
 
     function applyLanguageUI() {
-      const d = langData[currentLang];
+      const d = langData[currentLang] || langData['hi'];
       document.getElementById('headerTitle').innerText = d.headerTitle;
       document.getElementById('welcomeMsg').innerText = d.welcomeMsg;
       document.getElementById('txtEditProfile').innerText = d.editProfile;
@@ -1090,7 +1256,7 @@
           console.log("Videos sheet error:", err);
         }
 
-                try {
+        try {
           const resDiag = await fetch(BASE_SHEET_URL + 'Diagnosis');
           const textDiag = await resDiag.text();
           diagnosisHistoryRecords = parseCSV(textDiag).map(cols => ({
@@ -1614,7 +1780,7 @@
       openScreen('screen-pest-alert', 'कीट व रोग चेतावनी');
     }
 
-        function showAiReportsScreen() {
+    function showAiReportsScreen() {
       const container = document.getElementById('aiReportsContainer');
       container.innerHTML = '';
 
@@ -1627,7 +1793,6 @@
             <button class="btn-action btn-wa" style="background:#1b5e20;" onclick="openSolutionModal()">⚡ अभी नई जांच करें</button>
           </div>`;
       } else {
-        // ताज़ा रिपोर्ट सबसे ऊपर (Reversed)
         const reversed = [...diagnosisHistoryRecords].reverse();
         reversed.forEach((rep, idx) => {
           const formattedText = (rep.result || '').replace(/\n/g, '<br>');
@@ -1752,13 +1917,18 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const loginStatus = localStorage.getItem('is_logged_in');
-      if (!loginStatus) {
-        document.getElementById('loginScreenModal').classList.add('active');
+      const savedLang = localStorage.getItem('app_lang');
+      if (!savedLang) {
+        // अगर पहली बार ऐप खुला है, तो भाषा चयन मोडल दिखाएं
+        document.getElementById('languageSelectModal').classList.add('active');
       } else {
-        document.getElementById('loginScreenModal').classList.remove('active');
+        currentLang = savedLang;
+        applyLanguageUI();
+        const loginStatus = localStorage.getItem('is_logged_in');
+        if (!loginStatus) {
+          document.getElementById('loginScreenModal').classList.add('active');
+        }
       }
-      applyLanguageUI();
     });
 
     function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
@@ -1790,7 +1960,6 @@
       }
     }
 
-    // Google Apps Script के जरिए AI लाइव स्कैन फंक्शन
     async function runSmartDiagnosis() {
       if (!base64ImageRaw) {
         alert("कृपया पहले पौधे की फोटो लें या गैलरी से चुनें!");
@@ -1808,7 +1977,6 @@
           notes: "पौधे में रोग की जांच"
         };
 
-        // Apps Script Web App को डेटा भेजना
         const response = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: {
@@ -1890,7 +2058,6 @@
 
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
-
 
     function openImageModal(imgUrl) {
       const modal = document.getElementById('imagePreviewModal');
