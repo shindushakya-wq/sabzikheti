@@ -674,20 +674,17 @@
   <!-- SCREEN: मंडी भाव -->
   <div id="screen-mandi-bhav" class="screen">
     <div class="variety-card">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="color:#1b5e20; font-size:16px;">📈 आज के प्रमुख मंडी भाव</h3>
-        <span style="font-size:11px; color:#166534; font-weight:bold;">मुहाना मंडी (जयपुर)</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="color:#1b5e20; font-size:16px;">📈 लाइव सरकारी मंडी भाव (eNAM / OGD)</h3>
+        <span style="font-size:11px; color:#166534; font-weight:bold;" id="mandiUpdateTime">ताज़ा डेटा</span>
       </div>
-      <table class="mandi-table">
-        <thead><tr><th>फसल</th><th>न्यूनतम</th><th>उच्चतम</th><th>औसत भाव</th></tr></thead>
-        <tbody>
-          <tr><td>🍅 टमाटर</td><td>₹14/किलो</td><td>₹22/किलो</td><td><b>₹18/किलो</b></td></tr>
-          <tr><td>🌶️ हरी मिर्च</td><td>₹25/किलो</td><td>₹35/किलो</td><td><b>₹30/किलो</b></td></tr>
-          <tr><td>🥒 खीरा</td><td>₹16/किलो</td><td>₹28/किलो</td><td><b>₹22/किलो</b></td></tr>
-          <tr><td>🥦 फूलगोभी</td><td>₹18/किलो</td><td>₹26/किलो</td><td><b>₹22/किलो</b></td></tr>
-          <tr><td>🥒 भिंडी</td><td>₹20/किलो</td><td>₹32/किलो</td><td><b>₹26/किलो</b></td></tr>
-        </tbody>
-      </table>
+      <div id="mandiLoading" style="text-align:center; padding:20px; color:#6b7280;">⏳ सरकार की वेबसाइट से लाइव मंडी भाव लोड हो रहे हैं...</div>
+      <div style="overflow-x:auto;">
+        <table class="mandi-table" id="mandiTableElement" style="display:none;">
+          <thead><tr><th>राज्य / ज़िला</th><th>मंडी</th><th>फसल (Commodity)</th><th>न्यूनतम (₹/क्विंटल)</th><th>अधिकतम (₹/क्विंटल)</th></tr></thead>
+          <tbody id="mandiTableBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -779,6 +776,53 @@
   </div>
 
   <script>
+    let cachedMandiData = null;
+    async function fetchLiveMandiPrices() {
+      const loadingDiv = document.getElementById('mandiLoading');
+      const tableElem = document.getElementById('mandiTableElement');
+      const tbody = document.getElementById('mandiTableBody');
+
+      if (cachedMandiData && cachedMandiData.length > 0) {
+        renderMandiTable(cachedMandiData);
+        return;
+      }
+
+      try {
+        const apiUrl = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=50";
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        
+        if (data && data.records && data.records.length > 0) {
+          cachedMandiData = data.records;
+          renderMandiTable(cachedMandiData);
+        } else {
+          loadingDiv.innerHTML = "⚠️ वर्तमान में लाइव मंडी डेटा उपलब्ध नहीं है।";
+        }
+      } catch (err) {
+        loadingDiv.innerHTML = "⚠️ मंडी डेटा लोड करने में इंटरनेट कनेक्शन की समस्या आई।";
+      }
+    }
+
+    function renderMandiTable(records) {
+      const loadingDiv = document.getElementById('mandiLoading');
+      const tableElem = document.getElementById('mandiTableElement');
+      const tbody = document.getElementById('mandiTableBody');
+      
+      tbody.innerHTML = '';
+      records.forEach(r => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${r.state || '-'}<br><small style="color:#6b7280;">${r.district || ''}</small></td>
+            <td><b>${r.market || '-'}</b></td>
+            <td>🍅 <b>${r.commodity || '-'}</b></td>
+            <td>₹${r.min_price || '-'}</td>
+            <td><span style="color:#16a34a; font-weight:bold;">₹${r.max_price || '-'}</span></td>
+          </tr>`;
+      });
+      loadingDiv.style.display = 'none';
+      tableElem.style.display = 'table';
+    }
+
     const navHistory = ['screen-home'];
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     
@@ -1532,7 +1576,7 @@
 
     function showOtherServicesScreen() { openScreen('screen-other-services', 'Other सेवाएं (मौसम, मंडी, अलर्ट)'); }
     function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', 'मौसम पूर्वानुमान'); }
-    function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); }
+    function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'ताज़ा मंडी भाव'); fetchLiveMandiPrices(); }
     function showPrivacyPolicyScreen() { openScreen('screen-privacy', 'नियम व शर्तें एवं गोपनीयता नीति'); }
     
     function showExpertAdviceScreen() {
@@ -1675,7 +1719,7 @@
 
     function sendOtpCode() {
       const phone = document.getElementById('loginPhone').value.trim();
-      if (phone.length !== 10) { alert("कृपया 10 अंकों का मोबाइल नंबर लिखें!"); return; }
+      if (phone.length !== 10) { alert("कृपया 10 अंकों का मोबाइल नंबर लिखें तालमेल के लिए!"); return; }
 
       document.getElementById('phoneInputGroup').style.display = 'none';
       document.getElementById('otpInputGroup').style.display = 'block';
