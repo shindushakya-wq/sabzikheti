@@ -69,21 +69,15 @@
 
     /* लाइव मौसम कार्ड व एनिमेटेड वेदर इफेक्ट्स */
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; }
-    .weather-card.night-mode { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-color: #334155; color: white; }
-    .weather-card.night-mode h4, .weather-card.night-mode .weather-datetime, .weather-card.night-mode .weather-temp, .weather-card.night-mode #weatherDesc { color: #f8fafc; }
-    .weather-card.night-mode .weather-header-row { border-bottom-color: #475569; }
-    
     .weather-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #a7f3d0; padding-bottom: 6px; margin-bottom: 8px; }
     .weather-card h4 { color: #1b5e20; font-size: 14px; font-weight: 700; }
     .weather-datetime { font-size: 11px; color: #166534; font-weight: 600; }
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
 
-    /* बादल उड़ते हुए एनिमेशन */
     @keyframes floatClouds { 0% { transform: translateX(-30px); opacity: 0.7; } 50% { transform: translateX(30px); opacity: 1; } 100% { transform: translateX(-30px); opacity: 0.7; } }
     .anim-clouds { animation: floatClouds 6s ease-in-out infinite; display: inline-block; }
 
-    /* बारिश गिरती हुई एनिमेशन */
     @keyframes fallRain { 0% { transform: translateY(-10px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(15px); opacity: 0; } }
     .anim-rain { animation: fallRain 1s linear infinite; display: inline-block; }
 
@@ -91,15 +85,12 @@
     .quick-crop-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; }
     .quick-crop-scroll::-webkit-scrollbar { display: none; }
     .quick-pill { background: white; border: 1.5px solid #d1d5db; border-radius: 20px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: #374151; white-space: nowrap; display: flex; align-items: center; gap: 5px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-    .quick-pill:active { background: #f0fdf4; border-color: #16a34a; color: #166534; }
 
     /* सर्च बार */
     .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
     .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
     .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; border-radius: 50%; }
-    .voice-btn.listening { animation: pulse 1s infinite alternate; background: #fee2e2; }
-    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
     /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
@@ -107,40 +98,28 @@
     .menu-box .icon { font-size: 26px; margin-bottom: 4px; }
     .menu-box h3 { font-size: 11.5px; font-weight: 700; line-height: 1.3; }
     
-    .card-crops { background: #ecfdf5; border-color: #6ee7b7; }
-    .card-crops h3 { color: #047857; }
-    .card-protection { background: #fff5f5; border-color: #fca5a5; }
-    .card-protection h3 { color: #b91c1c; }
-    .card-schedule { background: #fffbeb; border-color: #fde68a; }
-    .card-schedule h3 { color: #b45309; }
-    .card-atoz { background: #fef3c7; border-color: #fde68a; }
-    .card-atoz h3 { color: #92400e; }
-    .card-discussion { background: #eff6ff; border-color: #bfdbfe; }
-    .card-discussion h3 { color: #1d4ed8; }
-    .card-advisor { background: #f3e8ff; border-color: #e9d5ff; }
-    .card-advisor h3 { color: #6b21a8; }
-    .card-companies { background: #ffedd5; border-color: #fed7aa; }
-    .card-companies h3 { color: #c2410c; }
-    .card-chemicals { background: #fdf2f8; border-color: #fbcfe8; }
-    .card-chemicals h3 { color: #be185d; }
-    .card-services { background: #f1f5f9; border-color: #cbd5e1; }
-    .card-services h3 { color: #334155; }
+    .card-crops { background: #ecfdf5; border-color: #6ee7b7; } .card-crops h3 { color: #047857; }
+    .card-protection { background: #fff5f5; border-color: #fca5a5; } .card-protection h3 { color: #b91c1c; }
+    .card-schedule { background: #fffbeb; border-color: #fde68a; } .card-schedule h3 { color: #b45309; }
+    .card-atoz { background: #fef3c7; border-color: #fde68a; } .card-atoz h3 { color: #92400e; }
+    .card-discussion { background: #eff6ff; border-color: #bfdbfe; } .card-discussion h3 { color: #1d4ed8; }
+    .card-advisor { background: #f3e8ff; border-color: #e9d5ff; } .card-advisor h3 { color: #6b21a8; }
+    .card-companies { background: #ffedd5; border-color: #fed7aa; } .card-companies h3 { color: #c2410c; }
+    .card-chemicals { background: #fdf2f8; border-color: #fbcfe8; } .card-chemicals h3 { color: #be185d; }
+    .card-services { background: #f1f5f9; border-color: #cbd5e1; } .card-services h3 { color: #334155; }
 
-    /* 4 वीडियो ग्रिड कार्ड स्टाइल */
     .video-card-item { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
     .video-thumb-box { position: relative; width: 100%; height: 95px; background: #000; }
     .video-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
     .video-play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
     .video-card-title { font-size: 11.5px; font-weight: bold; color: #1f2937; padding: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* सोशल मीडिया कार्ड */
     .social-box { background: white; border-radius: 14px; padding: 14px; margin-top: 15px; text-align: center; border: 1px solid #e5e7eb; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
     .social-btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 8px; }
     .social-link { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 10px; text-decoration: none; font-size: 13px; font-weight: bold; }
     .link-yt { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
     .link-fb { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
 
-    /* फ़्लोटिंग बटन व मोडल */
     .fab-solution { position: fixed; right: 16px; bottom: 75px; background: #059669; color: white; border: none; border-radius: 30px; padding: 12px 18px; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.45); z-index: 1001; }
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.active { display: flex; }
@@ -156,19 +135,16 @@
     .preview-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; display: none; }
     .doc-result-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-top: 12px; display: none; }
 
-    /* फॉर्म इनपुट्स */
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 4px; }
     .form-control { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-size: 14px; }
 
-    /* लिस्ट व कार्ड */
     .list-item { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .list-left { display: flex; align-items: center; gap: 12px; }
     .list-icon { font-size: 24px; }
     .list-title { font-size: 15px; font-weight: 600; }
     .arrow { color: #9ca3af; font-weight: bold; }
 
-    /* वैरायटी कार्ड - फोटो ग्रिड (जितनी फोटो उतनी दिखेंगी) */
     .variety-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; border: 1px solid #e5e7eb; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     .var-photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 14px; }
     .var-photo { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; background-color: #f3f4f6; display: block; border: 1px solid #e2e8f0; cursor: pointer; }
@@ -178,17 +154,14 @@
     .badge-company { background: #eff6ff; color: #1d4ed8; font-size: 12px; padding: 4px 10px; border-radius: 8px; font-weight: 700; display: inline-block; border: 1px solid #bfdbfe; }
     
     .var-title { font-size: 18px; font-weight: 800; color: #111827; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 8px; }
-    
     .var-info-row { font-size: 13.5px; color: #374151; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.5; }
     .var-info-row b { color: #1f2937; }
 
-    /* फसल सुरक्षा रोग कार्ड्स */
     .disease-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fecaca; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #dc2626; }
     .disease-title { font-size: 16px; font-weight: bold; color: #991b1b; margin-bottom: 6px; }
     .disease-symptom { font-size: 13px; color: #4b5563; margin-bottom: 8px; line-height: 1.4; }
     .disease-cure-box { font-size: 13.5px; color: #065f46; background: #ecfdf5; padding: 8px 10px; border-radius: 8px; border-left: 4px solid #10b981; font-weight: 600; }
 
-    /* दवाइयाँ लिस्ट कार्ड */
     .chem-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fbcfe8; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #db2777; }
     .chem-title { font-size: 16px; font-weight: bold; color: #9d174d; margin-bottom: 8px; border-bottom: 1px dashed #fbcfe8; padding-bottom: 4px; }
     .chem-body-row { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
@@ -206,13 +179,11 @@
     .btn-action { display: block; width: 100%; padding: 12px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 14.5px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
     .btn-wa { background: #10b981; color: white; }
 
-    /* बॉटम नेविगेशन */
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 8px 0; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
     .nav-tab { text-align: center; font-size: 10px; color: #6b7280; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
     .nav-tab.active { color: #059669; font-weight: bold; }
     .nav-tab span:first-child { font-size: 18px; }
 
-    /* फ़ुल-स्क्रीन स्टोरी प्लेयर */
     .story-fullscreen-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000000; z-index: 5000; flex-direction: column; align-items: center; justify-content: center; }
     .story-fullscreen-modal.active { display: flex; }
     .story-top-bar { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; flex-direction: column; gap: 8px; z-index: 5010; }
@@ -223,23 +194,19 @@
     .story-media-view { width: 100%; height: 100%; object-fit: contain; max-height: 85vh; }
     .story-caption-box { position: absolute; bottom: 30px; background: rgba(0,0,0,0.7); color: white; padding: 12px 16px; border-radius: 10px; font-size: 14px; max-width: 90%; text-align: center; }
 
-    /* मंडी भाव टेबल */
     .mandi-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
     .mandi-table th { background: #e8f5e9; color: #1b5e20; padding: 10px 8px; text-align: left; border: 1px solid #d1fae5; }
     .mandi-table td { padding: 10px 8px; border: 1px solid #e5e7eb; color: #374151; }
     .mandi-table tr:nth-child(even) { background: #f9fafb; }
 
-    /* लॉगिन स्क्रीन स्टाइल */
     .login-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
     .login-modal-overlay.active { display: flex; }
     .login-card { background: white; border-radius: 16px; padding: 22px; max-width: 360px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid #059669; }
 
-    /* फुल-स्क्रीन इमेज प्रीव्यू मोडल */
     .image-preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 6000; align-items: center; justify-content: center; padding: 20px; }
     .image-preview-modal.active { display: flex; }
     .image-preview-content { max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: 12px; border: 2px solid white; }
     .image-preview-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.3); border: none; color: white; font-size: 26px; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
   </style>
 </head>
 <body>
@@ -306,13 +273,13 @@
       <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 भाषा बदलें</button>
       <div class="bell-wrapper" onclick="openNotificationModal()" title="नोटिफिकेशन">
         <span class="bell-icon">🔔</span>
-        <span class="notification-badge" id="notifBadge">1</span>
+        <span class="notification-badge" id="notifBadge" style="display:none;">1</span>
       </div>
       <span class="menu-bars-icon" onclick="openDrawer()">☰</span>
     </div>
   </div>
 
-  <!-- नोटिफिकेशन मोडल -->
+  <!-- नोटिफिकेशन मोडल (डायनामिक अपडेट के साथ) -->
   <div class="modal-overlay" id="notificationModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -322,7 +289,7 @@
       <div id="notificationListContent">
         <div class="schedule-step" style="border-left:4px solid #16a34a;">
           <b>🌾 नया डेटा अपडेट उपलब्ध है!</b>
-          <p>गूगल शीट की सभी तस्वीरें (1, 2 या 3) अब एक साथ सही ग्रिड में दिखेंगी।</p>
+          <p>फसल चर्चा मंच पर फोटो और टेक्स्ट दोनों के साथ पोस्टिंग पूरी तरह ठीक कर दी गई है।</p>
           <span style="font-size:11px; color:#166534;">आज, अभी अपडेट किया गया</span>
         </div>
       </div>
@@ -363,7 +330,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      सब्जी खेती बाड़ी की बातें • v5.5
+      सब्जी खेती बाड़ी की बातें • v5.7
     </div>
   </div>
 
@@ -562,7 +529,7 @@
   <!-- SCREEN: फसल की A से Z पूरी जानकारी -->
   <div id="screen-atoz-detail" class="screen"><div id="atozDetailContainer"></div></div>
 
-  <!-- SCREEN: किसान चर्चा -->
+  <!-- SCREEN: किसान चर्चा (Fixed Compressed Photo & Text Posting) -->
   <div id="screen-farmer-discussion" class="screen">
     <div class="variety-card" style="border-left:5px solid #0284c7; padding: 16px; margin-bottom: 14px;">
       <h3 style="color:#0369a1; font-size:16px; margin-bottom:8px;">💬 किसान चर्चा मंच (फसल फोटो व सुझाव)</h3>
@@ -1012,7 +979,7 @@
           if(cols[0] && !cols[0].includes('Crop') && !cols[0].toLowerCase().includes('crop')) {
             let crop = getStandardCropName(cols[0]);
             if(!protectionRecords[crop]) protectionRecords[crop] = [];
-            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', photo: cols[4] || '' });
+            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', photo: cols[5] || '' });
           }
         });
 
@@ -1043,6 +1010,24 @@
         videoRecords = parseCSV(await resVideos.text()).map(cols => ({
           title: cols[0]||'कृषि वीडियो', thumbnail: cols[1]||'', videoUrl: cols[2]||''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title'));
+
+        try {
+          const resNotif = await fetch(BASE_SHEET_URL + 'Notifications');
+          const textNotif = await resNotif.text();
+          let notifRows = parseCSV(textNotif);
+          if(notifRows.length > 1) {
+            let notifHtml = '';
+            notifRows.forEach((cols, idx) => {
+              if(idx > 0 && cols[0]) {
+                notifHtml += `<div class="schedule-step" style="border-left:4px solid #16a34a; margin-bottom:10px;"><b>🌾 ${cols[0]}</b><p>${cols[1] || ''}</p><span style="font-size:11px; color:#166534;">${cols[2] || 'ताज़ा अपडेट'}</span></div>`;
+              }
+            });
+            if(notifHtml) {
+              document.getElementById('notificationListContent').innerHTML = notifHtml;
+              document.getElementById('notifBadge').style.display = 'flex';
+            }
+          }
+        } catch(ex) {}
 
         renderStoriesBar();
         renderDynamicVideos();
@@ -1467,17 +1452,40 @@
       openScreen('screen-farmer-discussion', 'किसान चर्चा मंच');
     }
 
+    // फोटो कॉम्प्रेसिंग के साथ सुरक्षित पोस्टिंग लॉजिक
     function submitDiscussionPost() {
       let author = document.getElementById('discussionAuthor').value.trim();
       let text = document.getElementById('discussionText').value.trim();
       let fileInput = document.getElementById('discussionImageInput');
-      if(!author || !text) { alert("कृपया नाम और चर्चा/सवाल लिखें!"); return; }
+      
+      if(!author || !text) { 
+        alert("कृपया अपना नाम और चर्चा/सवाल दोनों लिखें!"); 
+        return; 
+      }
 
       if(fileInput.files && fileInput.files[0]) {
+        let file = fileInput.files[0];
         let reader = new FileReader();
-        reader.onload = (e) => { savePost(author, text, e.target.result); };
-        reader.readAsDataURL(fileInput.files[0]);
-      } else { savePost(author, text, ""); }
+        reader.onload = (e) => {
+          let img = new Image();
+          img.src = e.target.result;
+          img.onload = function() {
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+            let maxWidth = 600;
+            let scale = maxWidth / img.width;
+            if(scale > 1) scale = 1;
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            let compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            savePost(author, text, compressedDataUrl);
+          };
+        };
+        reader.readAsDataURL(file);
+      } else { 
+        savePost(author, text, ""); 
+      }
     }
 
     function savePost(author, text, imgUrl) {
@@ -1486,7 +1494,7 @@
       localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
       document.getElementById('discussionText').value = '';
       document.getElementById('discussionImageInput').value = '';
-      alert("✅ पोस्ट सफल रही!");
+      alert("✅ पोस्ट सफलतापूर्वक हो गई!");
       loadDiscussionPosts();
     }
 
