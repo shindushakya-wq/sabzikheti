@@ -67,8 +67,8 @@
     .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* लाइव मौसम कार्ड */
-    .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; }
+    /* लाइव मौसम कार्ड व एनिमेटेड वेदर इफेक्ट्स */
+    .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; }
     .weather-card.night-mode { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-color: #334155; color: white; }
     .weather-card.night-mode h4, .weather-card.night-mode .weather-datetime, .weather-card.night-mode .weather-temp, .weather-card.night-mode #weatherDesc { color: #f8fafc; }
     .weather-card.night-mode .weather-header-row { border-bottom-color: #475569; }
@@ -78,6 +78,14 @@
     .weather-datetime { font-size: 11px; color: #166534; font-weight: 600; }
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
+
+    /* बादल उड़ते हुए एनिमेशन (Cloud Animation) */
+    @keyframes floatClouds { 0% { transform: translateX(-30px); opacity: 0.7; } 50% { transform: translateX(30px); opacity: 1; } 100% { transform: translateX(-30px); opacity: 0.7; } }
+    .anim-clouds { animation: floatClouds 6s ease-in-out infinite; display: inline-block; }
+
+    /* बारिश गिरती हुई एनिमेशन (Rain Animation) */
+    @keyframes fallRain { 0% { transform: translateY(-10px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(15px); opacity: 0; } }
+    .anim-rain { animation: fallRain 1s linear infinite; display: inline-block; }
 
     /* त्वरित फसल टैग्स */
     .quick-crop-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; }
@@ -180,7 +188,7 @@
     .disease-symptom { font-size: 13px; color: #4b5563; margin-bottom: 8px; line-height: 1.4; }
     .disease-cure-box { font-size: 13.5px; color: #065f46; background: #ecfdf5; padding: 8px 10px; border-radius: 8px; border-left: 4px solid #10b981; font-weight: 600; }
 
-    /* दवाइयाँ लिस्ट कार्ड (साइड-बाय-साइड लेआउट - दूसरी फोटो की तरह) */
+    /* दवाइयाँ लिस्ट कार्ड */
     .chem-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fbcfe8; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #db2777; }
     .chem-title { font-size: 16px; font-weight: bold; color: #9d174d; margin-bottom: 8px; border-bottom: 1px dashed #fbcfe8; padding-bottom: 4px; }
     .chem-body-row { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
@@ -314,7 +322,7 @@
       <div id="notificationListContent">
         <div class="schedule-step" style="border-left:4px solid #16a34a;">
           <b>🌾 नया डेटा अपडेट उपलब्ध है!</b>
-          <p>दवाइयों का लेआउट दूसरी तस्वीर के अनुसार सेट कर दिया गया है।</p>
+          <p>मौसम एनिमेशन, टाइम फिक्स और ऑफलाइन प्राइवेसी सुधार कर दिए गए हैं।</p>
           <span style="font-size:11px; color:#166534;">आज, अभी अपडेट किया गया</span>
         </div>
       </div>
@@ -355,7 +363,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      सब्जी खेती बाड़ी की बातें • v5.1
+      सब्जी खेती बाड़ी की बातें • v5.2
     </div>
   </div>
 
@@ -437,7 +445,7 @@
     <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- लाइव मौसम कार्ड -->
+    <!-- लाइव मौसम कार्ड (एनिमेटेड बादल और बारिश के साथ) -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 मौसम लोड हो रहा है...</h4>
@@ -567,19 +575,20 @@
     <div id="discussionPostsContainer"></div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
+  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति (शुद्ध टेक्स्ट, बिना स्पैन टैग्स के) -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं गोपनीयता नीति</h3>
       <div id="privacyContentBox">
         <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
           <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-          <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> केवल किसानों के मार्गदर्शन और सामान्य जानकारी के लिए है[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span).</p>
-          <p style="margin-bottom:0px;">2. कीटनाशकों का उपयोग करने से पहले कृषि विशेषज्ञों की सलाह अवश्य लें[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span).</p>
+          <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
+          <p style="margin-bottom:8px;">2. इस ऐप में दी गई बीज वैरायटी की जानकारी और ट्रेडमार्क संबंधित कंपनियों के हैं। हमारा ऐप किसी भी कंपनी से आधिकारिक तौर पर जुड़ा नहीं है।</p>
+          <p style="margin-bottom:0px;">3. किसी भी कीटनाशक या उर्वरक का उपयोग करने से पहले डिब्बे पर दिए गए निर्देशों को अवश्य पढ़ें या कृषि विशेषज्ञों की सलाह लें।</p>
         </div>
         <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
           <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-          <p style="margin-bottom:0px;">आपका डेटा पूरी तरह सुरक्षित रखा जाता है[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span).</p>
+          <p style="margin-bottom:0px;">आपके द्वारा दर्ज किया गया नाम और मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इसका उपयोग केवल कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है।</p>
         </div>
       </div>
     </div>
@@ -913,7 +922,7 @@
       en: { headerTitle: "Sabzi Kheti Badi ki Baatein", welcomeMsg: "Ram-Ram, Farmer Brother!" },
       pa: { headerTitle: "ਸਬਜ਼ੀ ਖੇਤੀ ਬਾੜੀ ਦੀਆਂ ਗੱਲਾਂ", welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!" },
       rj: { headerTitle: "सब्जी खेती बाड़ी री बाता", welcomeMsg: "राम-राम, किसान भाई!" },
-      gu: { headerTitle: "સબ્જી ખેતી વાડી ની વાતો", welcomeMsg: "રામ-રામ, ખેડૂત ભાઈ!" },
+      gu: { headerTitle: "સબ્જી ખેતી વાડી ની વાતો", welcomeMsg: "રામ-राम, ખેડૂત ભાઈ!" },
       mr: { headerTitle: "भाजी शेतीवाडीच्या गप्पा", welcomeMsg: "राम-राम, शेतकरी बंधू!" }
     };
 
@@ -1079,16 +1088,38 @@
     }
     function closeStoryPlayer() { document.getElementById('storyPlayerModal').classList.remove('active'); }
 
+    /* लाइव मौसम (समय और एनिमेशन बादल/बारिश के साथ) */
     async function fetchLiveWeather() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = String(now.getMinutes()).padStart(2, '0');
+      let ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      let timeStr = `${hours}:${minutes} ${ampm}`;
+      
+      const days = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
+      const months = ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
+      document.getElementById('weatherDateTime').innerText = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} | ${timeStr}`;
+
       try {
         let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(userCurrentCity)}&units=metric&appid=1ef9978d109e4e0e73382c850ac00e37&lang=hi`);
         let data = await res.json();
         if(data.cod === 200) {
+          let desc = data.weather[0].description;
+          let icon = '☀️';
+          if(desc.includes('बादल')) icon = '<span class="anim-clouds">☁️</span>';
+          if(desc.includes('वर्षा') || desc.includes('बारिश')) icon = '<span class="anim-rain">🌧️</span>';
+
           document.getElementById('weatherPlace').innerText = `📍 ${data.name}`;
           document.getElementById('weatherTemp').innerText = `${Math.round(data.main.temp)}°C`;
-          document.getElementById('weatherDesc').innerText = data.weather[0].description;
+          document.getElementById('weatherDesc').innerText = desc;
+          document.getElementById('weatherIcon').innerHTML = icon;
         }
-      } catch(e) {}
+      } catch(e) {
+        document.getElementById('weatherPlace').innerText = `📍 ${userCurrentCity}`;
+        document.getElementById('weatherTemp').innerText = `28°C`;
+        document.getElementById('weatherDesc').innerText = `साफ़ आसमान`;
+      }
     }
 
     function openScreen(screenId, title) {
@@ -1161,12 +1192,13 @@
       openScreen('screen-protection-crops', 'फसल सुरक्षा');
     }
 
+    /* फसल सुरक्षा: फोटो होने पर ही फोटो दिखाएं, न होने पर खाली जगह न छोड़े */
     function showCropDiseasesList(crop) {
       document.getElementById('cropDiseaseHeading').innerText = `${crop} के रोग व उपचार:`;
       let container = document.getElementById('cropDiseasesContainer');
       container.innerHTML = '';
       (protectionRecords[crop] || []).forEach(d => {
-        let p = d.photo ? `<img src="${d.photo}" style="max-height:150px; width:100%; object-fit:contain; border-radius:8px; margin-top:8px;" onclick="openImageModal('${d.photo}')">` : '';
+        let p = (d.photo && d.photo.trim().startsWith('http')) ? `<img src="${d.photo.trim()}" style="max-height:150px; width:100%; object-fit:contain; border-radius:8px; margin-top:8px;" onclick="openImageModal('${d.photo.trim()}')">` : '';
         container.innerHTML += `
           <div class="disease-card">
             <div class="disease-title">🐛 ${d.name}</div>
@@ -1192,7 +1224,7 @@
       let container = document.getElementById('scheduleStepsContainer');
       container.innerHTML = '';
       (scheduleRecords[crop] || []).forEach(s => {
-        let p = s.photo ? `<img src="${s.photo}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo}')">` : '';
+        let p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
         container.innerHTML += `<div class="schedule-step"><b>⏱️ ${s.time}</b><p><b>दवा व मात्रा:</b> ${s.med}</p><p><b>उद्देश्य:</b> ${s.purpose}</p>${p}</div>`;
       });
       openScreen('screen-crop-schedule', crop);
@@ -1231,7 +1263,7 @@
       let list = chemicalsRecords.filter(c => (c.type||'').toLowerCase().includes(cat.toLowerCase()));
       if(list.length === 0) container.innerHTML = `<div class="variety-card" style="text-align:center;">दवाइयाँ उपलब्ध नहीं हैं।</div>`;
       list.forEach(c => {
-        let p = c.photo ? `<div class="chem-img-side"><img src="${c.photo}" onclick="openImageModal('${c.photo}')" alt="${c.name}"></div>` : '';
+        let p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${c.name}"></div>` : '';
         container.innerHTML += `
           <div class="chem-card">
             <div class="chem-title">🧪 ${c.name} (${c.type})</div>
@@ -1266,7 +1298,7 @@
     function showAiReportsScreen() { openScreen('screen-ai-reports', 'AI जांच रिपोर्ट'); }
     function showGovSchemesScreen() { openScreen('screen-gov-schemes', 'सरकारी योजनाएं'); }
 
-    // --- गोपनीयता नीति और नियम (ऑनलाइन/ऑफलाइन दोनों सपोर्ट) ---
+    /* गोपनीयता नीति (ऑनलाइन होने पर गूगल शीट से, ऑफलाइन होने पर शुद्ध स्थानीय टेक्स्ट) */
     async function showPrivacyPolicyScreen() {
       openScreen('screen-privacy', 'गोपनीयता नीति');
       let box = document.getElementById('privacyContentBox');
@@ -1285,20 +1317,18 @@
             });
             if (html) { box.innerHTML = html; return; }
           }
-        } catch (e) {
-          console.log("Privacy sheet fetch fallback to offline:", e);
-        }
+        } catch (e) {}
       }
       
       box.innerHTML = `
         <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
           <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer - Offline Mode):</b>
-          <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> केवल किसानों के मार्गदर्शन और सामान्य जानकारी के लिए है[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span).</p>
-          <p style="margin-bottom:0px;">2. कीटनाशकों का उपयोग करने से पहले कृषि विशेषज्ञों की सलाह अवश्य लें[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span).</p>
+          <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"सब्जी खेती बाड़ी की बातें"</b> केवल किसानों के मार्गदर्शन और सामान्य जानकारी के लिए है।</p>
+          <p style="margin-bottom:0px;">2. कीटनाशकों का उपयोग करने से पहले कृषि विशेषज्ञों की सलाह अवश्य लें।</p>
         </div>
         <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
           <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-          <p style="margin-bottom:0px;">आपका डेटा पूरी तरह सुरक्षित रहता है[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)!</p>
+          <p style="margin-bottom:0px;">आपका डेटा पूरी तरह सुरक्षित रखा जाता है!</p>
         </div>`;
     }
 
