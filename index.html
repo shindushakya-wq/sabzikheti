@@ -447,7 +447,7 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
     </div>
 
-    <!-- 3-3 बटन ग्रिड (सभी 9 बटन बिल्कुल एक जैसे चौकोर साइज के) -->
+    <!-- 3-3 बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
@@ -629,7 +629,7 @@
   <div id="screen-ai-reports" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; margin-bottom:12px;">
       <h3 style="color:#166534; font-size:16px; margin-bottom:6px;">🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड</h3>
-      <p style="font-size:12px; color:#6b7280;">गूगल शीट से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
+      <p style="font-size:12px; color:#6b7280;">गूगल शीट (Diagnosis) से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
     </div>
     <div id="aiReportsContainer">
       <div class="variety-card" style="text-align:center; padding:20px; color:#6b7280;">
@@ -1026,8 +1026,9 @@
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(e) {}
 
+        // यहाँ गूगल शीट का नाम 'Diagnosis' सेट किया गया है
         try {
-          const resReports = await fetch(BASE_SHEET_URL + 'AI%20जांच%20रिपोर्ट');
+          const resReports = await fetch(BASE_SHEET_URL + 'Diagnosis');
           const textReports = await resReports.text();
           let reportRows = parseCSV(textReports);
           let repContainer = document.getElementById('aiReportsContainer');
@@ -1143,7 +1144,6 @@
     }
     function closeStoryPlayer() { document.getElementById('storyPlayerModal').classList.remove('active'); }
 
-    // मौसम समय और नाईट मोड (रात होते ही रात का लुक) लॉजिक
     async function fetchLiveWeather() {
       const now = new Date();
       let hours = now.getHours();
@@ -1464,7 +1464,6 @@
       base64ImageRaw = "";
     }
 
-    // AI फोटो अपलोड और ऑटो कम्प्रेशन लॉजिक
     function handleImage(input) {
       if(input.files && input.files[0]) {
         let file = input.files[0];
