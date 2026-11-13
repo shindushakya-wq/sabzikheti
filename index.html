@@ -20,7 +20,7 @@
       opacity: 0.85;
     }
 
-    /* टॉप हेडर व एक समान बटन साइज */
+    /* टॉप हेडर व बटन साइज */
     .app-header { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); color: white; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .back-btn { font-size: 20px; cursor: pointer; margin-right: 8px; display: none; }
     .header-title { font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
@@ -90,11 +90,11 @@
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
     .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; border-radius: 50%; }
 
-    /* 3-3 बटन ग्रिड (एक समान फिक्स्ड साइज और एलाइनमेंट) */
+    /* सभी 9 बटन बिल्कुल एक जैसे चौकोर (Square) साइज के */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-    .menu-box { background: #ffffff; padding: 14px 6px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; height: 110px; }
-    .menu-box .icon { font-size: 26px; margin-bottom: 6px; }
-    .menu-box h3 { font-size: 11.5px; font-weight: 700; line-height: 1.3; }
+    .menu-box { background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
+    .menu-box .icon { font-size: 28px; margin-bottom: 6px; }
+    .menu-box h3 { font-size: 12px; font-weight: 700; line-height: 1.3; width: 100%; padding: 0 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
     
     .card-crops { background: #ecfdf5; border-color: #6ee7b7; } .card-crops h3 { color: #047857; }
     .card-protection { background: #fff5f5; border-color: #fca5a5; } .card-protection h3 { color: #b91c1c; }
@@ -261,7 +261,7 @@
     </div>
   </div>
 
-  <!-- टॉप हेडर (सुधरा हुआ बटन साइज) -->
+  <!-- टॉप हेडर -->
   <div class="app-header">
     <div style="display:flex; align-items:center;">
       <span class="back-btn" id="headerBack" onclick="goBack()">←</span>
@@ -338,7 +338,7 @@
     <span>तुरंत समाधान</span>
   </button>
 
-  <!-- तुरंत समाधान मोडल -->
+  <!-- तुरंत समाधान मोडल (ऑटो इमेज कम्प्रेशन के साथ) -->
   <div class="modal-overlay" id="solutionModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -410,7 +410,7 @@
     <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- लाइव मौसम कार्ड (समय और नाईट मोड के साथ) -->
+    <!-- लाइव मौसम कार्ड -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 श्रीलंका नगर</h4>
@@ -447,7 +447,7 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
     </div>
 
-    <!-- 3-3 बटन ग्रिड (समान साइज वाले बॉक्स) -->
+    <!-- 3-3 बटन ग्रिड (सभी 9 बटन बिल्कुल एक जैसे चौकोर साइज के) -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
@@ -1012,7 +1012,6 @@
           }
         });
 
-        // 1. एक्सपर्ट सुझाव (Tips) शीट लोड करना
         try {
           const resTips = await fetch(BASE_SHEET_URL + 'Tips');
           tipsRecords = parseCSV(await resTips.text()).map(cols => ({
@@ -1020,7 +1019,6 @@
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(e) {}
 
-        // 2. कीट अलर्ट (Alerts) शीट लोड करना
         try {
           const resAlerts = await fetch(BASE_SHEET_URL + 'Alerts');
           alertsRecords = parseCSV(await resAlerts.text()).map(cols => ({
@@ -1028,7 +1026,6 @@
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(e) {}
 
-        // 3. AI जांच रिपोर्ट (AI Reports) शीट सही कॉलम (A और B) से लोड करना
         try {
           const resReports = await fetch(BASE_SHEET_URL + 'AI%20जांच%20रिपोर्ट');
           const textReports = await resReports.text();
@@ -1466,20 +1463,39 @@
       document.getElementById('docResultCard').style.display = 'none';
       base64ImageRaw = "";
     }
+
+    // AI फोटो अपलोड और ऑटो कम्प्रेशन लॉजिक
     function handleImage(input) {
       if(input.files && input.files[0]) {
+        let file = input.files[0];
         let reader = new FileReader();
         reader.onload = (e) => {
-          let img = document.getElementById('solutionPreviewImg');
+          let img = new Image();
           img.src = e.target.result;
-          img.style.display = 'block';
-          base64ImageRaw = e.target.result.split(',')[1];
-          imageMimeType = input.files[0].type;
-          document.getElementById('btnDiagnose').style.display = 'block';
+          img.onload = function() {
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+            let maxWidth = 800;
+            let scale = maxWidth / img.width;
+            if(scale > 1) scale = 1;
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            let compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+            let previewElem = document.getElementById('solutionPreviewImg');
+            previewElem.src = compressedDataUrl;
+            previewElem.style.display = 'block';
+            
+            base64ImageRaw = compressedDataUrl.split(',')[1];
+            imageMimeType = "image/jpeg";
+            document.getElementById('btnDiagnose').style.display = 'block';
+          };
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(file);
       }
     }
+
     async function runSmartDiagnosis() {
       let btn = document.getElementById('btnDiagnose');
       btn.innerText = "⏳ AI जांच कर रहा है...";
