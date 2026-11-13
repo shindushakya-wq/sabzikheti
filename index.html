@@ -1028,16 +1028,20 @@
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(e) {}
 
-        // 3. AI जांच रिपोर्ट (AI Reports) शीट लोड करना
+        // 3. AI जांच रिपोर्ट (AI Reports) शीट सही कॉलम (A और B) से लोड करना
         try {
-          const resReports = await fetch(BASE_SHEET_URL + 'Reports');
-          let reportRows = parseCSV(await resReports.text());
+          const resReports = await fetch(BASE_SHEET_URL + 'AI%20जांच%20रिपोर्ट');
+          const textReports = await resReports.text();
+          let reportRows = parseCSV(textReports);
           let repContainer = document.getElementById('aiReportsContainer');
+          
           if(reportRows.length > 1) {
             let repHtml = '';
             reportRows.forEach((cols, idx) => {
-              if(idx > 0 && cols[0]) {
-                repHtml += `<div class="variety-card" style="border-left:4px solid #16a34a;"><b>📅 ${cols[0]}</b><p style="margin-top:6px; color:#374151;">${cols[1] || ''}</p></div>`;
+              if(idx > 0 && (cols[0] || cols[1])) {
+                let dateStr = cols[0] || 'ताज़ा रिपोर्ट';
+                let reportText = cols[1] || '';
+                repHtml += `<div class="variety-card" style="border-left:4px solid #16a34a;"><b>📅 ${dateStr}</b><p style="margin-top:8px; color:#374151; line-height:1.5; white-space: pre-line;">${reportText}</p></div>`;
               }
             });
             repContainer.innerHTML = repHtml || `<div class="variety-card" style="text-align:center; color:#6b7280;">कोई पुरानी रिपोर्ट उपलब्ध नहीं है।</div>`;
