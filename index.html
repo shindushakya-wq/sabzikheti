@@ -700,7 +700,9 @@
   <div id="screen-expert-advice" class="screen">
     <div class="variety-card">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">💡 कृषि एक्सपर्ट सुझाव</h3>
-      <div id="tipsContainer"></div>
+      <div id="tipsContainer">
+        <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ सुझाव लोड हो रहे हैं...</div>
+      </div>
     </div>
   </div>
 
@@ -708,7 +710,9 @@
   <div id="screen-pest-alert" class="screen">
     <div class="variety-card" style="border-left:5px solid #dc2626;">
       <h3 style="color:#dc2626; font-size:16px; margin-bottom:10px;">🚨 कीट व रोग चेतावनी</h3>
-      <div id="alertsContainer"></div>
+      <div id="alertsContainer">
+        <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ अलर्ट लोड हो रहे हैं...</div>
+      </div>
     </div>
   </div>
 
@@ -1008,6 +1012,42 @@
           }
         });
 
+        // 1. एक्सपर्ट सुझाव (Tips) शीट लोड करना
+        try {
+          const resTips = await fetch(BASE_SHEET_URL + 'Tips');
+          tipsRecords = parseCSV(await resTips.text()).map(cols => ({
+            title: cols[0] || '', desc: cols[1] || ''
+          })).filter(r => r.title && !r.title.includes('Title'));
+        } catch(e) {}
+
+        // 2. कीट अलर्ट (Alerts) शीट लोड करना
+        try {
+          const resAlerts = await fetch(BASE_SHEET_URL + 'Alerts');
+          alertsRecords = parseCSV(await resAlerts.text()).map(cols => ({
+            title: cols[0] || '', desc: cols[1] || ''
+          })).filter(r => r.title && !r.title.includes('Title'));
+        } catch(e) {}
+
+        // 3. AI जांच रिपोर्ट (AI Reports) शीट लोड करना
+        try {
+          const resReports = await fetch(BASE_SHEET_URL + 'Reports');
+          let reportRows = parseCSV(await resReports.text());
+          let repContainer = document.getElementById('aiReportsContainer');
+          if(reportRows.length > 1) {
+            let repHtml = '';
+            reportRows.forEach((cols, idx) => {
+              if(idx > 0 && cols[0]) {
+                repHtml += `<div class="variety-card" style="border-left:4px solid #16a34a;"><b>📅 ${cols[0]}</b><p style="margin-top:6px; color:#374151;">${cols[1] || ''}</p></div>`;
+              }
+            });
+            repContainer.innerHTML = repHtml || `<div class="variety-card" style="text-align:center; color:#6b7280;">कोई पुरानी रिपोर्ट उपलब्ध नहीं है।</div>`;
+          } else {
+            repContainer.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">कोई पुरानी रिपोर्ट उपलब्ध नहीं है।</div>`;
+          }
+        } catch(e) {
+          document.getElementById('aiReportsContainer').innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">रिपोर्ट लोड करने में विफल।</div>`;
+        }
+
         const resStories = await fetch(BASE_SHEET_URL + 'Stories');
         dailyStories = parseCSV(await resStories.text()).map(cols => ({
           title: cols[0]||'स्टोरी', type: cols[1]||'photo', url: cols[2]||'', icon: cols[3]||'🌱', desc: cols[4]||''
@@ -1116,7 +1156,6 @@
       document.getElementById('weatherDateTime').innerText = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} | ${timeStr}`;
       document.getElementById('detailDate').innerText = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} | ${timeStr}`;
 
-      // रात का मोड चेक (शाम 6 बजे से सुबह 6 बजे तक नाईट मोड)
       let isNight = hours < 6 || hours >= 18;
       const weatherCard = document.getElementById('weatherCardMain');
       const detailWeatherCard = document.getElementById('detailWeatherCard');
@@ -1321,18 +1360,33 @@
     function showOtherServicesScreen() { openScreen('screen-other-services', 'Other सेवाएं'); }
     function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', 'मौसम'); }
     function showMandiBhavScreen() { openScreen('screen-mandi-bhav', 'मंडी भाव'); fetchLiveMandiPrices(); }
+    
     function showExpertAdviceScreen() {
       let container = document.getElementById('tipsContainer');
       container.innerHTML = '';
-      tipsRecords.forEach(t => { container.innerHTML += `<div class="schedule-step"><b>💡 ${t.title}</b><p>${t.desc}</p></div>`; });
+      if(tipsRecords.length > 0) {
+        tipsRecords.forEach(t => { 
+          container.innerHTML += `<div class="schedule-step"><b>💡 ${t.title}</b><p>${t.desc}</p></div>`; 
+        });
+      } else {
+        container.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई सुझाव उपलब्ध नहीं है।</div>`;
+      }
       openScreen('screen-expert-advice', 'एक्सपर्ट सुझाव');
     }
+
     function showPestAlertScreen() {
       let container = document.getElementById('alertsContainer');
       container.innerHTML = '';
-      alertsRecords.forEach(a => { container.innerHTML += `<div style="background:#fef2f2; padding:10px; border-radius:8px; margin-bottom:10px;"><b>⚠️ ${a.title}</b><p>${a.desc}</p></div>`; });
+      if(alertsRecords.length > 0) {
+        alertsRecords.forEach(a => { 
+          container.innerHTML += `<div style="background:#fef2f2; padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid #dc2626;"><b>⚠️ ${a.title}</b><p style="margin-top:4px; color:#374151;">${a.desc}</p></div>`; 
+        });
+      } else {
+        container.innerHTML = `<div style="padding:10px; text-align:center; color:#6b7280;">कोई कीट अलर्ट उपलब्ध नहीं है।</div>`;
+      }
       openScreen('screen-pest-alert', 'कीट अलर्ट');
     }
+
     function showAiReportsScreen() { openScreen('screen-ai-reports', 'AI जांच रिपोर्ट'); }
     function showGovSchemesScreen() { openScreen('screen-gov-schemes', 'सरकारी योजनाएं'); }
 
