@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sabzi-kheti-v1';
+Const CACHE_NAME = 'crop-sabzi-doctor-v1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
