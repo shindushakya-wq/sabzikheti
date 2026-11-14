@@ -97,7 +97,7 @@
     .quick-crop-scroll::-webkit-scrollbar { display: none; }
     .quick-pill { background: white; border: 1.5px solid #d1d5db; border-radius: 20px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: #374151; white-space: nowrap; display: flex; align-items: center; gap: 5px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
 
-    /* सर्च बार व AI वॉइस असिस्टेंट */
+    /* सर्च बार */
     .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
     .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
@@ -105,8 +105,13 @@
     .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
     @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.25); } }
 
-    /* AI वॉइस असिस्टेंट संवाद बॉक्स */
-    .ai-assistant-box { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #86efac; border-radius: 14px; padding: 14px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    /* AI वॉइस असिस्टेंट कार्ड (एनिमेशन के साथ फिक्सड लेआउट) */
+    @keyframes pulseAiBox {
+      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+    }
+    .ai-assistant-box { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #86efac; border-radius: 14px; padding: 14px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.04); animation: pulseAiBox 2s infinite; cursor: pointer; }
     body.dark-mode .ai-assistant-box { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; }
 
     /* 3-3 बटन ग्रिड */
@@ -362,7 +367,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v9.0 AI VOICE PRO
+      CROP & SABZI DOCTOR • v9.1 PRO
     </div>
   </div>
 
@@ -444,13 +449,13 @@
     <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- AI वॉइस असिस्टेंट बात करने वाला विजेट बॉक्स -->
+    <!-- AI वॉइस असिस्टेंट कार्ड (एनिमेटेड और फिक्सड लेआउट) -->
     <div class="ai-assistant-box" onclick="startVoiceAssistant()">
-      <div>
-        <h4 style="color:#166534; font-size:14px; font-weight:bold;">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
-        <p style="font-size:12px; color:#4b5563; margin-top:2px;" id="aiAssistantSubText">टैप करें और फसल या बीमारी का नाम बोलें...</p>
+      <div style="flex: 1; padding-right: 8px;">
+        <h4 style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
+        <p style="font-size:11.5px; color:#4b5563; margin-top:2px;" id="aiAssistantSubText">टैप करें और फसल या बीमारी का नाम बोलें...</p>
       </div>
-      <button style="background:#16a34a; color:white; border:none; width:40px; height:40px; border-radius:50%; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;">🗣️</button>
+      <div style="background:#16a34a; color:white; min-width:38px; height:38px; border-radius:50%; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🗣️</div>
     </div>
 
     <!-- लाइव मौसम कार्ड -->
@@ -892,18 +897,16 @@
       if(dateInput) dateInput.value = todayStr;
     });
 
-    // AI बोलकर जवाब देने का फंक्शन (Text-to-Speech)
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // पुरानी आवाज़ रोके
+        window.speechSynthesis.cancel();
         let utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'hi-IN'; // हिंदी भाषा
-        utterance.rate = 1.0; // बोलने की गति
+        utterance.lang = 'hi-IN';
+        utterance.rate = 1.0;
         window.speechSynthesis.speak(utterance);
       }
     }
 
-    // AI वॉइस असिस्टेंट सीधे बात करने के लिए
     function startVoiceAssistant() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -927,12 +930,11 @@
         subText.innerText = `🗣️ आपने कहा: "${spokenText}"`;
         document.getElementById('homeSearch').value = spokenText;
         
-        // AI द्वारा जवाब देना और बोलना
         let aiReply = `आपने ${spokenText} के बारे में पूछा है। इसकी जानकारी नीचे खोजी जा रही है।`;
         if(spokenText.includes('टमाटर') || spokenText.includes('फंगस')) {
           aiReply = "टमाटर में फंगस या ब्लाइट रोग के लिए मैंकोजेब या कॉपर ऑक्सीक्लोराइड का छिड़काव करें।";
         } else if(spokenText.includes('कीट') || spokenText.includes('सुंडी')) {
-          aiResult = "कीट या सुंडी की रोकथाम के लिए इमामेक्टिन बेंजोएट दवा का उपयोग करें।";
+          aiReply = "कीट या सुंडी की रोकथाम के लिए इमामेक्टिन बेंजोएट दवा का उपयोग करें।";
         }
         
         speakAiAnswer(aiReply);
