@@ -1002,15 +1002,28 @@
       container.scrollTop = container.scrollHeight;
 
       setTimeout(() => {
-        let reply = "आपकी समस्या दर्ज कर ली गई है। इसके लिए समय पर सिंचाई और संतुलित उर्वरक का ध्यान रखें।";
+        let reply = "किसान भाई, आपकी बात समझ आ गई है। अपनी फसल में नियमित सिंचाई रखें और हल्की निकाई-गुड़ाई करें ताकि पौधे स्वस्थ रहें।";
         let lowMsg = msg.toLowerCase();
 
-        if(lowMsg.includes('टमाटर') || lowMsg.includes('पत्ते') || lowMsg.includes('मुड़')) {
-          reply = "टमाटर के पत्ते मुड़ने (Curl) या पीला पड़ने पर रस चूसक कीट (Thrips/Whitefly) का हमला हो सकता है। इसके लिए इमिडाक्लोप्रिड या थियामेथोक्साम दवा का छिड़काव करें।";
-        } else if(lowMsg.includes('कीट') || lowMsg.includes('सुंडी') || lowMsg.includes('इल्ली')) {
-          reply = "सुंडी या कीट की रोकथाम के लिए इमामेक्टिन बेंजोएट (Emamectin Benzoate) 5% SG की 7 ग्राम मात्रा प्रति 15 लीटर पंप में मिलाकर छिड़काव करें।";
-        } else if(lowMsg.includes('फंगस') || lowMsg.includes('ब्लाइट') || lowMsg.includes('धब्बे')) {
-          reply = "फफूंद या ब्लाइट रोग के लिए मैंकोजेब (Mancozeb 75% WP) या कॉपर ऑक्सीक्लोराइड दवा का उपयोग करें।";
+        // 1. झुलसा या ब्लाइट रोग (Blight / Leaf Spot)
+        if(lowMsg.includes('झुलसा') || lowMsg.includes('ब्लाइट') || lowMsg.includes('धब्बे') || lowMsg.includes('फंगस') || lowMsg.includes('रोग')) {
+          reply = "🌿 **झुलसा/फफूंद रोग का उपचार:** फसल में फंगस या झुलसा दिखने पर मैंकोजेब (Mancozeb 75% WP) या कॉपर ऑक्सीक्लोराइड की 30 ग्राम मात्रा प्रति 15 लीटर पंप में मिलाकर छिड़काव करें।";
+        } 
+        // 2. सुंडी या इल्ली (Caterpillar / Borers)
+        else if(lowMsg.includes('सुंडी') || lowMsg.includes('इल्ली') || lowMsg.includes('कीड़ा') || lowMsg.includes('कीट')) {
+          reply = "🐛 **सुंडी/कीट नियंत्रण:** सुंडी की रोकथाम के लिए इमामेक्टिन बेंजोएट (Emamectin Benzoate 5% SG) की 7 ग्राम मात्रा प्रति 15 लीटर पंप में मिलाकर स्प्रे करें।";
+        } 
+        // 3. पत्ते मुड़ना या रसचूसक कीट (Leaf Curl / Thrips / Whitefly)
+        else if(lowMsg.includes('मुड़') || lowMsg.includes('सिकुड़') || lowMsg.includes('थ्रिप्स') || lowMsg.includes('मक्खी') || lowMsg.includes('रस')) {
+          reply = "🦟 **रसचूसक कीट (थ्रिप्स/सफेद मक्खी) का उपचार:** पत्तियां मुड़ने पर इमिडाक्लोप्रिड (Imidacloprid) या थियामेथोक्साम दवा का छिड़काव करें।";
+        }
+        // 4. पीलापन या कमजोरी (Yellowing / Growth)
+        else if(lowMsg.includes('पीला') || lowMsg.includes('बढ़वार') || low.includes('कमजोर') || low.includes('खाद')) {
+          reply = "⚡ **पोषण प्रबंधन:** पौधे में पीलापन या कमजोरी दूर करने के लिए एनपीके (NPK 19:19:19) की 100 ग्राम मात्रा प्रति 15 लीटर पानी में घोलकर छिड़काव करें।";
+        }
+        // 5. खीरा, टमाटर, मिर्च सामान्य पूछताछ
+        else if(lowMsg.includes('खीरा') || low.includes('टमाटर') || low.includes('मिर्च') || low.includes('तरबूज') || low.includes('फूलगोभी')) {
+          reply = "🌱 इस फसल में उचित नमी बनाए रखें। यदि किसी विशेष कीट या रोग के लक्षण (जैसे धब्बे, सुंडी या पीलापन) दिख रहे हैं, तो उसका नाम लिखकर बताएं ताकि सटीक दवा बताई जा सके।";
         }
 
         container.innerHTML += `
