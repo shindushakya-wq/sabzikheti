@@ -105,14 +105,30 @@
     .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
     @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.25); } }
 
-    /* AI वॉइस असिस्टेंट कार्ड (एनिमेशन के साथ फिक्सड लेआउट) */
+    /* AI वॉइस असिस्टेंट कार्ड (सुधारित चौड़ाई और पूर्ण एनिमेशन) */
     @keyframes pulseAiBox {
-      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); border-color: #4ade80; }
+      70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); border-color: #16a34a; }
+      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); border-color: #4ade80; }
     }
-    .ai-assistant-box { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #86efac; border-radius: 14px; padding: 14px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.04); animation: pulseAiBox 2s infinite; cursor: pointer; }
-    body.dark-mode .ai-assistant-box { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; }
+    .ai-assistant-box { 
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); 
+      border: 1.5px solid #86efac; 
+      border-radius: 14px; 
+      padding: 12px 14px; 
+      margin-bottom: 15px; 
+      width: 100%;
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+      animation: pulseAiBox 2s infinite ease-in-out; 
+      cursor: pointer; 
+    }
+    body.dark-mode .ai-assistant-box { 
+      background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); 
+      border-color: #334155; 
+    }
 
     /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
@@ -911,6 +927,7 @@
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
         alert("आपका ब्राउज़र बोलकर बात करने की सुविधा सपोर्ट नहीं करता है।");
+        document.getElementById('homeSearch').focus();
         return;
       }
       let rec = new SpeechRecognition();
@@ -930,19 +947,17 @@
         subText.innerText = `🗣️ आपने कहा: "${spokenText}"`;
         document.getElementById('homeSearch').value = spokenText;
         
-        let aiReply = `आपने ${spokenText} के बारे में पूछा है। इसकी जानकारी नीचे खोजी जा रही है।`;
-        if(spokenText.includes('टमाटर') || spokenText.includes('फंगस')) {
-          aiReply = "टमाटर में फंगस या ब्लाइट रोग के लिए मैंकोजेब या कॉपर ऑक्सीक्लोराइड का छिड़काव करें।";
-        } else if(spokenText.includes('कीट') || spokenText.includes('सुंडी')) {
-          aiReply = "कीट या सुंडी की रोकथाम के लिए इमामेक्टिन बेंजोएट दवा का उपयोग करें।";
-        }
-        
-        speakAiAnswer(aiReply);
+        speakAiAnswer(`आपने ${spokenText} के बारे में पूछा है।`);
         triggerManualSearch();
       };
 
-      rec.onerror = function() {
-        subText.innerText = "⚠️ आवाज़ स्पष्ट नहीं आई, दोबारा टैप करें।";
+      rec.onerror = function(event) {
+        if(event.error === 'not-allowed') {
+          subText.innerText = "⚠️ माइक्रोफोन की अनुमति दें।";
+          alert("कृपया अपने ब्राउज़र में माइक्रोफोन (Microphone) की अनुमति दें।");
+        } else {
+          subText.innerText = "⚠️ आवाज़ स्पष्ट नहीं आई, दोबारा टैप करें।";
+        }
       };
 
       rec.onend = function() {
@@ -1119,7 +1134,7 @@
       en: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!" },
       pa: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!" },
       rj: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, किसान भाई!" },
-      gu: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "રામ-राम, ખેડૂત ભાઈ!" },
+      gu: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "રાम-ram, ખેડૂત ભાઈ!" },
       mr: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, शेतकरी बंधू!" }
     };
 
