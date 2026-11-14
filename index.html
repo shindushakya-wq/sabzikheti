@@ -89,6 +89,8 @@
     .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
     .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; border-radius: 50%; }
+    .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
+    @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
 
     /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
@@ -435,7 +437,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार (बोलकर सर्च करने की सुविधा के साथ) -->
+    <!-- सर्च बार (सुधरा हुआ वॉइस सर्च 'मैं सुन रहा हूँ' के साथ) -->
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -1441,41 +1443,47 @@
     }
     function handleSearchKeyPress(e) { if(e.key === 'Enter') triggerManualSearch(); }
     
-    // बोलकर सर्च करने का फिक्स फंक्शन
+    // उन्नत वॉइस सर्च (स्क्रीन पर "मैं सुन रहा हूँ, बोलिए..." दिखाने के साथ)
     function startVoiceSearch() {
+      let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("आपका ब्राउज़र बोलकर सर्च करने की सुविधा सपोर्ट नहीं करता है।");
+        return;
+      }
+      let rec = new SpeechRecognition();
+      rec.lang = 'hi-IN';
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+      
+      let searchInput = document.getElementById('homeSearch');
+      let micBtn = document.getElementById('voiceSearchBtn');
+
+      rec.onstart = function() {
+        searchInput.value = "";
+        searchInput.placeholder = "🎙️ मैं सुन रहा हूँ, बोलिए...";
+        micBtn.classList.add('listening');
+      };
+
+      rec.onresult = (e) => {
+        let spokenText = e.results[0][0].transcript;
+        searchInput.value = spokenText;
+        triggerManualSearch();
+      };
+
+      rec.onerror = function(event) {
+        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+        micBtn.classList.remove('listening');
+      };
+
+      rec.onend = function() {
+        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+        micBtn.classList.remove('listening');
+      };
+
       try {
-        let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) {
-          alert("आपका ब्राउज़र बोलकर सर्च करने की सुविधा (Voice Search) सपोर्ट नहीं करता है।");
-          return;
-        }
-        let rec = new SpeechRecognition();
-        rec.lang = 'hi-IN';
-        rec.interimResults = false;
-        rec.maxAlternatives = 1;
-        
-        rec.onstart = function() {
-          document.getElementById('homeSearch').placeholder = "सुन रहे हैं, बोलिए...";
-        };
-
-        rec.onresult = (e) => {
-          let spokenText = e.results[0][0].transcript;
-          document.getElementById('homeSearch').value = spokenText;
-          triggerManualSearch();
-        };
-
-        rec.onerror = function(event) {
-          alert("आवाज़ पहचानने में दिक्कत आई, कृपया दोबारा बोलें।");
-          document.getElementById('homeSearch').placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        };
-
-        rec.onend = function() {
-          document.getElementById('homeSearch').placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        };
-
         rec.start();
       } catch (err) {
-        alert("वॉइस सर्च शुरू करने में त्रुटि: " + err.message);
+        alert("माइक्रोफोन चालू करने में त्रुटि: " + err.message);
       }
     }
 
