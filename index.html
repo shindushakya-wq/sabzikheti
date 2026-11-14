@@ -1027,10 +1027,10 @@
         if(loadingDiv) loadingDiv.remove();
 
         let reply = "माफ़ कीजिए, अभी उत्तर नहीं मिल पाया। कृपया दोबारा कोशिश करें।";
-        if (data.status === "सफल" && data.परिणाम) {
-          reply = data.परिणाम;
-        } else if (data.status === "success" && data.result) {
+        if (data.status === "success" && data.result) {
           reply = data.result;
+        } else if (data.status === "सफल" && data.परिणाम) {
+          reply = data.परिणाम;
         }
 
         container.innerHTML += `
@@ -1182,7 +1182,7 @@
 
     const navHistory = ['screen-home'];
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJCMcfZAfZHvbFRXxx2F7YzmNUV52__MFCBidlC588Yh4NRL2nkULgGyawdibU-uA/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-tLEyNTUMqf4ykwY5i8BJJwwRPwl0kz8PyNXezhBo2FoXMxnLR3PRko44chCLoH0/exec";
 
     let sheetRecords = [];
     let scheduleRecords = {};
@@ -1939,10 +1939,10 @@
         let data = await res.json();
         
         let resultText = "";
-        if(data.status === "सफल" && data.परिणाम) {
-          resultText = data.परिणाम;
-        } else if(data.status === "success" && data.result) {
+        if(data.status === "success" && data.result) {
           resultText = data.result;
+        } else if(data.status === "सफल" && data.परिणाम) {
+          resultText = data.परिणाम;
         }
 
         if(resultText) {
