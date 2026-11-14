@@ -1027,10 +1027,12 @@
         if(loadingDiv) loadingDiv.remove();
 
         let reply = "माफ़ कीजिए, अभी उत्तर नहीं मिल पाया। कृपया दोबारा कोशिश करें।";
-        if (data.status === "success" && data.result) {
+        if (data.result) {
           reply = data.result;
-        } else if (data.status === "सफल" && data.परिणाम) {
+        } else if (data.परिणाम) {
           reply = data.परिणाम;
+        } else if (typeof data === 'string') {
+          reply = data;
         }
 
         container.innerHTML += `
@@ -1939,10 +1941,12 @@
         let data = await res.json();
         
         let resultText = "";
-        if(data.status === "success" && data.result) {
+        if (data.result) {
           resultText = data.result;
-        } else if(data.status === "सफल" && data.परिणाम) {
+        } else if (data.परिणाम) {
           resultText = data.परिणाम;
+        } else if (typeof data === 'string') {
+          resultText = data;
         }
 
         if(resultText) {
