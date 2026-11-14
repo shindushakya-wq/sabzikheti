@@ -67,7 +67,7 @@
     .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* लाइव मौसम कार्ड व एनिमेटेड इफेक्ट्स */
+    /* लाइव मौसम कार्ड */
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; transition: background 0.3s ease; }
     .weather-card.night-mode { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; color: #f8fafc; }
     .weather-card.night-mode h4, .weather-card.night-mode .weather-datetime, .weather-card.night-mode .weather-temp { color: #f8fafc !important; }
@@ -78,16 +78,6 @@
     .weather-datetime { font-size: 11px; color: #166534; font-weight: 600; }
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
-
-    /* मौसम एनिमेटेड इफेक्ट्स */
-    @keyframes floatClouds { 0% { transform: translateX(-10px); } 50% { transform: translateX(10px); } 100% { transform: translateX(-10px); } }
-    .anim-clouds { animation: floatClouds 4s ease-in-out infinite; display: inline-block; }
-
-    @keyframes fallRain { 0% { transform: translateY(-5px); } 50% { transform: translateY(5px); } 100% { transform: translateY(-5px); } }
-    .anim-rain { animation: fallRain 1s linear infinite; display: inline-block; }
-
-    @keyframes rotateSun { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .anim-sun { animation: rotateSun 10s linear infinite; display: inline-block; }
 
     /* त्वरित फसल टैग्स */
     .quick-crop-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; }
@@ -100,7 +90,7 @@
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
     .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; border-radius: 50%; }
 
-    /* 3-3 बटन ग्रिड (समान चौकोर आकार) */
+    /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
     .menu-box .icon { font-size: 28px; margin-bottom: 6px; }
@@ -128,7 +118,6 @@
     .link-yt { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
     .link-fb { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
 
-    /* तुरंत समाधान बटन पर पल्स (धड़कने वाला) एनिमेशन */
     @keyframes pulseFab {
       0% { transform: scale(1); box-shadow: 0 4px 14px rgba(5, 150, 105, 0.45); }
       50% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.7); }
@@ -350,7 +339,7 @@
     </div>
   </div>
 
-  <!-- तुरंत समाधान फ्लोटिंग बटन (एनिमेशन के साथ) -->
+  <!-- तुरंत समाधान फ्लोटिंग बटन -->
   <button class="fab-solution" onclick="openSolutionModal()">
     <span>⚡</span>
     <span>तुरंत समाधान</span>
@@ -446,7 +435,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
+    <!-- सर्च बार (बोलकर सर्च करने की सुविधा के साथ) -->
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -1044,7 +1033,6 @@
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(e) {}
 
-        // Google Sheet से Diagnosis डेटा लोड करना
         try {
           const resReports = await fetch(BASE_SHEET_URL + 'Diagnosis');
           const textReports = await resReports.text();
@@ -1452,11 +1440,43 @@
       renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(val) || r.crop.toLowerCase().includes(val)), 'सर्च परिणाम');
     }
     function handleSearchKeyPress(e) { if(e.key === 'Enter') triggerManualSearch(); }
+    
+    // बोलकर सर्च करने का फिक्स फंक्शन
     function startVoiceSearch() {
-      let rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-      rec.lang = 'hi-IN';
-      rec.onresult = (e) => { document.getElementById('homeSearch').value = e.results[0][0].transcript; triggerManualSearch(); };
-      rec.start();
+      try {
+        let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          alert("आपका ब्राउज़र बोलकर सर्च करने की सुविधा (Voice Search) सपोर्ट नहीं करता है।");
+          return;
+        }
+        let rec = new SpeechRecognition();
+        rec.lang = 'hi-IN';
+        rec.interimResults = false;
+        rec.maxAlternatives = 1;
+        
+        rec.onstart = function() {
+          document.getElementById('homeSearch').placeholder = "सुन रहे हैं, बोलिए...";
+        };
+
+        rec.onresult = (e) => {
+          let spokenText = e.results[0][0].transcript;
+          document.getElementById('homeSearch').value = spokenText;
+          triggerManualSearch();
+        };
+
+        rec.onerror = function(event) {
+          alert("आवाज़ पहचानने में दिक्कत आई, कृपया दोबारा बोलें।");
+          document.getElementById('homeSearch').placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+        };
+
+        rec.onend = function() {
+          document.getElementById('homeSearch').placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
+        };
+
+        rec.start();
+      } catch (err) {
+        alert("वॉइस सर्च शुरू करने में त्रुटि: " + err.message);
+      }
     }
 
     function sendOtpCode() {
