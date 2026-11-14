@@ -105,7 +105,7 @@
     .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
     @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.25); } }
 
-    /* AI वॉइस असिस्टेंट कार्ड (सुधारित चौड़ाई और पूर्ण एनिमेशन) */
+    /* AI वॉइस असिस्टेंट कार्ड */
     @keyframes pulseAiBox {
       0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); border-color: #4ade80; }
       70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); border-color: #16a34a; }
@@ -422,7 +422,7 @@
       </button>
 
       <div class="doc-result-card" id="docResultCard">
-        <h4 style="color:#b91c1c; font-size:15px; margin-bottom:8px;">🌿 AI रोग निदान रिपोर्ट</h4>
+        <h4 style="color:#b91c1c; font-size:15px; margin-bottom:8px;">🌿 AI रोग निदान रिपोर्ट व सावधानियां</h4>
         <div style="font-size:13.5px; color:#374151; line-height:1.6; margin-bottom:10px;" id="smartSymptoms"></div>
         <a id="btnDocWhatsapp" href="#" target="_blank" class="btn-action btn-wa">
           💬 यह रिपोर्ट डॉक्टर को WhatsApp करें
@@ -465,7 +465,7 @@
     <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- AI वॉइस असिस्टेंट कार्ड (एनिमेटेड और फिक्सड लेआउट) -->
+    <!-- AI वॉइस असिस्टेंट कार्ड -->
     <div class="ai-assistant-box" onclick="startVoiceAssistant()">
       <div style="flex: 1; padding-right: 8px;">
         <h4 style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
@@ -492,7 +492,7 @@
       </div>
     </div>
 
-    <!-- सर्च बार (वॉइस सर्च के साथ) -->
+    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -756,7 +756,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: मेरी पसंदीदा किस्में (Bookmarks Screen) -->
+  <!-- SCREEN: मेरी पसंदीदा किस्में -->
   <div id="screen-favorites" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; margin-bottom:12px;">
       <h3 style="color:#d97706; font-size:16px; margin-bottom:6px;">⭐ आपकी सेव की गई पसंदीदा किस्में</h3>
@@ -935,21 +935,27 @@
       if(dateInput) dateInput.value = todayStr;
     });
 
+    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech)
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        let utterance = new SpeechSynthesisUtterance(text);
+        let cleanText = text.replace(/[*#_]/g, '');
+        let utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = 'hi-IN';
         utterance.rate = 1.0;
         window.speechSynthesis.speak(utterance);
       }
     }
 
+    // AI डॉक्टर से बोलकर बात करने का फंक्शन (Voice Assistant)
     function startVoiceAssistant() {
       openScreen('screen-ai-doctor-chat', 'AI सब्जी डॉक्टर चैट');
       
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) return;
+      if (!SpeechRecognition) {
+        alert("आपका ब्राउज़र बोलकर बात करने की सुविधा सपोर्ट नहीं करता।");
+        return;
+      }
       
       let rec = new SpeechRecognition();
       rec.lang = 'hi-IN';
@@ -986,7 +992,8 @@
       if(e.key === 'Enter') sendUserChatMessage();
     }
 
-    function sendUserChatMessage() {
+    // असली Gemini AI (Apps Script) को मैसेज भेजने का फंक्शन
+    async function sendUserChatMessage() {
       let inputElem = document.getElementById('aiUserChatInput');
       let msg = inputElem.value.trim();
       if(!msg) return;
@@ -1001,39 +1008,49 @@
       inputElem.value = '';
       container.scrollTop = container.scrollHeight;
 
-      setTimeout(() => {
-        let reply = "किसान भाई, आपकी बात समझ आ गई है। अपनी फसल में नियमित सिंचाई रखें और हल्की निकाई-गुड़ाई करें ताकि पौधे स्वस्थ रहें।";
-        let lowMsg = msg.toLowerCase();
+      let loadingId = 'loading_' + Date.now();
+      container.innerHTML += `
+        <div id="${loadingId}" style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
+          <b>👨‍⚕️ AI डॉक्टर:</b> सोच रहा हूँ... ⏳
+        </div>`;
+      container.scrollTop = container.scrollHeight;
 
-        // 1. झुलसा या ब्लाइट रोग (Blight / Leaf Spot)
-        if(lowMsg.includes('झुलसा') || lowMsg.includes('ब्लाइट') || lowMsg.includes('धब्बे') || lowMsg.includes('फंगस') || lowMsg.includes('रोग')) {
-          reply = "🌿 **झुलसा/फफूंद रोग का उपचार:** फसल में फंगस या झुलसा दिखने पर मैंकोजेब (Mancozeb 75% WP) या कॉपर ऑक्सीक्लोराइड की 30 ग्राम मात्रा प्रति 15 लीटर पंप में मिलाकर छिड़काव करें।";
-        } 
-        // 2. सुंडी या इल्ली (Caterpillar / Borers)
-        else if(lowMsg.includes('सुंडी') || lowMsg.includes('इल्ली') || lowMsg.includes('कीड़ा') || lowMsg.includes('कीट')) {
-          reply = "🐛 **सुंडी/कीट नियंत्रण:** सुंडी की रोकथाम के लिए इमामेक्टिन बेंजोएट (Emamectin Benzoate 5% SG) की 7 ग्राम मात्रा प्रति 15 लीटर पंप में मिलाकर स्प्रे करें।";
-        } 
-        // 3. पत्ते मुड़ना या रसचूसक कीट (Leaf Curl / Thrips / Whitefly)
-        else if(lowMsg.includes('मुड़') || lowMsg.includes('सिकुड़') || lowMsg.includes('थ्रिप्स') || lowMsg.includes('मक्खी') || lowMsg.includes('रस')) {
-          reply = "🦟 **रसचूसक कीट (थ्रिप्स/सफेद मक्खी) का उपचार:** पत्तियां मुड़ने पर इमिडाक्लोप्रिड (Imidacloprid) या थियामेथोक्साम दवा का छिड़काव करें।";
-        }
-        // 4. पीलापन या कमजोरी (Yellowing / Growth)
-        else if(lowMsg.includes('पीला') || lowMsg.includes('बढ़वार') || low.includes('कमजोर') || low.includes('खाद')) {
-          reply = "⚡ **पोषण प्रबंधन:** पौधे में पीलापन या कमजोरी दूर करने के लिए एनपीके (NPK 19:19:19) की 100 ग्राम मात्रा प्रति 15 लीटर पानी में घोलकर छिड़काव करें।";
-        }
-        // 5. खीरा, टमाटर, मिर्च सामान्य पूछताछ
-        else if(lowMsg.includes('खीरा') || low.includes('टमाटर') || low.includes('मिर्च') || low.includes('तरबूज') || low.includes('फूलगोभी')) {
-          reply = "🌱 इस फसल में उचित नमी बनाए रखें। यदि किसी विशेष कीट या रोग के लक्षण (जैसे धब्बे, सुंडी या पीलापन) दिख रहे हैं, तो उसका नाम लिखकर बताएं ताकि सटीक दवा बताई जा सके।";
+      try {
+        let res = await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ notes: msg })
+        });
+        let data = await res.json();
+        
+        let loadingDiv = document.getElementById(loadingId);
+        if(loadingDiv) loadingDiv.remove();
+
+        let reply = "माफ़ कीजिए, अभी उत्तर नहीं मिल पाया। कृपया दोबारा कोशिश करें।";
+        if (data.status === "सफल" && data.परिणाम) {
+          reply = data.परिणाम;
+        } else if (data.status === "success" && data.result) {
+          reply = data.result;
         }
 
         container.innerHTML += `
           <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
-            <b>👨‍⚕️ AI डॉक्टर:</b> ${reply}
+            <b>👨‍⚕️ AI डॉक्टर:</b> ${reply.replace(/\n/g, '<br>')}
           </div>`;
         
         container.scrollTop = container.scrollHeight;
         speakAiAnswer(reply);
-      }, 800);
+
+      } catch (err) {
+        let loadingDiv = document.getElementById(loadingId);
+        if(loadingDiv) loadingDiv.remove();
+        
+        container.innerHTML += `
+          <div style="background:#fee2e2; padding:10px 12px; border-radius:10px; border-left:4px solid #dc2626; font-size:13.5px; color:#991b1b; max-width:85%;">
+            <b>⚠️ एरर:</b> इंटरनेट कनेक्शन या सर्वर में समस्या है।
+          </div>`;
+        container.scrollTop = container.scrollHeight;
+      }
     }
 
     function startChatVoiceInput() {
@@ -1908,6 +1925,7 @@
       }
     }
 
+    // तुरंत समाधान (फोटो भेजकर AI जांच व सावधानियां पाना)
     async function runSmartDiagnosis() {
       let btn = document.getElementById('btnDiagnose');
       btn.innerText = "⏳ AI जांच कर रहा है...";
@@ -1916,17 +1934,31 @@
         let res = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ imageBase64: base64ImageRaw, mimeType: imageMimeType, notes: "रोग जांच" })
+          body: JSON.stringify({ imageBase64: base64ImageRaw, mimeType: imageMimeType, notes: "रोग जांच व सावधानियां" })
         });
         let data = await res.json();
-        if(data.status === "success" && data.result) {
-          document.getElementById('smartSymptoms').innerHTML = data.result.replace(/\n/g, '<br>');
-          document.getElementById('btnDocWhatsapp').href = `https://wa.me/916378475002?text=${encodeURIComponent(data.result)}`;
+        
+        let resultText = "";
+        if(data.status === "सफल" && data.परिणाम) {
+          resultText = data.परिणाम;
+        } else if(data.status === "success" && data.result) {
+          resultText = data.result;
+        }
+
+        if(resultText) {
+          document.getElementById('smartSymptoms').innerHTML = resultText.replace(/\n/g, '<br>');
+          document.getElementById('btnDocWhatsapp').href = `https://wa.me/916378475002?text=${encodeURIComponent(resultText)}`;
           document.getElementById('docResultCard').style.display = 'block';
-          speakAiAnswer("रोग की जांच पूरी हो गई है, रिपोर्ट स्क्रीन पर देख सकते हैं।");
-        } else alert("परिणाम नहीं मिला।");
-      } catch(e) { alert("त्रुटि: " + e.message); }
-      finally { btn.innerText = "🔍 रोग पहचानें व उपचार पाएं"; btn.disabled = false; }
+          speakAiAnswer("रोग की जांच पूरी हो गई है, रिपोर्ट और सावधानियां स्क्रीन पर देख सकते हैं।");
+        } else {
+          alert("परिणाम नहीं मिला।");
+        }
+      } catch(e) { 
+        alert("त्रुटि: " + e.message); 
+      } finally { 
+        btn.innerText = "🔍 रोग पहचानें व उपचार पाएं"; 
+        btn.disabled = false; 
+      }
     }
 
     function openProfileScreen() {
