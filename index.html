@@ -11,7 +11,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
     
-    /* डार्क मोड स्टाइल (फसल जानकारी टेक्स्ट कलर फिक्स के साथ) */
+    /* डार्क मोड स्टाइल */
     body.dark-mode { background-color: #0f172a; color: #f8fafc; }
     body.dark-mode .variety-card, body.dark-mode .menu-box, body.dark-mode .list-item, body.dark-mode .social-box, body.dark-mode .modal-box, body.dark-mode .login-card, body.dark-mode .bottom-nav, body.dark-mode .drawer-content { background-color: #1e2937 !important; color: #f8fafc !important; border-color: #334155 !important; }
     body.dark-mode .search-box { background-color: #1e2937 !important; color: #f8fafc !important; border-color: #334155 !important; }
@@ -358,7 +358,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v7.2 PRO
+      CROP & SABZI DOCTOR • v8.0 PRO
     </div>
   </div>
 
@@ -629,6 +629,10 @@
       <div class="list-left"><span class="list-icon">📈</span><span class="list-title">ताज़ा मंडी भाव (GPS आधारित)</span></div>
       <span class="arrow">&gt;</span>
     </div>
+    <div class="list-item" onclick="showSowingCalculatorScreen()">
+      <div class="list-left"><span class="list-icon">🧮</span><span class="list-title" style="color:#d97706; font-weight:bold;">बुवाई और कटाई कैलकुलेटर</span></div>
+      <span class="arrow">&gt;</span>
+    </div>
     <div class="list-item" onclick="showExpertAdviceScreen()">
       <div class="list-left"><span class="list-icon">💡</span><span class="list-title">कृषि एक्सपर्ट सुझाव</span></div>
       <span class="arrow">&gt;</span>
@@ -652,6 +656,34 @@
     <div class="list-item" onclick="shareAppWithFriends()">
       <div class="list-left"><span class="list-icon">📲</span><span class="list-title">किसान साथियों को शेयर करें</span></div>
       <span class="arrow">&gt;</span>
+    </div>
+  </div>
+
+  <!-- SCREEN: बुवाई और कटाई कैलकुलेटर -->
+  <div id="screen-sowing-calc" class="screen">
+    <div class="variety-card" style="border-left:5px solid #d97706; padding:16px;">
+      <h3 style="color:#b45309; font-size:17px; margin-bottom:12px;">🧮 स्मार्ट बुवाई और कटाई कैलकुलेटर</h3>
+      <div class="form-group">
+        <label>फसल चुनें:</label>
+        <select id="calcCropSelect" class="form-control">
+          <option value="टमाटर">🍅 टमाटर (लगभग 90-100 दिन)</option>
+          <option value="खीरा">🥒 खीरा (लगभग 50-60 दिन)</option>
+          <option value="मिर्च">🌶️ मिर्च (लगभग 70-80 दिन)</option>
+          <option value="तरबूज">🍉 तरबूज (लगभग 80-90 दिन)</option>
+          <option value="फूलगोभी">🥦 फूलगोभी (लगभग 70-85 दिन)</option>
+          <option value="भिंडी">🥒 भिंडी (लगभग 50-60 दिन)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>बुवाई की तारीख (Sowing Date):</label>
+        <input type="date" id="calcDateInput" class="form-control">
+      </div>
+      <button class="btn-action btn-wa" style="background:#d97706; margin-top:12px;" onclick="calculateCropSchedule()">📊 सही समय गणना करें</button>
+    </div>
+
+    <div class="doc-result-card" id="calcResultBox" style="display:block; background:#fffbeb; border:1.5px solid #fde68a;">
+      <h4 style="color:#b45309; font-size:15px; margin-bottom:8px;">📅 फसल अनुमानित समय सारणी</h4>
+      <p style="font-size:13.5px; color:#374151; line-height:1.6;" id="calcResultText">कृपया फसल और बुवाई की तारीख चुनकर 'गणना करें' बटन दबाएं।</p>
     </div>
   </div>
 
@@ -842,7 +874,41 @@
         document.body.classList.add('dark-mode');
       }
       detectUserLocation();
+      let todayStr = new Date().toISOString().split('T')[0];
+      let dateInput = document.getElementById('calcDateInput');
+      if(dateInput) dateInput.value = todayStr;
     });
+
+    function showSowingCalculatorScreen() {
+      openScreen('screen-sowing-calc', 'बुवाई व कटाई कैलकुलेटर');
+    }
+
+    function calculateCropSchedule() {
+      let crop = document.getElementById('calcCropSelect').value;
+      let dateVal = document.getElementById('calcDateInput').value;
+      if(!dateVal) { alert("कृपया बुवाई की तारीख चुनें!"); return; }
+
+      let sowingDate = new Date(dateVal);
+      let daysToHarvest = 90;
+      if(crop === 'खीरा' || crop === 'भिंडी') daysToHarvest = 55;
+      if(crop === 'मिर्च') daysToHarvest = 75;
+      if(crop === 'तरबूज') daysToHarvest = 85;
+      if(crop === 'फूलगोभी') daysToHarvest = 78;
+
+      let fertilizerDate1 = new Date(sowingDate); fertilizerDate1.setDate(sowingDate.getDate() + 15);
+      let fertilizerDate2 = new Date(sowingDate); fertilizerDate2.setDate(sowingDate.getDate() + 35);
+      let harvestDate = new Date(sowingDate); harvestDate.setDate(sowingDate.getDate() + daysToHarvest);
+
+      let options = { year: 'numeric', month: 'long', day: 'numeric' };
+      let resultHTML = `
+        <b>🌱 फसल:</b> ${crop}<br>
+        <b>📅 बुवाई की तारीख:</b> ${sowingDate.toLocaleDateString('hi-IN', options)}<br><br>
+        <b>🌿 पहली खाद (बेसल/ग्रोथ) का समय:</b> ${fertilizerDate1.toLocaleDateString('hi-IN', options)}<br>
+        <b>⚡ दूसरी खाद (फूल व फल विकास) का समय:</b> ${fertilizerDate2.toLocaleDateString('hi-IN', options)}<br>
+        <b style="color:#16a34a;">🎯 अनुमानित कटाई शुरू होने की तारीख: ${harvestDate.toLocaleDateString('hi-IN', options)}</b>
+      `;
+      document.getElementById('calcResultText').innerHTML = resultHTML;
+    }
 
     function detectUserLocation() {
       if (navigator.geolocation) {
