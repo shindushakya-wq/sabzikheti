@@ -579,6 +579,28 @@
     </div>
   </div>
 
+  <!-- SCREEN: AI डॉक्टर चैट/कंसल्टेशन पेज -->
+  <div id="screen-ai-doctor-chat" class="screen">
+    <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px; margin-bottom:12px;">
+      <h3 style="color:#1b5e20; font-size:17px; margin-bottom:6px;">👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन</h3>
+      <p style="font-size:12px; color:#6b7280;">अपनी फसल, पौधे के रोग या खाद से जुड़ा सवाल यहाँ लिखकर या बोलकर पूछें:</p>
+    </div>
+
+    <!-- चैट का इतिहास (Messages Box) -->
+    <div id="aiChatMessagesContainer" style="background:white; border:1px solid #e5e7eb; border-radius:12px; padding:12px; height:320px; overflow-y:auto; margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
+      <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534;">
+        <b>👨‍⚕️ AI डॉक्टर:</b> राम-राम किसान भाई! फसल में कोई रोग, कीट या खाद से जुड़ी समस्या है? यहाँ लिखकर या बोलकर बताएं।
+      </div>
+    </div>
+
+    <!-- इनपुट बॉक्स और वॉइस/सेंड बटन -->
+    <div style="display:flex; gap:8px; align-items:center;">
+      <input type="text" id="aiUserChatInput" class="form-control" placeholder="उदा. टमाटर के पत्ते मुड़ रहे हैं..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
+      <button class="btn-action" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="बोलकर पूछें">🎙️</button>
+      <button class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()">भेजें</button>
+    </div>
+  </div>
+
   <!-- SCREEN: खेती कैसे करें - फसल सूची (A-Z) -->
   <div id="screen-atoz-crops" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; padding: 14px; margin-bottom: 12px;">
@@ -924,53 +946,98 @@
     }
 
     function startVoiceAssistant() {
+      openScreen('screen-ai-doctor-chat', 'AI सब्जी डॉक्टर चैट');
+      
+      let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) return;
+      
+      let rec = new SpeechRecognition();
+      rec.lang = 'hi-IN';
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+
+      let chatInput = document.getElementById('aiUserChatInput');
+
+      rec.onstart = function() {
+        chatInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए...";
+        speakAiAnswer("बोलिए, आपकी फसल में क्या समस्या है?");
+      };
+
+      rec.onresult = (e) => {
+        let spokenText = e.results[0][0].transcript;
+        chatInput.value = spokenText;
+        sendUserChatMessage();
+      };
+
+      rec.onerror = function() {
+        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
+      };
+
+      rec.onend = function() {
+        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
+      };
+
+      try {
+        rec.start();
+      } catch (err) {}
+    }
+
+    function handleAiChatKeyPress(e) {
+      if(e.key === 'Enter') sendUserChatMessage();
+    }
+
+    function sendUserChatMessage() {
+      let inputElem = document.getElementById('aiUserChatInput');
+      let msg = inputElem.value.trim();
+      if(!msg) return;
+
+      let container = document.getElementById('aiChatMessagesContainer');
+      
+      container.innerHTML += `
+        <div style="background:#eff6ff; padding:10px 12px; border-radius:10px; border-left:4px solid #2563eb; font-size:13.5px; color:#1e40af; align-self:flex-end; max-width:85%;">
+          <b>👤 आप:</b> ${msg}
+        </div>`;
+      
+      inputElem.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "आपकी समस्या दर्ज कर ली गई है। इसके लिए समय पर सिंचाई और संतुलित उर्वरक का ध्यान रखें।";
+        let lowMsg = msg.toLowerCase();
+
+        if(lowMsg.includes('टमाटर') || lowMsg.includes('पत्ते') || lowMsg.includes('मुड़')) {
+          reply = "टमाटर के पत्ते मुड़ने (Curl) या पीला पड़ने पर रस चूसक कीट (Thrips/Whitefly) का हमला हो सकता है। इसके लिए इमिडाक्लोप्रिड या थियामेथोक्साम दवा का छिड़काव करें।";
+        } else if(lowMsg.includes('कीट') || lowMsg.includes('सुंडी') || lowMsg.includes('इल्ली')) {
+          reply = "सुंडी या कीट की रोकथाम के लिए इमामेक्टिन बेंजोएट (Emamectin Benzoate) 5% SG की 7 ग्राम मात्रा प्रति 15 लीटर पंप में मिलाकर छिड़काव करें।";
+        } else if(lowMsg.includes('फंगस') || lowMsg.includes('ब्लाइट') || lowMsg.includes('धब्बे')) {
+          reply = "फफूंद या ब्लाइट रोग के लिए मैंकोजेब (Mancozeb 75% WP) या कॉपर ऑक्सीक्लोराइड दवा का उपयोग करें।";
+        }
+
+        container.innerHTML += `
+          <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
+            <b>👨‍⚕️ AI डॉक्टर:</b> ${reply}
+          </div>`;
+        
+        container.scrollTop = container.scrollHeight;
+        speakAiAnswer(reply);
+      }, 800);
+    }
+
+    function startChatVoiceInput() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        alert("आपका ब्राउज़र बोलकर बात करने की सुविधा सपोर्ट नहीं करता है।");
-        document.getElementById('homeSearch').focus();
+        alert("आपका ब्राउज़र बोलकर टाइप करने की सुविधा सपोर्ट नहीं करता।");
         return;
       }
       let rec = new SpeechRecognition();
       rec.lang = 'hi-IN';
       rec.interimResults = false;
-      rec.maxAlternatives = 1;
       
-      let subText = document.getElementById('aiAssistantSubText');
-
-      rec.onstart = function() {
-        subText.innerText = "🎙️ मैं सुन रहा हूँ, बोलिए...";
-        speakAiAnswer("मैं सुन रहा हूँ, बोलिए आप क्या जानना चाहते हैं?");
-      };
-
       rec.onresult = (e) => {
-        let spokenText = e.results[0][0].transcript;
-        subText.innerText = `🗣️ आपने कहा: "${spokenText}"`;
-        document.getElementById('homeSearch').value = spokenText;
-        
-        speakAiAnswer(`आपने ${spokenText} के बारे में पूछा है।`);
-        triggerManualSearch();
+        document.getElementById('aiUserChatInput').value = e.results[0][0].transcript;
+        sendUserChatMessage();
       };
-
-      rec.onerror = function(event) {
-        if(event.error === 'not-allowed') {
-          subText.innerText = "⚠️ माइक्रोफोन की अनुमति दें।";
-          alert("कृपया अपने ब्राउज़र में माइक्रोफोन (Microphone) की अनुमति दें।");
-        } else {
-          subText.innerText = "⚠️ आवाज़ स्पष्ट नहीं आई, दोबारा टैप करें।";
-        }
-      };
-
-      rec.onend = function() {
-        setTimeout(() => {
-          subText.innerText = "टैप करें और फसल या बीमारी का नाम बोलें...";
-        }, 4000);
-      };
-
-      try {
-        rec.start();
-      } catch (err) {
-        alert("माइक्रोफोन त्रुटि: " + err.message);
-      }
+      rec.start();
     }
 
     function showSowingCalculatorScreen() {
