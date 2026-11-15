@@ -102,7 +102,7 @@
     .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
     .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; border-radius: 50%; }
-    .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; background: #fee2e2; }
+    .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
     @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.25); } }
 
     /* AI वॉइस असिस्टेंट कार्ड */
@@ -596,7 +596,7 @@
     <!-- इनपुट बॉक्स और वॉइस/सेंड बटन -->
     <div style="display:flex; gap:8px; align-items:center;">
       <input type="text" id="aiUserChatInput" class="form-control" placeholder="उदा. टमाटर के पत्ते मुड़ रहे हैं..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
-      <button class="btn-action" id="chatVoiceMicBtn" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="बोलकर पूछें">🎙️</button>
+      <button class="btn-action" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="बोलकर पूछें">🎙️</button>
       <button class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()">भेजें</button>
     </div>
   </div>
@@ -937,73 +937,22 @@
       if(dateInput) dateInput.value = todayStr;
     });
 
-    // प्राकृतिक और असली डॉक्टर जैसी आवाज (Natural Text-to-Speech)
+    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech) - बिना ऑटो माइक ऑन किए
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // पुरानी कोई भी आवाज तुरंत बंद करें
+        window.speechSynthesis.cancel();
         let cleanText = text.replace(/[*#_]/g, '');
         let utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = 'hi-IN';
-        utterance.rate = 0.95; // बोलने की गति थोड़ी स्वाभाविक और स्पष्ट
-        utterance.pitch = 1.0; // प्राकृतिक टोन
-
-        // उपलब्ध सबसे अच्छी हिंदी आवाज चुनने की कोशिश
-        let voices = window.speechSynthesis.getVoices();
-        let hiVoice = voices.find(v => v.lang === 'hi-IN' || v.lang.includes('hi'));
-        if (hiVoice) {
-          utterance.voice = hiVoice;
-        }
-
+        utterance.rate = 1.0;
         window.speechSynthesis.speak(utterance);
       }
     }
 
-    // AI डॉक्टर से बोलकर बात करने का फंक्शन (Voice Assistant)
+    // होम स्क्रीन वाला वॉइस असिस्टेंट (टैप करने पर)
     function startVoiceAssistant() {
       openScreen('screen-ai-doctor-chat', 'AI सब्जी डॉक्टर चैट');
-      
-      let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        alert("आपका ब्राउज़र बोलकर बात करने की सुविधा सपोर्ट नहीं करता।");
-        return;
-      }
-      
-      let rec = new SpeechRecognition();
-      rec.lang = 'hi-IN';
-      rec.interimResults = false;
-      rec.maxAlternatives = 1;
-
-      let chatInput = document.getElementById('aiUserChatInput');
-      let micBtn = document.getElementById('chatVoiceMicBtn');
-
-      rec.onstart = function() {
-        chatInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए...";
-        if(micBtn) micBtn.classList.add('listening');
-        speakAiAnswer("बोलिए, आपकी फसल में क्या समस्या है?");
-      };
-
-      rec.onresult = (e) => {
-        let spokenText = e.results[0][0].transcript;
-        chatInput.value = spokenText;
-        if(micBtn) micBtn.classList.remove('listening');
-        sendUserChatMessage();
-      };
-
-      rec.onerror = function() {
-        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
-        if(micBtn) micBtn.classList.remove('listening');
-      };
-
-      rec.onend = function() {
-        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
-        if(micBtn) micBtn.classList.remove('listening');
-      };
-
-      try {
-        rec.start();
-      } catch (err) {
-        if(micBtn) micBtn.classList.remove('listening');
-      }
+      startChatVoiceInput();
     }
 
     function handleAiChatKeyPress(e) {
@@ -1073,31 +1022,49 @@
       }
     }
 
+    // चैट वाला माइक बटन क्लिक करने पर ही सुनेगा (Fixed)
     function startChatVoiceInput() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
         alert("आपका ब्राउज़र बोलकर टाइप करने की सुविधा सपोर्ट नहीं करता।");
         return;
       }
+      
       let rec = new SpeechRecognition();
       rec.lang = 'hi-IN';
       rec.interimResults = false;
-      let micBtn = document.getElementById('chatVoiceMicBtn');
+      rec.maxAlternatives = 1;
+
+      let chatInput = document.getElementById('aiUserChatInput');
 
       rec.onstart = function() {
-        if(micBtn) micBtn.classList.add('listening');
+        chatInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए...";
+        chatInput.style.borderColor = "#16a34a";
       };
-      
+
       rec.onresult = (e) => {
-        if(micBtn) micBtn.classList.remove('listening');
-        document.getElementById('aiUserChatInput').value = e.results[0][0].transcript;
+        let spokenText = e.results[0][0].transcript;
+        chatInput.value = spokenText;
+        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
+        chatInput.style.borderColor = "#d1d5db";
         sendUserChatMessage();
       };
 
-      rec.onerror = function() { if(micBtn) micBtn.classList.remove('listening'); };
-      rec.onend = function() { if(micBtn) micBtn.classList.remove('listening'); };
+      rec.onerror = function() {
+        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
+        chatInput.style.borderColor = "#d1d5db";
+      };
 
-      rec.start();
+      rec.onend = function() {
+        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
+        chatInput.style.borderColor = "#d1d5db";
+      };
+
+      try {
+        rec.start();
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     function showSowingCalculatorScreen() {
@@ -1573,11 +1540,6 @@
     }
 
     function openScreen(screenId, title) {
-      // जब भी किसी दूसरे पेज पर जाएं, AI डॉक्टर की आवाज तुरंत बंद कर दें
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
       document.getElementById('headerTitle').innerText = title;
@@ -1587,9 +1549,6 @@
     }
 
     function goBack() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
       navHistory.pop();
       let prev = navHistory[navHistory.length - 1] || 'screen-home';
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1857,13 +1816,12 @@
     function appLogout() { if(confirm("लॉगआउट करना चाहते हैं?")) { localStorage.clear(); location.reload(); } }
 
     function triggerManualSearch() {
-      let val = document.getElementById('homeSearch').value.trim();
+      let val = document.getElementById('homeSearch').value.trim().toLowerCase();
       if(!val) { alert("कृपया फसल का नाम लिखें!"); return; }
-      renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(val.toLowerCase()) || r.crop.toLowerCase().includes(val.toLowerCase())), `सर्च परिणाम: ${val}`);
+      renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(val) || r.crop.toLowerCase().includes(val)), 'सर्च परिणाम');
     }
     function handleSearchKeyPress(e) { if(e.key === 'Enter') triggerManualSearch(); }
     
-    // सर्च बार का माइक फंक्शन (अब बोलते ही फसल या वैरायटी ढूंढ लेगा)
     function startVoiceSearch() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1880,31 +1838,32 @@
 
       rec.onstart = function() {
         searchInput.value = "";
-        searchInput.placeholder = "🎙️ सुन रहा हूँ, फसल का नाम बोलिए...";
-        if(micBtn) micBtn.classList.add('listening');
+        searchInput.placeholder = "🎙️ मैं सुन रहा हूँ, बोलिए...";
+        speakAiAnswer("मैं सुन रहा हूँ, बोलिए...");
+        micBtn.classList.add('listening');
       };
 
       rec.onresult = (e) => {
-        let spokenText = e.results[0][0].transcript.replace(/[.!?]/g, '').trim();
+        let spokenText = e.results[0][0].transcript;
         searchInput.value = spokenText;
-        if(micBtn) micBtn.classList.remove('listening');
-        renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(spokenText.toLowerCase()) || r.crop.toLowerCase().includes(spokenText.toLowerCase())), `बोलकर खोजा गया: ${spokenText}`);
+        speakAiAnswer(`आपने ${spokenText} खोजा है।`);
+        triggerManualSearch();
       };
 
-      rec.onerror = function() {
+      rec.onerror = function(event) {
         searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        if(micBtn) micBtn.classList.remove('listening');
+        micBtn.classList.remove('listening');
       };
 
       rec.onend = function() {
         searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        if(micBtn) micBtn.classList.remove('listening');
+        micBtn.classList.remove('listening');
       };
 
       try {
         rec.start();
       } catch (err) {
-        if(micBtn) micBtn.classList.remove('listening');
+        alert("माइक्रोफोन चालू करने में त्रुटि: " + err.message);
       }
     }
 
@@ -2156,7 +2115,7 @@
       document.getElementById('notificationModal').classList.add('active');
       let notifRows = document.querySelectorAll('#notificationListContent .schedule-step');
       if(notifRows.length > 0) {
-        let firstTitle = notifRows[0].querySelector('b'].innerText.replace('🌾 ', '');
+        let firstTitle = notifRows[0].querySelector('b').innerText.replace('🌾 ', '');
         localStorage.setItem('last_seen_notification', firstTitle);
       }
       document.getElementById('notifBadge').style.display = 'none';
