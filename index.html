@@ -130,6 +130,19 @@
       border-color: #334155; 
     }
 
+    /* माइक सक्रिय होने पर एनिमेशन */
+    @keyframes micListeningPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+      70% { transform: scale(1.12); box-shadow: 0 0 0 12px rgba(22, 163, 74, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+    }
+    .mic-active-anim {
+      animation: micListeningPulse 1.2s infinite ease-in-out !important;
+      background-color: #16a34a !important;
+      color: white !important;
+      border-radius: 50%;
+    }
+
     /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
@@ -937,7 +950,7 @@
       if(dateInput) dateInput.value = todayStr;
     });
 
-    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech)
+    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech) - यदि पहले बोल रहा हो तो रोकेगा
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -1021,8 +1034,13 @@
       }
     }
 
-    // चैट वाला माइक बटन क्लिक करने पर ही सुनेगा
+    // चैट वाला माइक बटन क्लिक करने पर (बीच में टोकने और नई जानकारी देने के साथ)
     function startChatVoiceInput() {
+      // यदि AI बोल रहा है, तो माइक दबाते ही AI की आवाज़ तुरंत बंद हो जाएगी
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
         alert("आपका ब्राउज़र बोलकर टाइप करने की सुविधा सपोर्ट नहीं करता।");
@@ -1035,10 +1053,12 @@
       rec.maxAlternatives = 1;
 
       let chatInput = document.getElementById('aiUserChatInput');
+      let micBtn = document.querySelector('button[onclick="startChatVoiceInput()"]');
 
       rec.onstart = function() {
         chatInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए...";
         chatInput.style.borderColor = "#16a34a";
+        if(micBtn) micBtn.classList.add('mic-active-anim');
       };
 
       rec.onresult = (e) => {
@@ -1046,17 +1066,22 @@
         chatInput.value = spokenText;
         chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
         chatInput.style.borderColor = "#d1d5db";
+        if(micBtn) micBtn.classList.remove('mic-active-anim');
+        
+        // नया सवाल भेजें (पुरानी जानकारी छोड़कर नई जानकारी देना शुरू करेगा)
         sendUserChatMessage();
       };
 
       rec.onerror = function() {
         chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
         chatInput.style.borderColor = "#d1d5db";
+        if(micBtn) micBtn.classList.remove('mic-active-anim');
       };
 
       rec.onend = function() {
         chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
         chatInput.style.borderColor = "#d1d5db";
+        if(micBtn) micBtn.classList.remove('mic-active-anim');
       };
 
       try {
@@ -1823,7 +1848,7 @@
     }
     function handleSearchKeyPress(e) { if(e.key === 'Enter') triggerManualSearch(); }
     
-    // होम स्क्रीन सर्च बार का माइक बटन (किसान को साफ़ पता चलेगा कि माइक सुन रहा है)
+    // होम स्क्रीन सर्च बार का वॉइस सर्च (बोलने पर सीधे संबंधित स्क्रीन या परिणाम पर जाना)
     function startVoiceSearch() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1850,7 +1875,6 @@
         micBtn.classList.remove('listening');
         
         let lowText = spokenText.toLowerCase();
-        // अगर किसान ने रोग या स्प्रे या वैरायटी बोली है, तो सीधे संबंधित स्क्रीन पर ले जाएं
         if (lowText.includes('रोग') || lowText.includes('कीट') || lowText.includes('सुरक्षा')) {
           showProtectionCropsList();
         } else if (lowText.includes('स्प्रे') || lowText.includes('शेड्यूल')) {
@@ -1862,7 +1886,6 @@
         } else if (lowText.includes('मौसम')) {
           showWeatherDetailScreen();
         } else {
-          // सामान्य सर्च परिणाम दिखाएं
           renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(lowText) || r.crop.toLowerCase().includes(lowText)), `सर्च: ${spokenText}`);
         }
       };
