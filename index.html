@@ -915,7 +915,7 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBSStgj0MxDkphHLvOOYVxBfEi7RM1som-hSh4BvzHP_0gBYSiltAs8bERsaP2_jo/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDldzo8oq1ZaBSvsvwk7MAslIWwS3OGqDgnuJnTW_8I7jnJ47Oj0LXYB5Tg9ofIV0/exec";
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -1968,7 +1968,7 @@
 
     function openProfileScreen() {
       closeDrawer();
-      document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || 'Shailender Kumar';
+      document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
       document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
       openScreen('screen-profile', 'किसान प्रोफाइल');
@@ -2134,7 +2134,7 @@
       loadAllSheetsData();
     };
     function updateProfileUI() {
-      let name = localStorage.getItem('farmer_name') || 'Shailender Kumar';
+      let name = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
       document.getElementById('welcomeMsg').innerText = `राम-राम, ${name} जी!`;
     }
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
