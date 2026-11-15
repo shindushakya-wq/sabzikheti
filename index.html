@@ -847,7 +847,7 @@
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
-      <div class="form-group"><label>आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailnder Kumar"></div>
+      <div class="form-group"><label>आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailender Kumar"></div>
       <div class="form-group"><label>मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
       <div class="form-group"><label>गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar"></div>
       <div class="form-group"><label>मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
@@ -937,6 +937,7 @@
       if(dateInput) dateInput.value = todayStr;
     });
 
+    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech)
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -948,6 +949,7 @@
       }
     }
 
+    // AI डॉक्टर से बोलकर बात करने का फंक्शन (Voice Assistant)
     function startVoiceAssistant() {
       openScreen('screen-ai-doctor-chat', 'AI सब्जी डॉक्टर चैट');
       
@@ -992,6 +994,7 @@
       if(e.key === 'Enter') sendUserChatMessage();
     }
 
+    // असली Gemini AI (Apps Script) को मैसेज भेजने का फंक्शन
     async function sendUserChatMessage() {
       let inputElem = document.getElementById('aiUserChatInput');
       let msg = inputElem.value.trim();
@@ -1925,6 +1928,7 @@
       }
     }
 
+    // तुरंत समाधान (फोटो भेजकर AI जांच व सावधानियां पाना)
     async function runSmartDiagnosis() {
       let btn = document.getElementById('btnDiagnose');
       btn.innerText = "⏳ AI जांच कर रहा है...";
@@ -2130,7 +2134,7 @@
       loadAllSheetsData();
     };
     function updateProfileUI() {
-      let name = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
+      let name = localStorage.getItem('farmer_name') || 'Shailender Kumar';
       document.getElementById('welcomeMsg').innerText = `राम-राम, ${name} जी!`;
     }
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
