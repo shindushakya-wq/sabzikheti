@@ -1021,7 +1021,7 @@
       }
     }
 
-    // चैट वाला माइक बटन क्लिक करने पर ही सुनेगा (Fixed)
+    // चैट वाला माइक बटन क्लिक करने पर ही सुनेगा
     function startChatVoiceInput() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1823,6 +1823,7 @@
     }
     function handleSearchKeyPress(e) { if(e.key === 'Enter') triggerManualSearch(); }
     
+    // होम स्क्रीन सर्च बार का माइक बटन (किसान को साफ़ पता चलेगा कि माइक सुन रहा है)
     function startVoiceSearch() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1839,19 +1840,34 @@
 
       rec.onstart = function() {
         searchInput.value = "";
-        searchInput.placeholder = "🎙️ मैं सुन रहा हूँ, बोलिए...";
-        speakAiAnswer("मैं सुन रहा हूँ, बोलिए...");
+        searchInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए (फसल/रोग/स्प्रे)...";
         micBtn.classList.add('listening');
       };
 
       rec.onresult = (e) => {
-        let spokenText = e.results[0][0].transcript;
+        let spokenText = e.results[0][0].transcript.trim();
         searchInput.value = spokenText;
-        speakAiAnswer(`आपने ${spokenText} खोजा है।`);
-        triggerManualSearch();
+        micBtn.classList.remove('listening');
+        
+        let lowText = spokenText.toLowerCase();
+        // अगर किसान ने रोग या स्प्रे या वैरायटी बोली है, तो सीधे संबंधित स्क्रीन पर ले जाएं
+        if (lowText.includes('रोग') || lowText.includes('कीट') || lowText.includes('सुरक्षा')) {
+          showProtectionCropsList();
+        } else if (lowText.includes('स्प्रे') || lowText.includes('शेड्यूल')) {
+          showScheduleCropsList();
+        } else if (lowText.includes('दवा') || lowText.includes('केमिकल') || lowText.includes('कीटनाशक')) {
+          showChemicalsScreen();
+        } else if (lowText.includes('मंडी') || lowText.includes('भाव')) {
+          showMandiBhavScreen();
+        } else if (lowText.includes('मौसम')) {
+          showWeatherDetailScreen();
+        } else {
+          // सामान्य सर्च परिणाम दिखाएं
+          renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(lowText) || r.crop.toLowerCase().includes(lowText)), `सर्च: ${spokenText}`);
+        }
       };
 
-      rec.onerror = function(event) {
+      rec.onerror = function() {
         searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
         micBtn.classList.remove('listening');
       };
