@@ -595,13 +595,13 @@
   <!-- SCREEN: AI डॉक्टर चैट/कंसल्टेशन पेज -->
   <div id="screen-ai-doctor-chat" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px; margin-bottom:12px;">
-      <h3 style="color:#1b5e20; font-size:17px; margin-bottom:6px;" id="aiHeadTitle">👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन</h3>
-      <p style="font-size:12px; color:#6b7280;" id="aiSubText">अपनी फसल, पौधे के रोग या खाद से जुड़ा सवाल यहाँ लिखकर या बोलकर पूछें:</p>
+      <h3 style="color:#1b5e20; font-size:17px; margin-bottom:6px;">👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन</h3>
+      <p style="font-size:12px; color:#6b7280;">अपनी फसल, पौधे के रोग या खाद से जुड़ा सवाल यहाँ लिखकर या बोलकर पूछें:</p>
     </div>
 
     <!-- चैट का इतिहास (Messages Box) -->
     <div id="aiChatMessagesContainer" style="background:white; border:1px solid #e5e7eb; border-radius:12px; padding:12px; height:320px; overflow-y:auto; margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
-      <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534;" id="aiWelcomeMsg">
+      <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534;">
         <b>👨‍⚕️ AI डॉक्टर:</b> राम-राम किसान भाई! फसल में कोई रोग, कीट या खाद से जुड़ी समस्या है? यहाँ लिखकर या बोलकर बताएं।
       </div>
     </div>
@@ -610,7 +610,7 @@
     <div style="display:flex; gap:8px; align-items:center;">
       <input type="text" id="aiUserChatInput" class="form-control" placeholder="उदा. टमाटर के पत्ते मुड़ रहे हैं..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
       <button class="btn-action" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="बोलकर पूछें">🎙️</button>
-      <button class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()" id="btnSendChat">भेजें</button>
+      <button class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()">भेजें</button>
     </div>
   </div>
 
@@ -958,6 +958,7 @@
       let todayStr = new Date().toISOString().split('T')[0];
       let dateInput = document.getElementById('calcDateInput');
       if(dateInput) dateInput.value = todayStr;
+      loadAllSheetsData();
     });
 
     // बहुभाषी डिक्शनरी (हिंदी, अंग्रेजी, पंजाबी, तेलुगु, गुजराती, मराठी)
@@ -1110,7 +1111,6 @@
       if (!localStorage.getItem('is_logged_in')) {
         document.getElementById('loginScreenModal').classList.add('active');
       }
-      loadAllSheetsData();
     }
 
     function toggleAppLanguage() {
@@ -1220,7 +1220,7 @@
       } catch (err) {
         let loadingDiv = document.getElementById(loadingId);
         if(loadingDiv) loadingDiv.remove();
-        container.innerHTML += `<div style="background:#fee2e2; padding:10px 12px; border-radius:10px; border-left:4px solid #dc2626; font-size:13.5px; color:#991b1b; max-width:85%;"><b>⚠️ एरर:</b> इंटरनेट कनेक्शन या सर्वर में समस्या है।</div>`;
+        container.innerHTML += `<div style="background:#fee2e2; padding:10px 12px; border-radius:10px; border-left:4px solid #dc2626; font-size:13.5px; color:#991b1b; max-width:85%;"><b>⚠️ एरर:</b> कनेक्शन समस्या।</div>`;
         container.scrollTop = container.scrollHeight;
       }
     }
@@ -1273,7 +1273,7 @@
         searchInput.value = spokenText;
         micBtn.classList.remove('listening');
         let lowText = spokenText.toLowerCase();
-        if (lowText.includes('रोग') || lowText.includes('कीट') || lowText.includes('सुरक्षा')) {
+        if (lowText.includes('रोग') || lowText.includes('कीट')) {
           showProtectionCropsList();
         } else if (lowText.includes('स्प्रे') || lowText.includes('शेड्यूल')) {
           showScheduleCropsList();
