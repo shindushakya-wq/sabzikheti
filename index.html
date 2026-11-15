@@ -915,7 +915,7 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzC8mgdbLCQX_LeMUxAW5SaxRVK8SMv3OTh1aWTyphqzJBiRFvZj6MrimqRmL6f-F0/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznk-9Yc13G421IrmJsnyiL8LdgI8BzhEo26UCuZ5x4IT5aT9B9JACT8BQbMuERC9M/exec";
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -2116,7 +2116,7 @@
       document.getElementById('fullScreenPreviewImg').src = url;
       document.getElementById('imagePreviewModal').classList.add('active');
     }
-    closeImageModal = function() { document.getElementById('imagePreviewModal').classList.remove('active'); }
+    function closeImageModal() { document.getElementById('imagePreviewModal').classList.remove('active'); }
 
     function openNotificationModal() {
       document.getElementById('notificationModal').classList.add('active');
