@@ -847,7 +847,7 @@
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
-      <div class="form-group"><label>आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailender Kumar"></div>
+      <div class="form-group"><label>आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailnder Kumar"></div>
       <div class="form-group"><label>मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
       <div class="form-group"><label>गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar"></div>
       <div class="form-group"><label>मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
@@ -915,7 +915,7 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDldzo8oq1ZaBSvsvwk7MAslIWwS3OGqDgnuJnTW_8I7jnJ47Oj0LXYB5Tg9ofIV0/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzC8mgdbLCQX_LeMUxAW5SaxRVK8SMv3OTh1aWTyphqzJBiRFvZj6MrimqRmL6f-F0/exec";
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -2010,7 +2010,7 @@
     }
 
     function openFarmerDiscussionScreen() {
-      document.getElementById('discussionAuthor').value = localStorage.getItem('farmer_name') || 'Shailender Kumar';
+      document.getElementById('discussionAuthor').value = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
       loadDiscussionPosts();
       openScreen('screen-farmer-discussion', 'किसान चर्चा मंच');
     }
@@ -2116,7 +2116,7 @@
       document.getElementById('fullScreenPreviewImg').src = url;
       document.getElementById('imagePreviewModal').classList.add('active');
     }
-    function closeImageModal() { document.getElementById('imagePreviewModal').classList.remove('active'); }
+    closeImageModal = function() { document.getElementById('imagePreviewModal').classList.remove('active'); }
 
     function openNotificationModal() {
       document.getElementById('notificationModal').classList.add('active');
