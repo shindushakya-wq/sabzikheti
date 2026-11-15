@@ -937,7 +937,7 @@
       if(dateInput) dateInput.value = todayStr;
     });
 
-    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech) - बिना ऑटो माइक ऑन किए
+    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech)
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -949,10 +949,9 @@
       }
     }
 
-    // होम स्क्रीन वाला वॉइस असिस्टेंट (टैप करने पर)
+    // AI वॉइस असिस्टेंट कार्ड पर क्लिक करने पर चैट स्क्रीन खोलें
     function startVoiceAssistant() {
       openScreen('screen-ai-doctor-chat', 'AI सब्जी डॉक्टर चैट');
-      startChatVoiceInput();
     }
 
     function handleAiChatKeyPress(e) {
@@ -1540,6 +1539,7 @@
     }
 
     function openScreen(screenId, title) {
+      if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); }
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
       document.getElementById('headerTitle').innerText = title;
@@ -1549,6 +1549,7 @@
     }
 
     function goBack() {
+      if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); }
       navHistory.pop();
       let prev = navHistory[navHistory.length - 1] || 'screen-home';
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1883,6 +1884,7 @@
 
     function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
     function closeSolutionModal() {
+      if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); }
       document.getElementById('solutionModal').classList.remove('active');
       document.getElementById('solutionPreviewImg').style.display = 'none';
       document.getElementById('btnDiagnose').style.display = 'none';
