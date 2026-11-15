@@ -950,7 +950,7 @@
       if(dateInput) dateInput.value = todayStr;
     });
 
-    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech) - यदि पहले बोल रहा हो तो रोकेगा
+    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech)
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -1036,7 +1036,6 @@
 
     // चैट वाला माइक बटन क्लिक करने पर (बीच में टोकने और नई जानकारी देने के साथ)
     function startChatVoiceInput() {
-      // यदि AI बोल रहा है, तो माइक दबाते ही AI की आवाज़ तुरंत बंद हो जाएगी
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
@@ -1068,7 +1067,6 @@
         chatInput.style.borderColor = "#d1d5db";
         if(micBtn) micBtn.classList.remove('mic-active-anim');
         
-        // नया सवाल भेजें (पुरानी जानकारी छोड़कर नई जानकारी देना शुरू करेगा)
         sendUserChatMessage();
       };
 
@@ -1422,10 +1420,13 @@
           title: cols[0]||'कृषि वीडियो', thumbnail: cols[1]||'', videoUrl: cols[2]||''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title'));
 
+        // **FIXED: Notifications Sheet Parsing**
         try {
           const resNotif = await fetch(BASE_SHEET_URL + 'Notifications');
           const textNotif = await resNotif.text();
           let notifRows = parseCSV(textNotif);
+          let notifContainer = document.getElementById('notificationListContent');
+          
           if(notifRows.length > 1) {
             let notifHtml = '';
             let latestTitle = notifRows[1][0] || '';
@@ -1433,12 +1434,23 @@
 
             notifRows.forEach((cols, idx) => {
               if(idx > 0 && cols[0]) {
-                notifHtml += `<div class="schedule-step" style="border-left:4px solid #16a34a; margin-bottom:10px;"><b>🌾 ${cols[0]}</b><p>${cols[1] || ''}</p><span style="font-size:11px; color:#166534;">${cols[2] || 'ताज़ा अपडेट'}</span></div>`;
+                let title = cols[0] || '';
+                let desc = cols[1] || '';
+                let timeStr = cols[2] || 'ताज़ा अपडेट';
+                
+                notifHtml += `
+                  <div class="schedule-step" style="border-left:4px solid #16a34a; margin-bottom:10px;">
+                    <b>🌾 ${title}</b>
+                    <p style="margin-top:4px; color:#374151;">${desc}</p>
+                    <span style="font-size:11px; color:#166534;">${timeStr}</span>
+                  </div>`;
               }
             });
 
             if(notifHtml) {
-              document.getElementById('notificationListContent').innerHTML = notifHtml;
+              notifContainer.innerHTML = notifHtml;
+            } else {
+              notifContainer.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई नई सूचना उपलब्ध नहीं है।</div>`;
             }
 
             if(latestTitle !== lastSeenNotif) {
@@ -1447,8 +1459,12 @@
             } else {
               document.getElementById('notifBadge').style.display = 'none';
             }
+          } else {
+            notifContainer.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई नई सूचना उपलब्ध नहीं है।</div>`;
           }
-        } catch(ex) {}
+        } catch(ex) {
+          console.log("Notification error:", ex);
+        }
 
         renderStoriesBar();
         renderDynamicVideos();
@@ -1848,7 +1864,6 @@
     }
     function handleSearchKeyPress(e) { if(e.key === 'Enter') triggerManualSearch(); }
     
-    // होम स्क्रीन सर्च बार का वॉइस सर्च (बोलने पर सीधे संबंधित स्क्रीन या परिणाम पर जाना)
     function startVoiceSearch() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1962,7 +1977,6 @@
       }
     }
 
-    // तुरंत समाधान (फोटो भेजकर AI जांच व सावधानियां पाना)
     async function runSmartDiagnosis() {
       let btn = document.getElementById('btnDiagnose');
       btn.innerText = "⏳ AI जांच कर रहा है...";
