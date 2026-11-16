@@ -643,14 +643,14 @@
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;" id="privHeadTitle">📜 नियम व शर्तें एवं गोपनीयता नीति</h3>
       <div id="privacyContentBox">
         <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
-          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-          <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"CROP & SABZI DOCTOR"</b> केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
-          <p style="margin-bottom:8px;">2. इस ऐप में दी गई बीज वैरायटी की जानकारी और ट्रेडमार्क संबंधित कंपनियों के हैं। हमारा ऐप किसी भी कंपनी से आधिकारिक तौर पर जुड़ा नहीं है।</p>
-          <p style="margin-bottom:0px;">3. किसी भी कीटनाशक या उर्वरक का उपयोग करने से पहले डिब्बे पर दिए गए निर्देशों को अवश्य पढ़ें या कृषि विशेषज्ञों की सलाह लें।</p>
+          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;" id="pDiscHead">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
+          <p style="margin-bottom:8px;" id="pDisc1">1. यह मोबाइल ऐप <b>"CROP & SABZI DOCTOR"</b> केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
+          <p style="margin-bottom:8px;" id="pDisc2">2. इस ऐप में दी गई बीज वैरायटी की जानकारी और ट्रेडमार्क संबंधित कंपनियों के हैं। हमारा ऐप किसी भी कंपनी से आधिकारिक तौर पर जुड़ा नहीं है।</p>
+          <p style="margin-bottom:0px;" id="pDisc3">3. किसी भी कीटनाशक या उर्वरक का उपयोग करने से पहले डिब्बे पर दिए गए निर्देशों को अवश्य पढ़ें या कृषि विशेषज्ञों की सलाह लें।</p>
         </div>
         <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
-          <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-          <p style="margin-bottom:0px;">आपके द्वारा दर्ज किया गया नाम और मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इसका उपयोग केवल कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है।</p>
+          <b style="color:#166534; font-size:14px; margin-bottom:8px;" id="pPrivHead">🔒 गोपनीयता नीति (Privacy Policy):</b>
+          <p style="margin-bottom:0px;" id="pPrivText">आपके द्वारा दर्ज किया गया नाम और मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इसका उपयोग केवल कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है।</p>
         </div>
       </div>
     </div>
@@ -781,12 +781,12 @@
     <div class="variety-card">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;" id="govHeadTitle">🏛️ प्रमुख सरकारी योजनाएं</h3>
       <div class="schedule-step">
-        <b>1. प्रधानमंत्री किसान सम्मान निधि (PM-Kisan)</b>
-        <p>पात्र किसानों को साल में ₹6,000 की राशि तीन किस्तों में दी जाती है।</p>
+        <b id="gov1Title">1. प्रधानमंत्री किसान सम्मान निधि (PM-Kisan)</b>
+        <p id="gov1Desc">पात्र किसानों को साल में ₹6,000 की राशि तीन किस्तों में दी जाती है।</p>
       </div>
       <div class="schedule-step">
-        <b>2. प्रधानमंत्री फसल बीमा योजना (PMFBY)</b>
-        <p>प्राकृतिक आपदाओं से नुकसान पर बीमा सुरक्षा।</p>
+        <b id="gov2Title">2. प्रधानमंत्री फसल बीमा योजना (PMFBY)</b>
+        <p id="gov2Desc">प्राकृतिक आपदाओं से नुकसान पर बीमा सुरक्षा।</p>
       </div>
       <a href="https://pmkisan.gov.in/" target="_blank" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" id="btnGovPortal">🌐 पीएम-किसान पोर्टल देखें</a>
     </div>
@@ -972,7 +972,8 @@
     }
 
     function startVoiceAssistant() {
-      openScreen('screen-ai-doctor-chat', currentLang === 'en' ? 'AI Sabzi Doctor Chat' : 'AI सब्जी डॉक्टर चैट');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-ai-doctor-chat', t.aiDocTitle);
     }
 
     function handleAiChatKeyPress(e) {
@@ -985,10 +986,11 @@
       if(!msg) return;
 
       let container = document.getElementById('aiChatMessagesContainer');
+      const t = translations[currentLang] || translations['hi'];
       
       container.innerHTML += `
         <div style="background:#eff6ff; padding:10px 12px; border-radius:10px; border-left:4px solid #2563eb; font-size:13.5px; color:#1e40af; align-self:flex-end; max-width:85%;">
-          <b>👤 ${currentLang === 'en' ? 'You' : 'आप'}:</b> ${msg}
+          <b>👤 ${t.chatYou}:</b> ${msg}
         </div>`;
       
       inputElem.value = '';
@@ -997,7 +999,7 @@
       let loadingId = 'loading_' + Date.now();
       container.innerHTML += `
         <div id="${loadingId}" style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
-          <b>👨‍⚕️ AI ${currentLang === 'en' ? 'Doctor' : 'डॉक्टर'}:</b> ${currentLang === 'en' ? 'Thinking...' : 'सोच रहा हूँ...'} ⏳
+          <b>👨‍⚕️ AI ${t.chatDoc}:</b> ${t.chatThinking} ⏳
         </div>`;
       container.scrollTop = container.scrollHeight;
 
@@ -1012,7 +1014,7 @@
         let loadingDiv = document.getElementById(loadingId);
         if(loadingDiv) loadingDiv.remove();
 
-        let reply = currentLang === 'en' ? 'Sorry, could not get a response.' : 'माफ़ कीजिए, अभी उत्तर नहीं मिल पाया। कृपया दोबारा कोशिश करें।';
+        let reply = t.chatErr;
         if (data.result) {
           reply = data.result;
         } else if (data.परिणाम) {
@@ -1023,7 +1025,7 @@
 
         container.innerHTML += `
           <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
-            <b>👨‍⚕️ AI ${currentLang === 'en' ? 'Doctor' : 'डॉक्टर'}:</b> ${reply.replace(/\n/g, '<br>')}
+            <b>👨‍⚕️ AI ${t.chatDoc}:</b> ${reply.replace(/\n/g, '<br>')}
           </div>`;
         
         container.scrollTop = container.scrollHeight;
@@ -1035,7 +1037,7 @@
         
         container.innerHTML += `
           <div style="background:#fee2e2; padding:10px 12px; border-radius:10px; border-left:4px solid #dc2626; font-size:13.5px; color:#991b1b; max-width:85%;">
-            <b>⚠️ ${currentLang === 'en' ? 'Error' : 'एरर'}:</b> ${currentLang === 'en' ? 'Network error.' : 'इंटरनेट कनेक्शन या सर्वर में समस्या है।'}
+            <b>⚠️ ${t.chatNetErrHead}:</b> ${t.chatNetErrDesc}
           </div>`;
         container.scrollTop = container.scrollHeight;
       }
@@ -1079,7 +1081,8 @@
     }
 
     function showSowingCalculatorScreen() {
-      openScreen('screen-sowing-calc', currentLang === 'en' ? 'Sowing & Harvest Calculator' : 'बुवाई व कटाई कैलकुलेटर');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-sowing-calc', t.calcTitle);
     }
 
     function calculateCropSchedule() {
@@ -1213,7 +1216,7 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // व्यापक भाषा शब्दकोश (सभी पेजों, शीर्षकों और बटनों के लिए)
+    // व्यापक और पूर्ण भाषा शब्दकोश (सभी पेजों, शीर्षकों और बटनों के लिए)
     const translations = {
       hi: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1258,7 +1261,34 @@
         schemesTitle: "सरकारी योजनाएं",
         expertTitle: "एक्सपर्ट सुझाव",
         pestTitle: "कीट अलर्ट",
-        calcTitle: "बुवाई व कटाई कैलकुलेटर"
+        calcTitle: "बुवाई व कटाई कैलकुलेटर",
+        drawerHead: "📋 मेन्यू व सेटिंग्स",
+        completeProfileText: "टैप करके अपनी प्रोफाइल पूरी करें >",
+        mProfile: "मेरी प्रोफाइल / सेटिंग्स",
+        mFav: "मेरी पसंदीदा किस्में (Bookmarks)",
+        mCrops: "सब्जी फसल किस्में",
+        mSchedule: "स्प्रे शेड्यूल",
+        mProtection: "फसल सुरक्षा (रोग निदान)",
+        mChems: "दवाइयाँ Chemicals",
+        mServices: "Other सेवाएं (मौसम, मंडी, अलर्ट)",
+        mPrivacy: "नियम व शर्तें एवं गोपनीयता नीति",
+        mRate: "गूगल प्ले स्टोर पर रेट करें",
+        mShare: "किसान साथियों को ऐप शेयर करें",
+        mHelp: "व्हाट्सएप हेल्पलाइन",
+        mLogout: "लॉगआउट (Logout)",
+        solHead: "⚡ तुरंत समाधान (AI रोग जांच)",
+        camBtn: "कैमरा से फोटो लें",
+        galBtn: "गैलरी से चुनें",
+        diagBtn: "🔍 रोग पहचानें व उपचार पाएं",
+        diagRepHead: "🌿 AI रोग निदान रिपोर्ट व सावधानियां",
+        wapBtn: "💬 यह रिपोर्ट डॉक्टर को WhatsApp करें",
+        chatYou: "आप",
+        chatDoc: "डॉक्टर",
+        chatThinking: "सोच रहा हूँ...",
+        chatErr: "माफ़ कीजिए, अभी उत्तर नहीं मिल पाया। कृपया दोबारा कोशिश करें।",
+        chatNetErrHead: "एरर",
+        chatNetErrDesc: "इंटरनेट कनेक्शन या सर्वर में समस्या है।",
+        aiDocTitle: "AI सब्जी डॉक्टर चैट"
       },
       en: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1303,14 +1333,41 @@
         schemesTitle: "Government Schemes",
         expertTitle: "Expert Advice",
         pestTitle: "Pest Alerts",
-        calcTitle: "Sowing & Harvest Calculator"
+        calcTitle: "Sowing & Harvest Calculator",
+        drawerHead: "📋 Menu & Settings",
+        completeProfileText: "Tap to complete your profile >",
+        mProfile: "My Profile / Settings",
+        mFav: "Favorite Varieties (Bookmarks)",
+        mCrops: "Crop Varieties",
+        mSchedule: "Spray Schedule",
+        mProtection: "Crop Protection (Diagnosis)",
+        mChems: "Chemicals & Medicines",
+        mServices: "Other Services (Weather, Mandi)",
+        mPrivacy: "Terms & Privacy Policy",
+        mRate: "Rate on Google Play Store",
+        mShare: "Share App with Farmers",
+        mHelp: "WhatsApp Helpline",
+        mLogout: "Logout",
+        solHead: "⚡ Instant Solution (AI Diagnosis)",
+        camBtn: "Take Photo from Camera",
+        galBtn: "Choose from Gallery",
+        diagBtn: "🔍 Diagnose Disease & Get Cure",
+        diagRepHead: "🌿 AI Disease Diagnosis Report & Cautions",
+        wapBtn: "💬 Send this report to Doctor on WhatsApp",
+        chatYou: "You",
+        chatDoc: "Doctor",
+        chatThinking: "Thinking...",
+        chatErr: "Sorry, could not get a response. Please try again.",
+        chatNetErrHead: "Error",
+        chatNetErrDesc: "Network or server issue.",
+        aiDocTitle: "AI Sabzi Doctor Chat"
       },
       pa: {
         headerTitle: "CROP & SABZI DOCTOR",
         welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!",
-        txtChangeProf: "✏️ ਪ੍ਰੋਫाइल ਬਦलो",
+        txtChangeProf: "✏️ ਪ੍ਰੋਫાઇલ ਬਦਲੋ",
         txtAiTitle: "🎙️ ਏ.ਆਈ. ਖੇਤੀ ਡਾਕਟਰ ਨਾਲ ਗੱਲ ਕਰੋ",
-        aiSubText: "ਟੈਪ ਕਰੋ ਅਤੇ ਫਸਲ ਜਾਂ ਬਿमारी ਦਾ ਨਾਮ ਬੋਲੋ...",
+        aiSubText: "ਟੈਪ ਕਰੋ ਅਤੇ ਫਸਲ ਜਾਂ ਬਿਮਾਰੀ ਦਾ ਨਾਮ ਬੋਲੋ...",
         txtSprayAdvice: "ਸਪ੍ਰੇ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ",
         gCrops: "ਸਬਜ਼ੀ ਫਸਲ ਕਿਸਮ",
         gProt: "ਫਸਲ ਸੁਰੱਖਿਆ",
@@ -1339,7 +1396,7 @@
         chemTitle: "ਦਵਾਈਆਂ Chemicals",
         mandiTitle: "ਮੰਡੀ ਭਾਅ",
         weatherTitle: "ਮੌਸਮ",
-        profileTitle: "ਕਿਸਾਨ ਪ੍ਰੋਫाइल",
+        profileTitle: "ਕਿਸਾਨ ਪ੍ਰੋਫાઇલ",
         favoritesTitle: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
         atozTitle: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
         discTitle: "ਕਿਸਾਨ ਚਰਚਾ ਮੰਚ",
@@ -1347,8 +1404,35 @@
         reportsTitle: "AI ਰਿਪੋਰਟਾਂ",
         schemesTitle: "ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ",
         expertTitle: "ਮਾਹਰ ਸਲਾਹ",
-        pestTitle: "ਕੀੜೆ ਚੇਤਾਵਨੀ",
-        calcTitle: "ਬਿਜਾਈ ਕੈਲਕੁलेटर"
+        pestTitle: "ਕੀੜੇ ਚੇਤਾਵਨੀ",
+        calcTitle: "ਬਿਜਾਈ ਕੈਲਕੁਲੇਟਰ",
+        drawerHead: "📋 ਮੀਨੂ ਅਤੇ ਸੈਟਿੰਗਾਂ",
+        completeProfileText: "ਆਪਣੀ ਪ੍ਰੋਫાઇલ ਪੂਰੀ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ >",
+        mProfile: "ਮੇਰੀ ਪ੍ਰੋਫાઇલ / ਸੈਟਿੰਗਾਂ",
+        mFav: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
+        mCrops: "ਸਬਜ਼ੀ ਫਸਲ ਕਿਸਮਾਂ",
+        mSchedule: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ",
+        mProtection: "ਫਸਲ ਸੁਰੱਖਿਆ",
+        mChems: "ਦਵਾਈਆਂ Chemicals",
+        mServices: "Other ਸੇਵਾਵਾਂ",
+        mPrivacy: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+        mRate: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ",
+        mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
+        mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
+        mLogout: "ਲਾگਆਉਟ",
+        solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
+        camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
+        galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
+        diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
+        diagRepHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ",
+        wapBtn: "💬 ਡਾਕਟਰ ਨੂੰ ਵਟਸਐਪ ਕਰੋ",
+        chatYou: "ਤੁਸੀਂ",
+        chatDoc: "ਡਾਕਟਰ",
+        chatThinking: "ਸੋਚ ਰਿਹਾ ਹਾਂ...",
+        chatErr: "ਮਾਫ਼ ਕਰਨਾ, ਜਵਾਬ ਨਹੀਂ ਮਿਲਿਆ।",
+        chatNetErrHead: "ਗਲਤੀ",
+        chatNetErrDesc: "ਇੰਟਰਨੈੱਟ ਸਮੱਸਿਆ।",
+        aiDocTitle: "AI ਡਾਕਟਰ ਚੈਟ"
       },
       rj: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1393,7 +1477,34 @@
         schemesTitle: "सरकारी योजना",
         expertTitle: "एक्सपर्ट सुझाव",
         pestTitle: "कीट अलर्ट",
-        calcTitle: "बुवाई कैलकुलेटर"
+        calcTitle: "बुवाई कैलकुलेटर",
+        drawerHead: "📋 मेन्यू व सेटिंग्स",
+        completeProfileText: "प्रोफाइल पूरी करने खातिर टैप करो >",
+        mProfile: "मेरी प्रोफाइल / सेटिंग्स",
+        mFav: "पसंदीदा किस्में",
+        mCrops: "सब्जी फसल किस्में",
+        mSchedule: "स्प्रे शेड्यूल",
+        mProtection: "फसल सुरक्षा",
+        mChems: "दवाइयाँ Chemicals",
+        mServices: "Other सेवाएं",
+        mPrivacy: "गोपनीयता नीति",
+        mRate: "प्ले स्टोर पर रेट करो",
+        mShare: "किसान साथियों ने शेयर करो",
+        mHelp: "व्हाट्सएप हेल्पलाइन",
+        mLogout: "लॉगआउट",
+        solHead: "⚡ तुरंत समाधान (AI जांच)",
+        camBtn: "कैमरा सू फोटो लो",
+        galBtn: "गैलरी सू चुणो",
+        diagBtn: "🔍 रोग पहचानो",
+        diagRepHead: "🌿 AI रोग निदान रिपोर्ट",
+        wapBtn: "💬 डॉक्टर ने WhatsApp करो",
+        chatYou: "आप",
+        chatDoc: "डॉक्टर",
+        chatThinking: "सोच रह्यो हूँ...",
+        chatErr: "माफ करजो, उत्तर कोनी मिल्यो।",
+        chatNetErrHead: "एरर",
+        chatNetErrDesc: "इंटरनेट कनेक्शन में समस्या है।",
+        aiDocTitle: "AI सब्जी डॉक्टर चैट"
       },
       gu: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1438,7 +1549,34 @@
         schemesTitle: "સરકારી યોજનાઓ",
         expertTitle: "નિષ્ણાત સલાહ",
         pestTitle: "જીવાત ચેતવણી",
-        calcTitle: "વાવણી કેલ્ક્યુલેટર"
+        calcTitle: "વાવણી કેલ્ક્યુલેટર",
+        drawerHead: "📋 મેનુ અને સેટિંગ્સ",
+        completeProfileText: "તમારી પ્રોફાઇલ પૂર્ણ કરો >",
+        mProfile: "મારી પ્રોફાઇલ / સેટિંગ્સ",
+        mFav: "મનપસંદ જાતો",
+        mCrops: "શાકભાજી પાક જાતો",
+        mSchedule: "સ્પ્રે શેડ્યુલ",
+        mProtection: "પાક સુરક્ષા",
+        mChems: "દવાઓ Chemicals",
+        mServices: "Other સેવાઓ",
+        mPrivacy: "પ્રાઇવસી પોલિસી",
+        mRate: "પ્લે સ્ટોર પર રેટ કરો",
+        mShare: "મિત્રોને શેર કરો",
+        mHelp: "વ્હોટ્સએપ હેલ્પલાઇન",
+        mLogout: "લોગઆઉટ",
+        solHead: "⚡ ત્વરિત ઉકેલ (AI તપાસ)",
+        camBtn: "કેમેરાથી ફોટો લો",
+        galBtn: "ગેલેરીથી પસંદ કરો",
+        diagBtn: "🔍 રોગ ઓળખો",
+        diagRepHead: "🌿 AI રોગ નિદાન અહેવાલ",
+        wapBtn: "💬 ડોક્ટરને WhatsApp કરો",
+        chatYou: "તમે",
+        chatDoc: "ડોક્ટર",
+        chatThinking: "વિચારી રહ્યો છું...",
+        chatErr: "ક્ષમા કરશો, જવાબ મળ્યો નથી.",
+        chatNetErrHead: "ભૂલ",
+        chatNetErrDesc: "ઇન્ટરનેટ કનેક્શન સમસ્યા.",
+        aiDocTitle: "AI ડોક્ટર ચેટ"
       },
       mr: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1483,7 +1621,34 @@
         schemesTitle: "शासकीय योजना",
         expertTitle: "तज्ज्ञ सल्ला",
         pestTitle: "किटक सतर्कता",
-        calcTitle: "पेरणी कॅल्क्युलेटर"
+        calcTitle: "पेरणी कॅल्क्युलेटर",
+        drawerHead: "📋 मेनू व सेटिंग्ज",
+        completeProfileText: "प्रोफाइल पूर्ण करण्यासाठी टॅप करा >",
+        mProfile: "माझी प्रोफाइल / सेटिंग्ज",
+        mFav: "आवडत्या जाती",
+        mCrops: "भाजीपाला पिके",
+        mSchedule: "फवारणी वेळापत्रक",
+        mProtection: "पीक सुरक्षा",
+        mChems: "औषधे Chemicals",
+        mServices: "Other सेवा",
+        mPrivacy: "गोपनीयता धोरण",
+        mRate: "प्ले स्टोअरवर रेट करा",
+        mShare: "इतर शेतकऱ्यांना शेअर करा",
+        mHelp: "व्हाट्सएप हेल्पलाईन",
+        mLogout: "लॉगआउट",
+        solHead: "⚡ तातडीने उपाय (AI तपास)",
+        camBtn: "कॅमेऱ्याने फोटो घ्या",
+        galBtn: "गॅलरीतून निवडा",
+        diagBtn: "🔍 रोग ओळखा",
+        diagRepHead: "🌿 AI रोग निदान अहवाल",
+        wapBtn: "💬 डॉक्टरला WhatsApp करा",
+        chatYou: "तुम्ही",
+        chatDoc: "डॉक्टर",
+        chatThinking: "विचार करत आहे...",
+        chatErr: "क्षमस्व, उत्तर मिळाले नाही.",
+        chatNetErrHead: "त्रुटी",
+        chatNetErrDesc: "इंटरनेट कनेक्शन समस्या.",
+        aiDocTitle: "AI डॉक्टर चેટ"
       }
     };
 
@@ -1530,6 +1695,28 @@
       document.getElementById('navSched').innerText = t.navSched;
       document.getElementById('navProt').innerText = t.navProt;
       document.getElementById('navHelp').innerText = t.navHelp;
+
+      // Drawer and Modals
+      document.getElementById('txtDrawerHead').innerText = t.drawerHead;
+      document.getElementById('txtCompleteProfile').innerText = t.completeProfileText;
+      document.getElementById('mProfile').innerText = t.mProfile;
+      document.getElementById('mFav').innerText = t.mFav;
+      document.getElementById('mCrops').innerText = t.mCrops;
+      document.getElementById('mSchedule').innerText = t.mSchedule;
+      document.getElementById('mProtection').innerText = t.mProtection;
+      document.getElementById('mChems').innerText = t.mChems;
+      document.getElementById('mServices').innerText = t.mServices;
+      document.getElementById('mPrivacy').innerText = t.mPrivacy;
+      document.getElementById('mRate').innerText = t.mRate;
+      document.getElementById('mShare').innerText = t.mShare;
+      document.getElementById('mHelp').innerText = t.mHelp;
+      document.getElementById('mLogout').innerText = t.mLogout;
+      document.getElementById('txtSolHead').innerText = t.solHead;
+      document.getElementById('txtCam').innerText = t.camBtn;
+      document.getElementById('txtGal').innerText = t.galBtn;
+      document.getElementById('btnDiagnose').innerText = t.diagBtn;
+      document.getElementById('txtDiagRepHead').innerText = t.diagRepHead;
+      document.getElementById('txtWapBtn').innerText = t.wapBtn;
     }
 
     function getStandardCropName(raw) {
@@ -2239,7 +2426,8 @@
       } catch(e) { 
         alert("त्रुटि: " + e.message); 
       } finally { 
-        btn.innerText = currentLang === 'en' ? '🔍 Diagnose Disease' : '🔍 रोग पहचानें व उपचार पाएं'; 
+        const t = translations[currentLang] || translations['hi'];
+        btn.innerText = t.diagBtn; 
         btn.disabled = false; 
       }
     }
