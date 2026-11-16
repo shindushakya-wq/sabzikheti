@@ -11,12 +11,16 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
     
-    /* डार्क मोड स्टाइल */
-    body.dark-mode { background-color: #0f172a; color: #f8fafc; }
-    body.dark-mode .variety-card, body.dark-mode .menu-box, body.dark-mode .list-item, body.dark-mode .social-box, body.dark-mode .modal-box, body.dark-mode .login-card, body.dark-mode .bottom-nav, body.dark-mode .drawer-content { background-color: #1e2937 !important; color: #f8fafc !important; border-color: #334155 !important; }
-    body.dark-mode .search-box { background-color: #1e2937 !important; color: #f8fafc !important; border-color: #334155 !important; }
-    body.dark-mode .schedule-step, body.dark-mode .doc-result-card { background-color: #1e2937 !important; color: #f8fafc !important; border-color: #334155 !important; }
-    body.dark-mode .var-title, body.dark-mode h3, body.dark-mode h4, body.dark-mode .var-info-row, body.dark-mode .var-info-row b { color: #f8fafc !important; }
+    /* डार्क मोड स्टाइल - पूरी तरह सुधारा गया (अक्षर साफ़ दिखने के लिए) */
+    body.dark-mode { background-color: #0f172a; color: #f8fafc !important; }
+    body.dark-mode .variety-card, body.dark-mode .menu-box, body.dark-mode .list-item, body.dark-mode .social-box, body.dark-mode .modal-box, body.dark-mode .login-card, body.dark-mode .bottom-nav, body.dark-mode .drawer-content, body.dark-mode .search-box, body.dark-mode .schedule-step, body.dark-mode .doc-result-card, body.dark-mode .chem-card, body.dark-mode .disease-card { background-color: #1e2937 !important; color: #f8fafc !important; border-color: #334155 !important; }
+    
+    /* डार्क मोड में सभी टेक्स्ट, हेडिंग्स और पैराग्राफ का रंग सफेद */
+    body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode p, body.dark-mode span, body.dark-mode label, body.dark-mode b, body.dark-mode strong, body.dark-mode div, body.dark-mode .var-title, body.dark-mode .var-info-row, body.dark-mode .disease-title, body.dark-mode .disease-symptom, body.dark-mode .chem-title, body.dark-mode .chem-tech, body.dark-mode .chem-use, body.dark-mode .schedule-step p, body.dark-mode .schedule-step b { color: #f8fafc !important; }
+
+    body.dark-mode .badge-variety { background-color: #064e3b !important; color: #34d399 !important; border-color: #059669 !important; }
+    body.dark-mode .badge-company { background-color: #1e3a8a !important; color: #60a5fa !important; border-color: #2563eb !important; }
+    body.dark-mode .chem-dose, body.dark-mode .disease-cure-box { background-color: #064e3b !important; color: #34d399 !important; border-color: #10b981 !important; }
 
     button, .menu-box, .list-item, .social-link, .btn-action, .fab-solution, .story-item, .video-card-item, .upload-opt-btn {
       transition: transform 0.1s ease, opacity 0.1s ease;
@@ -926,7 +930,6 @@
   </div>
 
   <script>
-    // यहाँ आपका नया Google Apps Script वेब ऐप यूआरएल अपडेट कर दिया गया है
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9PbEg0GvfHYO0a42seATSJtE1f_3MDTK50Ot_bCP-pwbAXWNXeNgDP5r4NJjfO6o/exec";
 
     if ('serviceWorker' in navigator) {
@@ -1008,7 +1011,7 @@
         let res = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ notes: msg })
+          body: JSON.stringify({ notes: msg, lang: currentLang })
         });
         let data = await res.json();
         
@@ -1419,7 +1422,7 @@
         mRate: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ",
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
-        mLogout: "ਲਾగਆਉਟ",
+        mLogout: "ਲਾਗਆਉਟ",
         solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
         galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
@@ -1660,6 +1663,7 @@
       if (!localStorage.getItem('is_logged_in')) {
         document.getElementById('loginScreenModal').classList.add('active');
       }
+      loadAllSheetsData();
     }
 
     function toggleAppLanguage() {
@@ -2348,7 +2352,6 @@
         localStorage.setItem('farmer_phone', phone);
         localStorage.setItem('is_logged_in', 'true');
         
-        // गूगल शीट में लॉगिन/फोन नंबर सेव करें
         syncFarmerDataToGoogleSheet("नया किसान", phone, userCurrentCity, "");
 
         setTimeout(() => { document.getElementById('loginScreenModal').classList.remove('active'); }, 600);
@@ -2363,7 +2366,8 @@
           name: name,
           phone: phone,
           state: state,
-          crops: crops
+          crops: crops,
+          lang: currentLang
         };
         await fetch(APPS_SCRIPT_URL, {
           method: "POST",
@@ -2424,7 +2428,7 @@
         let res = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ imageBase64: base64ImageRaw, mimeType: imageMimeType, notes: "रोग जांच व सावधानियां" })
+          body: JSON.stringify({ imageBase64: base64ImageRaw, mimeType: imageMimeType, notes: "रोग जांच व सावधानियां", lang: currentLang })
         });
         let data = await res.json();
         
@@ -2474,7 +2478,6 @@
       localStorage.setItem('farmer_state', state);
       userCurrentCity = state;
 
-      // गूगल शीट में प्रोफाइल डेटा सेव करें
       syncFarmerDataToGoogleSheet(name, phone, state, crops);
 
       alert(currentLang === 'en' ? '✅ Profile saved and synced!' : '✅ प्रोफाइल सुरक्षित और गूगल शीट में सिंक हो गई!');
