@@ -926,7 +926,7 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKG88DqvTC29A56OvT5kJ_1TOU2FQJWMyqfVx7QEop-0Lyo1B0wO8VEaIkCy_5cq8kLA/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwzGs2eq2HSF5AHBkZn5XZEBnTgGhpEkevLcUxfCilHmMutIwkEAFBW-epPo_eyn5MGcg/exec";
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -1648,7 +1648,7 @@
         chatErr: "क्षमस्व, उत्तर मिळाले नाही.",
         chatNetErrHead: "त्रुटी",
         chatNetErrDesc: "इंटरनेट कनेक्शन समस्या.",
-        aiDocTitle: "AI डॉक्टर चેટ"
+        aiDocTitle: "AI डॉक्टर चेट"
       }
     };
 
@@ -2204,7 +2204,7 @@
       let list = chemicalsRecords.filter(c => (c.type||'').toLowerCase().includes(cat.toLowerCase()));
       if(list.length === 0) container.innerHTML = `<div class="variety-card" style="text-align:center;">${currentLang === 'en' ? 'No chemicals available.' : 'दवाइयाँ उपलब्ध नहीं हैं।'}</div>`;
       list.forEach(c => {
-        let p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${c.name}"></div>` : '';
+        let p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}'}" alt="${c.name}"></div>` : '';
         container.innerHTML += `
           <div class="chem-card">
             <div class="chem-title">🧪 ${c.name} (${c.type})</div>
