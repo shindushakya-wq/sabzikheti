@@ -435,9 +435,9 @@
       </button>
 
       <div class="doc-result-card" id="docResultCard">
-        <h4 style="color:#b91c1c; font-size:15px; margin-bottom:8px;">🌿 AI रोग निदान रिपोर्ट व सावधानियां</h4>
+        <h4 style="color:#b91c1c; font-size:15px; margin-bottom:8px;" id="txtDiagRepHead">🌿 AI रोग निदान रिपोर्ट व सावधानियां</h4>
         <div style="font-size:13.5px; color:#374151; line-height:1.6; margin-bottom:10px;" id="smartSymptoms"></div>
-        <a id="btnDocWhatsapp" href="#" target="_blank" class="btn-action btn-wa">
+        <a id="btnDocWhatsapp" href="#" target="_blank" class="btn-action btn-wa" id="txtWapBtn">
           💬 यह रिपोर्ट डॉक्टर को WhatsApp करें
         </a>
       </div>
@@ -943,7 +943,6 @@
         document.body.classList.add('dark-mode');
       }
       
-      // भाषा सेट करें
       let savedLang = localStorage.getItem('app_lang');
       if (!savedLang) {
         document.getElementById('languageSelectModal').classList.add('active');
@@ -1214,7 +1213,7 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // भाषा शब्दकोश (Multi-language dictionary for full app translation)
+    // व्यापक भाषा शब्दकोश (सभी पेजों, शीर्षकों और बटनों के लिए)
     const translations = {
       hi: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1242,7 +1241,24 @@
         navCrops: "फसलें",
         navSched: "शेड्यूल",
         navProt: "सुरक्षा",
-        navHelp: "हेल्पलाइन"
+        navHelp: "हेल्पलाइन",
+        cropsTitle: "सब्जी फसल चुनें:",
+        protTitle: "रोग निदान हेतु फसल चुनें:",
+        schedTitle: "स्प्रे शेड्यूल हेतु सब्जी चुनें:",
+        compTitle: "सीड कंपनी चुनें:",
+        chemTitle: "दवाइयाँ Chemicals",
+        mandiTitle: "मंडी भाव",
+        weatherTitle: "मौसम",
+        profileTitle: "किसान प्रोफाइल",
+        favoritesTitle: "मेरी पसंदीदा किस्में",
+        atozTitle: "खेती कैसे करें (A-Z)",
+        discTitle: "किसान चर्चा मंच",
+        privacyTitle: "गोपनीयता नीति",
+        reportsTitle: "AI जांच रिपोर्ट",
+        schemesTitle: "सरकारी योजनाएं",
+        expertTitle: "एक्सपर्ट सुझाव",
+        pestTitle: "कीट अलर्ट",
+        calcTitle: "बुवाई व कटाई कैलकुलेटर"
       },
       en: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1270,7 +1286,24 @@
         navCrops: "Crops",
         navSched: "Schedule",
         navProt: "Protection",
-        navHelp: "Helpline"
+        navHelp: "Helpline",
+        cropsTitle: "Select Vegetable Crop:",
+        protTitle: "Select Crop for Disease Diagnosis:",
+        schedTitle: "Select Crop for Spray Schedule:",
+        compTitle: "Select Seed Company:",
+        chemTitle: "Chemicals & Medicines",
+        mandiTitle: "Mandi Prices",
+        weatherTitle: "Weather",
+        profileTitle: "Farmer Profile",
+        favoritesTitle: "Favorite Varieties",
+        atozTitle: "Farming Guide (A-Z)",
+        discTitle: "Farmer Discussion Forum",
+        privacyTitle: "Privacy Policy",
+        reportsTitle: "AI Disease Reports",
+        schemesTitle: "Government Schemes",
+        expertTitle: "Expert Advice",
+        pestTitle: "Pest Alerts",
+        calcTitle: "Sowing & Harvest Calculator"
       },
       pa: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1298,7 +1331,24 @@
         navCrops: "ਫਸਲਾਂ",
         navSched: "ਸ਼ਡਿਊਲ",
         navProt: "ਸੁਰੱਖਿਆ",
-        navHelp: "ਹੈਲਪਲਾਈਨ"
+        navHelp: "ਹੈਲਪਲਾਈਨ",
+        cropsTitle: "ਸਬਜ਼ੀ ਫਸਲ ਚੁਣੋ:",
+        protTitle: "ਰੋਗ ਨਿਦਾਨ ਲਈ ਫਸਲ ਚੁਣੋ:",
+        schedTitle: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ ਲਈ ਫਸਲ ਚੁਣੋ:",
+        compTitle: "ਬੀਜ ਕੰਪਨੀ ਚੁਣੋ:",
+        chemTitle: "ਦਵਾਈਆਂ Chemicals",
+        mandiTitle: "ਮੰਡੀ ਭਾਅ",
+        weatherTitle: "ਮੌਸਮ",
+        profileTitle: "ਕਿਸਾਨ ਪ੍ਰੋਫाइल",
+        favoritesTitle: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
+        atozTitle: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
+        discTitle: "ਕਿਸਾਨ ਚਰਚਾ ਮੰਚ",
+        privacyTitle: "ਪਰਦਾਫ਼ਾਸ਼ ਨੀਤੀ",
+        reportsTitle: "AI ਰਿਪੋਰਟਾਂ",
+        schemesTitle: "ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ",
+        expertTitle: "ਮਾਹਰ ਸਲਾਹ",
+        pestTitle: "ਕੀੜೆ ਚੇਤਾਵਨੀ",
+        calcTitle: "ਬਿਜਾਈ ਕੈਲਕੁलेटर"
       },
       rj: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1326,7 +1376,24 @@
         navCrops: "फसल",
         navSched: "शेड्यूल",
         navProt: "सुरक्षा",
-        navHelp: "हेल्पलाइन"
+        navHelp: "हेल्पलाइन",
+        cropsTitle: "सब्जी फसल चुणो:",
+        protTitle: "रोग निवारण खातिर फसल चुणो:",
+        schedTitle: "स्प्रे शेड्यूल खातिर फसल चुणो:",
+        compTitle: "सीड कंपनी चुणो:",
+        chemTitle: "दवाइयाँ Chemicals",
+        mandiTitle: "मंडी भाव",
+        weatherTitle: "मौसम",
+        profileTitle: "किसान प्रोफाइल",
+        favoritesTitle: "पसंदीदा किस्में",
+        atozTitle: "खेती गाइड (A-Z)",
+        discTitle: "किसान चर्चा मंच",
+        privacyTitle: "गोपनीयता नीति",
+        reportsTitle: "AI जांच रिपोर्ट",
+        schemesTitle: "सरकारी योजना",
+        expertTitle: "एक्सपर्ट सुझाव",
+        pestTitle: "कीट अलर्ट",
+        calcTitle: "बुवाई कैलकुलेटर"
       },
       gu: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1340,7 +1407,7 @@
         gSched: "સ્પ્રે શેડ્યુલ",
         gAtoz: "ખેતી કેવી રીતે કરવી (A-Z)",
         gDisc: "ખેડૂત ચર્ચા",
-        gAdv: "सलाहकार",
+        gAdv: "સલાહકાર",
         gComp: "All કંપની બીજ",
         gChem: "દવાઓ Chemicals",
         gServ: "Other સેવાઓ",
@@ -1354,7 +1421,24 @@
         navCrops: "પાકો",
         navSched: "શેડ્યુલ",
         navProt: "સુરક્ષા",
-        navHelp: "હેલ્પલાઇન"
+        navHelp: "હેલ્પલાઇન",
+        cropsTitle: "શાકભાજી પાક પસંદ કરો:",
+        protTitle: "રોગ નિદાન માટે પાક પસંદ કરો:",
+        schedTitle: "સ્પ્રે શેડ્યુલ માટે પાક પસંદ કરો:",
+        compTitle: "બીજ કંપની પસંદ કરો:",
+        chemTitle: "દવાઓ Chemicals",
+        mandiTitle: "મંડી ભાવ",
+        weatherTitle: "હવામાન",
+        profileTitle: "ખેડૂત પ્રોફાઇલ",
+        favoritesTitle: "પસંદગીની જાતો",
+        atozTitle: "ખેતી માર્ગદર્શિકા (A-Z)",
+        discTitle: "ખેડૂત ચર્ચા મંચ",
+        privacyTitle: "પ્રાઇવસી પોલિસી",
+        reportsTitle: "AI રિપોર્ટ્સ",
+        schemesTitle: "સરકારી યોજનાઓ",
+        expertTitle: "નિષ્ણાત સલાહ",
+        pestTitle: "જીવાત ચેતવણી",
+        calcTitle: "વાવણી કેલ્ક્યુલેટર"
       },
       mr: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1382,7 +1466,24 @@
         navCrops: "पिके",
         navSched: "वेळापत्रक",
         navProt: "सुरक्षा",
-        navHelp: "हेल्पलाईन"
+        navHelp: "हेल्पलाईन",
+        cropsTitle: "भाजीपाला पीक निवडा:",
+        protTitle: "रोग निदानासाठी पीक निवडा:",
+        schedTitle: "फवारणी वेळापत्रकासाठी पीक निवडा:",
+        compTitle: "बियाणे कंपनी निवडा:",
+        chemTitle: "औषधे Chemicals",
+        mandiTitle: "मंडी भाव",
+        weatherTitle: "हवामान",
+        profileTitle: "शेतकरी प्रोफाइल",
+        favoritesTitle: "आवडत्या जाती",
+        atozTitle: "शेती मार्गदर्शक (A-Z)",
+        discTitle: "शेतकरी चर्चा मंच",
+        privacyTitle: "गोपनीयता धोरण",
+        reportsTitle: "AI अहवाल",
+        schemesTitle: "शासकीय योजना",
+        expertTitle: "तज्ज्ञ सल्ला",
+        pestTitle: "किटक सतर्कता",
+        calcTitle: "पेरणी कॅल्क्युलेटर"
       }
     };
 
@@ -1604,47 +1705,6 @@
           title: cols[0]||'कृषि वीडियो', thumbnail: cols[1]||'', videoUrl: cols[2]||''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title'));
 
-        try {
-          const resNotif = await fetch(BASE_SHEET_URL + 'Notifications');
-          const textNotif = await resNotif.text();
-          let notifRows = parseCSV(textNotif);
-          let notifContainer = document.getElementById('notificationListContent');
-          
-          if(notifRows.length > 1) {
-            let notifHtml = '';
-            let latestTitle = notifRows[1][0] || '';
-            let lastSeenNotif = localStorage.getItem('last_seen_notification') || '';
-
-            notifRows.forEach((cols, idx) => {
-              if(idx > 0 && cols[0]) {
-                let title = cols[0] || '';
-                let desc = cols[1] || '';
-                let timeStr = cols[2] || 'ताज़ा अपडेट';
-                
-                notifHtml += `
-                  <div class="schedule-step" style="border-left:4px solid #16a34a; margin-bottom:10px;">
-                    <b>🌾 ${title}</b>
-                    <p style="margin-top:4px; color:#374151;">${desc}</p>
-                    <span style="font-size:11px; color:#166534;">${timeStr}</span>
-                  </div>`;
-              }
-            });
-
-            if(notifHtml) {
-              notifContainer.innerHTML = notifHtml;
-            } else {
-              notifContainer.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई नई सूचना उपलब्ध नहीं है।</div>`;
-            }
-
-            if(latestTitle !== lastSeenNotif) {
-              document.getElementById('notifBadge').style.display = 'flex';
-              document.getElementById('notifBadge').innerText = '1';
-            } else {
-              document.getElementById('notifBadge').style.display = 'none';
-            }
-          }
-        } catch(ex) {}
-
         renderStoriesBar();
         renderDynamicVideos();
       } catch (e) {
@@ -1735,7 +1795,7 @@
         if(data.cod === 200) {
           let desc = data.weather[0].description;
           let icon = isNight ? '🌙' : '☀️';
-          if(desc.includes('बादल')) icon = isNight ? '☁️🌙' : '☁️';
+          if(desc.includes('बादल')) icon = '☁️';
           if(desc.includes('वर्षा') || desc.includes('बारिश')) icon = '🌧️';
 
           document.getElementById('weatherPlace').innerText = `📍 ${data.name}`;
@@ -1747,13 +1807,13 @@
           document.getElementById('detailTemp').innerText = `${Math.round(data.main.temp)}°C`;
           document.getElementById('detailDesc').innerText = desc;
           document.getElementById('detailWeatherIcon').innerHTML = icon;
-          document.getElementById('detailWind').innerText = `${data.wind.speed} किमी/घंटा`;
+          document.getElementById('detailWind').innerText = `${data.wind.speed} ${currentLang === 'en' ? 'km/h' : 'किमी/घंटा'}`;
           document.getElementById('detailHumidity').innerText = `${data.main.humidity}%`;
         }
       } catch(e) {
         document.getElementById('weatherPlace').innerText = `📍 ${userCurrentCity}`;
         document.getElementById('weatherTemp').innerText = `26°C`;
-        document.getElementById('weatherDesc').innerText = isNight ? `साफ़ रात` : `साफ़ आसमान`;
+        document.getElementById('weatherDesc').innerText = isNight ? `Clear Night` : `Clear Sky`;
       }
     }
 
@@ -1783,7 +1843,8 @@
       crops.forEach(c => {
         container.innerHTML += `<div class="list-item" onclick="filterByCrop('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
       });
-      openScreen('screen-crops', currentLang === 'en' ? 'Crop Varieties' : 'सब्जी फसल किस्म');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-crops', t.cropsTitle);
     }
 
     function filterByCrop(cropName) {
@@ -1813,7 +1874,8 @@
             </div>`;
         });
       }
-      openScreen('screen-favorites', currentLang === 'en' ? 'Favorite Varieties' : 'मेरी पसंदीदा किस्में');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-favorites', t.favoritesTitle);
     }
 
     function renderVarietiesList(list, title) {
@@ -1875,7 +1937,8 @@
       Object.keys(protectionRecords).filter(c => c && c.toLowerCase() !== 'crop').sort().forEach(c => {
         container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} ${currentLang === 'en' ? 'Protection' : 'सुरक्षा'}</span></div><span class="arrow">&gt;</span></div>`;
       });
-      openScreen('screen-protection-crops', currentLang === 'en' ? 'Crop Protection' : 'फसल सुरक्षा');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-protection-crops', t.protTitle);
     }
 
     function showCropDiseasesList(crop) {
@@ -1901,7 +1964,8 @@
       Object.keys(scheduleRecords).filter(c => c && c.toLowerCase() !== 'crop').sort().forEach(c => {
         container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} ${currentLang === 'en' ? 'Spray Schedule' : 'स्प्रे शेड्यूल'}</span></div><span class="arrow">&gt;</span></div>`;
       });
-      openScreen('screen-schedule-crops', currentLang === 'en' ? 'Spray Schedule' : 'स्प्रे शेड्यूल');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-schedule-crops', t.schedTitle);
     }
 
     function openCropScheduleDetail(crop) {
@@ -1922,7 +1986,8 @@
       comps.forEach(c => {
         container.innerHTML += `<div class="list-item" onclick="selectCompany('${c}')"><div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
       });
-      openScreen('screen-companies', currentLang === 'en' ? 'Seed Companies' : 'All कंपनी बीज');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-companies', t.compTitle);
     }
 
     function selectCompany(comp) {
@@ -1940,7 +2005,11 @@
       renderVarietiesList(sheetRecords.filter(r => r.company === comp && r.crop === crop), `${comp} - ${crop}`);
     }
 
-    function showChemicalsScreen() { openScreen('screen-chemicals', currentLang === 'en' ? 'Chemicals & Medicines' : 'दवाइयाँ Chemicals'); }
+    function showChemicalsScreen() {
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-chemicals', t.chemTitle);
+    }
+
     function filterChemicalsByCategory(cat) {
       let container = document.getElementById('chemicalListContainer');
       document.getElementById('chemicalListTitle').innerText = `${cat} ${currentLang === 'en' ? 'List:' : 'सूची:'}`;
@@ -1965,9 +2034,22 @@
       openScreen('screen-chemical-list', cat);
     }
 
-    function showOtherServicesScreen() { openScreen('screen-other-services', currentLang === 'en' ? 'Other Services' : 'Other सेवाएं'); }
-    function showWeatherDetailScreen() { fetchLiveWeather(); openScreen('screen-weather-detail', currentLang === 'en' ? 'Weather' : 'मौसम'); }
-    function showMandiBhavScreen() { openScreen('screen-mandi-bhav', currentLang === 'en' ? 'Mandi Prices' : 'मंडी भाव'); fetchLiveMandiPrices(); }
+    function showOtherServicesScreen() {
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-other-services', t.gServ);
+    }
+
+    function showWeatherDetailScreen() {
+      fetchLiveWeather();
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-weather-detail', t.weatherTitle);
+    }
+
+    function showMandiBhavScreen() {
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-mandi-bhav', t.mandiTitle);
+      fetchLiveMandiPrices();
+    }
     
     function showExpertAdviceScreen() {
       let container = document.getElementById('tipsContainer');
@@ -1979,7 +2061,8 @@
       } else {
         container.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">${currentLang === 'en' ? 'No tips available.' : 'कोई सुझाव उपलब्ध नहीं है।'}</div>`;
       }
-      openScreen('screen-expert-advice', currentLang === 'en' ? 'Expert Advice' : 'एक्सपर्ट सुझाव');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-expert-advice', t.expertTitle);
     }
 
     function showPestAlertScreen() {
@@ -1992,14 +2075,23 @@
       } else {
         container.innerHTML = `<div style="padding:10px; text-align:center; color:#6b7280;">${currentLang === 'en' ? 'No pest alerts.' : 'कोई कीट अलर्ट उपलब्ध नहीं है।'}</div>`;
       }
-      openScreen('screen-pest-alert', currentLang === 'en' ? 'Pest Alerts' : 'कीट अलर्ट');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-pest-alert', t.pestTitle);
     }
 
-    function showAiReportsScreen() { openScreen('screen-ai-reports', currentLang === 'en' ? 'AI Disease Reports' : 'AI जांच रिपोर्ट'); }
-    function showGovSchemesScreen() { openScreen('screen-gov-schemes', currentLang === 'en' ? 'Government Schemes' : 'सरकारी योजनाएं'); }
+    function showAiReportsScreen() {
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-ai-reports', t.reportsTitle);
+    }
+
+    function showGovSchemesScreen() {
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-gov-schemes', t.schemesTitle);
+    }
 
     async function showPrivacyPolicyScreen() {
-      openScreen('screen-privacy', currentLang === 'en' ? 'Privacy Policy' : 'गोपनीयता नीति');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-privacy', t.privacyTitle);
       let box = document.getElementById('privacyContentBox');
       
       box.innerHTML = `
@@ -2157,7 +2249,8 @@
       document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
       document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
-      openScreen('screen-profile', currentLang === 'en' ? 'Farmer Profile' : 'किसान प्रोफाइल');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-profile', t.profileTitle);
     }
     function saveFarmerProfile() {
       localStorage.setItem('farmer_name', document.getElementById('profNameInput').value.trim());
@@ -2174,7 +2267,8 @@
       crops.forEach(c => {
         container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} ${currentLang === 'en' ? 'Farming Guide' : 'की वैज्ञानिक खेती (A-Z)'}</span></div><span class="arrow">&gt;</span></div>`;
       });
-      openScreen('screen-atoz-crops', currentLang === 'en' ? 'Farming Guide (A-Z)' : 'खेती कैसे करें (A-Z)');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-atoz-crops', t.atozTitle);
     }
 
     function openAtoZDetail(crop) {
@@ -2198,7 +2292,8 @@
     function openFarmerDiscussionScreen() {
       document.getElementById('discussionAuthor').value = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
       loadDiscussionPosts();
-      openScreen('screen-farmer-discussion', currentLang === 'en' ? 'Farmer Discussion' : 'किसान चर्चा मंच');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-farmer-discussion', t.discTitle);
     }
 
     function submitDiscussionPost() {
