@@ -437,8 +437,8 @@
       <div class="doc-result-card" id="docResultCard">
         <h4 style="color:#b91c1c; font-size:15px; margin-bottom:8px;" id="txtDiagRepHead">🌿 AI रोग निदान रिपोर्ट व सावधानियां</h4>
         <div style="font-size:13.5px; color:#374151; line-height:1.6; margin-bottom:10px;" id="smartSymptoms"></div>
-        <a id="btnDocWhatsapp" href="#" target="_blank" class="btn-action btn-wa" id="txtWapBtn">
-          💬 यह रिपोर्ट डॉक्टर को WhatsApp करें
+        <a id="btnDocWhatsapp" href="#" target="_blank" class="btn-action btn-wa">
+          💬 <span id="txtWapBtn">यह रिपोर्ट डॉक्टर को WhatsApp करें</span>
         </a>
       </div>
     </div>
@@ -926,7 +926,8 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwzGs2eq2HSF5AHBkZn5XZEBnTgGhpEkevLcUxfCilHmMutIwkEAFBW-epPo_eyn5MGcg/exec";
+    // यहाँ आपका नया Google Apps Script वेब ऐप यूआरएल जोड़ दिया गया है
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvwKPxH5yvqZdYyLyunXyA5O4D9qMyZz365KIG84ZuXClyLrX78euIUnBzEdYkcCg/exec";
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -1216,7 +1217,6 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    // व्यापक और पूर्ण भाषा शब्दकोश (सभी पेजों, शीर्षकों और बटनों के लिए)
     const translations = {
       hi: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1281,7 +1281,7 @@
         galBtn: "गैलरी से चुनें",
         diagBtn: "🔍 रोग पहचानें व उपचार पाएं",
         diagRepHead: "🌿 AI रोग निदान रिपोर्ट व सावधानियां",
-        wapBtn: "💬 यह रिपोर्ट डॉक्टर को WhatsApp करें",
+        wapBtn: "यह रिपोर्ट डॉक्टर को WhatsApp करें",
         chatYou: "आप",
         chatDoc: "डॉक्टर",
         chatThinking: "सोच रहा हूँ...",
@@ -1353,7 +1353,7 @@
         galBtn: "Choose from Gallery",
         diagBtn: "🔍 Diagnose Disease & Get Cure",
         diagRepHead: "🌿 AI Disease Diagnosis Report & Cautions",
-        wapBtn: "💬 Send this report to Doctor on WhatsApp",
+        wapBtn: "Send this report to Doctor on WhatsApp",
         chatYou: "You",
         chatDoc: "Doctor",
         chatThinking: "Thinking...",
@@ -1419,13 +1419,13 @@
         mRate: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ",
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
-        mLogout: "ਲਾگਆਉਟ",
+        mLogout: "ਲਾగਆਉਟ",
         solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
         galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
         diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
         diagRepHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ",
-        wapBtn: "💬 ਡਾਕਟਰ ਨੂੰ ਵਟਸਐਪ ਕਰੋ",
+        wapBtn: "ਡਾਕਟਰ ਨੂੰ ਵਟਸਐਪ ਕਰੋ",
         chatYou: "ਤੁਸੀਂ",
         chatDoc: "ਡਾਕਟਰ",
         chatThinking: "ਸੋਚ ਰਿਹਾ ਹਾਂ...",
@@ -1497,7 +1497,7 @@
         galBtn: "गैलरी सू चुणो",
         diagBtn: "🔍 रोग पहचानो",
         diagRepHead: "🌿 AI रोग निदान रिपोर्ट",
-        wapBtn: "💬 डॉक्टर ने WhatsApp करो",
+        wapBtn: "डॉक्टर ने WhatsApp करो",
         chatYou: "आप",
         chatDoc: "डॉक्टर",
         chatThinking: "सोच रह्यो हूँ...",
@@ -1569,7 +1569,7 @@
         galBtn: "ગેલેરીથી પસંદ કરો",
         diagBtn: "🔍 રોગ ઓળખો",
         diagRepHead: "🌿 AI રોગ નિદાન અહેવાલ",
-        wapBtn: "💬 ડોક્ટરને WhatsApp કરો",
+        wapBtn: "ડોક્ટરને WhatsApp કરો",
         chatYou: "તમે",
         chatDoc: "ડોક્ટર",
         chatThinking: "વિચારી રહ્યો છું...",
@@ -1641,7 +1641,7 @@
         galBtn: "गॅलरीतून निवडा",
         diagBtn: "🔍 रोग ओळखा",
         diagRepHead: "🌿 AI रोग निदान अहवाल",
-        wapBtn: "💬 डॉक्टरला WhatsApp करा",
+        wapBtn: "डॉक्टरला WhatsApp करा",
         chatYou: "तुम्ही",
         chatDoc: "डॉक्टर",
         chatThinking: "विचार करत आहे...",
@@ -1696,7 +1696,6 @@
       document.getElementById('navProt').innerText = t.navProt;
       document.getElementById('navHelp').innerText = t.navHelp;
 
-      // Drawer and Modals
       document.getElementById('txtDrawerHead').innerText = t.drawerHead;
       document.getElementById('txtCompleteProfile').innerText = t.completeProfileText;
       document.getElementById('mProfile').innerText = t.mProfile;
@@ -2339,7 +2338,7 @@
       try { rec.start(); } catch (err) {}
     }
 
-    function sendOtpCode() {
+    async function sendOtpCode() {
       let phone = document.getElementById('loginPhone').value.trim();
       if(phone.length !== 10) { alert(currentLang === 'en' ? 'Enter valid 10-digit number!' : '10 अंकों का सही नंबर लिखें!'); return; }
       document.getElementById('phoneInputGroup').style.display = 'none';
@@ -2348,10 +2347,33 @@
         document.getElementById('loginOtp').value = "1234";
         localStorage.setItem('farmer_phone', phone);
         localStorage.setItem('is_logged_in', 'true');
+        
+        // गूगल शीट में लॉगिन/फोन नंबर सेव करें
+        syncFarmerDataToGoogleSheet("नया किसान", phone, userCurrentCity, "");
+
         setTimeout(() => { document.getElementById('loginScreenModal').classList.remove('active'); }, 600);
       }, 1000);
     }
     function skipLogin() { localStorage.setItem('is_logged_in', 'skipped'); document.getElementById('loginScreenModal').classList.remove('active'); }
+
+    async function syncFarmerDataToGoogleSheet(name, phone, state, crops) {
+      try {
+        let payloadData = {
+          action: "saveProfile",
+          name: name,
+          phone: phone,
+          state: state,
+          crops: crops
+        };
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payloadData)
+        });
+      } catch (err) {
+        console.log("शीट सिंक करने में त्रुटि:", err);
+      }
+    }
 
     function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
     function closeSolutionModal() {
@@ -2434,17 +2456,28 @@
 
     function openProfileScreen() {
       closeDrawer();
-      document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
+      document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || '';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
       document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
       const t = translations[currentLang] || translations['hi'];
       openScreen('screen-profile', t.profileTitle);
     }
+    
     function saveFarmerProfile() {
-      localStorage.setItem('farmer_name', document.getElementById('profNameInput').value.trim());
-      localStorage.setItem('farmer_state', document.getElementById('profStateInput').value.trim());
-      userCurrentCity = document.getElementById('profStateInput').value.trim();
-      alert(currentLang === 'en' ? '✅ Profile saved!' : '✅ प्रोफाइल सुरक्षित हो गई!');
+      let name = document.getElementById('profNameInput').value.trim();
+      let phone = document.getElementById('profPhoneInput').value.trim();
+      let state = document.getElementById('profStateInput').value.trim();
+      let crops = document.getElementById('profCropsInput').value.trim();
+
+      localStorage.setItem('farmer_name', name);
+      localStorage.setItem('farmer_phone', phone);
+      localStorage.setItem('farmer_state', state);
+      userCurrentCity = state;
+
+      // गूगल शीट में प्रोफाइल डेटा सेव करें
+      syncFarmerDataToGoogleSheet(name, phone, state, crops);
+
+      alert(currentLang === 'en' ? '✅ Profile saved and synced!' : '✅ प्रोफाइल सुरक्षित और गूगल शीट में सिंक हो गई!');
       goBack();
     }
 
@@ -2478,7 +2511,7 @@
     }
 
     function openFarmerDiscussionScreen() {
-      document.getElementById('discussionAuthor').value = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
+      document.getElementById('discussionAuthor').value = localStorage.getItem('farmer_name') || '';
       loadDiscussionPosts();
       const t = translations[currentLang] || translations['hi'];
       openScreen('screen-farmer-discussion', t.discTitle);
@@ -2604,7 +2637,7 @@
     };
 
     function updateProfileUI() {
-      let name = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
+      let name = localStorage.getItem('farmer_name') || 'किसान भाई';
       document.getElementById('welcomeMsg').innerText = `${currentLang === 'en' ? 'Ram-Ram' : 'राम-राम'}, ${name} जी!`;
     }
 
