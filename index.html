@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CROP & SABZI DOCTOR | कृषि सहायक ऐप</title>
+  <title id="pageTitle">CROP & SABZI DOCTOR | कृषि सहायक ऐप</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1b5e20">
 
@@ -272,7 +272,7 @@
   <!-- स्मार्ट लोडिंग स्पाइनर -->
   <div class="loader-overlay" id="appLoader">
     <div class="spinner"></div>
-    <p style="font-size:13px; font-weight:bold; color:#166534;">🌾 डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...</p>
+    <p id="txtLoading" style="font-size:13px; font-weight:bold; color:#166534;">🌾 डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...</p>
   </div>
 
   <!-- भाषा चयन स्क्रीन मोडल -->
@@ -301,26 +301,26 @@
       <div style="text-align:center; margin-bottom:16px;">
         <span style="font-size:40px;">🌾</span>
         <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;">CROP & SABZI DOCTOR</h3>
-        <p style="font-size:12px; color:#6b7280; margin-top:4px;">कृषि सहायता ऐप में आपका स्वागत है</p>
+        <p id="txtLoginSub" style="font-size:12px; color:#6b7280; margin-top:4px;">कृषि सहायता ऐप में आपका स्वागत है</p>
       </div>
 
       <div class="form-group" id="phoneInputGroup">
-        <label>अपना मोबाइल नंबर दर्ज करें:</label>
+        <label id="txtPhoneLabel">अपना मोबाइल नंबर दर्ज करें:</label>
         <div style="display:flex; gap:8px;">
           <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
           <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
         </div>
-        <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()">📲 ओटीपी (OTP) भेजें</button>
+        <button id="txtOtpBtn" class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()">📲 ओटीपी (OTP) भेजें</button>
       </div>
 
       <div class="form-group" id="otpInputGroup" style="display:none;">
-        <label style="color:#16a34a; font-weight:bold;">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
+        <label id="txtOtpStatus" style="color:#16a34a; font-weight:bold;">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
         <input type="text" id="loginOtp" class="form-control" style="text-align:center; font-size:18px; letter-spacing:4px; font-weight:bold; background:#f0fdf4;" readonly>
-        <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
+        <p id="txtOtpSuccess" style="font-size:11px; color:#166534; text-align:center; margin-top:6px;">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
       </div>
 
       <div style="text-align:center; margin-top:14px; border-top:1px solid #f3f4f6; padding-top:12px;">
-        <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;">
+        <button id="txtSkipLogin" onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;">
           ⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें
         </button>
       </div>
@@ -348,7 +348,7 @@
   <div class="modal-overlay" id="notificationModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 style="color:#1b5e20;">🔔 ताज़ा अपडेट व सूचनाएं</h3>
+        <h3 id="txtNotifHead" style="color:#1b5e20;">🔔 ताज़ा अपडेट व सूचनाएं</h3>
         <button class="modal-close" onclick="closeNotificationModal()">✕</button>
       </div>
       <div id="notificationListContent">
@@ -365,7 +365,7 @@
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
   <div class="drawer-content" id="drawerContent">
     <div class="drawer-header">
-      <h3>📋 मेन्यू व सेटिंग्स</h3>
+      <h3 id="txtDrawerHead">📋 मेन्यू व सेटिंग्स</h3>
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
 
@@ -377,22 +377,22 @@
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="profileProgressBar"></div>
       </div>
-      <p>टैप करके अपनी प्रोफाइल पूरी करें &gt;</p>
+      <p id="txtCompleteProfile">टैप करके अपनी प्रोफाइल पूरी करें &gt;</p>
     </div>
 
     <ul class="drawer-menu-list">
-      <li class="drawer-item" onclick="openProfileScreen()"><span>👨‍🌾</span><span>मेरी प्रोफाइल / सेटिंग्स</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showFavoritesScreen();" style="color:#d97706; font-weight:bold;"><span>⭐</span><span>मेरी पसंदीदा किस्में (Bookmarks)</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showAllCropsScreen();"><span>🥬</span><span>सब्जी फसल किस्में</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showScheduleCropsList();"><span>🗓️</span><span>स्प्रे शेड्यूल</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showProtectionCropsList();"><span>🛡️</span><span>फसल सुरक्षा (रोग निदान)</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showChemicalsScreen();"><span>🧪</span><span>दवाइयाँ Chemicals</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showOtherServicesScreen();"><span>⚙️</span><span>Other सेवाएं (मौसम, मंडी, अलर्ट)</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showPrivacyPolicyScreen();" style="color:#0369a1; border-top:1px solid #e0f2fe; margin-top:6px;"><span>⚖️</span><span>नियम व शर्तें एवं गोपनीयता नीति</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); window.open('https://play.google.com/store/apps', '_blank');" style="color:#2563eb; border-top:1px solid #dbeafe;"><span>⭐</span><span>गूगल प्ले स्टोर पर रेट करें</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); shareAppWithFriends();"><span>📲</span><span>किसान साथियों को ऐप शेयर करें</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); contactAdvisor();"><span>💬</span><span>व्हाट्सएप हेल्पलाइन</span></li>
-      <li class="drawer-item" style="color:#dc2626; border-top:1px solid #fee2e2; margin-top:10px;" onclick="appLogout()"><span>🚪</span><span>लॉगआउट (Logout)</span></li>
+      <li class="drawer-item" onclick="openProfileScreen()"><span>👨‍🌾</span><span id="mProf">मेरी प्रोफाइल / सेटिंग्स</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showFavoritesScreen();" style="color:#d97706; font-weight:bold;"><span>⭐</span><span id="mFav">मेरी पसंदीदा किस्में (Bookmarks)</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showAllCropsScreen();"><span>🥬</span><span id="mCrops">सब्जी फसल किस्में</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showScheduleCropsList();"><span>🗓️</span><span id="mSched">स्प्रे शेड्यूल</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showProtectionCropsList();"><span>🛡️</span><span id="mProt">फसल सुरक्षा (रोग निदान)</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showChemicalsScreen();"><span>🧪</span><span id="mChem">दवाइयाँ Chemicals</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showOtherServicesScreen();"><span>⚙️</span><span id="mServ">Other सेवाएं (मौसम, मंडी, अलर्ट)</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showPrivacyPolicyScreen();" style="color:#0369a1; border-top:1px solid #e0f2fe; margin-top:6px;"><span>⚖️</span><span id="mPrivacy">नियम व शर्तें एवं गोपनीयता नीति</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); window.open('https://play.google.com/store/apps', '_blank');" style="color:#2563eb; border-top:1px solid #dbeafe;"><span>⭐</span><span id="mRate">गूगल प्ले स्टोर पर रेट करें</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); shareAppWithFriends();"><span>📲</span><span id="mShare">किसान साथियों को ऐप शेयर करें</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); contactAdvisor();"><span>💬</span><span id="mHelp">व्हाट्सएप हेल्पलाइन</span></li>
+      <li class="drawer-item" style="color:#dc2626; border-top:1px solid #fee2e2; margin-top:10px;" onclick="appLogout()"><span>🚪</span><span id="mLogout">लॉगआउट (Logout)</span></li>
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
@@ -403,25 +403,25 @@
   <!-- तुरंत समाधान फ्लोटिंग बटन -->
   <button class="fab-solution" onclick="openSolutionModal()">
     <span>⚡</span>
-    <span>तुरंत समाधान</span>
+    <span id="txtFabSolution">तुरंत समाधान</span>
   </button>
 
   <!-- तुरंत समाधान मोडल -->
   <div class="modal-overlay" id="solutionModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3>⚡ तुरंत समाधान (AI रोग जांच)</h3>
+        <h3 id="txtSolHead">⚡ तुरंत समाधान (AI रोग जांच)</h3>
         <button class="modal-close" onclick="closeSolutionModal()">✕</button>
       </div>
 
       <div class="upload-options">
         <div class="upload-opt-btn" onclick="document.getElementById('cameraPhotoInput').click()">
           <span>📷</span>
-          <b>कैमरा से फोटो लें</b>
+          <b id="txtCamBtn">कैमरा से फोटो लें</b>
         </div>
         <div class="upload-opt-btn" onclick="document.getElementById('galleryPhotoInput').click()">
           <span>🖼️</span>
-          <b>गैलरी से चुनें</b>
+          <b id="txtGalBtn">गैलरी से चुनें</b>
         </div>
       </div>
 
@@ -435,7 +435,7 @@
       </button>
 
       <div class="doc-result-card" id="docResultCard">
-        <h4 style="color:#b91c1c; font-size:15px; margin-bottom:8px;">🌿 AI रोग निदान रिपोर्ट व सावधानियां</h4>
+        <h4 id="txtAiReportHead" style="color:#b91c1c; font-size:15px; margin-bottom:8px;">🌿 AI रोग निदान रिपोर्ट व सावधानियां</h4>
         <div style="font-size:13.5px; color:#374151; line-height:1.6; margin-bottom:10px;" id="smartSymptoms"></div>
         <a id="btnDocWhatsapp" href="#" target="_blank" class="btn-action btn-wa">
           💬 यह रिपोर्ट डॉक्टर को WhatsApp करें
@@ -470,7 +470,7 @@
       <div style="font-size:13px; font-weight:bold; color:#1b5e20;" id="welcomeMsg">
         राम-राम, किसान भाई!
       </div>
-      <span style="font-size:11px; color:#166534; font-weight:bold; cursor:pointer;" onclick="openProfileScreen()">
+      <span style="font-size:11px; color:#166534; font-weight:bold; cursor:pointer;" onclick="openProfileScreen()" id="txtChangeProf">
         ✏️ प्रोफाइल बदलें
       </span>
     </div>
@@ -481,8 +481,8 @@
     <!-- AI वॉइस असिस्टेंट कार्ड -->
     <div class="ai-assistant-box" onclick="startVoiceAssistant()">
       <div style="flex: 1; padding-right: 8px;">
-        <h4 style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
-        <p style="font-size:11.5px; color:#4b5563; margin-top:2px;" id="aiAssistantSubText">टैप करें और फसल या बीमारी का नाम बोलें...</p>
+        <h4 id="txtAiBoxTitle" style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
+        <p id="txtAiBoxSub" style="font-size:11.5px; color:#4b5563; margin-top:2px;">टैप करें और फसल या बीमारी का नाम बोलें...</p>
       </div>
       <div style="background:#16a34a; color:white; min-width:38px; height:38px; border-radius:50%; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🗣️</div>
     </div>
@@ -496,7 +496,7 @@
       <div class="weather-body-row">
         <div>
           <p style="font-size:13px; font-weight:600;" id="weatherDesc">साफ़ आसमान</p>
-          <p style="font-size:11px; font-weight:bold; margin-top:3px;">स्प्रे हेतु सुबह या शाम का समय चुनें</p>
+          <p id="txtSprayTip" style="font-size:11px; font-weight:bold; margin-top:3px;">स्प्रे हेतु सुबह या शाम का समय चुनें</p>
         </div>
         <div style="text-align:right;">
           <span style="font-size:30px;" id="weatherIcon">☀️</span>
@@ -516,51 +516,51 @@
 
     <!-- त्वरित फसल टैग्स -->
     <div class="quick-crop-scroll">
-      <div class="quick-pill" onclick="filterByCrop('टमाटर')">🍅 टमाटर</div>
-      <div class="quick-pill" onclick="filterByCrop('खीरा')">🥒 खीरा</div>
-      <div class="quick-pill" onclick="filterByCrop('मिर्च')">🌶️ मिर्च</div>
-      <div class="quick-pill" onclick="filterByCrop('तरबूज')">🍉 तरबूज</div>
-      <div class="quick-pill" onclick="filterByCrop('फूलगोभी')">🥦 फूलगोभी</div>
-      <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
+      <div class="quick-pill" onclick="filterByCrop('टमाटर')">🍅 <span class="c-tmt">टमाटर</span></div>
+      <div class="quick-pill" onclick="filterByCrop('खीरा')">🥒 <span class="c-cuc">खीरा</span></div>
+      <div class="quick-pill" onclick="filterByCrop('मिर्च')">🌶️ <span class="c-chi">मिर्च</span></div>
+      <div class="quick-pill" onclick="filterByCrop('तरबूज')">🍉 <span class="c-wat">तरबूज</span></div>
+      <div class="quick-pill" onclick="filterByCrop('फूलगोभी')">🥦 <span class="c-cau">फूलगोभी</span></div>
+      <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 <span class="c-okr">भिंडी</span></div>
     </div>
 
     <!-- 3-3 बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCropsScreen()">
         <div class="icon">🥬</div>
-        <h3>सब्जी फसल किस्म</h3>
+        <h3 id="g1">सब्जी फसल किस्म</h3>
       </div>
       <div class="menu-box card-protection" onclick="showProtectionCropsList()">
         <div class="icon">🛡️</div>
-        <h3>फसल सुरक्षा</h3>
+        <h3 id="g2">फसल सुरक्षा</h3>
       </div>
       <div class="menu-box card-schedule" onclick="showScheduleCropsList()">
         <div class="icon">🗓️</div>
-        <h3>स्प्रे शेड्यूल</h3>
+        <h3 id="g3">स्प्रे शेड्यूल</h3>
       </div>
       <div class="menu-box card-atoz" onclick="showAtoZCropsScreen()">
         <div class="icon">📖</div>
-        <h3>खेती कैसे करें (A-Z)</h3>
+        <h3 id="g4">खेती कैसे करें (A-Z)</h3>
       </div>
       <div class="menu-box card-discussion" onclick="openFarmerDiscussionScreen()">
         <div class="icon">💬</div>
-        <h3>किसान चर्चा (कमेटियाँ)</h3>
+        <h3 id="g5">किसान चर्चा (कमेटियाँ)</h3>
       </div>
       <div class="menu-box card-advisor" onclick="contactAdvisor()">
         <div class="icon">🎧</div>
-        <h3>सलाहकार</h3>
+        <h3 id="g6">सलाहकार</h3>
       </div>
       <div class="menu-box card-companies" onclick="showCompaniesList()">
         <div class="icon">🏢</div>
-        <h3>All कंपनी बीज</h3>
+        <h3 id="g7">All कंपनी बीज</h3>
       </div>
       <div class="menu-box card-chemicals" onclick="showChemicalsScreen()">
         <div class="icon">🧪</div>
-        <h3>दवाइयाँ Chemicals</h3>
+        <h3 id="g8">दवाइयाँ Chemicals</h3>
       </div>
       <div class="menu-box card-services" onclick="showOtherServicesScreen()">
         <div class="icon">⚙️</div>
-        <h3>Other सेवाएं</h3>
+        <h3 id="g9">Other सेवाएं</h3>
       </div>
     </div>
 
@@ -568,23 +568,23 @@
     <div style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
       <div>
         <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
-        <p style="font-size:12px; color:#334155; margin-top:2px;">हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।</p>
+        <p id="txtPlaySub" style="font-size:12px; color:#334155; margin-top:2px;">हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।</p>
       </div>
-      <a href="https://play.google.com/store/apps" target="_blank" style="background:#2563eb; color:white; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:bold; text-decoration:none;">रेट करें</a>
+      <a id="txtPlayBtn" href="https://play.google.com/store/apps" target="_blank" style="background:#2563eb; color:white; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:bold; text-decoration:none;">रेट करें</a>
     </div>
 
     <!-- 4 वीडियो / रील्स सेक्शन -->
     <div style="margin-bottom: 15px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700;">📺 ताज़ा कृषि वीडियो व रील्स</h3>
-        <span style="font-size: 11px; color: #166534; font-weight: bold; cursor: pointer;" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')">सभी देखें &gt;</span>
+        <h3 id="txtVideoHead" style="font-size: 14px; color: #1b5e20; font-weight: 700;">📺 ताज़ा कृषि वीडियो व रील्स</h3>
+        <span id="txtAllVideos" style="font-size: 11px; color: #166534; font-weight: bold; cursor: pointer;" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')">सभी देखें &gt;</span>
       </div>
       <div id="dynamicVideosContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
     </div>
 
     <!-- सोशल मीडिया कार्ड -->
     <div class="social-box">
-      <p style="font-size:13px; font-weight:bold; color:#374151;">हमारे साथ सोशल मीडिया पर जुड़ें</p>
+      <p id="txtSocialTitle" style="font-size:13px; font-weight:bold; color:#374151;">हमारे साथ सोशल मीडिया पर जुड़ें</p>
       <div class="social-btn-group">
         <a href="https://www.youtube.com/@NMGKISAN" target="_blank" class="social-link link-yt"><span>▶️</span> YouTube</a>
         <a href="https://www.facebook.com/share/19joE3v9ib/" target="_blank" class="social-link link-fb"><span>🌐</span> Facebook</a>
@@ -595,30 +595,28 @@
   <!-- SCREEN: AI डॉक्टर चैट/कंसल्टेशन पेज -->
   <div id="screen-ai-doctor-chat" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px; margin-bottom:12px;">
-      <h3 style="color:#1b5e20; font-size:17px; margin-bottom:6px;">👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन</h3>
-      <p style="font-size:12px; color:#6b7280;">अपनी फसल, पौधे के रोग या खाद से जुड़ा सवाल यहाँ लिखकर या बोलकर पूछें:</p>
+      <h3 id="txtAiChatHead" style="color:#1b5e20; font-size:17px; margin-bottom:6px;">👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन</h3>
+      <p id="txtAiChatSub" style="font-size:12px; color:#6b7280;">अपनी फसल, पौधे के रोग या खाद से जुड़ा सवाल यहाँ लिखकर या बोलकर पूछें:</p>
     </div>
 
-    <!-- चैट का इतिहास (Messages Box) -->
     <div id="aiChatMessagesContainer" style="background:white; border:1px solid #e5e7eb; border-radius:12px; padding:12px; height:320px; overflow-y:auto; margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
-      <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534;">
+      <div id="txtAiWelcomeMsg" style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534;">
         <b>👨‍⚕️ AI डॉक्टर:</b> राम-राम किसान भाई! फसल में कोई रोग, कीट या खाद से जुड़ी समस्या है? यहाँ लिखकर या बोलकर बताएं।
       </div>
     </div>
 
-    <!-- इनपुट बॉक्स और वॉइस/सेंड बटन -->
     <div style="display:flex; gap:8px; align-items:center;">
       <input type="text" id="aiUserChatInput" class="form-control" placeholder="उदा. टमाटर के पत्ते मुड़ रहे हैं..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
       <button class="btn-action" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="बोलकर पूछें">🎙️</button>
-      <button class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()">भेजें</button>
+      <button id="txtSendBtn" class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()">भेजें</button>
     </div>
   </div>
 
   <!-- SCREEN: खेती कैसे करें - फसल सूची (A-Z) -->
   <div id="screen-atoz-crops" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;">📖 सब्जी खेती गाइड (A से Z तक)</h3>
-      <p style="font-size:12.5px; color:#4b5563;">गूगल शीट से लाइव अपडेटेड फसल गाइड।</p>
+      <h3 id="txtAtozHead" style="color:#b45309; font-size:16px; margin-bottom:4px;">📖 सब्जी खेती गाइड (A से Z तक)</h3>
+      <p id="txtAtozSub" style="font-size:12.5px; color:#4b5563;">गूगल शीट से लाइव अपडेटेड फसल गाइड।</p>
     </div>
     <div id="atozCropsContainer"></div>
   </div>
@@ -629,20 +627,20 @@
   <!-- SCREEN: किसान चर्चा -->
   <div id="screen-farmer-discussion" class="screen">
     <div class="variety-card" style="border-left:5px solid #0284c7; padding: 16px; margin-bottom: 14px;">
-      <h3 style="color:#0369a1; font-size:16px; margin-bottom:8px;">💬 किसान चर्चा मंच (फसल फोटो व सुझाव)</h3>
-      <div class="form-group"><label>आपका नाम:</label><input type="text" id="discussionAuthor" class="form-control" placeholder="नाम लिखें"></div>
-      <div class="form-group"><label>आपकी चर्चा / सवाल:</label><textarea id="discussionText" class="form-control" rows="3" placeholder="अपनी समस्या या चर्चा यहाँ लिखें..."></textarea></div>
-      <div class="form-group"><label>फोटो जोड़ें (वैकल्पिक):</label><input type="file" id="discussionImageInput" accept="image/*" class="form-control" style="padding:6px;"></div>
-      <button class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" onclick="submitDiscussionPost()">📤 चर्चा पोस्ट करें</button>
+      <h3 id="txtDiscHead" style="color:#0369a1; font-size:16px; margin-bottom:8px;">💬 किसान चर्चा मंच (फसल फोटो व सुझाव)</h3>
+      <div class="form-group"><label id="txtLblName">आपका नाम:</label><input type="text" id="discussionAuthor" class="form-control" placeholder="नाम लिखें"></div>
+      <div class="form-group"><label id="txtLblDisc">आपकी चर्चा / सवाल:</label><textarea id="discussionText" class="form-control" rows="3" placeholder="अपनी समस्या या चर्चा यहाँ लिखें..."></textarea></div>
+      <div class="form-group"><label id="txtLblPhoto">फोटो जोड़ें (वैकल्पिक):</label><input type="file" id="discussionImageInput" accept="image/*" class="form-control" style="padding:6px;"></div>
+      <button id="txtPostBtn" class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" onclick="submitDiscussionPost()">📤 चर्चा पोस्ट करें</button>
     </div>
-    <h4 style="font-size:14px; color:#1b5e20; margin-bottom:10px;">📢 किसानों की ताज़ा चर्चाएं व सुझाव (Comments):</h4>
+    <h4 id="txtDiscListHead" style="font-size:14px; color:#1b5e20; margin-bottom:10px;">📢 किसानों की ताज़ा चर्चाएं व सुझाव (Comments):</h4>
     <div id="discussionPostsContainer"></div>
   </div>
 
   <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
-      <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं गोपनीयता नीति</h3>
+      <h3 id="txtPrivacyHead" style="color:#0369a1; font-size:17px; margin-bottom:14px;">📜 नियम व शर्तें एवं गोपनीयता नीति</h3>
       <div id="privacyContentBox">
         <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
           <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
@@ -661,22 +659,22 @@
   <!-- SCREEN: दवाइयाँ श्रेणियां -->
   <div id="screen-chemicals" class="screen">
     <div class="variety-card" style="border-left:5px solid #be185d;">
-      <h3 style="color:#be185d; font-size:16px; margin-bottom:6px;">🧪 कृषि दवाइयाँ व टॉनिक</h3>
-      <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">श्रेणी चुनें:</p>
+      <h3 id="txtChemHead" style="color:#be185d; font-size:16px; margin-bottom:6px;">🧪 कृषि दवाइयाँ व टॉनिक</h3>
+      <p id="txtChemSub" style="font-size:12px; color:#6b7280; margin-bottom:12px;">श्रेणी चुनें:</p>
       <div class="list-item" onclick="filterChemicalsByCategory('कीटनाशक')">
-        <div class="list-left"><span class="list-icon">🐛</span><span class="list-title">कीटनाशक (Insecticides)</span></div>
+        <div class="list-left"><span class="list-icon">🐛</span><span class="list-title" id="c1">कीटनाशक (Insecticides)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="filterChemicalsByCategory('फफूंदनाशक')">
-        <div class="list-left"><span class="list-icon">🍄</span><span class="list-title">फफूंदनाशक (Fungicides)</span></div>
+        <div class="list-left"><span class="list-icon">🍄</span><span class="list-title" id="c2">फफूंदनाशक (Fungicides)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="filterChemicalsByCategory('खरपतवारनाशक')">
-        <div class="list-left"><span class="list-icon">🌿</span><span class="list-title">खरपतवारनाशक (Weedicides)</span></div>
+        <div class="list-left"><span class="list-icon">🌿</span><span class="list-title" id="c3">खरपतवारनाशक (Weedicides)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="filterChemicalsByCategory('टॉनिक')">
-        <div class="list-left"><span class="list-icon">⚡</span><span class="list-title">टॉनिक व PGR (Tonics)</span></div>
+        <div class="list-left"><span class="list-icon">⚡</span><span class="list-title" id="c4">टॉनिक व PGR (Tonics)</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -691,39 +689,39 @@
   <!-- SCREEN: अन्य सेवाएं -->
   <div id="screen-other-services" class="screen">
     <div class="list-item" onclick="showWeatherDetailScreen()">
-      <div class="list-left"><span class="list-icon">🌦️</span><span class="list-title">मौसम की पूरी जानकारी</span></div>
+      <div class="list-left"><span class="list-icon">🌦️</span><span class="list-title" id="s1">मौसम की पूरी जानकारी</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showMandiBhavScreen()">
-      <div class="list-left"><span class="list-icon">📈</span><span class="list-title">ताज़ा मंडी भाव (GPS आधारित)</span></div>
+      <div class="list-left"><span class="list-icon">📈</span><span class="list-title" id="s2">ताज़ा मंडी भाव (GPS आधारित)</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showSowingCalculatorScreen()">
-      <div class="list-left"><span class="list-icon">🧮</span><span class="list-title" style="color:#d97706; font-weight:bold;">बुवाई और कटाई कैलकुलेटर</span></div>
+      <div class="list-left"><span class="list-icon">🧮</span><span class="list-title" id="s3" style="color:#d97706; font-weight:bold;">बुवाई और कटाई कैलकुलेटर</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showExpertAdviceScreen()">
-      <div class="list-left"><span class="list-icon">💡</span><span class="list-title">कृषि एक्सपर्ट सुझाव</span></div>
+      <div class="list-left"><span class="list-icon">💡</span><span class="list-title" id="s4">कृषि एक्सपर्ट सुझाव</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showPestAlertScreen()">
-      <div class="list-left"><span class="list-icon">🚨</span><span class="list-title" style="color:#b91c1c; font-weight:bold;">कीट व रोग अलर्ट</span></div>
+      <div class="list-left"><span class="list-icon">🚨</span><span class="list-title" id="s5" style="color:#b91c1c; font-weight:bold;">कीट व रोग अलर्ट</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showGovSchemesScreen()">
-      <div class="list-left"><span class="list-icon">🏛️</span><span class="list-title" style="color:#1b5e20; font-weight:bold;">सरकारी योजनाएं</span></div>
+      <div class="list-left"><span class="list-icon">🏛️</span><span class="list-title" id="s6" style="color:#1b5e20; font-weight:bold;">सरकारी योजनाएं</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showAiReportsScreen()">
-      <div class="list-left"><span class="list-icon">🌿</span><span class="list-title" style="color:#166534; font-weight:bold;">मेरी AI रोग जांच रिपोर्ट</span></div>
+      <div class="list-left"><span class="list-icon">🌿</span><span class="list-title" id="s7" style="color:#166534; font-weight:bold;">मेरी AI रोग जांच रिपोर्ट</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="window.open('https://play.google.com/store/apps', '_blank')">
-      <div class="list-left"><span class="list-icon">⭐</span><span class="list-title" style="color:#2563eb; font-weight:bold;">गूगल प्ले स्टोर पर रेट करें</span></div>
+      <div class="list-left"><span class="list-icon">⭐</span><span class="list-title" id="s8" style="color:#2563eb; font-weight:bold;">गूगल प्ले स्टोर पर रेट करें</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="shareAppWithFriends()">
-      <div class="list-left"><span class="list-icon">📲</span><span class="list-title">किसान साथियों को शेयर करें</span></div>
+      <div class="list-left"><span class="list-icon">📲</span><span class="list-title" id="s9">किसान साथियों को शेयर करें</span></div>
       <span class="arrow">&gt;</span>
     </div>
   </div>
@@ -731,9 +729,9 @@
   <!-- SCREEN: बुवाई और कटाई कैलकुलेटर -->
   <div id="screen-sowing-calc" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; padding:16px;">
-      <h3 style="color:#b45309; font-size:17px; margin-bottom:12px;">🧮 स्मार्ट बुवाई और कटाई कैलकुलेटर</h3>
+      <h3 id="txtCalcHead" style="color:#b45309; font-size:17px; margin-bottom:12px;">🧮 स्मार्ट बुवाई और कटाई कैलकुलेटर</h3>
       <div class="form-group">
-        <label>फसल चुनें:</label>
+        <label id="txtCalcCropLabel">फसल चुनें:</label>
         <select id="calcCropSelect" class="form-control">
           <option value="टमाटर">🍅 टमाटर (लगभग 90-100 दिन)</option>
           <option value="खीरा">🥒 खीरा (लगभग 50-60 दिन)</option>
@@ -744,14 +742,14 @@
         </select>
       </div>
       <div class="form-group">
-        <label>बुवाई की तारीख (Sowing Date):</label>
+        <label id="txtCalcDateLabel">बुवाई की तारीख (Sowing Date):</label>
         <input type="date" id="calcDateInput" class="form-control">
       </div>
-      <button class="btn-action btn-wa" style="background:#d97706; margin-top:12px;" onclick="calculateCropSchedule()">📊 सही समय गणना करें</button>
+      <button id="txtCalcBtn" class="btn-action btn-wa" style="background:#d97706; margin-top:12px;" onclick="calculateCropSchedule()">📊 सही समय गणना करें</button>
     </div>
 
     <div class="doc-result-card" id="calcResultBox" style="display:block; background:#fffbeb; border:1.5px solid #fde68a;">
-      <h4 style="color:#b45309; font-size:15px; margin-bottom:8px;">📅 फसल अनुमानित समय सारणी</h4>
+      <h4 id="txtCalcResHead" style="color:#b45309; font-size:15px; margin-bottom:8px;">📅 फसल अनुमानित समय सारणी</h4>
       <p style="font-size:13.5px; color:#374151; line-height:1.6;" id="calcResultText">कृपया फसल और बुवाई की तारीख चुनकर 'गणना करें' बटन दबाएं।</p>
     </div>
   </div>
@@ -759,11 +757,11 @@
   <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
   <div id="screen-ai-reports" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; margin-bottom:12px;">
-      <h3 style="color:#166534; font-size:16px; margin-bottom:6px;">🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड</h3>
-      <p style="font-size:12px; color:#6b7280;">गूगल शीट (Diagnosis) से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
+      <h3 id="txtReportHead" style="color:#166534; font-size:16px; margin-bottom:6px;">🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड</h3>
+      <p id="txtReportSub" style="font-size:12px; color:#6b7280;">गूगल शीट (Diagnosis) से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
     </div>
     <div id="aiReportsContainer">
-      <div class="variety-card" style="text-align:center; padding:20px; color:#6b7280;">
+      <div class="variety-card" style="text-align:center; padding:20px; color:#6b7280;" id="txtLoadingReports">
         ⏳ रिपोर्ट लोड हो रही है...
       </div>
     </div>
@@ -772,8 +770,8 @@
   <!-- SCREEN: मेरी पसंदीदा किस्में -->
   <div id="screen-favorites" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; margin-bottom:12px;">
-      <h3 style="color:#d97706; font-size:16px; margin-bottom:6px;">⭐ आपकी सेव की गई पसंदीदा किस्में</h3>
-      <p style="font-size:12px; color:#6b7280;">यहाँ आपकी बुकमार्क की गई सभी वैरायटी दिखेंगी:</p>
+      <h3 id="txtFavHead" style="color:#d97706; font-size:16px; margin-bottom:6px;">⭐ आपकी सेव की गई पसंदीदा किस्में</h3>
+      <p id="txtFavSub" style="font-size:12px; color:#6b7280;">यहाँ आपकी बुकमार्क की गई सभी वैरायटी दिखेंगी:</p>
     </div>
     <div id="favoritesContainer"></div>
   </div>
@@ -781,7 +779,7 @@
   <!-- SCREEN: सरकारी योजनाएं -->
   <div id="screen-gov-schemes" class="screen">
     <div class="variety-card">
-      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">🏛️ प्रमुख सरकारी योजनाएं</h3>
+      <h3 id="txtGovHead" style="color:#1b5e20; font-size:16px; margin-bottom:10px;">🏛️ प्रमुख सरकारी योजनाएं</h3>
       <div class="schedule-step">
         <b>1. प्रधानमंत्री किसान सम्मान निधि (PM-Kisan)</b>
         <p>पात्र किसानों को साल में ₹6,000 की राशि तीन किस्तों में दी जाती है।</p>
@@ -790,7 +788,7 @@
         <b>2. प्रधानमंत्री फसल बीमा योजना (PMFBY)</b>
         <p>प्राकृतिक आपदाओं से नुकसान पर बीमा सुरक्षा।</p>
       </div>
-      <a href="https://pmkisan.gov.in/" target="_blank" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;">🌐 पीएम-किसान पोर्टल देखें</a>
+      <a id="txtGovPortal" href="https://pmkisan.gov.in/" target="_blank" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;">🌐 पीएम-किसान पोर्टल देखें</a>
     </div>
   </div>
 
@@ -808,11 +806,11 @@
       </div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
         <div style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
-          <p style="font-size:11px; color:#166534;">हवा की गति</p>
+          <p id="txtWind" style="font-size:11px; color:#166534;">हवा की गति</p>
           <b style="font-size:14px; color:#15803d;" id="detailWind">6 किमी/घंटा</b>
         </div>
         <div style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
-          <p style="font-size:11px; color:#166534;">नमी</p>
+          <p id="txtHumid" style="font-size:11px; color:#166534;">नमी</p>
           <b style="font-size:14px; color:#15803d;" id="detailHumidity">45%</b>
         </div>
       </div>
@@ -823,13 +821,21 @@
   <div id="screen-mandi-bhav" class="screen">
     <div class="variety-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <h3 style="color:#1b5e20; font-size:16px;">📈 लाइव सरकारी मंडी भाव (GPS आधारित)</h3>
+        <h3 id="txtMandiHead" style="color:#1b5e20; font-size:16px;">📈 लाइव सरकारी मंडी भाव (GPS आधारित)</h3>
         <span style="font-size:11px; color:#166534; font-weight:bold;" id="mandiUpdateTime">ताज़ा डेटा</span>
       </div>
       <div id="mandiLoading" style="text-align:center; padding:20px; color:#6b7280;">⏳ आपके नजदीकी जिले के मंडी भाव लोड हो रहे हैं...</div>
       <div style="overflow-x:auto;">
         <table class="mandi-table" id="mandiTableElement" style="display:none;">
-          <thead><tr><th>राज्य / ज़िला</th><th>मंडी</th><th>फसल (Commodity)</th><th>न्यूनतम (₹/क्विंटल)</th><th>अधिकतम (₹/क्विंटल)</th></tr></thead>
+          <thead>
+            <tr>
+              <th id="thState">राज्य / ज़िला</th>
+              <th id="thMarket">मंडी</th>
+              <th id="thCrop">फसल (Commodity)</th>
+              <th id="thMin">न्यूनतम (₹/क्विंटल)</th>
+              <th id="thMax">अधिकतम (₹/क्विंटल)</th>
+            </tr>
+          </thead>
           <tbody id="mandiTableBody"></tbody>
         </table>
       </div>
@@ -839,7 +845,7 @@
   <!-- SCREEN: एक्सपर्ट सुझाव -->
   <div id="screen-expert-advice" class="screen">
     <div class="variety-card">
-      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;">💡 कृषि एक्सपर्ट सुझाव</h3>
+      <h3 id="txtTipsHead" style="color:#1b5e20; font-size:16px; margin-bottom:10px;">💡 कृषि एक्सपर्ट सुझाव</h3>
       <div id="tipsContainer">
         <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ सुझाव लोड हो रहे हैं...</div>
       </div>
@@ -849,7 +855,7 @@
   <!-- SCREEN: कीट अलर्ट -->
   <div id="screen-pest-alert" class="screen">
     <div class="variety-card" style="border-left:5px solid #dc2626;">
-      <h3 style="color:#dc2626; font-size:16px; margin-bottom:10px;">🚨 कीट व रोग चेतावनी</h3>
+      <h3 id="txtAlertHead" style="color:#dc2626; font-size:16px; margin-bottom:10px;">🚨 कीट व रोग चेतावनी</h3>
       <div id="alertsContainer">
         <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ अलर्ट लोड हो रहे हैं...</div>
       </div>
@@ -859,18 +865,18 @@
   <!-- SCREEN: प्रोफाइल स्क्रीन -->
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
-      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
-      <div class="form-group"><label>आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailnder Kumar"></div>
-      <div class="form-group"><label>मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
-      <div class="form-group"><label>गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar"></div>
-      <div class="form-group"><label>मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
-      <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()">💾 प्रोफाइल सुरक्षित करें</button>
+      <h3 id="txtProfHead" style="color:#1b5e20; font-size:16px; margin-bottom:12px;">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
+      <div class="form-group"><label id="txtProfName">आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailnder Kumar"></div>
+      <div class="form-group"><label id="txtProfPhone">मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
+      <div class="form-group"><label id="txtProfState">गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar"></div>
+      <div class="form-group"><label id="txtProfCrops">मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
+      <button id="txtSaveProf" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()">💾 प्रोफाइल सुरक्षित करें</button>
     </div>
   </div>
 
   <!-- SCREEN 2: सब्जी फसल सूची -->
   <div id="screen-crops" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">सब्जी फसल चुनें:</h3>
+    <h3 id="txtSelCrop" style="font-size:15px; margin-bottom:12px; color:#1b5e20;">सब्जी फसल चुनें:</h3>
     <div id="cropsContainer"></div>
   </div>
 
@@ -881,7 +887,7 @@
 
   <!-- SCREEN 4: स्प्रे शेड्यूल - फसलें -->
   <div id="screen-schedule-crops" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">स्प्रे शेड्यूल हेतु सब्जी चुनें:</h3>
+    <h3 id="txtSelSched" style="font-size:15px; margin-bottom:12px; color:#1b5e20;">स्प्रे शेड्यूल हेतु सब्जी चुनें:</h3>
     <div id="scheduleCropsContainer"></div>
   </div>
 
@@ -890,13 +896,13 @@
     <div class="variety-card">
       <h3 style="color:#15803d; font-size:17px; margin-bottom:10px;" id="scheduleCropTitle">स्प्रे शेड्यूल</h3>
       <div id="scheduleStepsContainer"></div>
-      <a href="https://wa.me/916378475002?text=नमस्ते%20जी,%20स्प्रे%20शेड्यूल%20के%20बारे%20में%20सलाह%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">💬 डॉक्टर से स्प्रे सलाह लें</a>
+      <a id="txtSchedDocBtn" href="https://wa.me/916378475002?text=नमस्ते%20जी,%20स्प्रे%20शेड्यूल%20के%20बारे%20में%20सलाह%20चाहिए।" target="_blank" class="btn-action btn-wa" style="margin-top:10px;">💬 डॉक्टर से स्प्रे सलाह लें</a>
     </div>
   </div>
 
   <!-- SCREEN 8A: फसल सुरक्षा - फसल सूची -->
   <div id="screen-protection-crops" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">रोग निदान हेतु फसल चुनें:</h3>
+    <h3 id="txtSelProt" style="font-size:15px; margin-bottom:12px; color:#1b5e20;">रोग निदान हेतु फसल चुनें:</h3>
     <div id="protectionCropsContainer"></div>
   </div>
 
@@ -908,7 +914,7 @@
 
   <!-- SCREEN 6: All कंपनी सूची -->
   <div id="screen-companies" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">सीड कंपनी चुनें:</h3>
+    <h3 id="txtSelComp" style="font-size:15px; margin-bottom:12px; color:#1b5e20;">सीड कंपनी चुनें:</h3>
     <div id="companiesContainer"></div>
   </div>
 
@@ -920,11 +926,11 @@
 
   <!-- बॉटम नेविगेशन -->
   <div class="bottom-nav">
-    <div class="nav-tab active" onclick="openScreen('screen-home', 'CROP & SABZI DOCTOR')"><span>🏠</span><span>होम</span></div>
-    <div class="nav-tab" onclick="showAllCropsScreen()"><span>🥬</span><span>फसलें</span></div>
-    <div class="nav-tab" onclick="showScheduleCropsList()"><span>🗓️</span><span>शेड्यूल</span></div>
-    <div class="nav-tab" onclick="showProtectionCropsList()"><span>🛡️</span><span>सुरक्षा</span></div>
-    <div class="nav-tab" onclick="contactAdvisor()"><span>💬</span><span>हेल्पलाइन</span></div>
+    <div class="nav-tab active" onclick="openScreen('screen-home', 'CROP & SABZI DOCTOR')"><span>🏠</span><span id="navHome">होम</span></div>
+    <div class="nav-tab" onclick="showAllCropsScreen()"><span>🥬</span><span id="navCrops">फसलें</span></div>
+    <div class="nav-tab" onclick="showScheduleCropsList()"><span>🗓️</span><span id="navSched">शेड्यूल</span></div>
+    <div class="nav-tab" onclick="showProtectionCropsList()"><span>🛡️</span><span id="navProt">सुरक्षा</span></div>
+    <div class="nav-tab" onclick="contactAdvisor()"><span>💬</span><span id="navHelp">हेल्पलाइन</span></div>
   </div>
 
   <script>
@@ -948,40 +954,46 @@
       let todayStr = new Date().toISOString().split('T')[0];
       let dateInput = document.getElementById('calcDateInput');
       if(dateInput) dateInput.value = todayStr;
+
+      // ऐप चालू होने पर चुनी हुई भाषा लागू करें
+      applyLanguageUI();
+      if (!localStorage.getItem('is_logged_in') && !localStorage.getItem('app_lang')) {
+        document.getElementById('languageSelectModal').classList.add('active');
+      } else if (!localStorage.getItem('is_logged_in')) {
+        document.getElementById('loginScreenModal').classList.add('active');
+      }
     });
 
-    // आवाज़ से सुनाने वाला फंक्शन (Text-to-Speech)
     function speakAiAnswer(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         let cleanText = text.replace(/[*#_]/g, '');
         let utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = 'hi-IN';
+        utterance.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
         utterance.rate = 1.0;
         window.speechSynthesis.speak(utterance);
       }
     }
 
-    // AI वॉइस असिस्टेंट कार्ड पर क्लिक करने पर चैट स्क्रीन खोलें
     function startVoiceAssistant() {
-      openScreen('screen-ai-doctor-chat', 'AI सब्जी डॉक्टर चैट');
+      openScreen('screen-ai-doctor-chat', translations[currentLang].aiChatTitle || 'AI सब्जी डॉक्टर चैट');
     }
 
     function handleAiChatKeyPress(e) {
       if(e.key === 'Enter') sendUserChatMessage();
     }
 
-    // असली Gemini AI (Apps Script) को मैसेज भेजने का फंक्शन
     async function sendUserChatMessage() {
       let inputElem = document.getElementById('aiUserChatInput');
       let msg = inputElem.value.trim();
       if(!msg) return;
 
       let container = document.getElementById('aiChatMessagesContainer');
+      let t = translations[currentLang];
       
       container.innerHTML += `
         <div style="background:#eff6ff; padding:10px 12px; border-radius:10px; border-left:4px solid #2563eb; font-size:13.5px; color:#1e40af; align-self:flex-end; max-width:85%;">
-          <b>👤 आप:</b> ${msg}
+          <b>👤 ${t.youLabel || 'आप'}:</b> ${msg}
         </div>`;
       
       inputElem.value = '';
@@ -990,7 +1002,7 @@
       let loadingId = 'loading_' + Date.now();
       container.innerHTML += `
         <div id="${loadingId}" style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
-          <b>👨‍⚕️ AI डॉक्टर:</b> सोच रहा हूँ... ⏳
+          <b>👨‍⚕️ ${t.aiDocLabel || 'AI डॉक्टर'}:</b> ${t.thinkingText || 'सोच रहा हूँ...'} ⏳
         </div>`;
       container.scrollTop = container.scrollHeight;
 
@@ -998,14 +1010,14 @@
         let res = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ notes: msg })
+          body: JSON.stringify({ notes: msg, lang: currentLang })
         });
         let data = await res.json();
         
         let loadingDiv = document.getElementById(loadingId);
         if(loadingDiv) loadingDiv.remove();
 
-        let reply = "माफ़ कीजिए, अभी उत्तर नहीं मिल पाया। कृपया दोबारा कोशिश करें।";
+        let reply = t.errorResponse || "माफ़ कीजिए, अभी उत्तर नहीं मिल पाया।";
         if (data.result) {
           reply = data.result;
         } else if (data.परिणाम) {
@@ -1016,7 +1028,7 @@
 
         container.innerHTML += `
           <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
-            <b>👨‍⚕️ AI डॉक्टर:</b> ${reply.replace(/\n/g, '<br>')}
+            <b>👨‍⚕️ ${t.aiDocLabel || 'AI डॉक्टर'}:</b> ${reply.replace(/\n/g, '<br>')}
           </div>`;
         
         container.scrollTop = container.scrollHeight;
@@ -1028,17 +1040,14 @@
         
         container.innerHTML += `
           <div style="background:#fee2e2; padding:10px 12px; border-radius:10px; border-left:4px solid #dc2626; font-size:13.5px; color:#991b1b; max-width:85%;">
-            <b>⚠️ एरर:</b> इंटरनेट कनेक्शन या सर्वर में समस्या है।
+            <b>⚠️ ${t.errorLabel || 'एरर'}:</b> ${t.errorServer || 'इंटरनेट कनेक्शन या सर्वर में समस्या है।'}
           </div>`;
         container.scrollTop = container.scrollHeight;
       }
     }
 
-    // चैट वाला माइक बटन क्लिक करने पर (बीच में टोकने और नई जानकारी देने के साथ)
     function startChatVoiceInput() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); }
 
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1047,7 +1056,7 @@
       }
       
       let rec = new SpeechRecognition();
-      rec.lang = 'hi-IN';
+      rec.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
       rec.interimResults = false;
       rec.maxAlternatives = 1;
 
@@ -1055,7 +1064,7 @@
       let micBtn = document.querySelector('button[onclick="startChatVoiceInput()"]');
 
       rec.onstart = function() {
-        chatInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए...";
+        chatInput.placeholder = translations[currentLang].listeningText || "🎙️ सुन रहा हूँ, बोलिए...";
         chatInput.style.borderColor = "#16a34a";
         if(micBtn) micBtn.classList.add('mic-active-anim');
       };
@@ -1063,34 +1072,23 @@
       rec.onresult = (e) => {
         let spokenText = e.results[0][0].transcript;
         chatInput.value = spokenText;
-        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
+        chatInput.placeholder = translations[currentLang].chatPlaceholder || "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
         chatInput.style.borderColor = "#d1d5db";
         if(micBtn) micBtn.classList.remove('mic-active-anim');
-        
         sendUserChatMessage();
       };
 
-      rec.onerror = function() {
-        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
+      rec.onerror = rec.onend = function() {
+        chatInput.placeholder = translations[currentLang].chatPlaceholder || "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
         chatInput.style.borderColor = "#d1d5db";
         if(micBtn) micBtn.classList.remove('mic-active-anim');
       };
 
-      rec.onend = function() {
-        chatInput.placeholder = "उदा. टमाटर के पत्ते मुड़ रहे हैं...";
-        chatInput.style.borderColor = "#d1d5db";
-        if(micBtn) micBtn.classList.remove('mic-active-anim');
-      };
-
-      try {
-        rec.start();
-      } catch (err) {
-        console.log(err);
-      }
+      try { rec.start(); } catch (err) {}
     }
 
     function showSowingCalculatorScreen() {
-      openScreen('screen-sowing-calc', 'बुवाई व कटाई कैलकुलेटर');
+      openScreen('screen-sowing-calc', translations[currentLang].calcTitle || 'बुवाई व कटाई कैलकुलेटर');
     }
 
     function calculateCropSchedule() {
@@ -1109,13 +1107,15 @@
       let fertilizerDate2 = new Date(sowingDate); fertilizerDate2.setDate(sowingDate.getDate() + 35);
       let harvestDate = new Date(sowingDate); harvestDate.setDate(sowingDate.getDate() + daysToHarvest);
 
+      let localeStr = currentLang === 'en' ? 'en-IN' : 'hi-IN';
       let options = { year: 'numeric', month: 'long', day: 'numeric' };
+      let t = translations[currentLang];
       let resultHTML = `
-        <b>🌱 फसल:</b> ${crop}<br>
-        <b>📅 बुवाई की तारीख:</b> ${sowingDate.toLocaleDateString('hi-IN', options)}<br><br>
-        <b>🌿 पहली खाद (बेसल/ग्रोथ) का समय:</b> ${fertilizerDate1.toLocaleDateString('hi-IN', options)}<br>
-        <b>⚡ दूसरी खाद (फूल व फल विकास) का समय:</b> ${fertilizerDate2.toLocaleDateString('hi-IN', options)}<br>
-        <b style="color:#16a34a;">🎯 अनुमानित कटाई शुरू होने की तारीख: ${harvestDate.toLocaleDateString('hi-IN', options)}</b>
+        <b>🌱 ${t.cropLabel || 'फसल'}:</b> ${crop}<br>
+        <b>📅 ${t.sowDateLabel || 'बुवाई की तारीख'}:</b> ${sowingDate.toLocaleDateString(localeStr, options)}<br><br>
+        <b>🌿 ${t.fert1Label || 'पहली खाद का समय'}:</b> ${fertilizerDate1.toLocaleDateString(localeStr, options)}<br>
+        <b>⚡ ${t.fert2Label || 'दूसरी खाद का समय'}:</b> ${fertilizerDate2.toLocaleDateString(localeStr, options)}<br>
+        <b style="color:#16a34a;">🎯 ${t.harvestLabel || 'अनुमानित कटाई शुरू होने की तारीख'}: ${harvestDate.toLocaleDateString(localeStr, options)}</b>
       `;
       document.getElementById('calcResultText').innerHTML = resultHTML;
     }
@@ -1128,7 +1128,7 @@
           try {
             let res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=hi`);
             let data = await res.json();
-            if (data && data.city || data.principalSubdivision) {
+            if (data && (data.city || data.principalSubdivision)) {
               let detectedCity = data.city || data.principalSubdivision;
               userCurrentCity = detectedCity;
               localStorage.setItem('farmer_state', detectedCity);
@@ -1138,15 +1138,6 @@
         }, () => {});
       }
     }
-
-    let touchstartY = 0;
-    window.addEventListener('touchstart', e => { touchstartY = e.changedTouches[0].screenY; });
-    window.addEventListener('touchend', e => {
-      let touchendY = e.changedTouches[0].screenY;
-      if (touchendY - touchstartY > 120 && window.scrollY === 0) {
-        location.reload();
-      }
-    });
 
     let cachedMandiData = null;
     async function fetchLiveMandiPrices() {
@@ -1217,40 +1208,354 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
 
-    function getStandardCropName(raw) {
-      if (!raw) return '';
-      let c = raw.trim();
-      let low = c.toLowerCase();
-      
-      if (low.includes('टमाटर') || low.includes('tomato')) return 'टमाटर';
-      if (low.includes('शिमला') || low.includes('capsicum')) return 'शिमला मिर्च';
-      if (low.includes('मिर्च') || low.includes('chilli') || low.includes('chili') || low.includes('pepper')) return 'मिर्च';
-      if (low.includes('फूलगोभी') || low.includes('cauliflower')) return 'फूलगोभी';
-      if (low.includes('पत्तागोभी') || low.includes('cabbage')) return 'पत्तागोभी';
-      if (low.includes('खीरा') || low.includes('cucumber')) return 'खीरा';
-      if (low.includes('तरबूज') || low.includes('watermelon')) return 'तरबूज';
-      if (low.includes('खरबूजा') || low.includes('muskmelon') || low.includes('melon')) return 'खरबूजा';
-      if (low.includes('भिंडी') || low.includes('okra')) return 'भिंडी';
-      if (low.includes('बैंगन') || low.includes('brinjal')) return 'बैंगन';
-      if (low.includes('कद्दू') || low.includes('pumpkin')) return 'कद्दू';
-      if (low.includes('लौकी') || low.includes('bottle gourd')) return 'लौकी';
-      if (low.includes('करेला') || low.includes('bitter gourd')) return 'करेला';
-      if (low.includes('तोरई') || low.includes('तोरी')) return 'तोरई';
-      if (low.includes('मटर') || low.includes('pea')) return 'मटर';
-      if (low.includes('स्वीट कॉर्न') || low.includes('मक्का') || low.includes('भुट्टा')) return 'स्वीट कॉर्न / मक्का';
-      if (low.includes('मूली') || low.includes('radish')) return 'मूली';
-      if (low.includes('गाजर') || low.includes('carrot')) return 'गाजर';
-      if (low.includes('प्याज') || low.includes('onion')) return 'प्याज';
-      return c.split('(')[0].split('-')[0].split('/')[0].trim();
-    }
-
-    const langData = {
-      hi: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, किसान भाई!" },
-      en: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!" },
-      pa: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!" },
-      rj: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, किसान भाई!" },
-      gu: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "રાम-ram, ખેડૂત ભાઈ!" },
-      mr: { headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, शेतकरी बंधू!" }
+    // **संपूर्ण भाषा शब्दकोश (Multi-Language Dictionary)**
+    const translations = {
+      hi: {
+        headerTitle: "CROP & SABZI DOCTOR",
+        welcomeMsg: "राम-राम, किसान भाई!",
+        txtLoading: "🌾 डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...",
+        txtLoginSub: "कृषि सहायता ऐप में आपका स्वागत है",
+        txtPhoneLabel: "अपना मोबाइल नंबर दर्ज करें:",
+        txtOtpBtn: "📲 ओटीपी (OTP) भेजें",
+        txtOtpStatus: "🔐 ओटीपी (OTP) दर्ज हो रहा है...",
+        txtOtpSuccess: "सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!",
+        txtSkipLogin: "⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें",
+        txtNotifHead: "🔔 ताज़ा अपडेट व सूचनाएं",
+        txtDrawerHead: "📋 मेन्यू व सेटिंग्स",
+        txtCompleteProfile: "टैप करके अपनी प्रोफाइल पूरी करें >",
+        mProf: "मेरी प्रोफाइल / सेटिंग्स",
+        mFav: "मेरी पसंदीदा किस्में (Bookmarks)",
+        mCrops: "सब्जी फसल किस्में",
+        mSched: "स्प्रे शेड्यूल",
+        mProt: "फसल सुरक्षा (रोग निदान)",
+        mChem: "दवाइयाँ Chemicals",
+        mServ: "Other सेवाएं (मौसम, मंडी, अलर्ट)",
+        mPrivacy: "नियम व शर्तें एवं गोपनीयता नीति",
+        mRate: "गूगल प्ले स्टोर पर रेट करें",
+        mShare: "किसान साथियों को ऐप शेयर करें",
+        mHelp: "व्हाट्सएप हेल्पलाइन",
+        mLogout: "लॉगआउट (Logout)",
+        txtFabSolution: "तुरंत समाधान",
+        txtSolHead: "⚡ तुरंत समाधान (AI रोग जांच)",
+        txtCamBtn: "कैमरा से फोटो लें",
+        txtGalBtn: "गैलरी से चुनें",
+        txtAiReportHead: "🌿 AI रोग निदान रिपोर्ट व सावधानियां",
+        txtChangeProf: "✏️ प्रोफाइल बदलें",
+        txtAiBoxTitle: "🎙️ AI कृषि डॉक्टर से बोलकर बात करें",
+        txtAiBoxSub: "टैप करें और फसल या बीमारी का नाम बोलें...",
+        txtSprayTip: "स्प्रे हेतु सुबह या शाम का समय चुनें",
+        tmt: "टमाटर", cuc: "खीरा", chi: "मिर्च", wat: "तरबूज", cau: "फूलगोभी", okr: "भिंडी",
+        g1: "सब्जी फसल किस्म", g2: "फसल सुरक्षा", g3: "स्प्रे शेड्यूल", g4: "खेती कैसे करें (A-Z)",
+        g5: "किसान चर्चा (कमेटियाँ)", g6: "सलाहकार", g7: "All कंपनी बीज", g8: "दवाइयाँ Chemicals", g9: "Other सेवाएं",
+        txtPlaySub: "हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।", txtPlayBtn: "रेट करें",
+        txtVideoHead: "📺 ताज़ा कृषि वीडियो व रील्स", txtAllVideos: "सभी देखें >",
+        txtSocialTitle: "हमारे साथ सोशल मीडिया पर जुड़ें",
+        aiChatTitle: "AI सब्जी डॉक्टर चैट",
+        aiChatHead: "👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन",
+        aiChatSub: "अपनी फसल, पौधे के रोग या खाद से जुड़ा सवाल यहाँ लिखकर या बोलकर पूछें:",
+        aiWelcomeMsg: "राम-राम किसान भाई! फसल में कोई रोग, कीट या खाद से जुड़ी समस्या है? यहाँ लिखकर या बोलकर बताएं。",
+        txtSendBtn: "भेजें",
+        txtAtozHead: "📖 सब्जी खेती गाइड (A से Z तक)",
+        txtAtozSub: "गूगल शीट से लाइव अपडेटेड फसल गाइड।",
+        txtDiscHead: "💬 किसान चर्चा मंच (फसल फोटो व सुझाव)",
+        txtLblName: "आपका नाम:", txtLblDisc: "आपकी चर्चा / सवाल:", txtLblPhoto: "फोटो जोड़ें (वैकल्पिक):",
+        txtPostBtn: "📤 चर्चा पोस्ट करें", txtDiscListHead: "📢 किसानों की ताज़ा चर्चाएं व सुझाव (Comments):",
+        txtPrivacyHead: "📜 नियम व शर्तें एवं गोपनीयता नीति",
+        txtChemHead: "🧪 कृषि दवाइयाँ व टॉनिक", txtChemSub: "श्रेणी चुनें:",
+        c1: "कीटनाशक (Insecticides)", c2: "फफूंदनाशक (Fungicides)", c3: "खरपतवारनाशक (Weedicides)", c4: "टॉनिक व PGR (Tonics)",
+        s1: "मौसम की पूरी जानकारी", s2: "ताज़ा मंडी भाव (GPS आधारित)", s3: "बुवाई और कटाई कैलकुलेटर", s4: "कृषि एक्सपर्ट सुझाव",
+        s5: "कीट व रोग अलर्ट", s6: "सरकारी योजनाएं", s7: "मेरी AI रोग जांच रिपोर्ट", s8: "गूगल प्ले स्टोर पर रेट करें", s9: "किसान साथियों को शेयर करें",
+        txtCalcHead: "🧮 स्मार्ट बुवाई और कटाई कैलकुलेटर", txtCalcCropLabel: "फसल चुनें:", txtCalcDateLabel: "बुवाई की तारीख (Sowing Date):",
+        txtCalcBtn: "📊 सही समय गणना करें", txtCalcResHead: "📅 फसल अनुमानित समय सारणी",
+        txtReportHead: "🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड", txtReportSub: "गूगल शीट (Diagnosis) से आपकी पिछली सभी फसल जांच रिपोर्ट:",
+        txtLoadingReports: "⏳ रिपोर्ट लोड हो रही है...",
+        txtFavHead: "⭐ आपकी सेव की गई पसंदीदा किस्में", txtFavSub: "यहाँ आपकी बुकमार्क की गई सभी वैरायटी दिखेंगी:",
+        txtGovHead: "🏛️ प्रमुख सरकारी योजनाएं", txtGovPortal: "🌐 पीएम-किसान पोर्टल देखें",
+        txtWind: "हवा की गति", txtHumid: "नमी",
+        txtMandiHead: "📈 लाइव सरकारी मंडी भाव (GPS आधारित)",
+        thState: "राज्य / ज़िला", thMarket: "मंडी", thCrop: "फसल (Commodity)", thMin: "न्यूनतम (₹/क्विंटल)", thMax: "अधिकतम (₹/क्विंटल)",
+        txtTipsHead: "💡 कृषि एक्सपर्ट सुझाव", txtAlertHead: "🚨 कीट व रोग चेतावनी",
+        txtProfHead: "👨‍🌾 किसान प्रोफाइल जानकारी", txtProfName: "आपका नाम:", txtProfPhone: "मोबाइल नंबर:", txtProfState: "गाँव / ज़िला / राज्य:", txtProfCrops: "मुख्य फसलें:", txtSaveProf: "💾 प्रोफाइल सुरक्षित करें",
+        txtSelCrop: "सब्जी फसल चुनें:", txtSelSched: "स्प्रे शेड्यूल हेतु सब्जी चुनें:", txtSelProt: "रोग निदान हेतु फसल चुनें:", txtSelComp: "सीड कंपनी चुनें:",
+        navHome: "होम", navCrops: "फसलें", navSched: "शेड्यूल", navProt: "सुरक्षा", navHelp: "हेल्पलाइन",
+        youLabel: "आप", aiDocLabel: "AI डॉक्टर", thinkingText: "सोच रहा हूँ...", errorLabel: "एरर", errorServer: "इंटरनेट कनेक्शन या सर्वर में समस्या है।", errorResponse: "माफ़ कीजिए, अभी उत्तर नहीं मिल पाया।",
+        cropLabel: "फसल", sowDateLabel: "बुवाई की तारीख", fert1Label: "पहली खाद का समय", fert2Label: "दूसरी खाद का समय", harvestLabel: "अनुमानित कटाई शुरू होने की तारीख",
+        listeningText: "🎙️ सुन रहा हूँ, बोलिए...", chatPlaceholder: "उदा. टमाटर के पत्ते मुड़ रहे हैं..."
+      },
+      en: {
+        headerTitle: "CROP & SABZI DOCTOR",
+        welcomeMsg: "Ram-Ram, Farmer Brother!",
+        txtLoading: "🌾 Loading data, please wait...",
+        txtLoginSub: "Welcome to Agri Assistance App",
+        txtPhoneLabel: "Enter your mobile number:",
+        txtOtpBtn: "📲 Send OTP",
+        txtOtpStatus: "🔐 Verifying OTP...",
+        txtOtpSuccess: "Verified automatically!",
+        txtSkipLogin: "⏩ Skip Login & Continue",
+        txtNotifHead: "🔔 Fresh Updates & Notices",
+        txtDrawerHead: "📋 Menu & Settings",
+        txtCompleteProfile: "Tap to complete your profile >",
+        mProf: "My Profile / Settings",
+        mFav: "Favorite Varieties (Bookmarks)",
+        mCrops: "Vegetable Varieties",
+        mSched: "Spray Schedule",
+        mProt: "Crop Protection (Disease Cure)",
+        mChem: "Chemicals & Medicines",
+        mServ: "Other Services (Weather, Mandi)",
+        mPrivacy: "Terms & Privacy Policy",
+        mRate: "Rate on Google Play Store",
+        mShare: "Share App with Farmer Friends",
+        mHelp: "WhatsApp Helpline",
+        mLogout: "Logout",
+        txtFabSolution: "Quick Solution",
+        txtSolHead: "⚡ Quick Solution (AI Disease Check)",
+        txtCamBtn: "Take Photo via Camera",
+        txtGalBtn: "Select from Gallery",
+        txtAiReportHead: "🌿 AI Disease Report & Precautions",
+        txtChangeProf: "✏️ Change Profile",
+        txtAiBoxTitle: "🎙️ Talk to AI Agri Doctor",
+        txtAiBoxSub: "Tap and speak crop or disease name...",
+        txtSprayTip: "Choose morning or evening for spraying",
+        tmt: "Tomato", cuc: "Cucumber", chi: "Chilli", wat: "Watermelon", cau: "Cauliflower", okr: "Okra",
+        g1: "Vegetable Varieties", g2: "Crop Protection", g3: "Spray Schedule", g4: "A-Z Farming Guide",
+        g5: "Farmer Discussion", g6: "Advisor", g7: "All Seed Companies", g8: "Chemicals", g9: "Other Services",
+        txtPlaySub: "Rate us on Play Store and share the app.", txtPlayBtn: "Rate Us",
+        txtVideoHead: "📺 Latest Agri Videos & Reels", txtAllVideos: "View All >",
+        txtSocialTitle: "Connect with us on Social Media",
+        aiChatTitle: "AI Sabzi Doctor Chat",
+        aiChatHead: "👨‍⚕️ AI Sabzi Doctor Live Consultation",
+        aiChatSub: "Ask your crop, disease or fertilizer questions here by text or voice:",
+        aiWelcomeMsg: "Ram-Ram Farmer Brother! Any crop disease, pest or fertilizer issue? Ask here.",
+        txtSendBtn: "Send",
+        txtAtozHead: "📖 Vegetable Farming Guide (A to Z)",
+        txtAtozSub: "Live updated crop guide from Google Sheet.",
+        txtDiscHead: "💬 Farmer Discussion Forum",
+        txtLblName: "Your Name:", txtLblDisc: "Your Question / Topic:", txtLblPhoto: "Add Photo (Optional):",
+        txtPostBtn: "📤 Post Discussion", txtDiscListHead: "📢 Farmer Discussions & Comments:",
+        txtPrivacyHead: "📜 Terms & Privacy Policy",
+        txtChemHead: "🧪 Agri Chemicals & Tonics", txtChemSub: "Select Category:",
+        c1: "Insecticides", c2: "Fungicides", c3: "Weedicides", c4: "Tonics & PGR",
+        s1: "Complete Weather Info", s2: "Live Mandi Prices (GPS)", s3: "Sowing & Harvest Calculator", s4: "Agri Expert Tips",
+        s5: "Pest & Disease Alert", s6: "Government Schemes", s7: "My AI Disease Reports", s8: "Rate on Play Store", s9: "Share with Friends",
+        txtCalcHead: "🧮 Smart Sowing & Harvest Calculator", txtCalcCropLabel: "Select Crop:", txtCalcDateLabel: "Sowing Date:",
+        txtCalcBtn: "📊 Calculate Schedule", txtCalcResHead: "📅 Crop Estimated Timetable",
+        txtReportHead: "🌿 Farmer AI Disease Diagnosis History", txtReportSub: "Your past crop analysis reports from Google Sheet:",
+        txtLoadingReports: "⏳ Loading reports...",
+        txtFavHead: "⭐ Your Saved Favorite Varieties", txtFavSub: "All your bookmarked varieties will appear here:",
+        txtGovHead: "🏛️ Major Government Schemes", txtGovPortal: "🌐 View PM-Kisan Portal",
+        txtWind: "Wind Speed", txtHumid: "Humidity",
+        txtMandiHead: "📈 Live Government Mandi Prices",
+        thState: "State / District", thMarket: "Mandi", thCrop: "Commodity", thMin: "Min (₹/Quintal)", thMax: "Max (₹/Quintal)",
+        txtTipsHead: "💡 Agri Expert Tips", txtAlertHead: "🚨 Pest & Disease Warnings",
+        txtProfHead: "👨‍🌾 Farmer Profile Information", txtProfName: "Your Name:", txtProfPhone: "Mobile Number:", txtProfState: "Village / District / State:", txtProfCrops: "Main Crops:", txtSaveProf: "💾 Save Profile",
+        txtSelCrop: "Select Vegetable Crop:", txtSelSched: "Select Crop for Spray Schedule:", txtSelProt: "Select Crop for Disease Diagnosis:", txtSelComp: "Select Seed Company:",
+        navHome: "Home", navCrops: "Crops", navSched: "Schedule", navProt: "Protection", navHelp: "Helpline",
+        youLabel: "You", aiDocLabel: "AI Doctor", thinkingText: "Thinking...", errorLabel: "Error", errorServer: "Internet connection or server issue.", errorResponse: "Sorry, could not get an answer.",
+        cropLabel: "Crop", sowDateLabel: "Sowing Date", fert1Label: "First Fertilizer Time", fert2Label: "Second Fertilizer Time", harvestLabel: "Estimated Harvest Start Date",
+        listeningText: "🎙️ Listening, speak...", chatPlaceholder: "e.g. Tomato leaves are curling..."
+      },
+      pa: {
+        headerTitle: "CROP & SABZI DOCTOR",
+        welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!",
+        txtLoading: "🌾 ਡੇਟਾ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+        txtLoginSub: "ਕਿਸਾਨ ਸਹਾਇਤਾ ਐਪ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ",
+        txtPhoneLabel: "ਆਪਣਾ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ:",
+        txtOtpBtn: "📲 OTP ਭੇਜੋ",
+        txtOtpStatus: "🔐 OTP ਤਸਦੀਕ ਹੋ ਰਿਹਾ ਹੈ...",
+        txtOtpSuccess: "ਆਟੋ-ਵੈਰੀਫਾਈ ਹੋ ਗਿਆ!",
+        txtSkipLogin: "⏩ ਲੌਗਇਨ ਛੱਡੋ ਅਤੇ ਅੱਗੇ ਵਧੋ",
+        txtNotifHead: "🔔 ਤਾਜ਼ਾ ਅੱਪਡੇਟ",
+        txtDrawerHead: "📋 ਮੀਨੂ ਅਤੇ ਸੈਟਿੰਗਾਂ",
+        txtCompleteProfile: "ਆਪਣੀ ਪ੍ਰੋਫਾਈਲ ਪੂਰੀ ਕਰੋ >",
+        mProf: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ / ਸੈਟਿੰਗਾਂ",
+        mFav: "ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ",
+        mCrops: "ਸਬਜ਼ੀਆਂ ਦੀਆਂ ਕਿਸਮਾਂ",
+        mSched: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ",
+        mProt: "ਫ਼ਸਲ ਸੁਰੱਖਿਆ",
+        mChem: "ਦਵਾਈਆਂ Chemicals",
+        mServ: "ਹੋਰ ਸੇਵਾਵਾਂ",
+        mPrivacy: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+        mRate: "ਪਲੇਅ ਸਟੋਰ ਤੇ ਰੇਟ ਕਰੋ",
+        mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
+        mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
+        mLogout: "ਲੌਗਆਉਟ",
+        txtFabSolution: "ਤੁਰੰਤ ਹੱਲ",
+        txtSolHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਰੋਗ ਜਾਂਚ)",
+        txtCamBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
+        txtGalBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
+        txtAiReportHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ",
+        txtChangeProf: "✏️ ਪ੍ਰੋਫਾਈਲ ਬਦਲੋ",
+        txtAiBoxTitle: "🎙️ AI ਡਾਕਟਰ ਨਾਲ ਗੱલ ਕਰੋ",
+        txtAiBoxSub: "ਬੋਲ ਕੇ ਫ਼ਸਲ ਦੀ ਸਮੱਸਿਆ ਪੁੱછੋ...",
+        txtSprayTip: "ਸਪ੍ਰੇ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ",
+        tmt: "ਟਮਾਟਰ", cuc: "ਖੀਰਾ", chi: "ਮਿਰਚ", wat: "ਤਰਬੂਜ", cau: "ਫੁੱਲ ਗੋਭੀ", okr: "ਭਿੰਡੀ",
+        g1: "ਸਬਜ਼ੀ ਕਿਸਮ", g2: "ਫ਼ਸਲ ਸੁਰੱਖਿਆ", g3: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ", g4: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
+        g5: "ਕਿਸਾਨ ਚਰਚਾ", g6: "ਸਲਾਹਕਾਰ", g7: "ਕੰਪਨੀ ਬੀਜ", g8: "ਦਵਾਈਆਂ", g9: "ਹੋਰ ਸੇਵਾਵਾਂ",
+        txtPlaySub: "ਪਲੇਅ ਸਟੋਰ ਤੇ ਰੇਟ ਕਰੋ।", txtPlayBtn: "ਰੇਟ ਕਰੋ",
+        txtVideoHead: "📺 ਤਾਜ਼ਾ ਖੇਤੀ ਵੀਡੀਓ", txtAllVideos: "ਸਾਰੇ ਦੇਖੋ >",
+        txtSocialTitle: "ਸੋਸ਼ਲ ਮੀਡੀਆ ਤੇ ਜੁੜੋ",
+        aiChatTitle: "AI ਡਾਕਟਰ ਚੈਟ", aiChatHead: "👨‍⚕️ AI ਡਾਕਟਰ ਲਾਈਵ", aiChatSub: "ਆਪਣਾ ਸਵਾਲ ਪੁੱਛੋ:", aiWelcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਕਿਸਾਨ ਵੀਰ!", txtSendBtn: "ਭੇਜੋ",
+        txtAtozHead: "📖 ਸਬਜ਼ੀ ਖੇਤੀ ਗਾਈਡ", txtAtozSub: "ਫ਼ਸਲ ਗਾਈਡ",
+        txtDiscHead: "💬 ਕਿਸਾਨ ਚਰਚਾ", txtLblName: "ਤੁਹਾਡਾ ਨਾਮ:", txtLblDisc: "ਸਵਾਲ:", txtLblPhoto: "ਫੋਟੋ:", txtPostBtn: "ਪੋਸਟ ਕਰੋ", txtDiscListHead: "📢 ਚਰਚਾ:",
+        txtPrivacyHead: "📜 ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+        txtChemHead: "🧪 ਦਵਾਈਆਂ", txtChemSub: "ਸ਼੍ਰੇਣੀ ਚੁਣੋ:",
+        c1: "ਕੀਟਨਾਸ਼ਕ", c2: "ਉੱਲੀਨਾਸ਼ਕ", c3: "ਨਦੀਨਨਾਸ਼ਕ", c4: "ਟੌਨਿਕ",
+        s1: "ਮੌਸਮ", s2: "ਮੰਡੀ ਭਾਅ", s3: "ਕੈਲਕੁਲੇਟਰ", s4: "ਸੁਝਾਅ", s5: "ਕੀਟ ਅਲਰਟ", s6: "ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ", s7: "AI ਰਿਪੋਰਟ", s8: "ਰੇਟ ਕਰੋ", s9: "ਸ਼ੇਅਰ ਕਰੋ",
+        txtCalcHead: "🧮 ਬਿਜਾਈ ਕੈਲਕੁलेटर", txtCalcCropLabel: "ਫ਼ਸਲ ਚੁਣੋ:", txtCalcDateLabel: "ਬਿਜਾਈ ਦੀ ਮਿਤੀ:", txtCalcBtn: "ਗਣਨਾ ਕਰੋ", txtCalcResHead: "📅 ਸ਼ਡਿਊਲ",
+        txtReportHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ ਰਿਕਾਰਡ", txtReportSub: "ਪਿਛਲੀਆਂ ਰਿਪੋਰਟਾਂ:", txtLoadingReports: "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+        txtFavHead: "⭐ ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ", txtFavSub: "ਸੇਵ ਕੀਤੀਆਂ ਕਿਸਮਾਂ:",
+        txtGovHead: "🏛️ ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ", txtGovPortal: "🌐 ਪੋਰਟਲ ਦੇਖੋ",
+        txtWind: "ਹਵਾ ਦੀ ਗਤੀ", txtHumid: "ਨਮੀ",
+        txtMandiHead: "📈 ਮੰਡੀ ਭਾਅ", thState: "ਰਾਜ / ਜ਼ਿਲ੍ਹਾ", thMarket: "ਮੰਡੀ", thCrop: "ਫ਼ਸਲ", thMin: "ਘੱਟੋ-ਘੱਟ", thMax: "ਵੱਧ ਤੋਂ ਵੱਧ",
+        txtTipsHead: "💡 ਸੁਝਾਅ", txtAlertHead: "🚨 ਚੇਤਾਵਨੀ",
+        txtProfHead: "👨‍🌾 ਪ੍ਰੋਫਾਈਲ", txtProfName: "ਨਾਮ:", txtProfPhone: "ਨੰਬਰ:", txtProfState: "ਰਾਜ:", txtProfCrops: "ਫ਼ਸਲਾਂ:", txtSaveProf: "ਸੇਵ ਕਰੋ",
+        txtSelCrop: "ਫ਼ਸਲ ਚੁਣੋ:", txtSelSched: "ਸ਼ਡਿਊਲ ਲਈ ਫ਼ਸਲ ਚੁਣੋ:", txtSelProt: "ਸੁਰੱਖਿਆ ਲਈ ਫ਼ਸਲ ਚੁਣੋ:", txtSelComp: "ਕੰਪਨੀ ਚੁਣੋ:",
+        navHome: "ਹੋਮ", navCrops: "ਫ਼ਸਲਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਹੈਲਪਲਾਈਨ",
+        youLabel: "ਤੁਸੀਂ", aiDocLabel: "AI ਡਾਕਟਰ", thinkingText: "ਸੋਚ ਰਿਹਾ ਹੈ...", errorLabel: "ਗਲਤੀ", errorServer: "ਸਰਵਰ ਸਮੱਸਿਆ।", errorResponse: "ਜਵਾਬ ਨਹੀਂ ਮਿਲਿਆ।",
+        cropLabel: "ਫ਼ਸਲ", sowDateLabel: "ਬਿਜਾਈ ਮਿਤੀ", fert1Label: "ਪਹਿਲੀ ਖਾਦ", fert2Label: "ਦੂਜੀ ਖਾਦ", harvestLabel: "ਕਟાઈ ਮਿਤੀ",
+        listeningText: "🎙️ ਸੁਣ ਰਿਹਾ ਹੈ...", chatPlaceholder: "ਉਦਾ. ਟਮਾਟਰ ਦੇ ਪੱਤੇ..."
+      },
+      rj: {
+        headerTitle: "CROP & SABZI DOCTOR",
+        welcomeMsg: "खम्मा घणी, किसान भाई!",
+        txtLoading: "🌾 डेटा लोड हो रिया है...",
+        txtLoginSub: "कृषि सहायता ऐप में स्वागत है",
+        txtPhoneLabel: "थारो मोबाइल नंबर लिखो:",
+        txtOtpBtn: "📲 ओटीपी (OTP) भेजो",
+        txtOtpStatus: "🔐 ओटीपी आ रिया है...",
+        txtOtpSuccess: "सफलतापूर्वक वेरीफाई होगी!",
+        txtSkipLogin: "⏩ लॉगिन छोड़ो और आगे बढ़ो",
+        txtNotifHead: "🔔 ताज़ा अपडेट",
+        txtDrawerHead: "📋 मेन्यू और सेटिंग",
+        txtCompleteProfile: "प्रोफाइल पूरी करो >",
+        mProf: "मेरी प्रोफाइल", mFav: "पसंदीदा किस्में", mCrops: "सब्जी किस्में", mSched: "स्प्रे शेड्यूल",
+        mProt: "फसल सुरक्षा", mChem: "दवाइयाँ Chemicals", mServ: "अन्य सेवाएं", mPrivacy: "नियम व शर्तें",
+        mRate: "प्ले स्टोर पर रेट करो", mShare: "ऐप शेयर करो", mHelp: "व्हाट्सएप हेल्पलाइन", mLogout: "लॉगआउट",
+        txtFabSolution: "तुरंत समाधान", txtSolHead: "⚡ तुरंत समाधान (AI रोग जांच)",
+        txtCamBtn: "कैमरे सू फोटो लो", txtGalBtn: "गेलरी सू चुणो", txtAiReportHead: "🌿 AI रोग रिपोर्ट",
+        txtChangeProf: "✏️ प्रोफाइल बदलो", txtAiBoxTitle: "🎙️ AI डॉक्टर सू बात करो",
+        txtAiBoxSub: "बोल कर फसल री समस्या पूछो...", txtSprayTip: "स्प्रे वास्ते सुबह या शाम चुणो",
+        tmt: "टमाटर", cuc: "खीरा", chi: "मिर्च", wat: "तरबूज", cau: "फूलगोभी", okr: "भिंडी",
+        g1: "सब्जी फसल", g2: "फसल सुरक्षा", g3: "स्प्रे शेड्यूल", g4: "खेती गाइड (A-Z)",
+        g5: "किसान चर्चा", g6: "सलाहकार", g7: "कंपनी बीज", g8: "दवाइयाँ", g9: "अन्य सेवाएं",
+        txtPlaySub: "प्ले स्टोर पर रेट करो।", txtPlayBtn: "रेट करो",
+        txtVideoHead: "📺 ताज़ा कृषि वीडियो", txtAllVideos: "सगळा देखो >",
+        txtSocialTitle: "सोशल मीडिया पर जुड़ो",
+        aiChatTitle: "AI डॉक्टर चैट", aiChatHead: "👨‍⚕️ AI डॉक्टर लाइव", aiChatSub: "थारो सवाल लिखो या बोलो:", aiWelcomeMsg: "खम्मा घणी किसान भाई!", txtSendBtn: "भेजो",
+        txtAtozHead: "📖 सब्जी खेती गाइड", txtAtozSub: "फसल गाइड",
+        txtDiscHead: "💬 किसान चर्चा", txtLblName: "थारो नाम:", txtLblDisc: "सवाल:", txtLblPhoto: "फोटो:", txtPostBtn: "पोस्ट करो", txtDiscListHead: "📢 चर्चा:",
+        txtPrivacyHead: "📜 नियम व शर्तें",
+        txtChemHead: "🧪 दवाइयाँ", txtChemSub: "श्रेणी चुणो:",
+        c1: "कीटनाशक", c2: "फफूंदनाशक", c3: "खरपतवारनाशक", c4: "टॉनिक",
+        s1: "मौसम", s2: "मंडी भाव", s3: "कैलकुलेटर", s4: "सुझाव", s5: "कीट अलर्ट", s6: "सरकारी योजना", s7: "AI रिपोर्ट", s8: "रेट करो", s9: "शेयर करो",
+        txtCalcHead: "🧮 बुवाई कैलकुलेटर", txtCalcCropLabel: "फसल चुणो:", txtCalcDateLabel: "बुवाई री तारीख:", txtCalcBtn: "गणना करो", txtCalcResHead: "📅 शेड्यूल",
+        txtReportHead: "🌿 AI रोग रिपोर्ट रेकॉर्ड", txtReportSub: "पुरानी रिपोर्ट:", txtLoadingReports: "लोड हो रिया है...",
+        txtFavHead: "⭐ पसंदीदा किस्में", txtFavSub: "सेव करीड़ी किस्में:",
+        txtGovHead: "🏛️ सरकारी योजना", txtGovPortal: "🌐 पोर्टल देखो",
+        txtWind: "हवा री गति", txtHumid: "नमी",
+        txtMandiHead: "📈 मंडी भाव", thState: "राज्य / जिला", thMarket: "मंडी", thCrop: "फसल", thMin: "न्यूनतम", thMax: "अधिकतम",
+        txtTipsHead: "💡 सुझाव", txtAlertHead: "🚨 चेतावनी",
+        txtProfHead: "👨‍🌾 प्रोफाइल", txtProfName: "नाम:", txtProfPhone: "नंबर:", txtProfState: "जिला:", txtProfCrops: "फसल:", txtSaveProf: "सेव करो",
+        txtSelCrop: "फसल चुणो:", txtSelSched: "शेड्यूल वास्ते फसल चुणो:", txtSelProt: "सुरक्षा वास्ते फसल चुणो:", txtSelComp: "कंपनी चुणो:",
+        navHome: "होम", navCrops: "फसलें", navSched: "शेड्यूल", navProt: "सुरक्षा", navHelp: "हेल्पलाइन",
+        youLabel: "आप", aiDocLabel: "AI डॉक्टर", thinkingText: "सोच रिया है...", errorLabel: "एरर", errorServer: "इंटरनेट समस्या।", errorResponse: "जवाब कोनी मिल्यो।",
+        cropLabel: "फसल", sowDateLabel: "बुवाई तारीख", fert1Label: "पैली खाद", fert2Label: "दूजी खाद", harvestLabel: "कटाई तारीख",
+        listeningText: "🎙️ सुण रिया है...", chatPlaceholder: "उदा. टमाटर रा पत्ता..."
+      },
+      gu: {
+        headerTitle: "CROP & SABZI DOCTOR",
+        welcomeMsg: "राम-राम, ખેડૂત ભાઈ!",
+        txtLoading: "🌾 ડેટા લોડ થઈ રહ્યો છે...",
+        txtLoginSub: "કૃષિ સહાયતા એપમાં સ્વાગત છે",
+        txtPhoneLabel: "તમારો મોબાઈલ નંબર દાખલ કરો:",
+        txtOtpBtn: "📲 OTP મોકલો",
+        txtOtpStatus: "🔐 OTP વેરિફાઈ થઈ રહ્યો છે...",
+        txtOtpSuccess: "ઓટો-વેરિફાઈ થઈ ગયું!",
+        txtSkipLogin: "⏩ લોગિન છોડો અને આગળ વધો",
+        txtNotifHead: "🔔 તાજા અપડેટ્સ",
+        txtDrawerHead: "📋 મેનુ અને સેટિંગ્સ",
+        txtCompleteProfile: "પ્રોફાઈલ પૂર્ણ કરો >",
+        mProf: "મારી પ્રોફાઈલ", mFav: "પસંદગીની જાતો", mCrops: "શાકભાજી જાતો", mSched: "સ્પ્રે શિડ્યુલ",
+        mProt: "પાક સુરક્ષા", mChem: "દવાઓ Chemicals", mServ: "અન્ય સેવાઓ", mPrivacy: "નિયમો અને શરતો",
+        mRate: "પ્લે સ્ટોર પર રેટ કરો", mShare: "એપ શેર કરો", mHelp: "વોટ્સએપ હેલ્પલાઇન", mLogout: "લોગઆઉટ",
+        txtFabSolution: "ત્વરિત ઉકેલ", txtSolHead: "⚡ ત્વરિત ઉકેલ (AI રોગ તપાસ)",
+        txtCamBtn: "કેમેરાથી ફોટો લો", txtGalBtn: "ગેલેરીથી પસંદ કરો", txtAiReportHead: "🌿 AI રોગ રિપોર્ટ",
+        txtChangeProf: "✏️ પ્રોફાઈલ બદલો", txtAiBoxTitle: "🎙️ AI ડોક્ટર સાથે વાત કરો",
+        txtAiBoxSub: "બોલીને પાકની સમસ્યા પૂછો...", txtSprayTip: "સ્પ્રે માટે સવાર કે સાંજ પસંદ કરો",
+        tmt: "ટામેટા", cuc: "કાકડી", chi: "મરચાં", wat: "તરબૂચ", cau: "ફ્લાવર", okr: "ભીંડા",
+        g1: "શાકભાજી પાક", g2: "પાક સુરક્ષા", g3: "સ્પ્રે શિડ્યુલ", g4: "ખેતી ગાઈડ (A-Z)",
+        g5: "ખેડૂત ચર્ચા", g6: "સલાહકાર", g7: "કંપની બીજ", g8: "દવાઓ", g9: "અન્ય સેવાઓ",
+        txtPlaySub: "પ્લે સ્ટોર પર રેટ કરો.", txtPlayBtn: "રેટ કરો",
+        txtVideoHead: "📺 તાજા કૃષિ વીડિયો", txtAllVideos: "બધા જુઓ >",
+        txtSocialTitle: "સોશિયલ મીડિયા પર જોડاو",
+        aiChatTitle: "AI ડોક્ટર ચેટ", aiChatHead: "👨‍⚕️ AI ડોક્ટર લાઈવ", aiChatSub: "તમારો પ્રશ્ન લખો અથવા બોલો:", aiWelcomeMsg: "રામ-राम ખેડૂત ભાઈ!", txtSendBtn: "મોકલો",
+        txtAtozHead: "📖 શાકભાજી ખેતી ગાઈડ", txtAtozSub: "પાક ગાઈડ",
+        txtDiscHead: "💬 ખેડૂત ચર્ચા મંચ", txtLblName: "તમારું નામ:", txtLblDisc: "પ્રશ્ન:", txtLblPhoto: "ફોટો:", txtPostBtn: "પોસ્ટ કરો", txtDiscListHead: "📢 ચર્ચા:",
+        txtPrivacyHead: "📜 નિયમો અને શરતો",
+        txtChemHead: "🧪 દવાઓ", txtChemSub: "શ્રેણી પસંદ કરો:",
+        c1: "જંતુનાશક", c2: "ફૂગનાશક", c3: "નિંદામણનાશક", c4: "ટોનિક",
+        s1: "હવામાન", s2: "મંડી ભાવ", s3: "કલ્ક્યુલેટર", s4: "સૂચનો", s5: "કીટક એલર્ટ", s6: "સરકારી યોજનાઓ", s7: "AI રિપોર્ટ", s8: "રેટ કરો", s9: "શેર કરો",
+        txtCalcHead: "🧮 વાવણી કલ્ક્યુલેટર", txtCalcCropLabel: "પાક પસંદ કરો:", txtCalcDateLabel: "વાવણી તારીખ:", txtCalcBtn: "ગણતરી કરો", txtCalcResHead: "📅 શિડ્યુલ",
+        txtReportHead: "🌿 AI રોગ રિપોર્ટ રેકોર્ડ", txtReportSub: "જૂના રિપોર્ટ્સ:", txtLoadingReports: "લોડ થઈ રહ્યું છે...",
+        txtFavHead: "⭐ પસંદગીની જાતો", txtFavSub: "સેવ કરેલી જાતો:",
+        txtGovHead: "🏛️ સરકારી યોજનાઓ", txtGovPortal: "🌐 પોર્ટલ જુઓ",
+        txtWind: "પવનની ગતિ", txtHumid: "ભેજ",
+        txtMandiHead: "📈 મંડી ભાવ", thState: "રાજ્ય / જિલ્લો", thMarket: "મંડી", thCrop: "પાક", thMin: "ન્યૂનતમ", thMax: "મહત્તમ",
+        txtTipsHead: "💡 સૂચનો", txtAlertHead: "🚨 ચેતવણી",
+        txtProfHead: "👨‍🌾 પ્રોફાઈલ", txtProfName: "નામ:", txtProfPhone: "નંબર:", txtProfState: "જિલ્લો:", txtProfCrops: "પાકો:", txtSaveProf: "સેવ કરો",
+        txtSelCrop: "પાક પસંદ કરો:", txtSelSched: "શિડ્યુલ માટે પાક પસંદ કરો:", txtSelProt: "સુરક્ષા માટે પાક પસંદ કરો:", txtSelComp: "કંપની પસંદ કરો:",
+        navHome: "હોમ", navCrops: "પાકો", navSched: "શિડ્યુલ", navProt: "સુરક્ષા", navHelp: "હેલ્પલાઇન",
+        youLabel: "તમે", aiDocLabel: "AI ડોક્ટર", thinkingText: "વિચારી રહ્યો છે...", errorLabel: "ભૂલ", errorServer: "ઇન્ટરનેટ સમસ્યા.", errorResponse: "જવાબ મળ્યો નથી.",
+        cropLabel: "પાક", sowDateLabel: "વાવણી તારીખ", fert1Label: "પ્રથમ ખાતર", fert2Label: "બીજું ખાતર", harvestLabel: "કાપણી તારીખ",
+        listeningText: "🎙️ સાંભળી રહ્યો છે...", chatPlaceholder: "દા.ત. ટામેટાના પાન..."
+      },
+      mr: {
+        headerTitle: "CROP & SABZI DOCTOR",
+        welcomeMsg: "राम-राम, शेतकरी बंधू!",
+        txtLoading: "🌾 डेटा लोड होत आहे...",
+        txtLoginSub: "कृषि सहाय्यता ऐपमध्ये स्वागत आहे",
+        txtPhoneLabel: "तुमचा मोबाईल नंबर प्रविष्ट करा:",
+        txtOtpBtn: "📲 OTP पाठवा",
+        txtOtpStatus: "🔐 OTP सत्यापित होत आहे...",
+        txtOtpSuccess: "स्वयंचलित सत्यापित झाले!",
+        txtSkipLogin: "⏩ लॉगिन वगळा आणि पुढे जा",
+        txtNotifHead: "🔔 ताज्या अपडेट्स",
+        txtDrawerHead: "📋 मेनू व सेटिंग्ज",
+        txtCompleteProfile: "प्रोफाइल पूर्ण करा >",
+        mProf: "माझी प्रोफाइल", mFav: "आवडत्या जाती", mCrops: "भाजीपाला पिके", mSched: "फवारणी वेळापत्रक",
+        mProt: "पीक सुरक्षा", mChem: "औषधे Chemicals", mServ: "इतर सेवा", mPrivacy: "नियम व अटी",
+        mRate: "प्ले स्टोअरवर रेट करा", mShare: "अॅप शेअर करा", mHelp: "whatsapp हेल्पलाइन", mLogout: "लॉगआउट",
+        txtFabSolution: "त्वरित उपाय", txtSolHead: "⚡ त्वरित उपाय (AI रोग तपासणी)",
+        txtCamBtn: "कॅमेऱ्याने फोटो घ्या", txtGalBtn: "गॅलरीतून निवडा", txtAiReportHead: "🌿 AI रोग अहवाल",
+        txtChangeProf: "✏️ प्रोफाइल बदला", txtAiBoxTitle: "🎙️ AI डॉक्टरशी बोला",
+        txtAiBoxSub: "बोला आणि पिकाची समस्या सांगा...", txtSprayTip: "फवारणीसाठी सकाळ किंवा संध्याकाळ निवडा",
+        tmt: "टोमॅटो", cuc: "काकडी", chi: "मिरची", wat: "कलिंगड", cau: "फुलकोबी", okr: "भेंडी",
+        g1: "भाजीपाला पिके", g2: "पीक सुरक्षा", g3: "फवारणी वेळापत्रक", g4: "शेती मार्गदर्शक (A-Z)",
+        g5: "शेतकरी चर्चा", g6: "सल्लागार", g7: "कंपनी बियाणे", g8: "औषधे", g9: "इतर सेवा",
+        txtPlaySub: "प्ले स्टोअरवर रेट करा.", txtPlayBtn: "रेट करा",
+        txtVideoHead: "📺 ताजे कृषी व्हिडिओ", txtAllVideos: "सर्व पहा >",
+        txtSocialTitle: "सोशल मीडियावर जोडा",
+        aiChatTitle: "AI डॉक्टर चैट", aiChatHead: "👨‍⚕️ AI डॉक्टर लाईव्ह", aiChatSub: "तुमचा प्रश्न लिहा किंवा बोला:", aiWelcomeMsg: "राम-राम शेतकरी बंधू!", txtSendBtn: "पाठवा",
+        txtAtozHead: "📖 भाजीपाला शेती मार्गदर्शक", txtAtozSub: "पीक मार्गदर्शक",
+        txtDiscHead: "💬 शेतकरी चर्चा मंच", txtLblName: "तुमचे नाव:", txtLblDisc: "प्रश्न:", txtLblPhoto: "फोटो:", txtPostBtn: "पोस्ट करा", txtDiscListHead: "📢 चर्चा:",
+        txtPrivacyHead: "📜 नियम व अटी",
+        txtChemHead: "🧪 औषधे", txtChemSub: "श्रेणी निवडा:",
+        c1: "कीटकनाशक", c2: "बुरशीनाशक", c3: "तणनाशक", c4: "टोनिक",
+        s1: "हवामान", s2: "बाजारभाव", s3: "कॅल्क्युलेटर", s4: "सल्ले", s5: "कीटक अलर्ट", s6: "शासकीय योजना", s7: "AI अहवाल", s8: "रेट करा", s9: "शेयर करा",
+        txtCalcHead: "🧮 पेरणी कॅल्क्युलेटर", txtCalcCropLabel: "पीक निवडा:", txtCalcDateLabel: "पेरणी तारीख:", txtCalcBtn: "गणना करा", txtCalcResHead: "📅 वेळापत्रक",
+        txtReportHead: "🌿 AI रोग अहवाल रेकॉर्ड", txtReportSub: "मागील अहवाल:", txtLoadingReports: "लोड होत आहे...",
+        txtFavHead: "⭐ आवडत्या जाती", txtFavSub: "जतन केलेल्या जाती:",
+        txtGovHead: "🏛️ शासकीय योजना", txtGovPortal: "🌐 पोर्टल पहा",
+        txtWind: "वाऱ्याचा वेग", txtHumid: "आर्द्रता",
+        txtMandiHead: "📈 बाजारभाव", thState: "राज्य / जिल्हा", thMarket: "बाजार समिती", thCrop: "पीक", thMin: "किमान", thMax: "कमाल",
+        txtTipsHead: "💡 सल्ले", txtAlertHead: "🚨 चेतावणी",
+        txtProfHead: "👨‍🌾 प्रोफाइल", txtProfName: "नाव:", txtProfPhone: "नंबर:", txtProfState: "जिल्हा:", txtProfCrops: "पिके:", txtSaveProf: "सेव्ह करा",
+        txtSelCrop: "पीक निवडा:", txtSelSched: "वेळापत्रकासाठी पीक निवडा:", txtSelProt: "सुरक्षेसाठी पीक निवडा:", txtSelComp: "कंपनी निवडा:",
+        navHome: "होम", navCrops: "पिके", navSched: "वेळापत्रक", navProt: "सुरक्षा", navHelp: "हेल्पलाईन",
+        youLabel: "तुम्ही", aiDocLabel: "AI डॉक्टर", thinkingText: "विचार करत आहे...", errorLabel: "त्रुटी", errorServer: "इंटरनेट समस्या.", errorResponse: "उत्तर मिळाले नाही.",
+        cropLabel: "पीक", sowDateLabel: "पेरणी तारीख", fert1Label: "पहिले खत", fert2Label: "दुसरे खत", harvestLabel: "काढणी तारीख",
+        listeningText: "🎙️ ऐकत आहे...", chatPlaceholder: "उदा. टोमॅटोची पाने..."
+      }
     };
 
     function setAppLanguage(langCode) {
@@ -1267,21 +1572,90 @@
       document.getElementById('languageSelectModal').classList.add('active');
     }
 
+    // **पूरे ऐप की भाषा एक साथ बदलने वाला मुख्य फंक्शन**
     function applyLanguageUI() {
-      const d = langData[currentLang] || langData['hi'];
-      if(!d) return;
-      document.getElementById('headerTitle').innerText = d.headerTitle;
-      document.getElementById('welcomeMsg').innerText = d.welcomeMsg;
+      const t = translations[currentLang] || translations['hi'];
+      if(!t) return;
+
+      document.getElementById('headerTitle').innerText = t.headerTitle;
+      document.getElementById('welcomeMsg').innerText = t.welcomeMsg;
+      document.getElementById('txtLoading').innerText = t.txtLoading;
+      document.getElementById('txtLoginSub').innerText = t.txtLoginSub;
+      document.getElementById('txtPhoneLabel').innerText = t.txtPhoneLabel;
+      document.getElementById('txtOtpBtn').innerText = t.txtOtpBtn;
+      document.getElementById('txtOtpStatus').innerText = t.txtOtpStatus;
+      document.getElementById('txtOtpSuccess').innerText = t.txtOtpSuccess;
+      document.getElementById('txtSkipLogin').innerText = t.txtSkipLogin;
+      document.getElementById('txtNotifHead').innerText = t.txtNotifHead;
+      document.getElementById('txtDrawerHead').innerText = t.txtDrawerHead;
+      document.getElementById('txtCompleteProfile').innerText = t.txtCompleteProfile;
+
+      // मेनू आइटम्स
+      document.getElementById('mProf').innerText = t.mProf;
+      document.getElementById('mFav').innerText = t.mFav;
+      document.getElementById('mCrops').innerText = t.mCrops;
+      document.getElementById('mSched').innerText = t.mSched;
+      document.getElementById('mProt').innerText = t.mProt;
+      document.getElementById('mChem').innerText = t.mChem;
+      document.getElementById('mServ').innerText = t.mServ;
+      document.getElementById('mPrivacy').innerText = t.mPrivacy;
+      document.getElementById('mRate').innerText = t.mRate;
+      document.getElementById('mShare').innerText = t.mShare;
+      document.getElementById('mHelp').innerText = t.mHelp;
+      document.getElementById('mLogout').innerText = t.mLogout;
+
+      // अन्य बटन व हेडिंग्स
+      document.getElementById('txtFabSolution').innerText = t.txtFabSolution;
+      document.getElementById('txtSolHead').innerText = t.txtSolHead;
+      document.getElementById('txtCamBtn').innerText = t.txtCamBtn;
+      document.getElementById('txtGalBtn').innerText = t.txtGalBtn;
+      document.getElementById('txtAiReportHead').innerText = t.txtAiReportHead;
+      document.getElementById('txtChangeProf').innerText = t.txtChangeProf;
+      document.getElementById('txtAiBoxTitle').innerText = t.txtAiBoxTitle;
+      document.getElementById('txtAiBoxSub').innerText = t.txtAiBoxSub;
+      document.getElementById('txtSprayTip').innerText = t.txtSprayTip;
+
+      // त्वरित फसल टैग्स
+      document.querySelector('.c-tmt').innerText = t.tmt;
+      document.querySelector('.c-cuc').innerText = t.cuc;
+      document.querySelector('.c-chi').innerText = t.chi;
+      document.querySelector('.c-wat').innerText = t.wat;
+      document.querySelector('.c-cau').innerText = t.cau;
+      document.querySelector('.c-okr').innerText = t.okr;
+
+      // 3x3 ग्रिड मेनू
+      document.getElementById('g1').innerText = t.g1;
+      document.getElementById('g2').innerText = t.g2;
+      document.getElementById('g3').innerText = t.g3;
+      document.getElementById('g4').innerText = t.g4;
+      document.getElementById('g5').innerText = t.g5;
+      document.getElementById('g6').innerText = t.g6;
+      document.getElementById('g7').innerText = t.g7;
+      document.getElementById('g8').innerText = t.g8;
+      document.getElementById('g9').innerText = t.g9;
+
+      document.getElementById('txtPlaySub').innerText = t.txtPlaySub;
+      document.getElementById('txtPlayBtn').innerText = t.txtPlayBtn;
+      document.getElementById('txtVideoHead').innerText = t.txtVideoHead;
+      document.getElementById('txtAllVideos').innerText = t.txtAllVideos;
+      document.getElementById('txtSocialTitle').innerText = t.txtSocialTitle;
+
+      // बॉटम नेविगेशन
+      document.getElementById('navHome').innerText = t.navHome;
+      document.getElementById('navCrops').innerText = t.navCrops;
+      document.getElementById('navSched').innerText = t.navSched;
+      document.getElementById('navProt').innerText = t.navProt;
+      document.getElementById('navHelp').innerText = t.navHelp;
     }
 
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
-      if (c.includes('टमाटर')) return '🍅';
-      if (c.includes('मिर्च')) return '🌶️';
-      if (c.includes('खीरा')) return '🥒';
-      if (c.includes('तरबूज')) return '🍉';
-      if (c.includes('फूलगोभी')) return '🥦';
+      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
+      if (c.includes('मिर्च') || c.includes('chilli')) return '🌶️';
+      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
+      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
+      if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
       if (c.includes('कद्दू')) return '🎃';
       if (c.includes('करेला')) return '🥒';
       return '🌱';
@@ -1420,7 +1794,6 @@
           title: cols[0]||'कृषि वीडियो', thumbnail: cols[1]||'', videoUrl: cols[2]||''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title'));
 
-        // **FIXED: Notifications Sheet Parsing**
         try {
           const resNotif = await fetch(BASE_SHEET_URL + 'Notifications');
           const textNotif = await resNotif.text();
@@ -1459,12 +1832,8 @@
             } else {
               document.getElementById('notifBadge').style.display = 'none';
             }
-          } else {
-            notifContainer.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई नई सूचना उपलब्ध नहीं है।</div>`;
           }
-        } catch(ex) {
-          console.log("Notification error:", ex);
-        }
+        } catch(ex) {}
 
         renderStoriesBar();
         renderDynamicVideos();
@@ -1556,8 +1925,8 @@
         if(data.cod === 200) {
           let desc = data.weather[0].description;
           let icon = isNight ? '🌙' : '☀️';
-          if(desc.includes('बादल')) icon = isNight ? '☁️🌙' : '<span class="anim-clouds">☁️</span>';
-          if(desc.includes('वर्षा') || desc.includes('बारिश')) icon = '<span class="anim-rain">🌧️</span>';
+          if(desc.includes('बादल')) icon = isNight ? '☁️🌙' : '☁️';
+          if(desc.includes('वर्षा') || desc.includes('बारिश')) icon = '🌧️';
 
           document.getElementById('weatherPlace').innerText = `📍 ${data.name}`;
           document.getElementById('weatherTemp').innerText = `${Math.round(data.main.temp)}°C`;
@@ -1822,35 +2191,6 @@
 
     async function showPrivacyPolicyScreen() {
       openScreen('screen-privacy', 'गोपनीयता नीति');
-      let box = document.getElementById('privacyContentBox');
-      
-      if (navigator.onLine) {
-        try {
-          let res = await fetch(BASE_SHEET_URL + 'Privacy');
-          let text = await res.text();
-          let rows = parseCSV(text);
-          if (rows.length > 1) {
-            let html = '';
-            rows.forEach((cols, idx) => {
-              if (idx > 0 && cols[0]) {
-                html += `<div class="schedule-step" style="background:#f8fafc; border-color:#cbd5e1; margin-bottom:10px;"><b>${cols[0]}</b><p>${cols[1] || ''}</p></div>`;
-              }
-            });
-            if (html) { box.innerHTML = html; return; }
-          }
-        } catch (e) {}
-      }
-      
-      box.innerHTML = `
-        <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
-          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer - Offline Mode):</b>
-          <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"CROP & SABZI DOCTOR"</b> केवल किसानों के मार्गदर्शन और सामान्य जानकारी के लिए है।</p>
-          <p style="margin-bottom:0px;">2. कीटनाशकों का उपयोग करने से पहले कृषि विशेषज्ञों की सलाह अवश्य लें।</p>
-        </div>
-        <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
-          <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-          <p style="margin-bottom:0px;">आपका डेटा पूरी तरह सुरक्षित रखा जाता है!</p>
-        `;
     }
 
     function contactAdvisor() { window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20सलाह%20चाहिए।', '_blank'); }
@@ -1871,7 +2211,7 @@
         return;
       }
       let rec = new SpeechRecognition();
-      rec.lang = 'hi-IN';
+      rec.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
       rec.interimResults = false;
       rec.maxAlternatives = 1;
       
@@ -1880,7 +2220,7 @@
 
       rec.onstart = function() {
         searchInput.value = "";
-        searchInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए (फसल/रोग/स्प्रे)...";
+        searchInput.placeholder = "🎙️ सुन रहा हूँ, बोलिए...";
         micBtn.classList.add('listening');
       };
 
@@ -1890,36 +2230,15 @@
         micBtn.classList.remove('listening');
         
         let lowText = spokenText.toLowerCase();
-        if (lowText.includes('रोग') || lowText.includes('कीट') || lowText.includes('सुरक्षा')) {
-          showProtectionCropsList();
-        } else if (lowText.includes('स्प्रे') || lowText.includes('शेड्यूल')) {
-          showScheduleCropsList();
-        } else if (lowText.includes('दवा') || lowText.includes('केमिकल') || lowText.includes('कीटनाशक')) {
-          showChemicalsScreen();
-        } else if (lowText.includes('मंडी') || lowText.includes('भाव')) {
-          showMandiBhavScreen();
-        } else if (lowText.includes('मौसम')) {
-          showWeatherDetailScreen();
-        } else {
-          renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(lowText) || r.crop.toLowerCase().includes(lowText)), `सर्च: ${spokenText}`);
-        }
+        renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(lowText) || r.crop.toLowerCase().includes(lowText)), `सर्च: ${spokenText}`);
       };
 
-      rec.onerror = function() {
+      rec.onerror = rec.onend = function() {
         searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
         micBtn.classList.remove('listening');
       };
 
-      rec.onend = function() {
-        searchInput.placeholder = "🔍 खीरा, टमाटर या तरबूज लिखें...";
-        micBtn.classList.remove('listening');
-      };
-
-      try {
-        rec.start();
-      } catch (err) {
-        alert("माइक्रोफोन चालू करने में त्रुटि: " + err.message);
-      }
+      try { rec.start(); } catch (err) {}
     }
 
     function sendOtpCode() {
@@ -1985,7 +2304,7 @@
         let res = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ imageBase64: base64ImageRaw, mimeType: imageMimeType, notes: "रोग जांच व सावधानियां" })
+          body: JSON.stringify({ imageBase64: base64ImageRaw, mimeType: imageMimeType, notes: "रोग जांच व सावधानियां", lang: currentLang })
         });
         let data = await res.json();
         
@@ -2068,10 +2387,7 @@
       let text = document.getElementById('discussionText').value.trim();
       let fileInput = document.getElementById('discussionImageInput');
       
-      if(!author || !text) { 
-        alert("कृपया अपना नाम और चर्चा/सवाल दोनों लिखें!"); 
-        return; 
-      }
+      if(!author || !text) { alert("कृपया अपना नाम और चर्चा/सवाल दोनों लिखें!"); return; }
 
       if(fileInput.files && fileInput.files[0]) {
         let file = fileInput.files[0];
@@ -2093,9 +2409,7 @@
           };
         };
         reader.readAsDataURL(file);
-      } else { 
-        savePost(author, text, ""); 
-      }
+      } else { savePost(author, text, ""); }
     }
 
     function savePost(author, text, imgUrl) {
@@ -2183,7 +2497,8 @@
     };
     function updateProfileUI() {
       let name = localStorage.getItem('farmer_name') || 'Shailnder Kumar';
-      document.getElementById('welcomeMsg').innerText = `राम-राम, ${name} जी!`;
+      let t = translations[currentLang] || translations['hi'];
+      document.getElementById('welcomeMsg').innerText = `${t.welcomeMsg.split(',')[0]}, ${name} जी!`;
     }
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
