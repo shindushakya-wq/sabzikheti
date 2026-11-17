@@ -1524,7 +1524,7 @@
         compTitle: "ਬੀਜ ਕੰਪਨੀ ਚੁਣੋ:",
         chemTitle: "ਦਵਾਈਆਂ Chemicals",
         mandiTitle: "ਮੰਡੀ ਭਾਅ",
-        weatherTitle: "ਮੌਸम",
+        weatherTitle: "ਮੌसम",
         profileTitle: "ਕਿਸਾਨ ਪ੍ਰੋਫાઇલ",
         favoritesTitle: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
         atozTitle: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
@@ -1549,7 +1549,7 @@
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
         mLogout: "ਲਾਗਆਉਟ",
-        solHead: "⚡ ਤੁਰंਤ ਹੱਲ (AI ਜਾਂਚ)",
+        solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
         galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
         diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
@@ -1894,6 +1894,7 @@
     async function fetchSheetTab(sheetName, categoryName) {
       try {
         let res = await fetch(BASE_SHEET_URL + sheetName);
+        if(!res.ok) return [];
         let text = await res.text();
         return parseCSV(text).map(cols => {
           let photoList = [];
