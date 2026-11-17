@@ -66,27 +66,16 @@
     body.dark-mode .variety-card, 
     body.dark-mode .menu-box, 
     body.dark-mode .list-item, 
-    body.dark-mode .social-box, 
     body.dark-mode .modal-box, 
     body.dark-mode .login-card, 
     body.dark-mode .bottom-nav, 
     body.dark-mode .drawer-content, 
     body.dark-mode .search-box, 
     body.dark-mode .schedule-step, 
-    body.dark-mode .doc-result-card, 
-    body.dark-mode .chem-card, 
-    body.dark-mode .disease-card,
-    body.dark-mode #aiChatMessagesContainer { 
+    body.dark-mode .disease-card { 
       background-color: #1e2937 !important; 
       color: #f8fafc !important; 
       border-color: #334155 !important; 
-    }
-
-    body.dark-mode #aiChatMessagesContainer > div,
-    body.dark-mode #aiUserChatInput {
-      background-color: #0f172a !important;
-      color: #f8fafc !important;
-      border-color: #334155 !important;
     }
 
     body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, 
@@ -136,15 +125,6 @@
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
 
-    /* सर्च बार */
-    .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
-    .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; }
-    .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
-    .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; }
-
-    /* AI वॉइस असिस्टेंट कार्ड */
-    .ai-assistant-box { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #86efac; border-radius: 14px; padding: 12px 14px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-
     /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
@@ -170,11 +150,6 @@
     /* तुरंत समाधान बटन */
     .fab-solution { position: fixed; right: 16px; bottom: 75px; background: #059669; color: white; border: none; border-radius: 30px; padding: 12px 18px; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1001; }
     
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-    .modal-overlay.active { display: flex; }
-    .modal-box { background: white; border-radius: 16px; padding: 20px; max-width: 400px; width: 100%; max-height: 85vh; overflow-y: auto; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-
     .list-item { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
     .list-left { display: flex; align-items: center; gap: 12px; }
     .list-icon { font-size: 24px; }
@@ -196,9 +171,6 @@
     .schedule-step { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 14px; margin-bottom: 12px; }
     .schedule-step b { color: #15803d; font-size: 14px; display: block; margin-bottom: 6px; }
     .schedule-step p { font-size: 13.5px; color: #374151; margin-bottom: 6px; line-height: 1.45; }
-
-    .btn-action { display: block; width: 100%; padding: 12px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 14.5px; font-weight: bold; border: none; cursor: pointer; }
-    .btn-wa { background: #10b981; color: white; }
 
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 8px 0; z-index: 1000; }
     .nav-tab { text-align: center; font-size: 10px; color: #6b7280; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
@@ -250,7 +222,7 @@
       <span class="header-title" id="headerTitle">CROP & SABZI DOCTOR</span>
     </div>
     <div class="header-actions">
-      <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
+      <button class="dark-mode-btn" onclick="toggleDarkMode()" title="डार्क मोड">🌙</button>
       <span class="menu-bars-icon" onclick="openDrawer()">☰</span>
     </div>
   </div>
@@ -302,7 +274,7 @@
       </div>
     </div>
 
-    <!-- 3x3 ग्रिड मेनू -->
+    <!-- 3x3 ग्रिड मेनू (दिए गए नियमों के अनुसार अपडेटेड) -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllVarietiesCategories()">
         <div class="icon">🥬</div><h3 id="gCrops">सभी किस्में</h3>
@@ -331,27 +303,27 @@
     </div>
   </div>
 
-  <!-- 1. सभी किस्में श्रेणियां -->
+  <!-- 1. सभी किस्में श्रेणियां स्क्रीन -->
   <div id="screen-varieties-categories" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">किस्मों की श्रेणी चुनें:</h3>
+    <h3 style="font-size:16px; margin-bottom:14px; color:#1b5e20;">किस्मों की श्रेणी चुनें:</h3>
     <div class="list-item" onclick="showCropsByCategory('सब्जी')"><div class="list-left"><span class="list-icon">🍅</span><span class="list-title">सब्जियां किस्में</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showCropsByCategory('अनाज')"><div class="list-left"><span class="list-icon">🌾</span><span class="list-title">अनाज किस्में</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showCropsByCategory('बागवानी')"><div class="list-left"><span class="list-icon">🍎</span><span class="list-title">बागवानी किस्में</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showCropsByCategory('अन्य')"><div class="list-left"><span class="list-icon">🌱</span><span class="list-title">अन्य किस्में</span></div><span class="arrow">&gt;</span></div>
   </div>
 
-  <!-- 2. फसल सुरक्षा श्रेणियां -->
+  <!-- 2. फसल सुरक्षा श्रेणियां स्क्रीन -->
   <div id="screen-protection-categories" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">फसल सुरक्षा श्रेणी चुनें:</h3>
+    <h3 style="font-size:16px; margin-bottom:14px; color:#b91c1c;">फसल सुरक्षा श्रेणी चुनें:</h3>
     <div class="list-item" onclick="showProtectionListByCategory('सब्जी')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">सब्जी फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showProtectionListByCategory('अनाज')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अनाज फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showProtectionListByCategory('बागवानी')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">बागवानी फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showProtectionListByCategory('अन्य')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अन्य फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
   </div>
 
-  <!-- 3. स्प्रे शेड्यूल श्रेणियां -->
+  <!-- 3. स्प्रे शेड्यूल श्रेणियां स्क्रीन -->
   <div id="screen-schedule-categories" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">स्प्रे शेड्यूल श्रेणी चुनें:</h3>
+    <h3 style="font-size:16px; margin-bottom:14px; color:#b45309;">स्प्रे शेड्यूल श्रेणी चुनें:</h3>
     <div class="list-item" onclick="showScheduleListByCategory('सब्जी')"><div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">सब्जी स्प्रे शेड्यूल</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showScheduleListByCategory('अनाज')"><div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अनाज स्प्रे शेड्यूल</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showScheduleListByCategory('बागवानी')"><div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">बागवानी स्प्रे शेड्यूल</span></div><span class="arrow">&gt;</span></div>
@@ -384,7 +356,7 @@
     </div>
     <div style="display:flex; gap:8px; align-items:center;">
       <input type="text" id="aiUserChatInput" class="form-control" placeholder="उदा. टमाटर के पत्ते मुड़ रहे हैं..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
-      <button class="btn-action btn-wa" style="padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()">भेजें</button>
+      <button class="btn-action" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px; color:white;" onclick="sendUserChatMessage()">भेजें</button>
     </div>
   </div>
 
@@ -458,7 +430,7 @@
       if (!cropName) return 'अन्य';
       let c = cropName.trim().toLowerCase();
       
-      let cereals = ['गेहूं', 'wheat', 'धान', 'paddy', 'चावल', 'rice', 'बाजरा', 'millet', 'मक्का', 'maize', 'जौ', 'barley', 'ज्वार', 'sorghum', 'मूंग', 'mung', 'गوار', 'guar', 'चना', 'gram', 'सरसों', 'mustard'];
+      let cereals = ['गेहूं', 'wheat', 'धान', 'paddy', 'चावल', 'rice', 'बाजरा', 'millet', 'मक्का', 'maize', 'जौ', 'barley', 'ज्वार', 'sorghum', 'मूंग', 'mung', 'गवार', 'guar', 'चना', 'gram', 'सरसों', 'mustard'];
       let horticulture = ['आम', 'mango', 'केला', 'banana', 'अमरूद', 'guava', 'अनार', 'pomegranate', 'नींबू', 'lemon', 'पपीता', 'papaya', 'फूल', 'flower', 'गेंदा', 'marigold', 'गुलाब', 'rose', 'अंगूर', 'grapes'];
       let vegetables = ['टमाटर', 'tomato', 'खीरा', 'cucumber', 'मिर्च', 'chilli', 'शिमला', 'capsicum', 'फूलगोभी', 'cauliflower', 'पत्तागोभी', 'cabbage', 'तरबूज', 'watermelon', 'खरबूजा', 'muskmelon', 'भिंडी', 'okra', 'बैंगन', 'brinjal', 'लौकी', 'bottle gourd', 'करेला', 'bitter gourd', 'तोरई', 'कद्दू', 'मटर', 'pea', 'मूली', 'radish', 'गाजर', 'carrot', 'प्याज', 'onion', 'आलू', 'potato'];
 
