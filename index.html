@@ -1611,11 +1611,11 @@
         mLogout: "ਲਾਗਆਉਟ",
         solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
-        galBtn: "ਗੈलरी ਤੋਂ ਚੁਣੋ",
+        galBtn: "ਗैलरी ਤੋਂ ਚੁਣੋ",
         diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
         diagRepHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ",
         wapBtn: "ਡਾਕਟਰ ਨੂੰ ਵਟਸਐਪ ਕਰੋ",
-        chatYou: "ਤੁਸੀਂ",
+        chatYou: "ਤुਸੀਂ",
         chatDoc: "ਡਾਕਟਰ",
         chatThinking: "ਸੋਚ ਰਿਹਾ ਹਾਂ...",
         chatErr: "ਮਾਫ਼ ਕਰਨਾ, ਜਵਾਬ ਨਹੀਂ ਮਿਲਿਆ।",
@@ -1763,7 +1763,7 @@
         chatDoc: "ડોક્ટર",
         chatThinking: "વિચારી રહ્યો છું...",
         chatErr: "ક્ષમા કરશો, જવાબ મળ્યો નથી.",
-        chatNetErrHead: "ભૂल",
+        chatNetErrHead: "ભूल",
         chatNetErrDesc: "ઇન્ટરનેટ કનેક્શન સમસ્યા.",
         aiDocTitle: "AI ડોક્ટર ચेट"
       },
@@ -1945,6 +1945,10 @@
       if (c.includes('फूलगोभी')) return '🥦';
       if (c.includes('कद्दू')) return '🎃';
       if (c.includes('करेला')) return '🥒';
+      if (c.includes('लौकी')) return '🥒';
+      if (c.includes('गाजर')) return '🥕';
+      if (c.includes('आलू')) return '🥔';
+      if (c.includes('बैंगन')) return '🍆';
       return '🌱';
     }
 
@@ -2029,8 +2033,9 @@
             let crop = getStandardCropName(cols[0]);
             let imgUrl = '';
             for(let i = 0; i < cols.length; i++) {
-              if(cols[i] && cols[i].trim().startsWith('http')) {
-                imgUrl = cols[i].trim();
+              let val = cols[i] ? cols[i].trim() : '';
+              if(val.startsWith('http')) {
+                imgUrl = val;
                 break;
               }
             }
@@ -2053,7 +2058,6 @@
     async function loadAllSheetsData() {
       showLoader();
       try {
-        // किस्में लोड करना
         let sabziList = await fetchSheetTab('Sheet1', 'सब्जियां');
         let phalList = await fetchSheetTab('Phal', 'फल');
         let phoolList = await fetchSheetTab('Phool', 'फूल');
@@ -2061,7 +2065,6 @@
         let anyaList = await fetchSheetTab('Other', 'अन्य');
         sheetRecords = [...sabziList, ...phalList, ...phoolList, ...anaajList, ...anyaList];
 
-        // स्प्रे शेड्यूल लोड करना (अलग-अलग टैब्स से)
         let schedSabzi = await fetchScheduleTab('Schedule', 'सब्जियां');
         let schedAnaaj = await fetchScheduleTab('Anaaj', 'अनाज');
         let schedPhal = await fetchScheduleTab('Phal', 'फल');
@@ -2077,11 +2080,11 @@
         });
 
         // फसल सुरक्षा (Protection) - अलग-अलग गूगल शीट टैब्स से डेटा फैच करना
-        let protSabzi = await fetchProtectionTab('Protection', 'सब्जियां');       // 'Protection' टैब
-        let protAnaaj = await fetchProtectionTab('Cereal crop protection', 'अनाज'); // 'Cereal crop protection' टैब
-        let protPhal = await fetchProtectionTab('Fruit crop protection', 'फल');     // 'Fruit crop protection' टैब
-        let protPhool = await fetchProtectionTab('Flower crop protection', 'फूल');   // 'Flower crop protection' टैब
-        let protOther = await fetchProtectionTab('other Protection', 'अन्य');         // 'other Protection' टैब
+        let protSabzi = await fetchProtectionTab('Protection', 'सब्जियां');
+        let protAnaaj = await fetchProtectionTab('Cereal crop protection', 'अनाज');
+        let protPhal = await fetchProtectionTab('Fruit crop protection', 'फल');
+        let protPhool = await fetchProtectionTab('Flower crop protection', 'फूल');
+        let protOther = await fetchProtectionTab('other Protection', 'अन्य');
 
         let allProtRows = [...protSabzi, ...protAnaaj, ...protPhal, ...protPhool, ...protOther];
         protectionRecords = {};
@@ -2452,7 +2455,9 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center;">डेटा उपलब्ध नहीं है।</div>`;
       } else {
         items.forEach(d => {
+          // कंडीशनल चेकिंग: यदि गूगल शीट में फोटो का लिंक है तभी इमेज दिखाएं, अन्यथा नहीं
           let p = (d.photo && d.photo.trim().startsWith('http')) ? `<img src="${d.photo.trim()}" style="max-height:160px; width:100%; object-fit:contain; border-radius:8px; margin-top:8px;" onclick="openImageModal('${d.photo.trim()}')">` : '';
+          
           container.innerHTML += `
             <div class="disease-card">
               <div class="disease-title">🐛 ${d.name}</div>
