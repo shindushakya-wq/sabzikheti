@@ -38,34 +38,64 @@
     }
 
     .splash-title {
-      color: #ffffff; font-size: 20px; font-weight: 800;
-      letter-spacing: 1px; margin-top: 20px; text-align: center;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      text-align: center;
       text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
-    .splash-sub { color: #86efac; font-size: 13px; font-weight: 600; margin-top: 6px; }
+    .splash-sub {
+      color: #86efac;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
     
-    body.dark-mode { background-color: #0f172a !important; color: #f8fafc !important; }
+    /* डार्क मोड स्टाइल */
+    body.dark-mode { 
+      background-color: #0f172a !important; 
+      color: #f8fafc !important; 
+    }
+    
     body.dark-mode .variety-card, 
     body.dark-mode .menu-box, 
     body.dark-mode .list-item, 
+    body.dark-mode .social-box, 
     body.dark-mode .modal-box, 
     body.dark-mode .login-card, 
     body.dark-mode .bottom-nav, 
     body.dark-mode .drawer-content, 
     body.dark-mode .search-box, 
     body.dark-mode .schedule-step, 
-    body.dark-mode .disease-card { 
-      background-color: #1e2937 !important; color: #f8fafc !important; border-color: #334155 !important; 
+    body.dark-mode .doc-result-card, 
+    body.dark-mode .chem-card, 
+    body.dark-mode .disease-card,
+    body.dark-mode #aiChatMessagesContainer { 
+      background-color: #1e2937 !important; 
+      color: #f8fafc !important; 
+      border-color: #334155 !important; 
+    }
+
+    body.dark-mode #aiChatMessagesContainer > div,
+    body.dark-mode #aiUserChatInput {
+      background-color: #0f172a !important;
+      color: #f8fafc !important;
+      border-color: #334155 !important;
     }
 
     body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, 
     body.dark-mode p, body.dark-mode span, body.dark-mode label, 
-    body.dark-mode b, body.dark-mode strong, body.dark-mode div { color: #f8fafc !important; }
+    body.dark-mode b, body.dark-mode strong, body.dark-mode div { 
+      color: #f8fafc !important; 
+    }
 
+    /* टॉप हेडर */
     .app-header { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); color: white; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .back-btn { font-size: 20px; cursor: pointer; margin-right: 8px; display: none; }
     .header-title { font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
@@ -74,10 +104,12 @@
     .lang-toggle-btn, .dark-mode-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); color: white; padding: 4px 8px; border-radius: 16px; font-size: 11px; font-weight: bold; cursor: pointer; height: 32px; display: flex; align-items: center; justify-content: center; }
     .menu-bars-icon { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; font-weight: bold; }
 
+    /* स्मार्ट लोडिंग स्पाइनर */
     .loader-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.85); z-index: 5000; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
     .spinner { width: 45px; height: 45px; border: 4px solid #bbf7d0; border-top: 4px solid #16a34a; border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+    /* साइड मेन्यू ड्रॉअर */
     .drawer-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2100; backdrop-filter: blur(2px); }
     .drawer-overlay.active { display: block; }
     .drawer-content { position: fixed; top: 0; right: -300px; width: 285px; height: 100%; background: #ffffff; z-index: 2200; box-shadow: -4px 0 16px rgba(0,0,0,0.2); transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; display: flex; flex-direction: column; }
@@ -87,18 +119,37 @@
     .drawer-menu-list { list-style: none; padding: 0 10px; margin-bottom: 20px; }
     .drawer-item { padding: 12px 14px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; gap: 12px; font-size: 14px; color: #374151; font-weight: 600; cursor: pointer; border-radius: 8px; }
 
+    /* स्क्रीन लेआउट */
     .screen { display: none; padding: 14px; max-width: 480px; margin: auto; }
     .screen.active { display: block; }
 
-    .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; border: 1px solid #bbf7d0; cursor: pointer; }
+    /* गोल स्टोरी बार */
+    .stories-wrapper { display: flex; gap: 12px; overflow-x: auto; padding: 12px 4px; background: #ffffff; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    .story-item { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; text-align: center; }
+    .story-ring { width: 62px; height: 62px; border-radius: 50%; padding: 2.5px; background: linear-gradient(45deg, #16a34a, #f59e0b, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 26px; background-color: #f0fdf4; cursor: pointer; overflow: hidden; }
+    .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* लाइव मौसम कार्ड */
+    .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; }
     .weather-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #a7f3d0; padding-bottom: 6px; margin-bottom: 8px; }
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
 
+    /* सर्च बार */
+    .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
+    .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; }
+    .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
+    .voice-btn, .search-icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px; }
+
+    /* AI वॉइस असिस्टेंट कार्ड */
+    .ai-assistant-box { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #86efac; border-radius: 14px; padding: 12px 14px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+
+    /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
     .menu-box .icon { font-size: 28px; margin-bottom: 6px; }
-    .menu-box h3 { font-size: 12px; font-weight: 700; line-height: 1.3; width: 100%; padding: 0 2px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .menu-box h3 { font-size: 12px; font-weight: 700; line-height: 1.3; width: 100%; padding: 0 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
     
     .card-crops { background: #ecfdf5; border-color: #6ee7b7; } .card-crops h3 { color: #047857; }
     .card-protection { background: #fff5f5; border-color: #fca5a5; } .card-protection h3 { color: #b91c1c; }
@@ -106,9 +157,24 @@
     .card-atoz { background: #fef3c7; border-color: #fde68a; } .card-atoz h3 { color: #92400e; }
     .card-discussion { background: #eff6ff; border-color: #bfdbfe; } .card-discussion h3 { color: #1d4ed8; }
     .card-advisor { background: #f3e8ff; border-color: #e9d5ff; } .card-advisor h3 { color: #6b21a8; }
+    .card-companies { background: #ffedd5; border-color: #fed7aa; } .card-companies h3 { color: #c2410c; }
+    .card-chemicals { background: #fdf2f8; border-color: #fbcfe8; } .card-chemicals h3 { color: #be185d; }
+    .card-services { background: #f1f5f9; border-color: #cbd5e1; } .card-services h3 { color: #334155; }
 
+    .video-card-item { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    .video-thumb-box { position: relative; width: 100%; height: 95px; background: #000; }
+    .video-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
+    .video-play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .video-card-title { font-size: 11.5px; font-weight: bold; color: #1f2937; padding: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* तुरंत समाधान बटन */
     .fab-solution { position: fixed; right: 16px; bottom: 75px; background: #059669; color: white; border: none; border-radius: 30px; padding: 12px 18px; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1001; }
     
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: white; border-radius: 16px; padding: 20px; max-width: 400px; width: 100%; max-height: 85vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+
     .list-item { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
     .list-left { display: flex; align-items: center; gap: 12px; }
     .list-icon { font-size: 24px; }
@@ -131,6 +197,9 @@
     .schedule-step b { color: #15803d; font-size: 14px; display: block; margin-bottom: 6px; }
     .schedule-step p { font-size: 13.5px; color: #374151; margin-bottom: 6px; line-height: 1.45; }
 
+    .btn-action { display: block; width: 100%; padding: 12px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 14.5px; font-weight: bold; border: none; cursor: pointer; }
+    .btn-wa { background: #10b981; color: white; }
+
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 8px 0; z-index: 1000; }
     .nav-tab { text-align: center; font-size: 10px; color: #6b7280; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
     .nav-tab.active { color: #059669; font-weight: bold; }
@@ -139,7 +208,7 @@
     .login-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
     .login-modal-overlay.active { display: flex; }
     .login-card { background: white; border-radius: 16px; padding: 22px; max-width: 360px; width: 100%; border-top: 5px solid #059669; }
-    .btn-action { display: block; width: 100%; padding: 12px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 14.5px; font-weight: bold; border: none; cursor: pointer; }
+    .form-control { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -208,7 +277,19 @@
 
   <!-- SCREEN 1: होम स्क्रीन -->
   <div id="screen-home" class="screen active">
-    <div style="font-size:13px; font-weight:bold; color:#1b5e20; margin-bottom:10px;">राम-राम, किसान भाई!</div>
+    <div style="font-size:13px; font-weight:bold; color:#1b5e20; margin-bottom:10px;" id="welcomeMsg">राम-राम, किसान भाई!</div>
+
+    <!-- गोल स्टोरी बार -->
+    <div class="stories-wrapper" id="storiesBarContainer"></div>
+
+    <!-- AI वॉइस असिस्टेंट कार्ड -->
+    <div class="ai-assistant-box" onclick="startVoiceAssistant()">
+      <div style="flex: 1; padding-right: 8px;">
+        <h4 style="color:#166534; font-size:13.5px; font-weight:bold;">🎙️ AI कृषि डॉक्टर से बात करें</h4>
+        <p style="font-size:11.5px; color:#4b5563; margin-top:2px;">फसल या बीमारी का नाम बोलें...</p>
+      </div>
+      <div style="background:#16a34a; color:white; min-width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;">🗣️</div>
+    </div>
 
     <div class="weather-card">
       <div class="weather-header-row">
@@ -216,31 +297,37 @@
         <span id="weatherDateTime">--:--</span>
       </div>
       <div class="weather-body-row">
-        <div><p style="font-size:13px; font-weight:600;">साफ़ आसमान</p></div>
-        <div style="text-align:right;"><div class="weather-temp">26°C</div></div>
+        <div><p style="font-size:13px; font-weight:600;" id="weatherDesc">साफ़ आसमान</p></div>
+        <div style="text-align:right;"><div class="weather-temp" id="weatherTemp">26°C</div></div>
       </div>
     </div>
 
     <!-- 3x3 ग्रिड मेनू -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllVarietiesCategories()">
-        <div class="icon">🥬</div><h3>सभी किस्में</h3>
+        <div class="icon">🥬</div><h3 id="gCrops">सभी किस्में</h3>
       </div>
       <div class="menu-box card-protection" onclick="showProtectionCategories()">
-        <div class="icon">🛡️</div><h3>फसल सुरक्षा</h3>
+        <div class="icon">🛡️</div><h3 id="gProt">फसल सुरक्षा</h3>
       </div>
       <div class="menu-box card-schedule" onclick="showScheduleCategories()">
-        <div class="icon">🗓️</div><h3>स्प्रे शेड्यूल</h3>
+        <div class="icon">🗓️</div><h3 id="gSched">स्प्रे शेड्यूल</h3>
       </div>
       <div class="menu-box card-atoz" onclick="showAtoZCropsScreen()">
-        <div class="icon">📖</div><h3>खेती (A-Z)</h3>
+        <div class="icon">📖</div><h3 id="gAtoz">खेती (A-Z)</h3>
       </div>
-      <div class="menu-box card-discussion" onclick="contactAdvisor()">
-        <div class="icon">💬</div><h3>किसान चर्चा</h3>
+      <div class="menu-box card-discussion" onclick="openFarmerDiscussionScreen()">
+        <div class="icon">💬</div><h3 id="gDisc">किसान चर्चा</h3>
       </div>
       <div class="menu-box card-advisor" onclick="contactAdvisor()">
-        <div class="icon">🎧</div><h3>सलाहकार</h3>
+        <div class="icon">🎧</div><h3 id="gAdv">सलाहकार</h3>
       </div>
+    </div>
+
+    <!-- वीडियो सेक्शन -->
+    <div style="margin-bottom: 15px;">
+      <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700; margin-bottom: 8px;">📺 ताज़ा कृषि वीडियो व रील्स</h3>
+      <div id="dynamicVideosContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
     </div>
   </div>
 
@@ -256,7 +343,7 @@
   <!-- 2. फसल सुरक्षा श्रेणियां -->
   <div id="screen-protection-categories" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;">फसल सुरक्षा श्रेणी चुनें:</h3>
-    <div class="list-item" onclick="showProtectionListByCategory('सब्जी')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">सब्जियां फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
+    <div class="list-item" onclick="showProtectionListByCategory('सब्जी')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">सब्जी फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showProtectionListByCategory('अनाज')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अनाज फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showProtectionListByCategory('बागवानी')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">बागवानी फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
     <div class="list-item" onclick="showProtectionListByCategory('अन्य')"><div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अन्य फसल सुरक्षा</span></div><span class="arrow">&gt;</span></div>
@@ -283,7 +370,23 @@
       <div id="scheduleStepsContainer"></div>
     </div>
   </div>
-  <div id="screen-atoz" class="screen"><div class="variety-card" style="text-align:center;">📖 A-Z खेती गाइड जल्द लोड होगी।</div></div>
+
+  <!-- AI चैट स्क्रीन -->
+  <div id="screen-ai-doctor-chat" class="screen">
+    <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px; margin-bottom:12px;">
+      <h3 style="color:#1b5e20; font-size:17px; margin-bottom:6px;">👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन</h3>
+      <p style="font-size:12px; color:#6b7280;">अपनी फसल या रोग से जुड़ा सवाल पूछें:</p>
+    </div>
+    <div id="aiChatMessagesContainer" style="background:white; border:1px solid #e5e7eb; border-radius:12px; padding:12px; height:320px; overflow-y:auto; margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
+      <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534;">
+        <b>👨‍⚕️ AI डॉक्टर:</b> राम-राम किसान भाई! फसल में कोई समस्या है? यहाँ लिखकर बताएं।
+      </div>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <input type="text" id="aiUserChatInput" class="form-control" placeholder="उदा. टमाटर के पत्ते मुड़ रहे हैं..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
+      <button class="btn-action btn-wa" style="padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()">भेजें</button>
+    </div>
+  </div>
 
   <!-- बॉटम नेविगेशन -->
   <div class="bottom-nav">
@@ -299,30 +402,38 @@
       setTimeout(() => {
         let splash = document.getElementById('splashScreen');
         if(splash) { splash.style.opacity = '0'; splash.style.visibility = 'hidden'; setTimeout(() => splash.remove(), 500); }
-      }, 1200);
+      }, 1500);
     });
 
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9PbEg0GvfHYO0a42seATSJtE1f_3MDTK50Ot_bCP-pwbAXWNXeNgDP5r4NJjfO6o/exec";
 
     let sheetRecords = [];
     let scheduleRecords = {};
     let protectionRecords = {};
+    let dailyStories = [];
+    let videoRecords = [];
+    let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
+    let currentLang = localStorage.getItem('app_lang') || 'hi';
     const navHistory = ['screen-home'];
 
     window.addEventListener('DOMContentLoaded', () => {
-      if(!localStorage.getItem('app_lang')) {
-        document.getElementById('languageSelectModal').classList.add('active');
-      }
+      if(localStorage.getItem('dark_mode') === 'true') document.body.classList.add('dark-mode');
+      if(!localStorage.getItem('app_lang')) document.getElementById('languageSelectModal').classList.add('active');
+      detectUserLocation();
       loadAllSheetsData();
     });
 
-    function setAppLanguage(lang) {
-      localStorage.setItem('app_lang', lang);
+    function setAppLanguage(langCode) {
+      currentLang = langCode;
+      localStorage.setItem('app_lang', langCode);
       document.getElementById('languageSelectModal').classList.remove('active');
+      loadAllSheetsData();
     }
 
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
+      localStorage.setItem('dark_mode', document.body.classList.contains('dark-mode') ? 'true' : 'false');
     }
 
     function getStandardCropName(raw) {
@@ -360,42 +471,59 @@
     async function loadAllSheetsData() {
       document.getElementById('appLoader').style.display = 'flex';
       try {
-        // Sheet1: Varieties
         const res1 = await fetch(BASE_SHEET_URL + 'Sheet1');
-        sheetRecords = parseCSV(await res1.text()).map(cols => ({
-          company: cols[0] || 'अन्य',
-          crop: getStandardCropName(cols[1] || ''),
-          variety: cols[2] || '',
-          segment: cols[3] || 'हाइब्रिड',
-          features: cols[4] || '',
-          weight: cols[5] || '',
-          maturity: cols[6] || '',
-          resistance: cols[7] || ''
-        })).filter(r => r.crop && r.crop.toLowerCase() !== 'crop');
+        sheetRecords = parseCSV(await res1.text()).map(cols => {
+          let photoList = [];
+          for(let i=0; i<cols.length; i++) {
+            if(cols[i] && cols[i].trim().startsWith('http')) photoList.push(cols[i].trim());
+          }
+          return {
+            company: cols[0] || 'अन्य',
+            crop: getStandardCropName(cols[1] || ''),
+            variety: cols[2] || '',
+            segment: cols[3] || 'हाइब्रिड',
+            features: cols[4] || '',
+            weight: cols[5] || '',
+            maturity: cols[6] || '',
+            resistance: cols[7] || '',
+            photos: photoList
+          };
+        }).filter(r => r.crop && r.crop.toLowerCase() !== 'crop');
 
-        // Schedule
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         scheduleRecords = {};
         parseCSV(await res2.text()).forEach(cols => {
           if(cols[0] && !cols[0].toLowerCase().includes('crop')) {
             let crop = getStandardCropName(cols[0]);
             if(!scheduleRecords[crop]) scheduleRecords[crop] = [];
-            scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '' });
+            scheduleRecords[crop].push({ time: cols[1] || '', med: cols[2] || '', purpose: cols[3] || '', photo: cols[4] || '' });
           }
         });
 
-        // Protection
         const res3 = await fetch(BASE_SHEET_URL + 'Protection');
         protectionRecords = {};
         parseCSV(await res3.text()).forEach(cols => {
           if(cols[0] && !cols[0].toLowerCase().includes('crop')) {
             let crop = getStandardCropName(cols[0]);
             if(!protectionRecords[crop]) protectionRecords[crop] = [];
-            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '' });
+            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', photo: cols[4] || '' });
           }
         });
+
+        const resStories = await fetch(BASE_SHEET_URL + 'Stories');
+        dailyStories = parseCSV(await resStories.text()).map(cols => ({
+          title: cols[0]||'स्टोरी', url: cols[2]||'', icon: cols[3]||'🌱', desc: cols[4]||''
+        })).filter(r => r.title && r.title !== 'Title');
+
+        const resVideos = await fetch(BASE_SHEET_URL + 'Videos');
+        videoRecords = parseCSV(await resVideos.text()).map(cols => ({
+          title: cols[0]||'वीडियो', thumbnail: cols[1]||'', videoUrl: cols[2]||''
+        })).filter(r => r.title && r.title !== 'Title');
+
+        renderStoriesBar();
+        renderDynamicVideos();
       } catch (e) {
-        console.log("Error loading sheets:", e);
+        console.log("Sheet error:", e);
       } finally {
         document.getElementById('appLoader').style.display = 'none';
       }
@@ -413,6 +541,63 @@
         cols.push(cur.trim().replace(/^"|"$/g, ''));
         return cols;
       }).filter(r => r.length > 0);
+    }
+
+    function renderStoriesBar() {
+      const container = document.getElementById('storiesBarContainer');
+      if(!container) return;
+      container.innerHTML = '';
+      let list = dailyStories.slice(0, 7);
+      if(list.length === 0) list = [{ title: 'खेती टिप्स', url: '', icon: '🌱', desc: 'नई तकनीक' }];
+      list.forEach((st) => {
+        let t = st.icon || '🌱';
+        if(st.url && st.url.startsWith('http')) t = `<img src="${st.url}">`;
+        container.innerHTML += `<div class="story-item"><div class="story-ring">${t}</div><span class="story-name">${st.title}</span></div>`;
+      });
+    }
+
+    function renderDynamicVideos() {
+      const container = document.getElementById('dynamicVideosContainer');
+      if(!container) return;
+      container.innerHTML = '';
+      let vids = videoRecords.slice(0, 4);
+      if(vids.length === 0) vids = [{ title: "टमाटर की उन्नत खेती", thumbnail: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400", videoUrl: "https://www.youtube.com/@NMGKISAN" }];
+      vids.forEach(v => {
+        container.innerHTML += `<div class="video-card-item" onclick="window.open('${v.videoUrl}', '_blank')"><div class="video-thumb-box"><img src="${v.thumbnail}" onerror="this.src='https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400'"><div class="video-play-icon">▶</div></div><div class="video-card-title">${v.title}</div></div>`;
+      });
+    }
+
+    async function fetchLiveWeather() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('weatherDateTime').innerText = `${hours % 12 || 12}:${minutes} ${hours >= 12 ? 'PM' : 'AM'}`;
+
+      try {
+        let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(userCurrentCity)}&units=metric&appid=1ef9978d109e4e0e73382c850ac00e37&lang=hi`);
+        let data = await res.json();
+        if(data.cod === 200) {
+          document.getElementById('weatherPlace').innerText = `📍 ${data.name}`;
+          document.getElementById('weatherTemp').innerText = `${Math.round(data.main.temp)}°C`;
+          document.getElementById('weatherDesc').innerText = data.weather[0].description;
+        }
+      } catch(e) {}
+    }
+
+    function detectUserLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          try {
+            let res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&localityLanguage=hi`);
+            let data = await res.json();
+            if (data && (data.city || data.principalSubdivision)) {
+              userCurrentCity = data.city || data.principalSubdivision;
+              fetchLiveWeather();
+            }
+          } catch(e) {}
+        }, () => {});
+      }
+      fetchLiveWeather();
     }
 
     function openScreen(screenId, title) {
@@ -523,7 +708,32 @@
       openScreen('screen-crop-schedule', crop);
     }
 
-    function showAtoZCropsScreen() { openScreen('screen-atoz', 'खेती कैसे करें (A-Z)'); }
+    function startVoiceAssistant() { openScreen('screen-ai-doctor-chat', 'AI सब्जी डॉक्टर चैट'); }
+    function handleAiChatKeyPress(e) { if(e.key === 'Enter') sendUserChatMessage(); }
+    async function sendUserChatMessage() {
+      let inputElem = document.getElementById('aiUserChatInput');
+      let msg = inputElem.value.trim();
+      if(!msg) return;
+      let container = document.getElementById('aiChatMessagesContainer');
+      container.innerHTML += `<div style="background:#eff6ff; padding:10px 12px; border-radius:10px; align-self:flex-end;"><b>👤 आप:</b> ${msg}</div>`;
+      inputElem.value = '';
+      try {
+        let res = await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ notes: msg, lang: currentLang })
+        });
+        let data = await res.json();
+        let reply = data.result || data.परिणाम || "उत्तर मिल गया।";
+        container.innerHTML += `<div style="background:#f0fdf4; padding:10px 12px; border-radius:10px;"><b>👨‍⚕️ डॉक्टर:</b> ${reply}</div>`;
+      } catch (err) {
+        container.innerHTML += `<div style="background:#fee2e2; padding:10px 12px; border-radius:10px;">⚠️ कनेक्शन एरर।</div>`;
+      }
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function showAtoZCropsScreen() { openScreen('screen-home', 'खेती (A-Z)'); }
+    function openFarmerDiscussionScreen() { openScreen('screen-home', 'किसान चर्चा'); }
     function contactAdvisor() { window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20सलाह%20चाहिए।', '_blank'); }
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
