@@ -1524,7 +1524,7 @@
         compTitle: "ਬੀਜ ਕੰਪਨੀ ਚੁਣੋ:",
         chemTitle: "ਦਵਾਈਆਂ Chemicals",
         mandiTitle: "ਮੰਡੀ ਭਾਅ",
-        weatherTitle: "ਮੌਸਮ",
+        weatherTitle: "ਮੌਸम",
         profileTitle: "ਕਿਸਾਨ ਪ੍ਰੋਫાઇલ",
         favoritesTitle: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
         atozTitle: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
@@ -1549,7 +1549,7 @@
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
         mLogout: "ਲਾਗਆਉਟ",
-        solHead: "⚡ ਤੁਰੰत ਹੱਲ (AI ਜਾਂਚ)",
+        solHead: "⚡ ਤੁਰंਤ ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
         galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
         diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
@@ -1933,12 +1933,12 @@
     async function loadAllSheetsData() {
       showLoader();
       try {
-        // अलग-अलग गूगल शीट टैब्स से डेटा फैच करना
+        // प्रत्येक श्रेणी के लिए उसकी अलग Google Sheet Tab से डेटा लोड किया जा रहा है
         let sabziList = await fetchSheetTab('Sheet1', 'सब्जियां');
         let phalList = await fetchSheetTab('Phal', 'फल');
         let phoolList = await fetchSheetTab('Phool', 'फूल');
         let anaajList = await fetchSheetTab('Anaaj', 'अनाज');
-        let anyaList = await fetchSheetTab('Anya', 'अन्य');
+        let anyaList = await fetchSheetTab('Other', 'अन्य');
 
         sheetRecords = [...sabziList, ...phalList, ...phoolList, ...anaajList, ...anyaList];
 
@@ -2174,12 +2174,8 @@
     }
 
     function showCropsForCategory(categoryName) {
-      // चुनी गई कैटेगरी (जैसे सब्जियां, फल, फूल, अनाज, अन्य) के आधार पर फसलें फिल्टर करें
+      // केवल उसी श्रेणी (जैसे सब्जियां, फल, फूल, अनाज, अन्य) के डेटा को फ़िल्टर करें
       let filteredRecords = sheetRecords.filter(r => r.category === categoryName);
-      if(filteredRecords.length === 0) {
-        // यदि उस शीट में category मैच न हो तो सभी रिकॉर्ड्स दिखा दें या डिफ़ॉल्ट
-        filteredRecords = sheetRecords;
-      }
       let crops = [...new Set(filteredRecords.map(r => r.crop))].filter(c => c && c.toLowerCase() !== 'crop').sort();
       let container = document.getElementById('cropsContainer');
       container.innerHTML = '';
@@ -2195,7 +2191,7 @@
     }
 
     function filterByCropAndCategory(cropName, categoryName) {
-      let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase() && (categoryName ? r.category === categoryName : true));
+      let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase() && r.category === categoryName);
       renderVarietiesList(list, `${cropName}`);
     }
 
