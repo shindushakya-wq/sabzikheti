@@ -472,8 +472,8 @@
       <li class="drawer-item" onclick="openProfileScreen()"><span>👨‍🌾</span><span id="mProfile">मेरी प्रोफाइल / सेटिंग्स</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showFavoritesScreen();" style="color:#d97706; font-weight:bold;"><span>⭐</span><span id="mFav">मेरी पसंदीदा किस्में (Bookmarks)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showAllCategoriesScreen();"><span>🌱</span><span id="mCrops">सभी किस्में</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showScheduleCropsList();"><span>🗓️</span><span id="mSchedule">स्प्रे शेड्यूल</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); showProtectionCropsList();"><span>🛡️</span><span id="mProtection">फसल सुरक्षा (रोग निदान)</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showProtectionCategoriesScreen();"><span>🛡️</span><span id="mProtection">फसल सुरक्षा (रोग निदान)</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showScheduleCategoriesScreen();"><span>🗓️</span><span id="mSchedule">स्प्रे शेड्यूल</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showChemicalsScreen();"><span>🧪</span><span id="mChems">दवाइयाँ Chemicals</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showOtherServicesScreen();"><span>⚙️</span><span id="mServices">Other सेवाएं (मौसम, मंडी, अलर्ट)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showPrivacyPolicyScreen();" style="color:#0369a1; border-top:1px solid #e0f2fe; margin-top:6px;"><span>⚖️</span><span id="mPrivacy">नियम व शर्तें एवं गोपनीयता नीति</span></li>
@@ -618,11 +618,11 @@
         <div class="icon">🌱</div>
         <h3 id="gCrops">सभी किस्में</h3>
       </div>
-      <div class="menu-box card-protection" onclick="showProtectionCropsList()">
+      <div class="menu-box card-protection" onclick="showProtectionCategoriesScreen()">
         <div class="icon">🛡️</div>
         <h3 id="gProt">फसल सुरक्षा</h3>
       </div>
-      <div class="menu-box card-schedule" onclick="showScheduleCropsList()">
+      <div class="menu-box card-schedule" onclick="showScheduleCategoriesScreen()">
         <div class="icon">🗓️</div>
         <h3 id="gSched">स्प्रे शेड्यूल</h3>
       </div>
@@ -705,6 +705,58 @@
       </div>
       <div class="list-item" onclick="showCropsForCategory('अन्य')">
         <div class="list-left"><span class="list-icon">📦</span><span class="list-title">अन्य फसलें (Other Crops)</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: फसल सुरक्षा - श्रेणियां (Categories) -->
+  <div id="screen-protection-categories" class="screen">
+    <div class="variety-card" style="border-left:5px solid #b91c1c; padding: 14px; margin-bottom: 12px;">
+      <h3 style="color:#b91c1c; font-size:16px; margin-bottom:4px;">🛡️ फसल सुरक्षा श्रेणी चुनें:</h3>
+      <p style="font-size:12.5px; color:#4b5563;">अपनी फसल की श्रेणी चुनें:</p>
+    </div>
+    <div id="protectionCategoriesContainer">
+      <div class="list-item" onclick="showProtectionCropsListByCategory('सब्जियां')">
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">सब्जियां फसल सुरक्षा</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showProtectionCropsListByCategory('अनाज')">
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अनाज फसल सुरक्षा</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showProtectionCropsListByCategory('बागवानी')">
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">बागवानी फसल सुरक्षा</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showProtectionCropsListByCategory('अन्य')">
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अन्य फसल सुरक्षा</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: स्प्रे शेड्यूल - श्रेणियां (Categories) -->
+  <div id="screen-schedule-categories" class="screen">
+    <div class="variety-card" style="border-left:5px solid #b45309; padding: 14px; margin-bottom: 12px;">
+      <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;">🗓️ स्प्रे शेड्यूल श्रेणी चुनें:</h3>
+      <p style="font-size:12.5px; color:#4b5563;">अपनी फसल की श्रेणी चुनें:</p>
+    </div>
+    <div id="scheduleCategoriesContainer">
+      <div class="list-item" onclick="showScheduleCropsListByCategory('सब्जियां')">
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">सब्जियां स्प्रे शेड्यूल</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showScheduleCropsListByCategory('अनाज')">
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अनाज स्प्रे शेड्यूल</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showScheduleCropsListByCategory('बागवानी')">
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">बागवानी स्प्रे शेड्यूल</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showScheduleCropsListByCategory('अन्य')">
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अन्य स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -995,13 +1047,13 @@
     <div id="varietiesContainer"></div>
   </div>
 
-  <!-- SCREEN 4: स्प्रे शेड्यूल - फसलें -->
+  <!-- SCREEN: स्प्रे शेड्यूल - फसलें -->
   <div id="screen-schedule-crops" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtSchedCropHead">स्प्रे शेड्यूल हेतु सब्जी चुनें:</h3>
+    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtSchedCropHead">फसल चुनें:</h3>
     <div id="scheduleCropsContainer"></div>
   </div>
 
-  <!-- SCREEN 5: चयनित सब्जी का स्प्रे शेड्यूल -->
+  <!-- SCREEN: चयनित सब्जी का स्प्रे शेड्यूल -->
   <div id="screen-crop-schedule" class="screen">
     <div class="variety-card">
       <h3 style="color:#15803d; font-size:17px; margin-bottom:10px;" id="scheduleCropTitle">स्प्रे शेड्यूल</h3>
@@ -1010,13 +1062,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 8A: फसल सुरक्षा - फसल सूची -->
-  <div id="screen-protection-crops" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtProtCropHead">रोग निदान हेतु फसल चुनें:</h3>
-    <div id="protectionCropsContainer"></div>
-  </div>
-
-  <!-- SCREEN 8B: फसल के रोग -->
+  <!-- SCREEN: फसल सुरक्षा - फसल के रोग -->
   <div id="screen-crop-diseases" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="cropDiseaseHeading">फसल के रोग व कीट:</h3>
     <div id="cropDiseasesContainer"></div>
@@ -1038,8 +1084,8 @@
   <div class="bottom-nav">
     <div class="nav-tab active" onclick="openScreen('screen-home', 'CROP & SABZI DOCTOR')"><span>🏠</span><span id="navHome">होम</span></div>
     <div class="nav-tab" onclick="showAllCategoriesScreen()"><span>🌱</span><span id="navCrops">किस्में</span></div>
-    <div class="nav-tab" onclick="showScheduleCropsList()"><span>🗓️</span><span id="navSched">शेड्यूल</span></div>
-    <div class="nav-tab" onclick="showProtectionCropsList()"><span>🛡️</span><span id="navProt">सुरक्षा</span></div>
+    <div class="nav-tab" onclick="showScheduleCategoriesScreen()"><span>🗓️</span><span id="navSched">शेड्यूल</span></div>
+    <div class="nav-tab" onclick="showProtectionCategoriesScreen()"><span>🛡️</span><span id="navProt">सुरक्षा</span></div>
     <div class="nav-tab" onclick="contactAdvisor()"><span>💬</span><span id="navHelp">हेल्पलाइन</span></div>
   </div>
 
@@ -1544,7 +1590,7 @@
         mProtection: "ਫਸਲ ਸੁਰੱਖਿਆ",
         mChems: "ਦਵਾਈਆਂ Chemicals",
         mServices: "Other ਸੇਵਾਵਾਂ",
-        mPrivacy: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+        mPrivacy: "ਨਿਯਮ এবং ਸ਼ਰਤਾਂ",
         mRate: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ",
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
@@ -1934,7 +1980,6 @@
     async function loadAllSheetsData() {
       showLoader();
       try {
-        // प्रत्येक श्रेणी के लिए उसकी अलग Google Sheet Tab से डेटा लोड किया जा रहा है
         let sabziList = await fetchSheetTab('Sheet1', 'सब्जियां');
         let phalList = await fetchSheetTab('Phal', 'फल');
         let phoolList = await fetchSheetTab('Phool', 'फूल');
@@ -1954,13 +1999,15 @@
           }
         });
 
+        // सुरक्षा (Protection) डेटा शीट से लोड करें और कैटेगरी तय करें
         const res3 = await fetch(BASE_SHEET_URL + 'Protection');
         const text3 = await res3.text();
         protectionRecords = {};
         parseCSV(text3).forEach(cols => {
           if(cols[0] && !cols[0].includes('Crop') && !cols[0].toLowerCase().includes('crop')) {
             let crop = getStandardCropName(cols[0]);
-            if(!protectionRecords[crop]) protectionRecords[crop] = [];
+            let cat = cols[4] ? cols[4].trim() : 'सब्जियां'; // पांचवें कॉलम में कैटेगरी हो सकती है या डिफ़ॉल्ट सब्जियां
+            if(!protectionRecords[crop]) protectionRecords[crop] = { category: cat, items: [] };
             
             let imgUrl = '';
             for(let i = 0; i < cols.length; i++) {
@@ -1969,7 +2016,7 @@
                 break;
               }
             }
-            protectionRecords[crop].push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', photo: imgUrl });
+            protectionRecords[crop].items.push({ name: cols[1] || '', symptoms: cols[2] || '', cure: cols[3] || '', photo: imgUrl });
           }
         });
 
@@ -2175,7 +2222,6 @@
     }
 
     function showCropsForCategory(categoryName) {
-      // केवल उसी श्रेणी (जैसे सब्जियां, फल, फूल, अनाज, अन्य) के डेटा को फ़िल्टर करें
       let filteredRecords = sheetRecords.filter(r => r.category === categoryName);
       let crops = [...new Set(filteredRecords.map(r => r.crop))].filter(c => c && c.toLowerCase() !== 'crop').sort();
       let container = document.getElementById('cropsContainer');
@@ -2199,6 +2245,56 @@
     function filterByCrop(cropName) {
       let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase());
       renderVarietiesList(list, `${cropName}`);
+    }
+
+    // फसल सुरक्षा श्रेणियां दिखाने का फंक्शन
+    function showProtectionCategoriesScreen() {
+      openScreen('screen-protection-categories', 'फसल सुरक्षा');
+    }
+
+    function showProtectionCropsListByCategory(categoryName) {
+      let container = document.getElementById('protectionCropsContainer');
+      container.innerHTML = '';
+      
+      let crops = Object.keys(protectionRecords).filter(c => {
+        let rec = protectionRecords[c];
+        return rec.category === categoryName;
+      }).sort();
+
+      // अगर कैटेगरी मैच न हो तो सभी दिखा दें या डिफ़ॉल्ट
+      if(crops.length === 0) {
+        crops = Object.keys(protectionRecords).sort();
+      }
+
+      if(crops.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई फसल सुरक्षा डेटा उपलब्ध नहीं है।</div>`;
+      } else {
+        crops.forEach(c => {
+          container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} सुरक्षा</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      }
+      openScreen('screen-protection-crops', `${categoryName} सुरक्षा`);
+    }
+
+    // स्प्रे शेड्यूल श्रेणियां दिखाने का फंक्शन
+    function showScheduleCategoriesScreen() {
+      openScreen('screen-schedule-categories', 'स्प्रे शेड्यूल');
+    }
+
+    function showScheduleCropsListByCategory(categoryName) {
+      let container = document.getElementById('scheduleCropsContainer');
+      container.innerHTML = '';
+      
+      let crops = Object.keys(scheduleRecords).filter(c => c && c.toLowerCase() !== 'crop').sort();
+
+      if(crops.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई शेड्यूल उपलब्ध नहीं है।</div>`;
+      } else {
+        crops.forEach(c => {
+          container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} स्प्रे शेड्यूल</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      }
+      openScreen('screen-schedule-crops', `${categoryName} शेड्यूल`);
     }
 
     function showFavoritesScreen() {
@@ -2280,21 +2376,14 @@
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
     }
 
-    function showProtectionCropsList() {
-      let container = document.getElementById('protectionCropsContainer');
-      container.innerHTML = '';
-      Object.keys(protectionRecords).filter(c => c && c.toLowerCase() !== 'crop').sort().forEach(c => {
-        container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} ${currentLang === 'en' ? 'Protection' : 'सुरक्षा'}</span></div><span class="arrow">&gt;</span></div>`;
-      });
-      const t = translations[currentLang] || translations['hi'];
-      openScreen('screen-protection-crops', t.protTitle);
-    }
-
     function showCropDiseasesList(crop) {
       document.getElementById('cropDiseaseHeading').innerText = `${crop} ${currentLang === 'en' ? 'Diseases & Cures:' : 'के रोग व उपचार:'}`;
       let container = document.getElementById('cropDiseasesContainer');
       container.innerHTML = '';
-      (protectionRecords[crop] || []).forEach(d => {
+      let recordObj = protectionRecords[crop];
+      let items = recordObj ? (recordObj.items || recordObj) : [];
+      
+      items.forEach(d => {
         let p = (d.photo && d.photo.trim().startsWith('http')) ? `<img src="${d.photo.trim()}" style="max-height:160px; width:100%; object-fit:contain; border-radius:8px; margin-top:8px;" onclick="openImageModal('${d.photo.trim()}')">` : '';
         container.innerHTML += `
           <div class="disease-card">
@@ -2305,16 +2394,6 @@
           </div>`;
       });
       openScreen('screen-crop-diseases', crop);
-    }
-
-    function showScheduleCropsList() {
-      let container = document.getElementById('scheduleCropsContainer');
-      container.innerHTML = '';
-      Object.keys(scheduleRecords).filter(c => c && c.toLowerCase() !== 'crop').sort().forEach(c => {
-        container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} ${currentLang === 'en' ? 'Spray Schedule' : 'स्प्रे शेड्यूल'}</span></div><span class="arrow">&gt;</span></div>`;
-      });
-      const t = translations[currentLang] || translations['hi'];
-      openScreen('screen-schedule-crops', t.schedTitle);
     }
 
     function openCropScheduleDetail(crop) {
