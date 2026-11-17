@@ -713,24 +713,24 @@
   <!-- SCREEN: फसल सुरक्षा - श्रेणियां (Categories) -->
   <div id="screen-protection-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b91c1c; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#b91c1c; font-size:16px; margin-bottom:4px;">🛡️ फसल सुरक्षा श्रेणी चुनें:</h3>
-      <p style="font-size:12.5px; color:#4b5563;">अपनी फसल की श्रेणी चुनें:</p>
+      <h3 style="color:#b91c1c; font-size:16px; margin-bottom:4px;" id="protCatHead">🛡️ फसल सुरक्षा श्रेणी चुनें:</h3>
+      <p style="font-size:12.5px; color:#4b5563;" id="protCatSub">अपनी फसल की श्रेणी चुनें:</p>
     </div>
     <div id="protectionCategoriesContainer">
       <div class="list-item" onclick="showProtectionCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">सब्जियां फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="pCat1">सब्जियां फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अनाज फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="pCat2">अनाज फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('बागवानी')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">बागवानी फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="pCat3">बागवानी फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अन्य फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="pCat4">अन्य फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -739,24 +739,24 @@
   <!-- SCREEN: स्प्रे शेड्यूल - श्रेणियां (Categories) -->
   <div id="screen-schedule-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b45309; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;">🗓️ स्प्रे शेड्यूल श्रेणी चुनें:</h3>
-      <p style="font-size:12.5px; color:#4b5563;">अपनी फसल की श्रेणी चुनें:</p>
+      <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;" id="schedCatHead">🗓️ स्प्रे शेड्यूल श्रेणी चुनें:</h3>
+      <p style="font-size:12.5px; color:#4b5563;" id="schedCatSub">अपनी फसल की श्रेणी चुनें:</p>
     </div>
     <div id="scheduleCategoriesContainer">
       <div class="list-item" onclick="showScheduleCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">सब्जियां स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="sCat1">सब्जियां स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अनाज स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="sCat2">अनाज स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('बागवानी')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">बागवानी स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="sCat3">बागवानी स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अन्य स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="sCat4">अन्य स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -1045,6 +1045,12 @@
   <!-- SCREEN: किस्में सूची (किसी फसल की सारी वैरायटी) -->
   <div id="screen-seeds" class="screen">
     <div id="varietiesContainer"></div>
+  </div>
+
+  <!-- SCREEN: फसल सुरक्षा - फसल सूची -->
+  <div id="screen-protection-crops" class="screen">
+    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtProtCropHead">फसल चुनें:</h3>
+    <div id="protectionCropsContainer"></div>
   </div>
 
   <!-- SCREEN: स्प्रे शेड्यूल - फसलें -->
@@ -1584,13 +1590,13 @@
         drawerHead: "📋 ਮੀਨੂ ਅਤੇ ਸੈਟਿੰਗਾਂ",
         completeProfileText: "ਆਪਣੀ ਪ੍ਰੋਫાઇલ ਪੂਰੀ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ >",
         mProfile: "ਮੇਰੀ ਪ੍ਰੋਫાઇલ / ਸੈਟਿੰਗਾਂ",
-        mFav: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
+        mFav: "ਮਨਪસंद ਕਿਸਮਾਂ",
         mCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ",
         mSchedule: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ",
         mProtection: "ਫਸਲ ਸੁਰੱਖਿਆ",
         mChems: "ਦਵਾਈਆਂ Chemicals",
         mServices: "Other ਸੇਵਾਵਾਂ",
-        mPrivacy: "ਨਿਯਮ এবং ਸ਼ਰਤਾਂ",
+        mPrivacy: "ਨਿਯਮ और ਸ਼ਰਤਾਂ",
         mRate: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ",
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
@@ -1751,7 +1757,7 @@
         chatErr: "ક્ષમા કરશો, જવાબ મળ્યો નથી.",
         chatNetErrHead: "ભૂલ",
         chatNetErrDesc: "ઇન્ટરનેટ કનેક્શન સમસ્યા.",
-        aiDocTitle: "AI ડોક્ટર ચેટ"
+        aiDocTitle: "AI ડોક્ટર ચेट"
       },
       mr: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -2261,9 +2267,8 @@
         return rec.category === categoryName;
       }).sort();
 
-      // अगर कैटेगरी मैच न हो तो सभी दिखा दें या डिफ़ॉल्ट
       if(crops.length === 0) {
-        crops = Object.keys(protectionRecords).sort();
+        crops = Object.keys(protectionRecords).sort(); // यदि कैटेगरी मैच न हो तो सभी दिखा दें
       }
 
       if(crops.length === 0) {
