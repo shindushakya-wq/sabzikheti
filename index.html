@@ -688,7 +688,7 @@
     </div>
     <div id="categoriesContainer">
       <div class="list-item" onclick="showCropsForCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🍅</span><span class="list-title">सब्जियां (Vegetable Crops)</span></div>
+        <div class="list-left"><span class="list-icon">🍅</span><span class="list-title">सब्जियां (Vegetables)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('फल')">
@@ -700,7 +700,11 @@
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🌾</span><span class="list-title">अनाज व अन्य फसलें (Cereals)</span></div>
+        <div class="list-left"><span class="list-icon">🌾</span><span class="list-title">अनाज वर्गीय फसलें (Cereals)</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showCropsForCategory('अन्य')">
+        <div class="list-left"><span class="list-icon">📦</span><span class="list-title">अन्य फसलें (Other Crops)</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -980,7 +984,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: सभी किस्में - फसलों की सूची (जैसे सब्जियां पर क्लिक करने के बाद) -->
+  <!-- SCREEN: श्रेणी की फसल सूची -->
   <div id="screen-crops" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="txtSelectCropHead">फसल चुनें:</h3>
     <div id="cropsContainer"></div>
@@ -1545,7 +1549,7 @@
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
         mLogout: "ਲਾਗਆਉਟ",
-        solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
+        solHead: "⚡ ਤੁਰੰत ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
         galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
         diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
@@ -1887,12 +1891,11 @@
     function showLoader() { document.getElementById('appLoader').style.display = 'flex'; }
     function hideLoader() { document.getElementById('appLoader').style.display = 'none'; }
 
-    async function loadAllSheetsData() {
-      showLoader();
+    async function fetchSheetTab(sheetName, categoryName) {
       try {
-        const res1 = await fetch(BASE_SHEET_URL + 'Sheet1');
-        const text1 = await res1.text();
-        sheetRecords = parseCSV(text1).map(cols => {
+        let res = await fetch(BASE_SHEET_URL + sheetName);
+        let text = await res.text();
+        return parseCSV(text).map(cols => {
           let photoList = [];
           for(let i = 0; i < cols.length; i++) {
             if(cols[i] && cols[i].trim().includes('http')) {
@@ -1914,13 +1917,30 @@
             weight: cols[5] || '',
             maturity: cols[6] || '',
             resistance: cols[7] || '',
-            photos: photoList
+            photos: photoList,
+            category: categoryName
           };
         }).filter(r => {
           let cLower = (r.crop || '').toLowerCase();
           let rLower = (r.rawCrop || '').toLowerCase();
           return r.crop && cLower !== 'crop' && rLower !== 'crop' && !rLower.includes('crop') && !cLower.includes('crop');
         });
+      } catch(e) {
+        return [];
+      }
+    }
+
+    async function loadAllSheetsData() {
+      showLoader();
+      try {
+        // अलग-अलग गूगल शीट टैब्स से डेटा फैच करना
+        let sabziList = await fetchSheetTab('Sheet1', 'सब्जियां');
+        let phalList = await fetchSheetTab('Phal', 'फल');
+        let phoolList = await fetchSheetTab('Phool', 'फूल');
+        let anaajList = await fetchSheetTab('Anaaj', 'अनाज');
+        let anyaList = await fetchSheetTab('Anya', 'अन्य');
+
+        sheetRecords = [...sabziList, ...phalList, ...phoolList, ...anaajList, ...anyaList];
 
         const res2 = await fetch(BASE_SHEET_URL + 'Schedule');
         const text2 = await res2.text();
@@ -2154,13 +2174,29 @@
     }
 
     function showCropsForCategory(categoryName) {
-      let crops = [...new Set(sheetRecords.map(r => r.crop))].filter(c => c && c.toLowerCase() !== 'crop').sort();
+      // चुनी गई कैटेगरी (जैसे सब्जियां, फल, फूल, अनाज, अन्य) के आधार पर फसलें फिल्टर करें
+      let filteredRecords = sheetRecords.filter(r => r.category === categoryName);
+      if(filteredRecords.length === 0) {
+        // यदि उस शीट में category मैच न हो तो सभी रिकॉर्ड्स दिखा दें या डिफ़ॉल्ट
+        filteredRecords = sheetRecords;
+      }
+      let crops = [...new Set(filteredRecords.map(r => r.crop))].filter(c => c && c.toLowerCase() !== 'crop').sort();
       let container = document.getElementById('cropsContainer');
       container.innerHTML = '';
-      crops.forEach(c => {
-        container.innerHTML += `<div class="list-item" onclick="filterByCrop('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
-      });
+      
+      if(crops.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई फसल उपलब्ध नहीं है।</div>`;
+      } else {
+        crops.forEach(c => {
+          container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${c}', '${categoryName}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      }
       openScreen('screen-crops', categoryName);
+    }
+
+    function filterByCropAndCategory(cropName, categoryName) {
+      let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase() && (categoryName ? r.category === categoryName : true));
+      renderVarietiesList(list, `${cropName}`);
     }
 
     function filterByCrop(cropName) {
