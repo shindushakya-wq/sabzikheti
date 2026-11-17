@@ -1609,9 +1609,9 @@
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
         mLogout: "ਲਾਗਆਉਟ",
-        solHead: "⚡ ਤੁਰੰत ਹੱਲ (AI ਜਾਂਚ)",
+        solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
-        galBtn: "ਗੈਲरी ਤੋਂ ਚੁਣੋ",
+        galBtn: "ਗੈलरी ਤੋਂ ਚੁਣੋ",
         diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
         diagRepHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ",
         wapBtn: "ਡਾਕਟਰ ਨੂੰ ਵਟਸਐਪ ਕਰੋ",
@@ -1744,7 +1744,7 @@
         mProfile: "મારી પ્રોફાઇલ / સેટિંગ્સ",
         mFav: "મનપસંદ જાતો",
         mCrops: "બધી જાતો",
-        mSchedule: "સ્પ્રે શેડ્યુल",
+        mSchedule: "સ્પ્રે શેડ્યુલ",
         mProtection: "પાક સુરક્ષા",
         mChems: "દવાઓ Chemicals",
         mServices: "Other સેવાઓ",
@@ -1763,7 +1763,7 @@
         chatDoc: "ડોક્ટર",
         chatThinking: "વિચારી રહ્યો છું...",
         chatErr: "ક્ષમા કરશો, જવાબ મળ્યો નથી.",
-        chatNetErrHead: "ભૂલ",
+        chatNetErrHead: "ભૂल",
         chatNetErrDesc: "ઇન્ટરનેટ કનેક્શન સમસ્યા.",
         aiDocTitle: "AI ડોક્ટર ચेट"
       },
@@ -2053,7 +2053,7 @@
     async function loadAllSheetsData() {
       showLoader();
       try {
-        // किस्में (Varieties) लोड करना
+        // किस्में लोड करना
         let sabziList = await fetchSheetTab('Sheet1', 'सब्जियां');
         let phalList = await fetchSheetTab('Phal', 'फल');
         let phoolList = await fetchSheetTab('Phool', 'फूल');
@@ -2061,7 +2061,7 @@
         let anyaList = await fetchSheetTab('Other', 'अन्य');
         sheetRecords = [...sabziList, ...phalList, ...phoolList, ...anaajList, ...anyaList];
 
-        // स्प्रे शेड्यूल (Schedule) अलग-अलग टैब से लोड करना
+        // स्प्रे शेड्यूल लोड करना (अलग-अलग टैब्स से)
         let schedSabzi = await fetchScheduleTab('Schedule', 'सब्जियां');
         let schedAnaaj = await fetchScheduleTab('Anaaj', 'अनाज');
         let schedPhal = await fetchScheduleTab('Phal', 'फल');
@@ -2076,12 +2076,12 @@
           scheduleRecords[s.category][s.crop].push({ time: s.time, med: s.med, purpose: s.purpose, photo: s.photo });
         });
 
-        // फसल सुरक्षा (Protection) अलग-अलग टैब से लोड करना
-        let protSabzi = await fetchProtectionTab('Protection', 'सब्जियां');
-        let protAnaaj = await fetchProtectionTab('Anaaj', 'अनाज');
-        let protPhal = await fetchProtectionTab('Protection', 'फल'); // या अलग टैब
-        let protPhool = await fetchProtectionTab('Protection', 'फूल');
-        let protOther = await fetchProtectionTab('Protection', 'अन्य');
+        // फसल सुरक्षा (Protection) - अलग-अलग गूगल शीट टैब्स से डेटा फैच करना
+        let protSabzi = await fetchProtectionTab('Protection', 'सब्जियां');       // 'Protection' टैब
+        let protAnaaj = await fetchProtectionTab('Cereal crop protection', 'अनाज'); // 'Cereal crop protection' टैब
+        let protPhal = await fetchProtectionTab('Fruit crop protection', 'फल');     // 'Fruit crop protection' टैब
+        let protPhool = await fetchProtectionTab('Flower crop protection', 'फूल');   // 'Flower crop protection' टैब
+        let protOther = await fetchProtectionTab('other Protection', 'अन्य');         // 'other Protection' टैब
 
         let allProtRows = [...protSabzi, ...protAnaaj, ...protPhal, ...protPhool, ...protOther];
         protectionRecords = {};
@@ -2915,7 +2915,7 @@
             <input type="text" id="commentInput_${p.id}" class="form-control" placeholder="अपना सुझाव / कमेंट लिखें..." style="padding:6px 10px; font-size:13px;">
             <button class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost(${p.id})">भेजें</button>
           </div>
-        </div>`;
+        `;
 
         container.innerHTML += `
           <div class="variety-card" style="border-left:4px solid #0284c7;">
