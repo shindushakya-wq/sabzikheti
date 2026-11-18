@@ -1986,12 +1986,17 @@
     function showLoader() { document.getElementById('appLoader').style.display = 'flex'; }
     function hideLoader() { document.getElementById('appLoader').style.display = 'none'; }
 
-    async function fetchSheetTab(sheetName, categoryName) {
+    async function fetchSheetTabWithCategory(sheetName) {
       try {
         let res = await fetch(BASE_SHEET_URL + encodeURIComponent(sheetName));
         if(!res.ok) return [];
         let text = await res.text();
         return parseCSV(text).map(cols => {
+          let cat = cols[0] || 'सब्जियां';
+          let comp = cols[1] || 'अन्य कंपनी';
+          let rawCrop = cols[2] || '';
+          let varName = cols[3] || '';
+          
           let photoList = [];
           for(let i = 0; i < cols.length; i++) {
             if(cols[i] && cols[i].trim().includes('http')) {
@@ -2002,19 +2007,19 @@
               });
             }
           }
-          let rawCrop = cols[1] || '';
+
           return {
-            company: cols[0] || 'अन्य कंपनी',
+            category: cat.trim(),
+            company: comp,
             crop: getStandardCropName(rawCrop),
             rawCrop: rawCrop,
-            variety: cols[2] || '',
-            segment: cols[3] || 'हाइब्रिड',
-            features: cols[4] || '',
-            weight: cols[5] || '',
-            maturity: cols[6] || '',
-            resistance: cols[7] || '',
-            photos: photoList,
-            category: categoryName
+            variety: varName,
+            segment: cols[4] || 'हाइब्रिड',
+            features: cols[5] || '',
+            weight: cols[6] || '',
+            maturity: cols[7] || '',
+            resistance: cols[8] || '',
+            photos: photoList
           };
         }).filter(r => {
           let cLower = (r.crop || '').toLowerCase();
@@ -2089,12 +2094,9 @@
     async function loadAllSheetsData() {
       showLoader();
       try {
-        let sabziList = await fetchSheetTab('Sheet1', 'सब्जियां');
-        let phalList = await fetchSheetTab('fruit veryati', 'फल');
-        let phoolList = await fetchSheetTab('flowers veryati', 'फूल');
-        let anaajList = await fetchSheetTab('Anaj veryati', 'अनाज');
-        let anyaList = await fetchSheetTab('Other veryati', 'अन्य');
-        sheetRecords = [...sabziList, ...phalList, ...phoolList, ...anaajList, ...anyaList];
+        // अब सभी किस्में Sheet1 से लोड होंगी जहाँ Category कॉलम दिया गया है
+        let allData = await fetchSheetTabWithCategory('Sheet1');
+        sheetRecords = allData;
 
         let schedSabzi = await fetchScheduleTab('Schedule', 'सब्जियां');
         let schedAnaaj = await fetchScheduleTab('Anaaj', 'अनाज');
@@ -2326,7 +2328,7 @@
     }
 
     function showCropsForCategory(categoryName) {
-      let filteredRecords = sheetRecords.filter(r => r.category === categoryName);
+      let filteredRecords = sheetRecords.filter(r => r.category.toLowerCase() === categoryName.toLowerCase());
       let cropsObj = {};
       filteredRecords.forEach(r => {
         if(r.crop && r.crop.toLowerCase() !== 'crop') {
@@ -2350,7 +2352,7 @@
     }
 
     function filterByCropAndCategory(cropName, categoryName) {
-      let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase() && r.category === categoryName);
+      let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase() && r.category.toLowerCase() === categoryName.toLowerCase());
       renderVarietiesList(list, `${cropName}`);
     }
 
