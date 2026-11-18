@@ -278,7 +278,7 @@
 
     .list-item { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .list-left { display: flex; align-items: center; gap: 12px; }
-    .list-icon { font-size: 24px; width: 32px; text-align: center; }
+    .list-icon { font-size: 24px; width: 32px; text-align: center; display: flex; align-items: center; justify-content: center; }
     .list-icon img { width: 32px; height: 32px; object-fit: cover; border-radius: 50%; }
     .list-title { font-size: 15px; font-weight: 600; }
     .arrow { color: #9ca3af; font-weight: bold; }
@@ -1753,7 +1753,7 @@
         mRate: "પ્લે સ્ટોર પર રેટ કરો",
         mShare: "મિત્રોને શેર કરો",
         mHelp: "વ્હોટ્સએપ હેલ્પલાઇન",
-        mLogout: "લોગઆઉટ",
+        mLogout: "લોગઆ웃",
         solHead: "⚡ ત્વરિત ઉકેલ (AI તપાસ)",
         camBtn: "કેમેરાથી ફોટો લો",
         galBtn: "ગેલેરીથી પસંદ કરો",
@@ -1995,18 +1995,16 @@
           let comp = cols[0] || 'अन्य कंपनी';
           let rawCrop = cols[1] || '';
           let varName = cols[2] || '';
-          // Category अब कॉलम J (इंडेक्स 9) से पढ़ी जा रही है जैसा आपके स्क्रीनशॉट में है
+          // यहाँ कॉलम J (इंडेक्स 9) से श्रेणी पढ़ी जा रही है
           let cat = cols[9] || cols[cols.length - 1] || 'सब्जियां';
           
           let photoList = [];
-          for(let i = 0; i < cols.length; i++) {
-            if(cols[i] && cols[i].trim().includes('http')) {
-              let parts = cols[i].split(',');
-              parts.forEach(p => {
-                let cleanUrl = p.trim();
-                if(cleanUrl.startsWith('http')) photoList.push(cleanUrl);
-              });
-            }
+          // फोटो लिंक कॉलम I (इंडेक्स 8) पर होना चाहिए ताकि वैरायटी कार्ड में दिखे
+          if(cols[8] && cols[8].trim().startsWith('http')) {
+            cols[8].split(',').forEach(p => {
+              let cleanUrl = p.trim();
+              if(cleanUrl.startsWith('http')) photoList.push(cleanUrl);
+            });
           }
 
           return {
@@ -2328,7 +2326,7 @@
     }
 
     function showCropsForCategory(categoryName) {
-      let filteredRecords = sheetRecords.filter(r => r.category.toLowerCase() === categoryName.toLowerCase());
+      let filteredRecords = sheetRecords.filter(r => r.category.toLowerCase().includes(categoryName.toLowerCase()));
       let cropsObj = {};
       filteredRecords.forEach(r => {
         if(r.crop && r.crop.toLowerCase() !== 'crop') {
@@ -2352,7 +2350,7 @@
     }
 
     function filterByCropAndCategory(cropName, categoryName) {
-      let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase() && r.category.toLowerCase() === categoryName.toLowerCase());
+      let list = sheetRecords.filter(r => r.crop.toLowerCase() === cropName.toLowerCase() && r.category.toLowerCase().includes(categoryName.toLowerCase()));
       renderVarietiesList(list, `${cropName}`);
     }
 
