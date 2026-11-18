@@ -91,6 +91,21 @@
       border-color: #334155 !important; 
     }
 
+    /* डार्क मोड में चैट मैसेज बबल्स और इनपुट फिक्स */
+    body.dark-mode #aiChatMessagesContainer > div {
+      background-color: #273548 !important;
+      color: #f8fafc !important;
+      border-color: #16a34a !important;
+    }
+    body.dark-mode #aiUserChatInput {
+      background-color: #1e2937 !important;
+      color: #f8fafc !important;
+      border-color: #334155 !important;
+    }
+    body.dark-mode #aiUserChatInput::placeholder {
+      color: #94a3b8 !important;
+    }
+
     body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, 
     body.dark-mode p, body.dark-mode span, body.dark-mode label, 
     body.dark-mode b, body.dark-mode strong, body.dark-mode div { 
