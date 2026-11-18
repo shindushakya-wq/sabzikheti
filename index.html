@@ -288,7 +288,7 @@
     .var-photo { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; background-color: #f3f4f6; display: block; border: 1px solid #e2e8f0; cursor: pointer; }
     
     .var-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
-    .badge-variety { background: #e8f5e9; color: #1b5e20; font-size: 12px; padding: 4px 10px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #bbf7d0; }
+    .badge-variety { background: #e8f5e9; color: #1b5e20; font-size: 12px; padding: 4px 10px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; border: 1.5px solid #bbf7d0; }
     .badge-company { background: #eff6ff; color: #1d4ed8; font-size: 12px; padding: 4px 10px; border-radius: 8px; font-weight: 700; display: inline-block; border: 1px solid #bfdbfe; }
     
     .var-title { font-size: 18px; font-weight: 800; color: #111827; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 8px; }
@@ -296,10 +296,10 @@
     .var-info-row b { color: #1f2937; }
 
     .disease-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fecaca; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #dc2626; }
-    .disease-title { font-size: 16px; font-weight: bold; color: #991b1b; margin-bottom: 6px; }
+    .disease-title { font-size: 16px; font-weight: bold; color: #991b1b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
     .disease-symptom { font-size: 13px; color: #4b5563; margin-bottom: 8px; line-height: 1.4; }
     .disease-cure-box { font-size: 13.5px; color: #065f46; background: #ecfdf5; padding: 8px 10px; border-radius: 8px; border-left: 4px solid #10b981; font-weight: 600; }
-    .disease-photo { max-height: 160px; width: 100%; object-fit: contain; border-radius: 8px; margin-top: 8px; cursor: pointer; border: 1px solid #e2e8f0; background: #fafafa; }
+    .disease-photo { max-height: 180px; width: 100%; object-fit: contain; border-radius: 8px; margin-top: 10px; cursor: pointer; border: 1px solid #e2e8f0; background: #fafafa; }
 
     .chem-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fbcfe8; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #db2777; }
     .chem-title { font-size: 16px; font-weight: bold; color: #9d174d; margin-bottom: 8px; border-bottom: 1px dashed #fbcfe8; padding-bottom: 4px; }
@@ -820,11 +820,11 @@
       <div id="privacyContentBox">
         <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
           <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-          <p id="privacyDisclaimerText">लोड हो रहा है...</p>
+          <div id="privacyDisclaimerText">लोड हो रहा है...</div>
         </div>
         <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
           <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-          <p id="privacyPolicyText">लोड हो रहा है...</p>
+          <div id="privacyPolicyText">लोड हो रहा है...</div>
         </div>
       </div>
     </div>
@@ -1702,7 +1702,7 @@
         gSched: "સ્પ્રે શેડ્યુલ",
         gAtoz: "ખેતી કેવી રીતે કરવી (A-Z)",
         gDisc: "ખેડૂત ચર્ચા",
-        gAdv: "સલાહકાર",
+        gAdv: "સલાहકાર",
         gComp: "All કંપની બીજ",
         gChem: "દવાઓ Chemicals",
         gServ: "Other સેવાઓ",
@@ -2048,7 +2048,6 @@
       }
     }
 
-    // [UPDATED] फसल सुरक्षा (Protection) शीट से डेटा पढ़ना जिसमें फोटो लिंक हैंडल किया गया है
     async function fetchProtectionTab(sheetName, categoryName) {
       try {
         let res = await fetch(BASE_SHEET_URL + encodeURIComponent(sheetName));
@@ -2089,7 +2088,7 @@
         let allData = await fetchSheetTabWithCategory('Sheet1');
         sheetRecords = allData;
 
-        // Privacy डेटा लोड करना
+        // Privacy (गोपनीयता नीति) डेटा लोड करना
         try {
           const resPrivacy = await fetch(BASE_SHEET_URL + encodeURIComponent('Privacy'));
           const privText = await resPrivacy.text();
@@ -2485,7 +2484,7 @@
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
     }
 
-    // [UPDATED] फसल के रोगों की सूची दिखाने का फंक्शन जिसमें फोटो लिंक होने पर फोटो और नहीं होने पर नॉर्मल आइकॉन/इमोजी दिखेगा
+    // फसल के रोगों की सूची दिखाने का फंक्शन जिसमें फोटो लिंक होने पर फोटो और नहीं होने पर नॉर्मल आइकॉन/इमोजी दिखेगा
     function showCropDiseasesList(categoryName, crop) {
       document.getElementById('cropDiseaseHeading').innerText = `${crop} के रोग व उपचार:`;
       let container = document.getElementById('cropDiseasesContainer');
@@ -2497,7 +2496,6 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center;">डेटा उपलब्ध नहीं है।</div>`;
       } else {
         items.forEach(d => {
-          // यदि गूगल शीट में फोटो लिंक दिया है तो फोटो दिखेगी, नहीं तो नॉर्मल इमोजी/आइकॉन दिखेगा
           let p = (d.photo && d.photo.trim().startsWith('http')) 
             ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${d.name}">` 
             : '';
