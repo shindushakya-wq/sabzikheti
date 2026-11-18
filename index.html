@@ -278,7 +278,8 @@
 
     .list-item { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .list-left { display: flex; align-items: center; gap: 12px; }
-    .list-icon { font-size: 24px; }
+    .list-icon { font-size: 24px; width: 32px; text-align: center; }
+    .list-icon img { width: 32px; height: 32px; object-fit: cover; border-radius: 50%; }
     .list-title { font-size: 15px; font-weight: 600; }
     .arrow { color: #9ca3af; font-weight: bold; }
 
@@ -1951,6 +1952,13 @@
       return c.split('(')[0].split('-')[0].split('/')[0].trim();
     }
 
+    function getCropDisplayHtml(cropName, recordPhotos) {
+      if (recordPhotos && recordPhotos.length > 0 && recordPhotos[0].startsWith('http')) {
+        return `<img src="${recordPhotos[0]}" alt="${cropName}">`;
+      }
+      return getCropEmoji(cropName);
+    }
+
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
@@ -1965,9 +1973,13 @@
       if (c.includes('गाजर')) return '🥕';
       if (c.includes('आलू')) return '🥔';
       if (c.includes('बैंगन')) return '🍆';
+      if (c.includes('आम')) return '🥭';
+      if (c.includes('अमरूद')) return '🍈';
+      if (c.includes('पपीता')) return '🍈';
+      if (c.includes('अनार')) return '🍎';
+      if (c.includes('केला')) return '🍌';
       if (c.includes('गेहूँ') || c.includes('अनाज')) return '🌾';
-      if (c.includes('गैंदा') || c.includes('गुलाब') || c.includes('फूल')) return '🌼';
-      if (c.includes('आम') || c.includes('अमरूद') || c.includes('फल')) return '🍉';
+      if (c.includes('गैंदा') || c.includes('गुलाब') || c.includes('फूल') || c.includes('गुलदाउदी')) return '🌼';
       return '🌱';
     }
 
@@ -2315,7 +2327,14 @@
 
     function showCropsForCategory(categoryName) {
       let filteredRecords = sheetRecords.filter(r => r.category === categoryName);
-      let crops = [...new Set(filteredRecords.map(r => r.crop))].filter(c => c && c.toLowerCase() !== 'crop').sort();
+      let cropsObj = {};
+      filteredRecords.forEach(r => {
+        if(r.crop && r.crop.toLowerCase() !== 'crop') {
+          if(!cropsObj[r.crop]) cropsObj[r.crop] = [];
+          cropsObj[r.crop] = r.photos;
+        }
+      });
+      let crops = Object.keys(cropsObj).sort();
       let container = document.getElementById('cropsContainer');
       container.innerHTML = '';
       
@@ -2323,7 +2342,8 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी (${categoryName}) में अभी कोई फसल उपलब्ध नहीं है।</div>`;
       } else {
         crops.forEach(c => {
-          container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${c}', '${categoryName}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
+          let displayHtml = getCropDisplayHtml(c, cropsObj[c]);
+          container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${c}', '${categoryName}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
       openScreen('screen-crops', categoryName);
@@ -2354,7 +2374,9 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई फसल सुरक्षा डेटा उपलब्ध नहीं है।</div>`;
       } else {
         crops.forEach(c => {
-          container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName}', '${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} सुरक्षा</span></div><span class="arrow">&gt;</span></div>`;
+          let firstPhoto = (catData[c] && catData[c][0] && catData[c][0].photo) ? [catData[c][0].photo] : [];
+          let displayHtml = getCropDisplayHtml(c, firstPhoto);
+          container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName}', '${c}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c} सुरक्षा</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
       openScreen('screen-protection-crops', `${categoryName} सुरक्षा`);
@@ -2375,7 +2397,9 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई शेड्यूल उपलब्ध नहीं है।</div>`;
       } else {
         crops.forEach(c => {
-          container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName}', '${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c} स्प्रे शेड्यूल</span></div><span class="arrow">&gt;</span></div>`;
+          let firstPhoto = (catData[c] && catData[c][0] && catData[c][0].photo) ? [catData[c][0].photo] : [];
+          let displayHtml = getCropDisplayHtml(c, firstPhoto);
+          container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName}', '${c}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c} स्प्रे शेड्यूल</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
       openScreen('screen-schedule-crops', `${categoryName} शेड्यूल`);
@@ -2515,12 +2539,20 @@
     }
 
     function selectCompany(comp) {
-      let crops = [...new Set(sheetRecords.filter(r => r.company === comp).map(r => r.crop))].filter(c => c && c.toLowerCase() !== 'crop').sort();
+      let cropsObj = {};
+      sheetRecords.filter(r => r.company === comp).forEach(r => {
+        if(r.crop && r.crop.toLowerCase() !== 'crop') {
+          if(!cropsObj[r.crop]) cropsObj[r.crop] = [];
+          cropsObj[r.crop] = r.photos;
+        }
+      });
+      let crops = Object.keys(cropsObj).sort();
       let container = document.getElementById('companyCropsContainer');
       document.getElementById('compCropHeading').innerText = `${comp} की फसलें:`;
       container.innerHTML = '';
       crops.forEach(c => {
-        container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp}', '${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
+        let displayHtml = getCropDisplayHtml(c, cropsObj[c]);
+        container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp}', '${c}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
       });
       openScreen('screen-company-crops', comp);
     }
