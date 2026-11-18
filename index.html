@@ -1932,6 +1932,22 @@
       if (low.includes('मूली') || low.includes('radish')) return 'मूली';
       if (low.includes('गाजर') || low.includes('carrot')) return 'गाजर';
       if (low.includes('प्याज') || low.includes('onion')) return 'प्याज';
+      if (low.includes('गेहूँ') || low.includes('wheat')) return 'गेहूँ';
+      if (low.includes('धान') || low.includes('paddy')) return 'धान';
+      if (low.includes('सरसों') || low.includes('mustard')) return 'सरसों';
+      if (low.includes('सोयाबीन') || low.includes('soybean')) return 'सोयाबीन';
+      if (low.includes('चना') || low.includes('chickpea')) return 'चना';
+      if (low.includes('गन्ना') || low.includes('sugarcane')) return 'गन्ना';
+      if (low.includes('जीरा') || low.includes('cumin')) return 'जीरा';
+      if (low.includes('गैंदा') || low.includes('marigold')) return 'गैंदा';
+      if (low.includes('गुलाब') || low.includes('rose')) return 'गुलाब';
+      if (low.includes('गुलदाउदी') || low.includes('chrysanthemum')) return 'गुलदाउदी';
+      if (low.includes('रजनीगंधा') || low.includes('tuberose')) return 'रजनीगंधा';
+      if (low.includes('आम') || low.includes('mango')) return 'आम';
+      if (low.includes('अमरूद') || low.includes('guava')) return 'अमरूद';
+      if (low.includes('पपीता') || low.includes('papaya')) return 'पपीता';
+      if (low.includes('अनार') || low.includes('pomegranate')) return 'अनार';
+      if (low.includes('केला') || low.includes('banana')) return 'केला';
       return c.split('(')[0].split('-')[0].split('/')[0].trim();
     }
 
@@ -1949,6 +1965,9 @@
       if (c.includes('गाजर')) return '🥕';
       if (c.includes('आलू')) return '🥔';
       if (c.includes('बैंगन')) return '🍆';
+      if (c.includes('गेहूँ') || c.includes('अनाज')) return '🌾';
+      if (c.includes('गैंदा') || c.includes('गुलाब') || c.includes('फूल')) return '🌼';
+      if (c.includes('आम') || c.includes('अमरूद') || c.includes('फल')) return '🍉';
       return '🌱';
     }
 
@@ -2079,7 +2098,6 @@
           scheduleRecords[s.category][s.crop].push({ time: s.time, med: s.med, purpose: s.purpose, photo: s.photo });
         });
 
-        // फसल सुरक्षा (Protection) - अलग-अलग गूगल शीट टैब्स से डेटा फैच करना
         let protSabzi = await fetchProtectionTab('Protection', 'सब्जियां');
         let protAnaaj = await fetchProtectionTab('Cereal crop protection', 'अनाज');
         let protPhal = await fetchProtectionTab('Fruit crop protection', 'फल');
@@ -2302,7 +2320,7 @@
       container.innerHTML = '';
       
       if(crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई फसल उपलब्ध नहीं है।</div>`;
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी (${categoryName}) में अभी कोई फसल उपलब्ध नहीं है।</div>`;
       } else {
         crops.forEach(c => {
           container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${c}', '${categoryName}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
@@ -2321,7 +2339,6 @@
       renderVarietiesList(list, `${cropName}`);
     }
 
-    // फसल सुरक्षा श्रेणियां दिखाने का फंक्शन
     function showProtectionCategoriesScreen() {
       openScreen('screen-protection-categories', 'फसल सुरक्षा');
     }
@@ -2343,7 +2360,6 @@
       openScreen('screen-protection-crops', `${categoryName} सुरक्षा`);
     }
 
-    // स्प्रे शेड्यूल श्रेणियां दिखाने का फंक्शन
     function showScheduleCategoriesScreen() {
       openScreen('screen-schedule-categories', 'स्प्रे शेड्यूल');
     }
