@@ -1992,10 +1992,11 @@
         if(!res.ok) return [];
         let text = await res.text();
         return parseCSV(text).map(cols => {
-          let cat = cols[0] || 'सब्जियां';
-          let comp = cols[1] || 'अन्य कंपनी';
-          let rawCrop = cols[2] || '';
-          let varName = cols[3] || '';
+          let comp = cols[0] || 'अन्य कंपनी';
+          let rawCrop = cols[1] || '';
+          let varName = cols[2] || '';
+          // Category अब कॉलम J (इंडेक्स 9) से पढ़ी जा रही है जैसा आपके स्क्रीनशॉट में है
+          let cat = cols[9] || cols[cols.length - 1] || 'सब्जियां';
           
           let photoList = [];
           for(let i = 0; i < cols.length; i++) {
@@ -2014,11 +2015,11 @@
             crop: getStandardCropName(rawCrop),
             rawCrop: rawCrop,
             variety: varName,
-            segment: cols[4] || 'हाइब्रिड',
-            features: cols[5] || '',
-            weight: cols[6] || '',
-            maturity: cols[7] || '',
-            resistance: cols[8] || '',
+            segment: cols[3] || 'हाइब्रिड',
+            features: cols[4] || '',
+            weight: cols[5] || '',
+            maturity: cols[6] || '',
+            resistance: cols[7] || '',
             photos: photoList
           };
         }).filter(r => {
@@ -2094,7 +2095,6 @@
     async function loadAllSheetsData() {
       showLoader();
       try {
-        // अब सभी किस्में Sheet1 से लोड होंगी जहाँ Category कॉलम दिया गया है
         let allData = await fetchSheetTabWithCategory('Sheet1');
         sheetRecords = allData;
 
