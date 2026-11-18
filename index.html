@@ -1957,7 +1957,7 @@
 
     async function fetchSheetTab(sheetName, categoryName) {
       try {
-        let res = await fetch(BASE_SHEET_URL + sheetName);
+        let res = await fetch(BASE_SHEET_URL + encodeURIComponent(sheetName));
         if(!res.ok) return [];
         let text = await res.text();
         return parseCSV(text).map(cols => {
@@ -1997,7 +1997,7 @@
 
     async function fetchScheduleTab(sheetName, categoryName) {
       try {
-        let res = await fetch(BASE_SHEET_URL + sheetName);
+        let res = await fetch(BASE_SHEET_URL + encodeURIComponent(sheetName));
         if(!res.ok) return [];
         let text = await res.text();
         let rows = parseCSV(text);
@@ -2023,7 +2023,7 @@
 
     async function fetchProtectionTab(sheetName, categoryName) {
       try {
-        let res = await fetch(BASE_SHEET_URL + sheetName);
+        let res = await fetch(BASE_SHEET_URL + encodeURIComponent(sheetName));
         if(!res.ok) return [];
         let text = await res.text();
         let rows = parseCSV(text);
@@ -2059,10 +2059,10 @@
       showLoader();
       try {
         let sabziList = await fetchSheetTab('Sheet1', 'सब्जियां');
-        let phalList = await fetchSheetTab('Phal', 'फल');
-        let phoolList = await fetchSheetTab('Phool', 'फूल');
-        let anaajList = await fetchSheetTab('Anaaj', 'अनाज');
-        let anyaList = await fetchSheetTab('Other', 'अन्य');
+        let phalList = await fetchSheetTab('fruit veryati', 'फल');
+        let phoolList = await fetchSheetTab('flowers veryati', 'फूल');
+        let anaajList = await fetchSheetTab('Anaj veryati', 'अनाज');
+        let anyaList = await fetchSheetTab('Other veryati', 'अन्य');
         sheetRecords = [...sabziList, ...phalList, ...phoolList, ...anaajList, ...anyaList];
 
         let schedSabzi = await fetchScheduleTab('Schedule', 'सब्जियां');
@@ -2094,12 +2094,12 @@
           protectionRecords[p.category][p.crop].push({ name: p.name, symptoms: p.symptoms, cure: p.cure, photo: p.photo });
         });
 
-        const res4 = await fetch(BASE_SHEET_URL + 'Chemicals');
+        const res4 = await fetch(BASE_SHEET_URL + encodeURIComponent('Chemicals'));
         chemicalsRecords = parseCSV(await res4.text()).map(cols => ({
           name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || '', photo: cols[5] || ''
         })).filter(r => r.name && !r.name.includes('दवा') && !r.name.toLowerCase().includes('name'));
 
-        const resAtoZ = await fetch(BASE_SHEET_URL + 'AtoZ');
+        const resAtoZ = await fetch(BASE_SHEET_URL + encodeURIComponent('AtoZ'));
         atozGuideRecords = {};
         parseCSV(await resAtoZ.text()).forEach(cols => {
           if(cols[0] && !cols[0].includes('Crop') && !cols[0].toLowerCase().includes('crop')) {
@@ -2113,21 +2113,21 @@
         });
 
         try {
-          const resTips = await fetch(BASE_SHEET_URL + 'Tips');
+          const resTips = await fetch(BASE_SHEET_URL + encodeURIComponent('Tips'));
           tipsRecords = parseCSV(await resTips.text()).map(cols => ({
             title: cols[0] || '', desc: cols[1] || ''
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(e) {}
 
         try {
-          const resAlerts = await fetch(BASE_SHEET_URL + 'Alerts');
+          const resAlerts = await fetch(BASE_SHEET_URL + encodeURIComponent('Alerts'));
           alertsRecords = parseCSV(await resAlerts.text()).map(cols => ({
             title: cols[0] || '', desc: cols[1] || ''
           })).filter(r => r.title && !r.title.includes('Title'));
         } catch(e) {}
 
         try {
-          const resReports = await fetch(BASE_SHEET_URL + 'Diagnosis');
+          const resReports = await fetch(BASE_SHEET_URL + encodeURIComponent('Diagnosis'));
           const textReports = await resReports.text();
           let reportRows = parseCSV(textReports);
           let repContainer = document.getElementById('aiReportsContainer');
@@ -2149,12 +2149,12 @@
           document.getElementById('aiReportsContainer').innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">रिपोर्ट लोड करने में विफल।</div>`;
         }
 
-        const resStories = await fetch(BASE_SHEET_URL + 'Stories');
+        const resStories = await fetch(BASE_SHEET_URL + encodeURIComponent('Stories'));
         dailyStories = parseCSV(await resStories.text()).map(cols => ({
           title: cols[0]||'स्टोरी', type: cols[1]||'photo', url: cols[2]||'', icon: cols[3]||'🌱', desc: cols[4]||''
         })).filter(r => r.title && r.title !== 'Title' && !r.title.toLowerCase().includes('title'));
 
-        const resVideos = await fetch(BASE_SHEET_URL + 'Videos');
+        const resVideos = await fetch(BASE_SHEET_URL + encodeURIComponent('Videos'));
         videoRecords = parseCSV(await resVideos.text()).map(cols => ({
           title: cols[0]||'कृषि वीडियो', thumbnail: cols[1]||'', videoUrl: cols[2]||''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title'));
@@ -2455,7 +2455,6 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center;">डेटा उपलब्ध नहीं है।</div>`;
       } else {
         items.forEach(d => {
-          // कंडीशनल चेकिंग: यदि गूगल शीट में फोटो का लिंक है तभी इमेज दिखाएं, अन्यथा नहीं
           let p = (d.photo && d.photo.trim().startsWith('http')) ? `<img src="${d.photo.trim()}" style="max-height:160px; width:100%; object-fit:contain; border-radius:8px; margin-top:8px;" onclick="openImageModal('${d.photo.trim()}')">` : '';
           
           container.innerHTML += `
