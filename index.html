@@ -299,6 +299,7 @@
     .disease-title { font-size: 16px; font-weight: bold; color: #991b1b; margin-bottom: 6px; }
     .disease-symptom { font-size: 13px; color: #4b5563; margin-bottom: 8px; line-height: 1.4; }
     .disease-cure-box { font-size: 13.5px; color: #065f46; background: #ecfdf5; padding: 8px 10px; border-radius: 8px; border-left: 4px solid #10b981; font-weight: 600; }
+    .disease-photo { max-height: 160px; width: 100%; object-fit: contain; border-radius: 8px; margin-top: 8px; cursor: pointer; border: 1px solid #e2e8f0; background: #fafafa; }
 
     .chem-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fbcfe8; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #db2777; }
     .chem-title { font-size: 16px; font-weight: bold; color: #9d174d; margin-bottom: 8px; border-bottom: 1px dashed #fbcfe8; padding-bottom: 4px; }
@@ -441,11 +442,7 @@
         <button class="modal-close" onclick="closeNotificationModal()">✕</button>
       </div>
       <div id="notificationListContent">
-        <div class="schedule-step" style="border-left:4px solid #16a34a;">
-          <b>🌾 नया डेटा अपडेट उपलब्ध है!</b>
-          <p>गूगल शीट से सभी फसल और नोटिफिकेशन डेटा सिंक कर दिए गए हैं।</p>
-          <span style="font-size:11px; color:#166534;">आज, अभी अपडेट किया गया</span>
-        </div>
+        <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ लोड हो रहा है...</div>
       </div>
     </div>
   </div>
@@ -822,14 +819,12 @@
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;" id="privHeadTitle">📜 नियम व शर्तें एवं गोपनीयता नीति</h3>
       <div id="privacyContentBox">
         <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
-          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;" id="pDiscHead">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-          <p style="margin-bottom:8px;" id="pDisc1">1. यह मोबाइल ऐप <b>"CROP & SABZI DOCTOR"</b> केवल किसानों के मार्गदर्शन, जागरूकता और खेती-किसानी की सामान्य जानकारी साझा करने के उद्देश्य से बनाया गया है।</p>
-          <p style="margin-bottom:8px;" id="pDisc2">2. इस ऐप में दी गई बीज वैरायटी की जानकारी और ट्रेडमार्क संबंधित कंपनियों के हैं। हमारा ऐप किसी भी कंपनी से आधिकारिक तौर पर जुड़ा नहीं है।</p>
-          <p style="margin-bottom:0px;" id="pDisc3">3. किसी भी कीटनाशक या उर्वरक का उपयोग करने से पहले डिब्बे पर दिए गए निर्देशों को अवश्य पढ़ें या कृषि विशेषज्ञों की सलाह लें।</p>
+          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
+          <p id="privacyDisclaimerText">लोड हो रहा है...</p>
         </div>
         <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
-          <b style="color:#166534; font-size:14px; margin-bottom:8px;" id="pPrivHead">🔒 गोपनीयता नीति (Privacy Policy):</b>
-          <p style="margin-bottom:0px;" id="pPrivText">आपके द्वारा दर्ज किया गया नाम और मोबाइल नंबर पूरी तरह सुरक्षित रखा जाता है। इसका उपयोग केवल कृषि संबंधी जानकारी प्रदान करने के लिए किया जाता है।</p>
+          <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
+          <p id="privacyPolicyText">लोड हो रहा है...</p>
         </div>
       </div>
     </div>
@@ -1105,7 +1100,6 @@
   </div>
 
   <script>
-    // स्प्लैश स्क्रीन एनीमेशन नियंत्रण
     window.addEventListener('load', () => {
       setTimeout(() => {
         let splash = document.getElementById('splashScreen');
@@ -1835,7 +1829,7 @@
         chatYou: "तुम्ही",
         chatDoc: "डॉक्टर",
         chatThinking: "विचार करत आहे...",
-        chatErr: "क्षमस्व, उत्तर मिळाले नाही.",
+        chatErr: "क्षमस्व, मिळाले नाही.",
         chatNetErrHead: "त्रुटी",
         chatNetErrDesc: "इंटरनेट कनेक्शन समस्या.",
         aiDocTitle: "AI डॉक्टर चेट"
@@ -1995,11 +1989,9 @@
           let comp = cols[0] || 'अन्य कंपनी';
           let rawCrop = cols[1] || '';
           let varName = cols[2] || '';
-          // यहाँ कॉलम J (इंडेक्स 9) से श्रेणी पढ़ी जा रही है
           let cat = cols[9] || cols[cols.length - 1] || 'सब्जियां';
           
           let photoList = [];
-          // फोटो लिंक कॉलम I (इंडेक्स 8) पर होना चाहिए ताकि वैरायटी कार्ड में दिखे
           if(cols[8] && cols[8].trim().startsWith('http')) {
             cols[8].split(',').forEach(p => {
               let cleanUrl = p.trim();
@@ -2056,6 +2048,7 @@
       }
     }
 
+    // [UPDATED] फसल सुरक्षा (Protection) शीट से डेटा पढ़ना जिसमें फोटो लिंक हैंडल किया गया है
     async function fetchProtectionTab(sheetName, categoryName) {
       try {
         let res = await fetch(BASE_SHEET_URL + encodeURIComponent(sheetName));
@@ -2095,6 +2088,51 @@
       try {
         let allData = await fetchSheetTabWithCategory('Sheet1');
         sheetRecords = allData;
+
+        // Privacy डेटा लोड करना
+        try {
+          const resPrivacy = await fetch(BASE_SHEET_URL + encodeURIComponent('Privacy'));
+          const privText = await resPrivacy.text();
+          let privRows = parseCSV(privText);
+          let disclaimerHtml = "";
+          let policyHtml = "";
+          privRows.forEach((cols, idx) => {
+            if(idx > 0 && cols[0]) {
+              let title = (cols[0] || '').toLowerCase();
+              let desc = cols[1] || '';
+              if(title.includes('डिस्क्लेमर') || title.includes('disclaimer') || title.includes('अस्वीकरण')) {
+                disclaimerHtml += `<p style="margin-bottom:8px;">${desc}</p>`;
+              } else if(title.includes('गोपनीयता') || title.includes('privacy')) {
+                policyHtml += `<p style="margin-bottom:8px;">${desc}</p>`;
+              }
+            }
+          });
+          if(disclaimerHtml) document.getElementById('privacyDisclaimerText').innerHTML = disclaimerHtml;
+          if(policyHtml) document.getElementById('privacyPolicyText').innerHTML = policyHtml;
+        } catch(e) {}
+
+        // Notifications डेटा लोड करना
+        try {
+          const resNotif = await fetch(BASE_SHEET_URL + encodeURIComponent('Notifications'));
+          const notifText = await resNotif.text();
+          let notifRows = parseCSV(notifText);
+          let notifContainer = document.getElementById('notificationListContent');
+          if(notifRows.length > 1) {
+            let notifHtml = '';
+            notifRows.forEach((cols, idx) => {
+              if(idx > 0 && cols[0]) {
+                let title = cols[0] || 'सूचना';
+                let desc = cols[1] || '';
+                notifHtml += `
+                  <div class="schedule-step" style="border-left:4px solid #16a34a; margin-bottom:10px;">
+                    <b>🌾 ${title}</b>
+                    <p style="margin-top:4px;">${desc}</p>
+                  </div>`;
+              }
+            });
+            notifContainer.innerHTML = notifHtml || `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई सूचना उपलब्ध नहीं है।</div>`;
+          }
+        } catch(e) {}
 
         let schedSabzi = await fetchScheduleTab('Schedule', 'सब्जियां');
         let schedAnaaj = await fetchScheduleTab('Anaaj', 'अनाज');
@@ -2141,43 +2179,6 @@
             };
           }
         });
-
-        try {
-          const resTips = await fetch(BASE_SHEET_URL + encodeURIComponent('Tips'));
-          tipsRecords = parseCSV(await resTips.text()).map(cols => ({
-            title: cols[0] || '', desc: cols[1] || ''
-          })).filter(r => r.title && !r.title.includes('Title'));
-        } catch(e) {}
-
-        try {
-          const resAlerts = await fetch(BASE_SHEET_URL + encodeURIComponent('Alerts'));
-          alertsRecords = parseCSV(await resAlerts.text()).map(cols => ({
-            title: cols[0] || '', desc: cols[1] || ''
-          })).filter(r => r.title && !r.title.includes('Title'));
-        } catch(e) {}
-
-        try {
-          const resReports = await fetch(BASE_SHEET_URL + encodeURIComponent('Diagnosis'));
-          const textReports = await resReports.text();
-          let reportRows = parseCSV(textReports);
-          let repContainer = document.getElementById('aiReportsContainer');
-          
-          if(reportRows.length > 1) {
-            let repHtml = '';
-            reportRows.forEach((cols, idx) => {
-              if(idx > 0 && (cols[0] || cols[1])) {
-                let dateStr = cols[0] || 'ताज़ा रिपोर्ट';
-                let reportText = cols[1] || '';
-                repHtml += `<div class="variety-card" style="border-left:4px solid #16a34a;"><b>📅 ${dateStr}</b><p style="margin-top:8px; color:#374151; line-height:1.5; white-space: pre-line;">${reportText}</p></div>`;
-              }
-            });
-            repContainer.innerHTML = repHtml || `<div class="variety-card" style="text-align:center; color:#6b7280;">कोई पुरानी रिपोर्ट उपलब्ध नहीं है।</div>`;
-          } else {
-            repContainer.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">कोई पुरानी रिपोर्ट उपलब्ध नहीं है।</div>`;
-          }
-        } catch(e) {
-          document.getElementById('aiReportsContainer').innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">रिपोर्ट लोड करने में विफल।</div>`;
-        }
 
         const resStories = await fetch(BASE_SHEET_URL + encodeURIComponent('Stories'));
         dailyStories = parseCSV(await resStories.text()).map(cols => ({
@@ -2484,6 +2485,7 @@
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
     }
 
+    // [UPDATED] फसल के रोगों की सूची दिखाने का फंक्शन जिसमें फोटो लिंक होने पर फोटो और नहीं होने पर नॉर्मल आइकॉन/इमोजी दिखेगा
     function showCropDiseasesList(categoryName, crop) {
       document.getElementById('cropDiseaseHeading').innerText = `${crop} के रोग व उपचार:`;
       let container = document.getElementById('cropDiseasesContainer');
@@ -2495,11 +2497,16 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center;">डेटा उपलब्ध नहीं है।</div>`;
       } else {
         items.forEach(d => {
-          let p = (d.photo && d.photo.trim().startsWith('http')) ? `<img src="${d.photo.trim()}" style="max-height:160px; width:100%; object-fit:contain; border-radius:8px; margin-top:8px;" onclick="openImageModal('${d.photo.trim()}')">` : '';
+          // यदि गूगल शीट में फोटो लिंक दिया है तो फोटो दिखेगी, नहीं तो नॉर्मल इमोजी/आइकॉन दिखेगा
+          let p = (d.photo && d.photo.trim().startsWith('http')) 
+            ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${d.name}">` 
+            : '';
           
+          let iconEmoji = getCropEmoji(crop);
+
           container.innerHTML += `
             <div class="disease-card">
-              <div class="disease-title">🐛 ${d.name}</div>
+              <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span>${d.name}</div>
               <div class="disease-symptom"><b>लक्षण:</b> ${d.symptoms}</div>
               <div class="disease-cure-box">उपचार: ${d.cure}</div>
               ${p}
@@ -2648,18 +2655,6 @@
     async function showPrivacyPolicyScreen() {
       const t = translations[currentLang] || translations['hi'];
       openScreen('screen-privacy', t.privacyTitle);
-      let box = document.getElementById('privacyContentBox');
-      
-      box.innerHTML = `
-        <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
-          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
-          <p style="margin-bottom:8px;">1. यह मोबाइल ऐप <b>"CROP & SABZI DOCTOR"</b> केवल किसानों के मार्गदर्शन और सामान्य जानकारी के लिए है।</p>
-          <p style="margin-bottom:0px;">2. कीटनाशकों का उपयोग करने से पहले कृषि विशेषज्ञों की सलाह अवश्य लें।</p>
-        </div>
-        <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
-          <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
-          <p style="margin-bottom:0px;">आपका डेटा पूरी तरह सुरक्षित रखा जाता है!</p>
-        </div>`;
     }
 
     function contactAdvisor() { window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20सलाह%20चाहिए।', '_blank'); }
