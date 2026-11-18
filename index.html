@@ -1956,24 +1956,28 @@
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       let c = cropName.trim().toLowerCase();
-      if (c.includes('टमाटर')) return '🍅';
-      if (c.includes('मिर्च')) return '🌶️';
-      if (c.includes('खीरा')) return '🥒';
-      if (c.includes('तरबूज')) return '🍉';
-      if (c.includes('फूलगोभी')) return '🥦';
-      if (c.includes('कद्दू')) return '🎃';
-      if (c.includes('करेला')) return '🥒';
-      if (c.includes('लौकी')) return '🥒';
-      if (c.includes('गाजर')) return '🥕';
-      if (c.includes('आलू')) return '🥔';
-      if (c.includes('बैंगन')) return '🍆';
-      if (c.includes('आम')) return '🥭';
-      if (c.includes('अमरूद')) return '🍈';
-      if (c.includes('पपीता')) return '🍈';
-      if (c.includes('अनार')) return '🍎';
-      if (c.includes('केला')) return '🍌';
-      if (c.includes('गेहूँ') || c.includes('अनाज')) return '🌾';
-      if (c.includes('गैंदा') || c.includes('गुलाब') || c.includes('फूल') || c.includes('गुलदाउदी')) return '🌼';
+      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
+      if (c.includes('मिर्च') || c.includes('chilli') || c.includes('chili')) return '🌶️';
+      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
+      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
+      if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
+      if (c.includes('कद्दू') || c.includes('pumpkin')) return '🎃';
+      if (c.includes('करेला') || c.includes('bitter')) return '🥒';
+      if (c.includes('लौकी') || c.includes('bottle')) return '🥒';
+      if (c.includes('गाजर') || c.includes('carrot')) return '🥕';
+      if (c.includes('आलू') || c.includes('potato')) return '🥔';
+      if (c.includes('बैंगन') || c.includes('brinjal')) return '🍆';
+      if (c.includes('गेहूँ') || c.includes('wheat')) return '🌾';
+      if (c.includes('धान') || c.includes('paddy') || c.includes('rice')) return '🌾';
+      if (c.includes('सरसों') || c.includes('mustard')) return '🌼';
+      if (c.includes('चना') || c.includes('chickpea')) return '🌱';
+      if (c.includes('गन्ना') || c.includes('sugarcane')) return '🎋';
+      if (c.includes('आम') || c.includes('mango')) return '🥭';
+      if (c.includes('अमरूद') || c.includes('guava')) return '🍈';
+      if (c.includes('पपीता') || c.includes('papaya')) return '🍈';
+      if (c.includes('अनार') || c.includes('pomegranate')) return '🍎';
+      if (c.includes('केला') || c.includes('banana')) return '🍌';
+      if (c.includes('गैंदा') || c.includes('गुलाब') || c.includes('फूल') || c.includes('marigold') || c.includes('rose')) return '🌼';
       return '🌱';
     }
 
@@ -2088,7 +2092,7 @@
         let allData = await fetchSheetTabWithCategory('Sheet1');
         sheetRecords = allData;
 
-        // Privacy (गोपनीयता नीति) डेटा लोड करना
+        // Privacy (गोपनीयता नीति) डेटा गूगल शीट से लोड करना
         try {
           const resPrivacy = await fetch(BASE_SHEET_URL + encodeURIComponent('Privacy'));
           const privText = await resPrivacy.text();
@@ -2099,10 +2103,12 @@
             if(idx > 0 && cols[0]) {
               let title = (cols[0] || '').toLowerCase();
               let desc = cols[1] || '';
-              if(title.includes('डिस्क्लेमर') || title.includes('disclaimer') || title.includes('अस्वीकरण')) {
-                disclaimerHtml += `<p style="margin-bottom:8px;">${desc}</p>`;
-              } else if(title.includes('गोपनीयता') || title.includes('privacy')) {
+              if(title.includes('डिस्क्लेमर') || title.includes('disclaimer') || title.includes('अस्वीकरण') || title.includes('महत्वपूर्ण')) {
+                disclaimerHtml += `<p style="margin-bottom:8px;"><b>${cols[0]}:</b> ${desc}</p>`;
+              } else if(title.includes('गोपनीयता') || title.includes('privacy') || title.includes('नीति')) {
                 policyHtml += `<p style="margin-bottom:8px;">${desc}</p>`;
+              } else {
+                disclaimerHtml += `<p style="margin-bottom:8px;"><b>${cols[0]}:</b> ${desc}</p>`;
               }
             }
           });
@@ -2420,7 +2426,7 @@
                 <span class="badge-variety">${getCropEmoji(v.crop)} ${v.variety}</span>
                 <span class="badge-company">${v.company}</span>
               </div>
-              <div class="var-title">🍅 ${v.variety} (${v.crop})</div>
+              <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
               <div class="var-info-row">⭐ <b>${currentLang === 'en' ? 'Features:' : 'विशेषता:'}</b> ${v.features}</div>
               <div class="var-info-row">⏱️ <b>${currentLang === 'en' ? 'Maturity:' : 'पकने का समय:'}</b> ${v.maturity}</div>
               <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety}'); showFavoritesScreen();">❌ ${currentLang === 'en' ? 'Remove from favorites' : 'पसंद से हटाएं'}</button>
@@ -2455,7 +2461,7 @@
               <span class="badge-variety">${getCropEmoji(v.crop)} ${v.variety}</span>
               <span class="badge-company">${v.company}</span>
             </div>
-            <div class="var-title">🍅 ${v.variety} (${v.crop})</div>
+            <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
             
             <div class="var-info-row">🌱 <b>${currentLang === 'en' ? 'Segment:' : 'सीजन/प्रकार:'}</b> ${v.segment}</div>
             <div class="var-info-row">⭐ <b>${currentLang === 'en' ? 'Features:' : 'विशेषता:'}</b> ${v.features}</div>
@@ -2484,7 +2490,6 @@
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
     }
 
-    // फसल के रोगों की सूची दिखाने का फंक्शन जिसमें फोटो लिंक होने पर फोटो और नहीं होने पर नॉर्मल आइकॉन/इमोजी दिखेगा
     function showCropDiseasesList(categoryName, crop) {
       document.getElementById('cropDiseaseHeading').innerText = `${crop} के रोग व उपचार:`;
       let container = document.getElementById('cropDiseasesContainer');
