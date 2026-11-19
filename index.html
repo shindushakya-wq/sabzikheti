@@ -109,13 +109,51 @@
       color: #f8fafc !important;
     }
 
-    button, .menu-box, .list-item, .social-link, .btn-action, .fab-solution, .story-item, .video-card-item, .upload-opt-btn {
+    button, .menu-box, .list-item, .social-link, .btn-action, .fab-solution, .story-item, .video-card-item, .upload-opt-btn, .lang-chip {
       transition: transform 0.1s ease, opacity 0.1s ease;
       cursor: pointer;
     }
-    button:active, .menu-box:active, .list-item:active, .social-link:active, .btn-action:active, .fab-solution:active, .story-item:active, .video-card-item:active, .upload-opt-btn:active {
+    button:active, .menu-box:active, .list-item:active, .social-link:active, .btn-action:active, .fab-solution:active, .story-item:active, .video-card-item:active, .upload-opt-btn:active, .lang-chip:active {
       transform: scale(0.95);
       opacity: 0.8;
+    }
+
+    .lang-strip-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 4px;
+      margin-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .lang-strip-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .lang-chip {
+      flex: 0 0 auto;
+      background: #ffffff;
+      color: #1b5e20;
+      border: 1.5px solid #86efac;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .lang-chip.active {
+      background: #1b5e20;
+      color: #ffffff;
+      border-color: #1b5e20;
+    }
+    body.dark-mode .lang-chip {
+      background: #1e2937;
+      color: #f8fafc;
+      border-color: #334155;
+    }
+    body.dark-mode .lang-chip.active {
+      background: #16a34a;
+      color: #ffffff;
+      border-color: #16a34a;
     }
 
     .app-header { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); color: white; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -482,7 +520,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v9.5 PRO
+      CROP & SABZI DOCTOR • v9.4 PRO
     </div>
   </div>
 
@@ -548,6 +586,21 @@
 
   <!-- SCREEN 1: होम स्क्रीन -->
   <div id="screen-home" class="screen active">
+
+    <div class="lang-strip-bar" id="languageStrip">
+      <button type="button" class="lang-chip active" data-lang="hi" onclick="setAppLanguage('hi')">हिंदी</button>
+      <button type="button" class="lang-chip" data-lang="mr" onclick="setAppLanguage('mr')">मराठी</button>
+      <button type="button" class="lang-chip" data-lang="bn" onclick="setAppLanguage('bn')">বাংলা</button>
+      <button type="button" class="lang-chip" data-lang="te" onclick="setAppLanguage('te')">తెలుగు</button>
+      <button type="button" class="lang-chip" data-lang="ta" onclick="setAppLanguage('ta')">தமிழ்</button>
+      <button type="button" class="lang-chip" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+      <button type="button" class="lang-chip" data-lang="kn" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
+      <button type="button" class="lang-chip" data-lang="pa" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
+      <button type="button" class="lang-chip" data-lang="en" onclick="setAppLanguage('en')">English</button>
+      <button type="button" class="lang-chip" data-lang="ml" onclick="setAppLanguage('ml')">മലയാളം</button>
+      <button type="button" class="lang-chip" data-lang="or" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
+      <button type="button" class="lang-chip" data-lang="as" onclick="setAppLanguage('as')">অসমীয়া</button>
+    </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
       <div style="font-size:13px; font-weight:bold; color:#1b5e20;" id="welcomeMsg">
@@ -674,23 +727,23 @@
     </div>
     <div id="categoriesContainer">
       <div class="list-item" onclick="showCropsForCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🍅</span><span class="list-title" id="catItemVeg">सब्जियां</span></div>
+        <div class="list-left"><span class="list-icon">🍅</span><span class="list-title" id="catItemVeg">सब्जियां (Vegetables)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('फल')">
-        <div class="list-left"><span class="list-icon">🍉</span><span class="list-title" id="catItemFruit">फल</span></div>
+        <div class="list-left"><span class="list-icon">🍉</span><span class="list-title" id="catItemFruit">फल वर्गीय फसलें (Fruits)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🌼</span><span class="list-title" id="catItemFlower">फूल</span></div>
+        <div class="list-left"><span class="list-icon">🌼</span><span class="list-title" id="catItemFlower">फूल वर्गीय फसलें (Flowers)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🌾</span><span class="list-title" id="catItemCereal">अनाज</span></div>
+        <div class="list-left"><span class="list-icon">🌾</span><span class="list-title" id="catItemCereal">अनाज वर्गीय फसलें (Cereals)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">📦</span><span class="list-title" id="catItemOther">अन्य</span></div>
+        <div class="list-left"><span class="list-icon">📦</span><span class="list-title" id="catItemOther">अन्य फसलें (Other Crops)</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -704,23 +757,23 @@
     </div>
     <div id="protectionCategoriesContainer">
       <div class="list-item" onclick="showProtectionCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemVeg">सब्जियां</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemVeg">सब्जियां फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemCereal">अनाज</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemCereal">अनाज फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('फल')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemFruit">फल</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemFruit">फल फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemFlower">फूल</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemFlower">फूल फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemOther">अन्य</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemOther">अन्य फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -734,23 +787,23 @@
     </div>
     <div id="scheduleCategoriesContainer">
       <div class="list-item" onclick="showScheduleCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemVeg">सब्जियां</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemVeg">सब्जियां स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemCereal">अनाज</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemCereal">अनाज स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फल')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemFruit">फल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemFruit">फल स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemFlower">फूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemFlower">फूल स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemOther">अन्य</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemOther">अन्य स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -977,7 +1030,7 @@
       <div id="mandiLoading" style="text-align:center; padding:20px; color:#6b7280;" id="txtMandiLoading">⏳ आपके नजदीकी जिले के मंडी भाव लोड हो रहे हैं...</div>
       <div style="overflow-x:auto;">
         <table class="mandi-table" id="mandiTableElement" style="display:none;">
-          <thead><tr><th id="th1">राज्य / ज़िला</th><th id="th2">मंडी</th><th id="th3">फसल व भाव (₹/क्विंटल)</th></tr></thead>
+          <thead><tr><th id="th1">राज्य / ज़िला</th><th id="th2">मंडी</th><th id="th3">फसल</th></tr></thead>
           <tbody id="mandiTableBody"></tbody>
         </table>
       </div>
@@ -1109,7 +1162,6 @@
 
     const translations = {
       hi: {
-        langBtn: "🌐 हिंदी",
         headerTitle: "CROP & SABZI DOCTOR",
         splashSub: "🌾 कृषि सहायक ऐप",
         loading: "🌾 डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...",
@@ -1302,16 +1354,17 @@
       localStorage.setItem('dark_mode', isDark ? 'true' : 'false');
     }
 
+    function highlightActiveLangChip(langCode) {
+      document.querySelectorAll('#languageStrip .lang-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === langCode);
+      });
+    }
+
     function updateLangToggleButtonLabel(langCode) {
       const btn = document.getElementById('langToggleBtn');
       if (!btn) return;
-      const t = translations[langCode];
-      if (t && t.langBtn) {
-        btn.innerText = t.langBtn;
-      } else {
-        const label = langDisplayNames[langCode] || "भाषा";
-        btn.innerText = `🌐 ${label}`;
-      }
+      const label = langDisplayNames[langCode] || "भाषा";
+      btn.innerText = `🌐 ${label}`;
     }
 
     async function translateTextForApp(text, targetLang) {
@@ -1347,9 +1400,6 @@
       for (const [k, v] of entries) {
         if (k === 'headerTitle') {
           bundle[k] = v;
-        } else if (k === 'langBtn') {
-          const nativeName = langDisplayNames[langCode] || "भाषा";
-          bundle[k] = `🌐 ${nativeName}`;
         } else {
           bundle[k] = await translateTextForApp(v, langCode);
         }
@@ -1569,6 +1619,7 @@
       updateLangToggleButtonLabel(currentLang);
       await translateQuickCropLabels(currentLang);
       await translateCalculatorOptions(currentLang);
+      await translateVisibleHomeElements(currentLang);
     }
 
     async function setAppLanguage(langCode) {
@@ -1576,6 +1627,7 @@
       localStorage.setItem('app_lang', langCode);
       const langModal = document.getElementById('languageSelectModal');
       if (langModal) langModal.classList.remove('active');
+      highlightActiveLangChip(langCode);
       await applyLanguageUI();
       if (!localStorage.getItem('is_logged_in')) {
         const loginModal = document.getElementById('loginScreenModal');
@@ -2222,6 +2274,16 @@
         console.log("Sheet error:", e);
       } finally {
         hideLoader();
+      }
+    }
+
+    async function translateVisibleHomeElements(langCode) {
+      const searchInput = document.getElementById('homeSearch');
+      if (searchInput) {
+        const t = translations[langCode];
+        searchInput.placeholder = (t && t.searchPlaceholder)
+          ? t.searchPlaceholder
+          : await translateTextForApp("खीरा, टमाटर या तरबूज लिखें...", langCode);
       }
     }
 
@@ -3122,6 +3184,7 @@
           if (langModal) langModal.classList.add('active');
         } else {
           currentLang = savedLang;
+          highlightActiveLangChip(currentLang);
           await applyLanguageUI();
           if (!localStorage.getItem('is_logged_in')) {
             const loginModal = document.getElementById('loginScreenModal');
