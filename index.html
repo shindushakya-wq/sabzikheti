@@ -637,7 +637,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.4
+      CROP & SABZI DOCTOR • v10.5
     </div>
   </div>
 
@@ -3612,10 +3612,13 @@
           refreshActiveScreenOnTranslation();
         }
       }
-    });    if ('serviceWorker' in navigator) {
+    });
+
+    if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
+    }
   </script>
 
   <!-- इमेज प्रीव्यू मोडल -->
