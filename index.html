@@ -505,7 +505,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v9.3 FAST
+      CROP & SABZI DOCTOR • v9.4 FAST
     </div>
   </div>
 
@@ -1073,7 +1073,7 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9PbEg0GvfHYO0a42seATSJtE1f_3MDTK50Ot_bCP-pwbAXWNXeNgDP5r4NJjfO6o/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwjsfZCQJFIoA_zz_iQtfkb6fLlxW5EKpWgLueuKbDUSL5ewWypc1M81bNYUY8nr5RrCw/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
 
     const navHistory = ['screen-home'];
@@ -1095,6 +1095,16 @@
     let currentLang = localStorage.getItem('app_lang') || 'hi';
     let isTranslatingBackground = false;
     let isLoadingSheets = false;
+
+    let currentActiveCategory = null;
+    let currentActiveProtectionCat = null;
+    let currentActiveProtectionCrop = null;
+    let currentActiveScheduleCat = null;
+    let currentActiveScheduleCrop = null;
+    let currentActiveChemicalCat = null;
+    let currentActiveAtoZCrop = null;
+    let lastVarietiesList = [];
+    let lastVarietiesTitle = "";
 
     const speechLangMap = {
       hi: 'hi-IN', mr: 'mr-IN', bn: 'bn-IN', te: 'te-IN',
@@ -1396,6 +1406,34 @@
       localStorage.setItem('dark_mode', String(isDark));
     }
 
+    function refreshActiveScreenOnTranslation() {
+      const activeScreen = document.querySelector('.screen.active');
+      if (!activeScreen) return;
+      const id = activeScreen.id;
+
+      if (id === 'screen-crops' && currentActiveCategory) {
+        showCropsForCategory(currentActiveCategory);
+      } else if (id === 'screen-seeds' && lastVarietiesList.length > 0) {
+        renderVarietiesList(lastVarietiesList, lastVarietiesTitle);
+      } else if (id === 'screen-protection-crops' && currentActiveProtectionCat) {
+        showProtectionCropsListByCategory(currentActiveProtectionCat);
+      } else if (id === 'screen-crop-diseases' && currentActiveProtectionCat && currentActiveProtectionCrop) {
+        showCropDiseasesList(currentActiveProtectionCat, currentActiveProtectionCrop);
+      } else if (id === 'screen-schedule-crops' && currentActiveScheduleCat) {
+        showScheduleCropsListByCategory(currentActiveScheduleCat);
+      } else if (id === 'screen-crop-schedule' && currentActiveScheduleCat && currentActiveScheduleCrop) {
+        openCropScheduleDetail(currentActiveScheduleCat, currentActiveScheduleCrop);
+      } else if (id === 'screen-chemical-list' && currentActiveChemicalCat) {
+        filterChemicalsByCategory(currentActiveChemicalCat);
+      } else if (id === 'screen-atoz-crops') {
+        showAtoZCropsScreen();
+      } else if (id === 'screen-atoz-detail' && currentActiveAtoZCrop) {
+        openAtoZDetail(currentActiveAtoZCrop);
+      } else if (id === 'screen-companies') {
+        showCompaniesList();
+      }
+    }
+
     const pendingTranslations = {};
     function getCachedTranslation(text, targetLang) {
       if (!text || targetLang === 'hi') return text || '';
@@ -1424,21 +1462,34 @@
           const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=${encodeURIComponent(eff)}&dt=t&q=${encodeURIComponent(clean)}`;
           const res = await fetch(url, { signal: controller.signal });
           clearTimeout(timer);
-          if (!res.ok) return clean;
-          const data = await res.json();
-          if (Array.isArray(data) && Array.isArray(data[0])) {
-            const translated = data[0].map(item => item[0]).join('').trim();
-            if (translated) {
-              try { localStorage.setItem(cacheKey, translated); } catch (e) {}
-              return translated;
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && Array.isArray(data[0])) {
+              const translated = data[0].map(item => item[0]).join('').trim();
+              if (translated) {
+                try { localStorage.setItem(cacheKey, translated); } catch (e) {}
+                return translated;
+              }
             }
           }
-          return clean;
-        } catch (err) {
-          return clean;
-        } finally {
-          delete pendingTranslations[cacheKey];
-        }
+        } catch (err) {}
+
+        try {
+          const fallbackUrl = `${APPS_SCRIPT_URL}?action=translate&lang=${encodeURIComponent(eff)}&text=${encodeURIComponent(clean)}`;
+          const fRes = await fetch(fallbackUrl);
+          if (fRes.ok) {
+            const fJson = await fRes.json();
+            if (fJson && fJson.result) {
+              const tr = String(fJson.result).trim();
+              if (tr) {
+                try { localStorage.setItem(cacheKey, tr); } catch (e) {}
+                return tr;
+              }
+            }
+          }
+        } catch (e) {}
+
+        return clean;
       })();
 
       return await pendingTranslations[cacheKey];
@@ -1447,45 +1498,65 @@
     function runBackgroundTranslation(items, fields, onUpdate) {
       if (!Array.isArray(items) || currentLang === 'hi') return;
       const tasks = [];
+      const uniqueStrings = new Set();
+
       items.forEach(item => {
         fields.forEach(f => {
           const val = item[f];
-          if (val) {
+          if (val && typeof val === 'string') {
             const cached = getCachedTranslation(val, currentLang);
             if (cached) {
               item[f] = cached;
             } else {
-              tasks.push(
-                translateSheetText(val, currentLang).then(tr => {
-                  item[f] = tr;
-                })
-              );
+              uniqueStrings.add(val.trim());
             }
           }
         });
       });
 
-      if (tasks.length === 0) {
+      if (uniqueStrings.size === 0) {
         if (onUpdate) onUpdate();
+        refreshActiveScreenOnTranslation();
         return;
       }
 
+      uniqueStrings.forEach(str => {
+        tasks.push(translateSheetText(str, currentLang));
+      });
+
       isTranslatingBackground = true;
-      const concurrency = 12;
+      const concurrency = 10;
       let idx = 0;
+
+      function applyCachedToItems() {
+        items.forEach(item => {
+          fields.forEach(f => {
+            const val = item[f];
+            if (val && typeof val === 'string') {
+              const cached = getCachedTranslation(val, currentLang);
+              if (cached) item[f] = cached;
+            }
+          });
+        });
+      }
 
       async function worker() {
         while (idx < tasks.length) {
           const curIdx = idx++;
           await tasks[curIdx];
-          if (curIdx % 18 === 0 && onUpdate) onUpdate();
+          if (curIdx % 12 === 0) {
+            applyCachedToItems();
+            if (onUpdate) onUpdate();
+          }
         }
       }
 
       const workers = Array.from({ length: Math.min(concurrency, tasks.length) }, worker);
       Promise.all(workers).then(() => {
+        applyCachedToItems();
         isTranslatingBackground = false;
         if (onUpdate) onUpdate();
+        refreshActiveScreenOnTranslation();
       });
     }
 
@@ -2296,6 +2367,7 @@
     }
 
     function showCropsForCategory(categoryName) {
+      currentActiveCategory = categoryName;
       const filteredRecords = sheetRecords.filter(r => r.rawCategory.toLowerCase().includes(categoryName.toLowerCase()));
       const cropsObj = {};
       filteredRecords.forEach(r => {
@@ -2346,6 +2418,7 @@
     }
 
     function showProtectionCropsListByCategory(categoryName) {
+      currentActiveProtectionCat = categoryName;
       const container = document.getElementById('protectionCropsContainer');
       container.innerHTML = '';
       const catData = protectionRecords[categoryName] || {};
@@ -2369,6 +2442,7 @@
     }
 
     function showScheduleCropsListByCategory(categoryName) {
+      currentActiveScheduleCat = categoryName;
       const container = document.getElementById('scheduleCropsContainer');
       container.innerHTML = '';
       const catData = scheduleRecords[categoryName] || {};
@@ -2413,6 +2487,8 @@
     }
 
     function renderVarietiesList(list, title) {
+      lastVarietiesList = list;
+      lastVarietiesTitle = title;
       const container = document.getElementById('varietiesContainer');
       container.innerHTML = '';
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
@@ -2465,6 +2541,8 @@
     }
 
     function showCropDiseasesList(categoryName, crop) {
+      currentActiveProtectionCat = categoryName;
+      currentActiveProtectionCrop = crop;
       document.getElementById('cropDiseaseHeading').innerText = `${crop}`;
       const container = document.getElementById('cropDiseasesContainer');
       container.innerHTML = '';
@@ -2493,6 +2571,8 @@
     }
 
     function openCropScheduleDetail(categoryName, crop) {
+      currentActiveScheduleCat = categoryName;
+      currentActiveScheduleCrop = crop;
       document.getElementById('scheduleCropTitle').innerText = `${crop}`;
       const container = document.getElementById('scheduleStepsContainer');
       container.innerHTML = '';
@@ -2549,6 +2629,7 @@
     }
 
     function filterChemicalsByCategory(cat) {
+      currentActiveChemicalCat = cat;
       const container = document.getElementById('chemicalListContainer');
       document.getElementById('chemicalListTitle').innerText = `${cat}`;
       container.innerHTML = '';
@@ -2798,6 +2879,7 @@
     }
 
     function openAtoZDetail(crop) {
+      currentActiveAtoZCrop = crop;
       const d = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
       document.getElementById('atozDetailContainer').innerHTML = `
         <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
