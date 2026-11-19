@@ -1094,6 +1094,7 @@
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
     let isTranslatingBackground = false;
+    let isLoadingSheets = false;
 
     const speechLangMap = {
       hi: 'hi-IN', mr: 'mr-IN', bn: 'bn-IN', te: 'te-IN',
@@ -1390,6 +1391,11 @@
       }
     };
 
+    function toggleDarkMode() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('dark_mode', String(isDark));
+    }
+
     const pendingTranslations = {};
     function getCachedTranslation(text, targetLang) {
       if (!text || targetLang === 'hi') return text || '';
@@ -1438,7 +1444,6 @@
       return await pendingTranslations[cacheKey];
     }
 
-    // कैश से तुरंत टेक्स्ट लगाना, बाकी को बैकग्राउंड में तेज़ पैरेलल में अनुवाद करना
     function runBackgroundTranslation(items, fields, onUpdate) {
       if (!Array.isArray(items) || currentLang === 'hi') return;
       const tasks = [];
@@ -1513,7 +1518,7 @@
       }
       updateProfileUI();
       fetchLiveWeather();
-      loadAllSheetsData();
+      loadAllSheetsData(true);
     }
 
     function toggleAppLanguage() {
@@ -1934,8 +1939,9 @@
         const cat = cols[9] || cols[cols.length - 1] || 'सब्जियां';
 
         const photoList = [];
-        if (cols[8] && cols[8].trim().startsWith('http')) {
-          cols[8].split(',').forEach(p => {
+        const rawPhotoCol = (cols[8] && cols[8].trim().startsWith('http')) ? cols[8] : '';
+        if (rawPhotoCol) {
+          rawPhotoCol.split(',').forEach(p => {
             const cleanUrl = p.trim();
             if (cleanUrl.startsWith('http')) photoList.push(cleanUrl);
           });
@@ -2036,8 +2042,9 @@
         </div>`).join('');
     }
 
-    // सभी शीट्स एक साथ पैरेलल में डाउनलोड होंगी; लोडर तुरंत हटेगा और अनुवाद बैकग्राउंड में चलेगा
-    async function loadAllSheetsData() {
+    async function loadAllSheetsData(forceRefresh = false) {
+      if (isLoadingSheets && !forceRefresh) return;
+      isLoadingSheets = true;
       showLoader();
       try {
         const [
@@ -2067,7 +2074,6 @@
 
         sheetRecords = parseVarietiesCSV(csvSheet1);
 
-        // Privacy
         if (csvPriv) {
           let dHtml = "", pHtml = "";
           parseCSV(csvPriv).slice(1).forEach(cols => {
@@ -2083,13 +2089,11 @@
           renderPrivacyUI();
         }
 
-        // Notifications
         if (csvNotif) {
           notificationsList = parseCSV(csvNotif).slice(1).filter(c => c[0]).map(c => ({ title: c[0], desc: c[1] || '' }));
           renderNotificationsUI();
         }
 
-        // Schedule
         const allSchedRows = [
           ...parseScheduleCSV(csvSchedSabzi, 'सब्जियां'),
           ...parseScheduleCSV(csvSchedAnaaj, 'अनाज'),
@@ -2099,7 +2103,6 @@
         ];
         rebuildScheduleMap(allSchedRows);
 
-        // Protection
         const allProtRows = [
           ...parseProtectionCSV(csvProtSabzi, 'सब्जियां'),
           ...parseProtectionCSV(csvProtAnaaj, 'अनाज'),
@@ -2109,12 +2112,10 @@
         ];
         rebuildProtectionMap(allProtRows);
 
-        // Chemicals
         chemicalsRecords = csvChem ? parseCSV(csvChem).map(cols => ({
           name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || '', photo: cols[5] || ''
         })).filter(r => r.name && !r.name.includes('दवा') && !r.name.toLowerCase().includes('name')) : [];
 
-        // AtoZ
         atozGuideRecords = {};
         if (csvAtoZ) {
           parseCSV(csvAtoZ).forEach(cols => {
@@ -2130,12 +2131,10 @@
           });
         }
 
-        // Stories
         dailyStories = csvStories ? parseCSV(csvStories).map(cols => ({
           title: cols[0] || 'स्टोरी', type: cols[1] || 'photo', url: cols[2] || '', icon: cols[3] || '🌱', desc: cols[4] || ''
         })).filter(r => r.title && r.title !== 'Title' && !r.title.toLowerCase().includes('title')) : [];
 
-        // Videos
         videoRecords = csvVideos ? parseCSV(csvVideos).map(cols => ({
           title: cols[0] || 'कृषि वीडियो', thumbnail: cols[1] || '', videoUrl: cols[2] || ''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title')) : [];
@@ -2143,10 +2142,9 @@
         renderStoriesBar();
         renderDynamicVideos();
 
-        // लोडर तुरंत हटाएं ताकि यूज़र बिना इंतज़ार किए ऐप इस्तेमाल कर सकें
         hideLoader();
+        isLoadingSheets = false;
 
-        // अनुवाद बैकग्राउंड में तेज़ी से पूरा करें और अपडेट आने पर UI रिफ्रेश करें
         if (currentLang !== 'hi') {
           runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance']);
           runBackgroundTranslation(allSchedRows, ['crop', 'time', 'med', 'purpose'], () => rebuildScheduleMap(allSchedRows));
@@ -2167,6 +2165,7 @@
         }
       } catch (e) {
         hideLoader();
+        isLoadingSheets = false;
       }
     }
 
@@ -2332,12 +2331,13 @@
     }
 
     function filterByCrop(cropName) {
-      const targetTr = getCachedTranslation(cropName, currentLang) || cropName;
-      const list = sheetRecords.filter(r =>
-        r.crop.toLowerCase() === cropName.toLowerCase() ||
-        r.crop.toLowerCase() === targetTr.toLowerCase()
-      );
-      renderVarietiesList(list, targetTr);
+      const targetTr = (getCachedTranslation(cropName, currentLang) || cropName).toLowerCase();
+      const baseLow = cropName.toLowerCase();
+      const list = sheetRecords.filter(r => {
+        const cLow = (r.crop || '').toLowerCase();
+        return cLow === baseLow || cLow === targetTr || cLow.includes(baseLow) || cLow.includes(targetTr);
+      });
+      renderVarietiesList(list, targetTr === baseLow ? cropName : (getCachedTranslation(cropName, currentLang) || cropName));
     }
 
     function showProtectionCategoriesScreen() {
@@ -2923,8 +2923,19 @@
 
     function updateProfileUI() {
       const name = localStorage.getItem('farmer_name');
+      const phone = localStorage.getItem('farmer_phone');
+      const state = localStorage.getItem('farmer_state');
       const t = translations[currentLang] || translations['hi'];
       document.getElementById('welcomeMsg').innerText = name ? `🌾 ${name}` : t.welcomeMsg;
+
+      let pct = 25;
+      if (name) pct += 25;
+      if (phone) pct += 25;
+      if (state) pct += 25;
+      const bar = document.getElementById('profileProgressBar');
+      const badge = document.getElementById('profilePercentBadge');
+      if (bar) bar.style.width = `${pct}%`;
+      if (badge) badge.innerText = `${pct}%`;
     }
 
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
