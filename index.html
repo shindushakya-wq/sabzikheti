@@ -394,7 +394,7 @@
       <img src="https://i.postimg.cc/xCGvN3rt/IMG-20261116-WA7746.jpg" alt="Logo" onerror="this.style.display='none'">
     </div>
     <div class="splash-title">CROP & SABZI DOCTOR</div>
-    <div class="splash-sub">🌾 कृषि सहायक ऐप</div>
+    <div class="splash-sub" id="txtSplashSub">🌾 कृषि सहायक ऐप</div>
   </div>
 
   <div class="loader-overlay" id="appLoader">
@@ -407,7 +407,7 @@
       <div style="text-align:center; margin-bottom:14px;">
         <span style="font-size:38px;">🌾</span>
         <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;">CROP & SABZI DOCTOR</h3>
-        <p style="font-size:12px; color:#6b7280; margin-top:4px;">कृपया अपनी भाषा चुनें / Please select your language</p>
+        <p style="font-size:12px; color:#6b7280; margin-top:4px;" id="txtLangModalSub">कृपया अपनी भाषा चुनें / Please select your language</p>
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
@@ -481,7 +481,7 @@
         <button type="button" class="modal-close" onclick="closeNotificationModal()">✕</button>
       </div>
       <div id="notificationListContent">
-        <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ लोड हो रहा है...</div>
+        <div class="schedule-step" style="text-align:center; color:#6b7280;" id="txtNotifLoading">⏳ लोड हो रहा है...</div>
       </div>
     </div>
   </div>
@@ -520,7 +520,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v9.3 PRO
+      CROP & SABZI DOCTOR • v9.4 PRO
     </div>
   </div>
 
@@ -646,13 +646,13 @@
       </div>
     </div>
 
-    <div class="quick-crop-scroll">
-      <div class="quick-pill" onclick="filterByCrop('टमाटर')">🍅 टमाटर</div>
-      <div class="quick-pill" onclick="filterByCrop('खीरा')">🥒 खीरा</div>
-      <div class="quick-pill" onclick="filterByCrop('मिर्च')">🌶️ मिर्च</div>
-      <div class="quick-pill" onclick="filterByCrop('तरबूज')">🍉 तरबूज</div>
-      <div class="quick-pill" onclick="filterByCrop('फूलगोभी')">🥦 फूलगोभी</div>
-      <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 भिंडी</div>
+    <div class="quick-crop-scroll" id="quickCropContainer">
+      <div class="quick-pill" data-crop="टमाटर" onclick="filterByCrop('टमाटर')">🍅 <span class="q-label">टमाटर</span></div>
+      <div class="quick-pill" data-crop="खीरा" onclick="filterByCrop('खीरा')">🥒 <span class="q-label">खीरा</span></div>
+      <div class="quick-pill" data-crop="मिर्च" onclick="filterByCrop('मिर्च')">🌶️ <span class="q-label">मिर्च</span></div>
+      <div class="quick-pill" data-crop="तरबूज" onclick="filterByCrop('तरबूज')">🍉 <span class="q-label">तरबूज</span></div>
+      <div class="quick-pill" data-crop="फूलगोभी" onclick="filterByCrop('फूलगोभी')">🥦 <span class="q-label">फूलगोभी</span></div>
+      <div class="quick-pill" data-crop="भिंडी" onclick="filterByCrop('भिंडी')">🥒 <span class="q-label">भिंडी</span></div>
     </div>
 
     <div class="grid-menu">
@@ -696,7 +696,7 @@
 
     <div style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
       <div>
-        <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
+        <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;" id="txtPlayHead">⭐ Google Play Store</h4>
         <p style="font-size:12px; color:#334155; margin-top:2px;" id="txtPlaySub">हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।</p>
       </div>
       <a href="https://play.google.com/store/apps" target="_blank" style="background:#2563eb; color:white; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:bold; text-decoration:none;" id="txtRateBtn">रेट करें</a>
@@ -727,23 +727,23 @@
     </div>
     <div id="categoriesContainer">
       <div class="list-item" onclick="showCropsForCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🍅</span><span class="list-title">सब्जियां (Vegetables)</span></div>
+        <div class="list-left"><span class="list-icon">🍅</span><span class="list-title" id="catItemVeg">सब्जियां (Vegetables)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('फल')">
-        <div class="list-left"><span class="list-icon">🍉</span><span class="list-title">फल वर्गीय फसलें (Fruits)</span></div>
+        <div class="list-left"><span class="list-icon">🍉</span><span class="list-title" id="catItemFruit">फल वर्गीय फसलें (Fruits)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🌼</span><span class="list-title">फूल वर्गीय फसलें (Flowers)</span></div>
+        <div class="list-left"><span class="list-icon">🌼</span><span class="list-title" id="catItemFlower">फूल वर्गीय फसलें (Flowers)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🌾</span><span class="list-title">अनाज वर्गीय फसलें (Cereals)</span></div>
+        <div class="list-left"><span class="list-icon">🌾</span><span class="list-title" id="catItemCereal">अनाज वर्गीय फसलें (Cereals)</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">📦</span><span class="list-title">अन्य फसलें (Other Crops)</span></div>
+        <div class="list-left"><span class="list-icon">📦</span><span class="list-title" id="catItemOther">अन्य फसलें (Other Crops)</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -752,28 +752,28 @@
   <!-- SCREEN: फसल सुरक्षा - श्रेणियां -->
   <div id="screen-protection-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b91c1c; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#b91c1c; font-size:16px; margin-bottom:4px;">🛡️ फसल सुरक्षा श्रेणी चुनें:</h3>
-      <p style="font-size:12.5px; color:#4b5563;">अपनी फसल की श्रेणी चुनें:</p>
+      <h3 style="color:#b91c1c; font-size:16px; margin-bottom:4px;" id="protCatHead">🛡️ फसल सुरक्षा श्रेणी चुनें:</h3>
+      <p style="font-size:12.5px; color:#4b5563;" id="protCatSub">अपनी फसल की श्रेणी चुनें:</p>
     </div>
     <div id="protectionCategoriesContainer">
       <div class="list-item" onclick="showProtectionCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">सब्जियां फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemVeg">सब्जियां फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अनाज फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemCereal">अनाज फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('फल')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">फल फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemFruit">फल फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">फूल फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemFlower">फूल फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अन्य फसल सुरक्षा</span></div>
+        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title" id="protItemOther">अन्य फसल सुरक्षा</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -782,28 +782,28 @@
   <!-- SCREEN: स्प्रे शेड्यूल - श्रेणियां -->
   <div id="screen-schedule-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b45309; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;">🗓️ स्प्रे शेड्यूल श्रेणी चुनें:</h3>
-      <p style="font-size:12.5px; color:#4b5563;">अपनी फसल की श्रेणी चुनें:</p>
+      <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;" id="schedCatHead">🗓️ स्प्रे शेड्यूल श्रेणी चुनें:</h3>
+      <p style="font-size:12.5px; color:#4b5563;" id="schedCatSub">अपनी फसल की श्रेणी चुनें:</p>
     </div>
     <div id="scheduleCategoriesContainer">
       <div class="list-item" onclick="showScheduleCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">सब्जियां स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemVeg">सब्जियां स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अनाज स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemCereal">अनाज स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फल')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">फल स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemFruit">फल स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">फूल स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemFlower">फूल स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अन्य स्प्रे शेड्यूल</span></div>
+        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title" id="schedItemOther">अन्य स्प्रे शेड्यूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -857,11 +857,11 @@
       <h3 style="color:#0369a1; font-size:17px; margin-bottom:14px;" id="privHeadTitle">📜 नियम व शर्तें एवं गोपनीयता नीति</h3>
       <div id="privacyContentBox">
         <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
-          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
+          <b style="color:#991b1b; font-size:14px; margin-bottom:8px;" id="privDiscHead">⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):</b>
           <div id="privacyDisclaimerText">लोड हो रहा है...</div>
         </div>
         <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
-          <b style="color:#166534; font-size:14px; margin-bottom:8px;">🔒 गोपनीयता नीति (Privacy Policy):</b>
+          <b style="color:#166534; font-size:14px; margin-bottom:8px;" id="privPolHead">🔒 गोपनीयता नीति (Privacy Policy):</b>
           <div id="privacyPolicyText">लोड हो रहा है...</div>
         </div>
       </div>
@@ -941,12 +941,12 @@
       <div class="form-group">
         <label id="lblCalcCrop">फसल चुनें:</label>
         <select id="calcCropSelect" class="form-control">
-          <option value="टमाटर">🍅 टमाटर (लगभग 90-100 दिन)</option>
-          <option value="खीरा">🥒 खीरा (लगभग 50-60 दिन)</option>
-          <option value="मिर्च">🌶️ मिर्च (लगभग 70-80 दिन)</option>
-          <option value="तरबूज">🍉 तरबूज (लगभग 80-90 दिन)</option>
-          <option value="फूलगोभी">🥦 फूलगोभी (लगभग 70-85 दिन)</option>
-          <option value="भिंडी">🥒 भिंडी (लगभग 50-60 दिन)</option>
+          <option value="टमाटर" id="optCalcTom">🍅 टमाटर (लगभग 90-100 दिन)</option>
+          <option value="खीरा" id="optCalcCuc">🥒 खीरा (लगभग 50-60 दिन)</option>
+          <option value="मिर्च" id="optCalcChi">🌶️ मिर्च (लगभग 70-80 दिन)</option>
+          <option value="तरबूज" id="optCalcWat">🍉 तरबूज (लगभग 80-90 दिन)</option>
+          <option value="फूलगोभी" id="optCalcCau">🥦 फूलगोभी (लगभग 70-85 दिन)</option>
+          <option value="भिंडी" id="optCalcOkr">🥒 भिंडी (लगभग 50-60 दिन)</option>
         </select>
       </div>
       <div class="form-group">
@@ -968,7 +968,7 @@
       <p style="font-size:12px; color:#6b7280;" id="repSubTitle">गूगल शीट (Diagnosis) से आपकी पिछली सभी फसल जांच रिपोर्ट:</p>
     </div>
     <div id="aiReportsContainer">
-      <div class="variety-card" style="text-align:center; padding:20px; color:#6b7280;">
+      <div class="variety-card" style="text-align:center; padding:20px; color:#6b7280;" id="txtRepLoading">
         ⏳ रिपोर्ट लोड हो रही है...
       </div>
     </div>
@@ -1027,10 +1027,10 @@
         <h3 style="color:#1b5e20; font-size:16px;" id="mandiHeadTitle">📈 लाइव सरकारी मंडी भाव (GPS आधारित)</h3>
         <span style="font-size:11px; color:#166534; font-weight:bold;" id="mandiUpdateTime">ताज़ा डेटा</span>
       </div>
-      <div id="mandiLoading" style="text-align:center; padding:20px; color:#6b7280;">⏳ आपके नजदीकी जिले के मंडी भाव लोड हो रहे हैं...</div>
+      <div id="mandiLoading" style="text-align:center; padding:20px; color:#6b7280;" id="txtMandiLoading">⏳ आपके नजदीकी जिले के मंडी भाव लोड हो रहे हैं...</div>
       <div style="overflow-x:auto;">
         <table class="mandi-table" id="mandiTableElement" style="display:none;">
-          <thead><tr><th id="th1">राज्य / ज़िला</th><th id="th2">मंडी</th><th id="th3">फसल (Commodity)</th><th id="th4">न्यूनतम (₹/क्विंटल)</th><th id="th5">अधिकतम (₹/क्विंटल)</th></tr></thead>
+          <thead><tr><th id="th1">राज्य / ज़िला</th><th id="th2">मंडी</th><th id="th3">फसल</th></tr></thead>
           <tbody id="mandiTableBody"></tbody>
         </table>
       </div>
@@ -1041,7 +1041,7 @@
     <div class="variety-card">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:10px;" id="expHeadTitle">💡 कृषि एक्सपर्ट सुझाव</h3>
       <div id="tipsContainer">
-        <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ सुझाव लोड हो रहे हैं...</div>
+        <div class="schedule-step" style="text-align:center; color:#6b7280;" id="txtExpLoading">⏳ सुझाव लोड हो रहे हैं...</div>
       </div>
     </div>
   </div>
@@ -1050,7 +1050,7 @@
     <div class="variety-card" style="border-left:5px solid #dc2626;">
       <h3 style="color:#dc2626; font-size:16px; margin-bottom:10px;" id="pestHeadTitle">🚨 कीट व रोग चेतावनी</h3>
       <div id="alertsContainer">
-        <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ अलर्ट लोड हो रहे हैं...</div>
+        <div class="schedule-step" style="text-align:center; color:#6b7280;" id="txtPestLoading">⏳ अलर्ट लोड हो रहे हैं...</div>
       </div>
     </div>
   </div>
@@ -1058,9 +1058,9 @@
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:12px;" id="profHeadTitle">👨‍🌾 किसान प्रोफाइल जानकारी</h3>
-      <div class="form-group"><label id="lblPName">आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. Shailnder Kumar"></div>
+      <div class="form-group"><label id="lblPName">आपका नाम:</label><input type="text" id="profNameInput" class="form-control" placeholder="उदा. किसान साथी"></div>
       <div class="form-group"><label id="lblPPhone">मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
-      <div class="form-group"><label id="lblPState">गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar"></div>
+      <div class="form-group"><label id="lblPState">गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. श्री गंगानगर"></div>
       <div class="form-group"><label id="lblPCrops">मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
       <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾 प्रोफाइल सुरक्षित करें</button>
     </div>
@@ -1135,6 +1135,8 @@
     let dailyStories = [];
     let videoRecords = [];
     let atozGuideRecords = {};
+    let notificationsData = [];
+    let privacyData = { disclaimer: "", policy: "" };
 
     let base64ImageRaw = "";
     let imageMimeType = "image/jpeg";
@@ -1161,6 +1163,17 @@
     const translations = {
       hi: {
         headerTitle: "CROP & SABZI DOCTOR",
+        splashSub: "🌾 कृषि सहायक ऐप",
+        loading: "🌾 डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...",
+        langModalSub: "कृपया अपनी भाषा चुनें / Please select your language",
+        loginSub: "कृषि सहायता ऐप में आपका स्वागत है",
+        phoneLabel: "अपना मोबाइल नंबर दर्ज करें:",
+        phonePlaceholder: "उदा. 9876543210",
+        otpBtn: "📲 ओटीपी (OTP) भेजें",
+        otpVer: "🔐 ओटीपी (OTP) दर्ज हो रहा है...",
+        otpSuccess: "सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!",
+        skipLogin: "⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें",
+        notifHead: "🔔 ताज़ा अपडेट व सूचनाएं",
         welcomeMsg: "राम-राम, किसान भाई!",
         txtChangeProf: "✏️ प्रोफाइल बदलें",
         txtAiTitle: "🎙️ AI कृषि डॉक्टर से बोलकर बात करें",
@@ -1175,6 +1188,7 @@
         gComp: "All कंपनी बीज",
         gChem: "दवाइयाँ Chemicals",
         gServ: "Other सेवाएं",
+        playHead: "⭐ Google Play Store",
         txtPlaySub: "हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।",
         txtRateBtn: "रेट करें",
         txtVideoHead: "📺 ताज़ा कृषि वीडियो व रील्स",
@@ -1190,19 +1204,75 @@
         protTitle: "रोग निदान हेतु फसल चुनें:",
         schedTitle: "स्प्रे शेड्यूल हेतु सब्जी चुनें:",
         compTitle: "सीड कंपनी चुनें:",
-        chemTitle: "दवाइयाँ Chemicals",
+        chemTitle: "दवाइयाँ व टॉनिक",
+        chemSubTitle: "श्रेणी चुनें:",
+        c1: "कीटनाशक (Insecticides)",
+        c2: "फफूंदनाशक (Fungicides)",
+        c3: "खरपतवारनाशक (Weedicides)",
+        c4: "टॉनिक व PGR (Tonics)",
+        s1: "मौसम की पूरी जानकारी",
+        s2: "ताज़ा मंडी भाव (GPS आधारित)",
+        s3: "बुवाई और कटाई कैलकुलेटर",
+        s4: "कृषि एक्सपर्ट सुझाव",
+        s5: "कीट व रोग अलर्ट",
+        s6: "सरकारी योजनाएं",
+        s7: "मेरी AI रोग जांच रिपोर्ट",
+        s8: "गूगल प्ले स्टोर पर रेट करें",
+        s9: "किसान साथियों को शेयर करें",
         mandiTitle: "मंडी भाव",
+        mandiHeadTitle: "📈 लाइव सरकारी मंडी भाव (GPS आधारित)",
+        mandiUpdateTime: "ताज़ा डेटा",
+        th1: "राज्य / ज़िला",
+        th2: "मंडी",
+        th3: "फसल व भाव (₹/क्विंटल)",
         weatherTitle: "मौसम",
+        lblWind: "हवा की गति",
+        lblHum: "नमी",
         profileTitle: "किसान प्रोफाइल",
+        profHeadTitle: "👨‍🌾 किसान प्रोफाइल जानकारी",
+        lblPName: "आपका नाम:",
+        lblPPhone: "मोबाइल नंबर:",
+        lblPState: "गाँव / ज़िला / राज्य:",
+        lblPCrops: "मुख्य फसलें:",
+        btnSaveProf: "💾 प्रोफाइल सुरक्षित करें",
         favoritesTitle: "मेरी पसंदीदा किस्में",
+        favHeadTitle: "⭐ आपकी सेव की गई पसंदीदा किस्में",
+        favSubTitle: "यहाँ आपकी बुकमार्क की गई सभी वैरायटी दिखेंगी:",
         atozTitle: "खेती कैसे करें (A-Z)",
+        atozHeadTitle: "📖 सब्जी खेती गाइड (A से Z तक)",
+        atozSubTitle: "गूगल शीट से लाइव अपडेटेड फसल गाइड।",
         discTitle: "किसान चर्चा मंच",
+        discHeadTitle: "💬 किसान चर्चा मंच (फसल फोटो व सुझाव)",
+        lblAuthor: "आपका नाम:",
+        lblDiscText: "आपकी चर्चा / सवाल:",
+        lblDiscPhoto: "फोटो जोड़ें (वैकल्पिक):",
+        btnDiscPost: "📤 चर्चा पोस्ट करें",
+        discListTitle: "📢 किसानों की ताज़ा चर्चाएं व सुझाव (Comments):",
         privacyTitle: "गोपनीयता नीति",
+        privHeadTitle: "📜 नियम व शर्तें एवं गोपनीयता नीति",
+        privDiscHead: "⚠️ महत्वपूर्ण अस्वीकरण (Disclaimer):",
+        privPolHead: "🔒 गोपनीयता नीति (Privacy Policy):",
         reportsTitle: "AI जांच रिपोर्ट",
+        repHeadTitle: "🌿 किसान AI रोग जांच रिपोर्ट रिकॉर्ड",
+        repSubTitle: "गूगल शीट (Diagnosis) से आपकी पिछली सभी फसल जांच रिपोर्ट:",
         schemesTitle: "सरकारी योजनाएं",
+        govHeadTitle: "🏛️ प्रमुख सरकारी योजनाएं",
+        gov1Title: "1. प्रधानमंत्री किसान सम्मान निधि (PM-Kisan)",
+        gov1Desc: "पात्र किसानों को साल में ₹6,000 की राशि तीन किस्तों में दी जाती है।",
+        gov2Title: "2. प्रधानमंत्री फसल बीमा योजना (PMFBY)",
+        gov2Desc: "प्राकृतिक आपदाओं से नुकसान पर बीमा सुरक्षा।",
+        btnGovPortal: "🌐 पीएम-किसान पोर्टल देखें",
         expertTitle: "एक्सपर्ट सुझाव",
+        expHeadTitle: "💡 कृषि एक्सपर्ट सुझाव",
         pestTitle: "कीट अलर्ट",
+        pestHeadTitle: "🚨 कीट व रोग चेतावनी",
         calcTitle: "बुवाई व कटाई कैलकुलेटर",
+        calcHeadTitle: "🧮 स्मार्ट बुवाई और कटाई कैलकुलेटर",
+        lblCalcCrop: "फसल चुनें:",
+        lblCalcDate: "बुवाई की तारीख (Sowing Date):",
+        btnCalcRun: "📊 सही समय गणना करें",
+        calcResHead: "📅 फसल अनुमानित समय सारणी",
+        calcResultText: "कृपया फसल और बुवाई की तारीख चुनकर 'गणना करें' बटन दबाएं।",
         drawerHead: "📋 मेन्यू व सेटिंग्स",
         completeProfileText: "टैप करके अपनी प्रोफाइल पूरी करें >",
         mProfile: "मेरी प्रोफाइल / सेटिंग्स",
@@ -1223,6 +1293,11 @@
         diagBtn: "🔍 रोग पहचानें व उपचार पाएं",
         diagRepHead: "🌿 AI रोग निदान रिपोर्ट व सावधानियां",
         wapBtn: "यह रिपोर्ट डॉक्टर को WhatsApp करें",
+        chatHeadTitle: "👨‍⚕️ AI सब्जी डॉक्टर लाइव कंसल्टेशन",
+        chatSubTitle: "अपनी फसल, पौधे के रोग या खाद से जुड़ा सवाल यहाँ लिखकर या बोलकर पूछें:",
+        chatWelcomeMsg: "<b>👨‍⚕️ AI डॉक्टर:</b> राम-राम किसान भाई! फसल में कोई रोग, कीट या खाद से जुड़ी समस्या है? यहाँ लिखकर या बोलकर बताएं।",
+        chatInputPlaceholder: "उदा. टमाटर के पत्ते मुड़ रहे हैं...",
+        chatSendBtn: "भेजें",
         chatYou: "आप",
         chatDoc: "डॉक्टर",
         chatThinking: "सोच रहा हूँ...",
@@ -1230,812 +1305,22 @@
         chatNetErrHead: "एरर",
         chatNetErrDesc: "इंटरनेट कनेक्शन या सर्वर में समस्या है।",
         aiDocTitle: "AI सब्जी डॉक्टर चैट",
-        searchPlaceholder: "🔍 खीरा, टमाटर या तरबूज लिखें..."
-      },
-      mr: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "राम-राम, शेतकरी बंधू!",
-        txtChangeProf: "✏️ प्रोफाइल बदला",
-        txtAiTitle: "🎙️ AI कृषी डॉक्टरशी बोला",
-        aiSubText: "टॅप करा आणि पिकाचे वा रोगाचे नाव बोला...",
-        txtSprayAdvice: "फवारणीसाठी सकाळ किंवा संध्याकाळची वेळ निवडा",
-        gCrops: "सर्व जाती",
-        gProt: "पीक सुरक्षा",
-        gSched: "फवारणी वेळापत्रक",
-        gAtoz: "शेती कशी करावी (A-Z)",
-        gDisc: "शेतकरी चर्चा",
-        gAdv: "सल्लागार",
-        gComp: "सर्व कंपनी बियाणे",
-        gChem: "औषधे व केमिकल्स",
-        gServ: "इतर सेवा",
-        txtPlaySub: "प्ले स्टोअरवर रेट करा आणि अ‍ॅप शेअर करा.",
-        txtRateBtn: "रेट करा",
-        txtVideoHead: "📺 ताज्या कृषी व्हिडिओ",
-        txtSeeAll: "सर्व पहा >",
-        txtSocialHead: "सोशल मीडियावर आमच्याशी जोडा",
-        fabText: "तातडीने उपाय",
-        navHome: "होम",
-        navCrops: "जाती",
-        navSched: "वेळापत्रक",
-        navProt: "सुरक्षा",
-        navHelp: "हेल्पलाईन",
-        cropsTitle: "पीक निवडा:",
-        protTitle: "रोग निदानासाठी पीक निवडा:",
-        schedTitle: "फवारणी वेळापत्रकासाठी पीक निवडा:",
-        compTitle: "बियाणे कंपनी निवडा:",
-        chemTitle: "औषधे व केमिकल्स",
-        mandiTitle: "मंडी भाव",
-        weatherTitle: "हवामान",
-        profileTitle: "शेतकरी प्रोफाइल",
-        favoritesTitle: "आवडत्या जाती",
-        atozTitle: "शेती मार्गदर्शक (A-Z)",
-        discTitle: "शेतकरी चर्चा मंच",
-        privacyTitle: "गोपनीयता धोरण",
-        reportsTitle: "AI अहवाल",
-        schemesTitle: "शासकीय योजना",
-        expertTitle: "तज्ज्ञ सल्ला",
-        pestTitle: "किटक सतर्कता",
-        calcTitle: "पेरणी कॅल्क्युलेटर",
-        drawerHead: "📋 मेनू व सेटिंग्ज",
-        completeProfileText: "प्रोफाइल पूर्ण करण्यासाठी टॅप करा >",
-        mProfile: "माझी प्रोफाइल / सेटिंग्ज",
-        mFav: "आवडत्या जाती",
-        mCrops: "सर्व जाती",
-        mSchedule: "फवारणी वेळापत्रक",
-        mProtection: "पीक सुरक्षा",
-        mChems: "औषधे व केमिकल्स",
-        mServices: "इतर सेवा",
-        mPrivacy: "गोपनीयता धोरण",
-        mRate: "प्ले स्टोअरवर रेट करा",
-        mShare: "इतर शेतकऱ्यांना शेअर करा",
-        mHelp: "व्हॉट्सॲप हेल्पलाईन",
-        mLogout: "लॉगआउट",
-        solHead: "⚡ तातडीने उपाय (AI तपास)",
-        camBtn: "कॅमेऱ्याने फोटो घ्या",
-        galBtn: "गॅलरीतून निवडा",
-        diagBtn: "🔍 रोग ओळखा",
-        diagRepHead: "🌿 AI रोग निदान अहवाल",
-        wapBtn: "डॉक्टरला WhatsApp करा",
-        chatYou: "तुम्ही",
-        chatDoc: "डॉक्टर",
-        chatThinking: "विचार करत आहे...",
-        chatErr: "क्षमस्व, उत्तर मिळाले नाही.",
-        chatNetErrHead: "त्रुटी",
-        chatNetErrDesc: "इंटरनेट कनेक्शन समस्या.",
-        aiDocTitle: "AI डॉक्टर चॅट",
-        searchPlaceholder: "🔍 काकडी, टोमॅटो किंवा कलिंगड लिहा..."
-      },
-      bn: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "নমস্কার, কৃষক বন্ধু!",
-        txtChangeProf: "✏️ প্রোফাইল পরিবর্তন করুন",
-        txtAiTitle: "🎙️ AI কৃষি ডাক্তারের সাথে কথা বলুন",
-        aiSubText: "ট্যাপ করুন এবং ফসল বা রোগের নাম বলুন...",
-        txtSprayAdvice: "স্প্রে করার জন্য সকাল বা সন্ধ্যা বেছে নিন",
-        gCrops: "সব জাত",
-        gProt: "ফসল সুরক্ষা",
-        gSched: "স্প্রে শিডিউল",
-        gAtoz: "চাষের গাইড (A-Z)",
-        gDisc: "কৃষক আলোচনা",
-        gAdv: "পরামর্শদাতা",
-        gComp: "সব কোম্পানির বীজ",
-        gChem: "ওষুধ ও কেমিক্যাল",
-        gServ: "অন্যান্য পরিষেবা",
-        txtPlaySub: "প্লে স্টোরে রেট দিন এবং অ্যাপ শেয়ার করুন।",
-        txtRateBtn: "রেট দিন",
-        txtVideoHead: "📺 সাম্প্রতিক কৃষি ভিডিও ও রিলস",
-        txtSeeAll: "সব দেখুন >",
-        txtSocialHead: "সোশ্যাল মিডিয়ায় আমাদের সাথে যুক্ত হোন",
-        fabText: "দ্রুত সমাধান",
-        navHome: "হোম",
-        navCrops: "জাত",
-        navSched: "শিডিউল",
-        navProt: "সুরক্ষা",
-        navHelp: "হেল্পলাইন",
-        cropsTitle: "ফসল নির্বাচন করুন:",
-        protTitle: "রোগ নির্ণয়ের জন্য ফসল নির্বাচন করুন:",
-        schedTitle: "স্প্রে শিডিউলের জন্য ফসল নির্বাচন করুন:",
-        compTitle: "বীজ কোম্পানি নির্বাচন করুন:",
-        chemTitle: "ওষুধ ও কেমিক্যাল",
-        mandiTitle: "মান্ডির দর",
-        weatherTitle: "আবহাওয়া",
-        profileTitle: "কৃষক প্রোফাইল",
-        favoritesTitle: "পছন্দের জাত",
-        atozTitle: "চাষের গাইড (A-Z)",
-        discTitle: "কৃষক আলোচনা মঞ্চ",
-        privacyTitle: "গোপনীয়তা নীতি",
-        reportsTitle: "AI রোগ রিপোর্ট",
-        schemesTitle: "সরকারি প্রকল্প",
-        expertTitle: "বিশেষজ্ঞ পরামর্শ",
-        pestTitle: "পোকা সতর্কতা",
-        calcTitle: "বপন ও কাটাই ক্যালকুলেটর",
-        drawerHead: "📋 মেনু ও সেটিংস",
-        completeProfileText: "প্রোফাইল সম্পূর্ণ করতে ট্যাপ করুন >",
-        mProfile: "আমার প্রোফাইল / সেটিংস",
-        mFav: "পছন্দের জাত (Bookmarks)",
-        mCrops: "সব জাত",
-        mSchedule: "স্প্রে শিডিউল",
-        mProtection: "ফসল সুরক্ষা",
-        mChems: "ওষুধ ও কেমিক্যাল",
-        mServices: "অন্যান্য পরিষেবা",
-        mPrivacy: "গোপনীয়তা নীতি",
-        mRate: "গুগল প্লে স্টোরে রেট দিন",
-        mShare: "কৃষক বন্ধুদের শেয়ার করুন",
-        mHelp: "হোয়াটসঅ্যাপ হেল্পলাইন",
-        mLogout: "লগআউট",
-        solHead: "⚡ দ্রুত সমাধান (AI পরীক্ষা)",
-        camBtn: "ক্যামেরা দিয়ে ছবি তুলুন",
-        galBtn: "গ্যালারি থেকে নিন",
-        diagBtn: "🔍 রোগ চিনুন ও সমাধান পান",
-        diagRepHead: "🌿 AI রোগ নির্ণয় রিপোর্ট",
-        wapBtn: "ডাক্তারকে WhatsApp করুন",
-        chatYou: "আপনি",
-        chatDoc: "ডাক্তার",
-        chatThinking: "ভাবছি...",
-        chatErr: "দুঃখিত, উত্তর পাওয়া যায়নি।",
-        chatNetErrHead: "ত্রুটি",
-        chatNetErrDesc: "ইন্টারনেট বা সার্ভারের সমস্যা।",
-        aiDocTitle: "AI সবজি ডাক্তার চ্যাট",
-        searchPlaceholder: "🔍 শসা, টমেটো বা তরমুজ লিখুন..."
-      },
-      te: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "నమస్కారం, రైతు సోదరా!",
-        txtChangeProf: "✏️ ప్రొఫైల్ మార్చండి",
-        txtAiTitle: "🎙️ AI వ్యవసాయ డాక్టర్‌తో మాట్లాడండి",
-        aiSubText: "నొక్కండి మరియు పంట లేదా వ్యాధి పేరు చెప్పండి...",
-        txtSprayAdvice: "పిచికారీకి ఉదయం లేదా సాయంత్రం ఎంచుకోండి",
-        gCrops: "అన్ని రకాలు",
-        gProt: "పంట రక్షణ",
-        gSched: "స్ప్రే షెడ్యూల్",
-        gAtoz: "సాగు గైడ్ (A-Z)",
-        gDisc: "రైతు చర్చ",
-        gAdv: "సలహాదారు",
-        gComp: "అన్ని కంపెనీ విత్తనాలు",
-        gChem: "మందులు & కెమికల్స్",
-        gServ: "ఇతర సేవలు",
-        txtPlaySub: "ప్లే స్టోర్‌లో రేటింగ్ ఇవ్వండి మరియు యాప్ షేర్ చేయండి.",
-        txtRateBtn: "రేటింగ్",
-        txtVideoHead: "📺 తాజా వ్యవసాయ వీడియోలు & రీల్స్",
-        txtSeeAll: "అన్నీ చూడండి >",
-        txtSocialHead: "సోషల్ మీడియాలో మమ్మల్ని అనుసరించండి",
-        fabText: "తక్షణ పరిష్కారం",
-        navHome: "హోమ్",
-        navCrops: "రకాలు",
-        navSched: "షెడ్యూల్",
-        navProt: "రక్షణ",
-        navHelp: "హెల్ప్‌లైన్",
-        cropsTitle: "పంటను ఎంచుకోండి:",
-        protTitle: "వ్యాధి నిర్ధారణకు పంట ఎంచుకోండి:",
-        schedTitle: "స్ప్రే షెడ్యూల్ కోసం పంట ఎంచుకోండి:",
-        compTitle: "విత్తన కంపెనీ ఎంచుకోండి:",
-        chemTitle: "మందులు & కెమికల్స్",
-        mandiTitle: "మార్కెట్ ధరలు",
-        weatherTitle: "వాతావరణం",
-        profileTitle: "రైతు ప్రొఫైల్",
-        favoritesTitle: "ఇష్టమైన రకాలు",
-        atozTitle: "సాగు గైడ్ (A-Z)",
-        discTitle: "రైతు చర్చా వేదిక",
-        privacyTitle: "గోప్యతా విధానం",
-        reportsTitle: "AI రిపోర్టులు",
-        schemesTitle: "ప్రభుత్వ పథకాలు",
-        expertTitle: "నిపుణుల సలహా",
-        pestTitle: "తెగులు హెచ్చరిక",
-        calcTitle: "విత్తనం & కోత కాలిక్యులేటర్",
-        drawerHead: "📋 మెనూ & సెట్టింగ్స్",
-        completeProfileText: "ప్రొఫైల్ పూర్తి చేయడానికి నొక్కండి >",
-        mProfile: "నా ప్రొఫైల్ / సెట్టింగ్స్",
-        mFav: "ఇష్టమైన రకాలు (Bookmarks)",
-        mCrops: "అన్ని రకాలు",
-        mSchedule: "స్ప్రే షెడ్యూల్",
-        mProtection: "పంట రక్షణ",
-        mChems: "మందులు & కెమికల్స్",
-        mServices: "ఇతర సేవలు",
-        mPrivacy: "గోప్యతా విధానం",
-        mRate: "గూగుల్ ప్లే స్టోర్‌లో రేటింగ్ ఇవ్వండి",
-        mShare: "రైతు మిత్రులకు షేర్ చేయండి",
-        mHelp: "వాట్సాప్ హెల్ప్‌లైన్",
-        mLogout: "లాగ్ అవుట్",
-        solHead: "⚡ తక్షణ పరిష్కారం (AI నిర్ధారణ)",
-        camBtn: "కెమెరాతో ఫోటో తీయండి",
-        galBtn: "గ్యాలరీ నుండి ఎంచుకోండి",
-        diagBtn: "🔍 వ్యాధి గుర్తించండి & పరిష్కారం పొందండి",
-        diagRepHead: "🌿 AI వ్యాధి నిర్ధారణ నివేదిక",
-        wapBtn: "డాక్టర్‌కు WhatsApp చేయండి",
-        chatYou: "మీరు",
-        chatDoc: "డాక్టర్",
-        chatThinking: "ఆలోచిస్తున్నాను...",
-        chatErr: "క్షమించండి, సమాధానం రాలేదు.",
-        chatNetErrHead: "లోపం",
-        chatNetErrDesc: "ఇంటర్నెట్ లేదా సర్వర్ సమస్య ఉంది.",
-        aiDocTitle: "AI డాక్టర్ చాట్",
-        searchPlaceholder: "🔍 దోస, టమోటా లేదా పుచ్చకాయ టైప్ చేయండి..."
-      },
-      ta: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "வணக்கம், விவசாய சகோதரரே!",
-        txtChangeProf: "✏️ சுயவிவரத்தை மாற்றவும்",
-        txtAiTitle: "🎙️ AI வேளாண் மருத்துவரிடம் பேசுங்கள்",
-        aiSubText: "தட்டவும் மற்றும் பயிர் அல்லது நோயின் பெயரைச் சொல்லவும்...",
-        txtSprayAdvice: "தெளிக்க காலை அல்லது மாலை நேரத்தைத் தேர்ந்தெடுக்கவும்",
-        gCrops: "அனைத்து ரகங்கள்",
-        gProt: "பயிர் பாதுகாப்பு",
-        gSched: "தெளிப்பு அட்டவணை",
-        gAtoz: "சாகுபடி வழிகாட்டி (A-Z)",
-        gDisc: "விவசாயிகள் விவாதம்",
-        gAdv: "ஆலோசகர்",
-        gComp: "அனைத்து விதை நிறுவனங்கள்",
-        gChem: "மருந்துகள் & இரசாயனங்கள்",
-        gServ: "மற்ற சேவைகள்",
-        txtPlaySub: "ப்ளே ஸ்டோரில் மதிப்பிட்டு செயலியைப் பகிரவும்.",
-        txtRateBtn: "மதிப்பிடு",
-        txtVideoHead: "📺 சமீபத்திய வேளாண் வீடியோக்கள்",
-        txtSeeAll: "அனைத்தும் >",
-        txtSocialHead: "சமூக வலைத்தளங்களில் இணையுங்கள்",
-        fabText: "உடனடி தீர்வு",
-        navHome: "முகப்பு",
-        navCrops: "ரகங்கள்",
-        navSched: "அட்டவணை",
-        navProt: "பாதுகாப்பு",
-        navHelp: "உதவி",
-        cropsTitle: "பயிரைத் தேர்ந்தெடுக்கவும்:",
-        protTitle: "நோய் கண்டறிய பயிரைத் தேர்ந்தெடுக்கவும்:",
-        schedTitle: "தெளிப்பு அட்டவணைக்கு பயிரைத் தேர்ந்தெடுக்கவும்:",
-        compTitle: "விதை நிறுவனத்தைத் தேர்ந்தெடுக்கவும்:",
-        chemTitle: "மருந்துகள் & இரசாயனங்கள்",
-        mandiTitle: "சந்தை விலை",
-        weatherTitle: "வானிலை",
-        profileTitle: "விவசாயி சுயவிவரம்",
-        favoritesTitle: "விருப்பமான ரகங்கள்",
-        atozTitle: "சாகுபடி வழிகாட்டி (A-Z)",
-        discTitle: "விவசாயிகள் கலந்துரையாடல்",
-        privacyTitle: "தனியுரிமைக் கொள்கை",
-        reportsTitle: "AI அறிக்கைகள்",
-        schemesTitle: "அரசுத் திட்டங்கள்",
-        expertTitle: "நிபுணர் ஆலோசனை",
-        pestTitle: "பூச்சி எச்சரிக்கை",
-        calcTitle: "விதைப்பு & அறுவடை கணிப்பான்",
-        drawerHead: "📋 மெனு & அமைப்புகள்",
-        completeProfileText: "சுயவிவரத்தை முழுமையாக்க தட்டவும் >",
-        mProfile: "என் சுயவிவரம் / அமைப்புகள்",
-        mFav: "விருப்பமான ரகங்கள்",
-        mCrops: "அனைத்து ரகங்கள்",
-        mSchedule: "தெளிப்பு அட்டவணை",
-        mProtection: "பயிர் பாதுகாப்பு",
-        mChems: "மருந்துகள் & இரசாயனங்கள்",
-        mServices: "மற்ற சேவைகள்",
-        mPrivacy: "தனியுரிமைக் கொள்கை",
-        mRate: "ப்ளே ஸ்டோரில் மதிப்பிடுங்கள்",
-        mShare: "விவசாய நண்பர்களுக்குப் பகிரவும்",
-        mHelp: "வாட்ஸ்அப் உதவி எண்",
-        mLogout: "வெளியேறு",
-        solHead: "⚡ உடனடி தீர்வு (AI பரிசோதனை)",
-        camBtn: "கேமராவில் படம் எடுக்கவும்",
-        galBtn: "கேலரியில் இருந்து தேர்ந்தெடுக்கவும்",
-        diagBtn: "🔍 நோயைக் கண்டறியவும்",
-        diagRepHead: "🌿 AI நோய் கண்டறிதல் அறிக்கை",
-        wapBtn: "மருத்துவருக்கு WhatsApp செய்யவும்",
-        chatYou: "நீங்கள்",
-        chatDoc: "மருத்துவர்",
-        chatThinking: "யோசிக்கிறேன்...",
-        chatErr: "மன்னிக்கவும், பதில் கிடைக்கவில்லை.",
-        chatNetErrHead: "பிழை",
-        chatNetErrDesc: "இணையம் அல்லது சர்வர் சிக்கல்.",
-        aiDocTitle: "AI மருத்துவர் அரட்டை",
-        searchPlaceholder: "🔍 வெள்ளரி, தக்காளி அல்லது தர்பூசணி..."
-      },
-      gu: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "રામ-રામ, ખેડૂત ભાઈ!",
-        txtChangeProf: "✏️ પ્રોફાઇલ બદલો",
-        txtAiTitle: "🎙️ AI કૃષિ ડોક્ટર સાથે વાત કરો",
-        aiSubText: "ટેપ કરો અને પાક કે રોગનું નામ બોલો...",
-        txtSprayAdvice: "સ્પ્રે માટે સવાર કે સાંજનો સમય પસંદ કરો",
-        gCrops: "બધી જાતો",
-        gProt: "પાક સુરક્ષા",
-        gSched: "સ્પ્રે શેડ્યુલ",
-        gAtoz: "ખેતી કેવી રીતે કરવી (A-Z)",
-        gDisc: "ખેડૂત ચર્ચા",
-        gAdv: "સલાહકાર",
-        gComp: "બધી કંપનીના બીજ",
-        gChem: "દવાઓ અને કેમિકલ્સ",
-        gServ: "અન્ય સેવાઓ",
-        txtPlaySub: "પ્લે સ્ટોર પર રેટ કરો અને એપ શેર કરો.",
-        txtRateBtn: "રેટ કરો",
-        txtVideoHead: "📺 તાજા કૃષિ વિડિયો",
-        txtSeeAll: "બધા જુઓ >",
-        txtSocialHead: "સોશિયલ મીડિયા પર જોડાઓ",
-        fabText: "ત્વરિત ઉકેલ",
-        navHome: "હોમ",
-        navCrops: "જાતો",
-        navSched: "શેડ્યુલ",
-        navProt: "સુરક્ષા",
-        navHelp: "હેલ્પલાઇન",
-        cropsTitle: "પાક પસંદ કરો:",
-        protTitle: "રોગ નિદાન માટે પાક પસંદ કરો:",
-        schedTitle: "સ્પ્રે શેડ્યુલ માટે પાક પસંદ કરો:",
-        compTitle: "બીજ કંપની પસંદ કરો:",
-        chemTitle: "દવાઓ અને કેમિકલ્સ",
-        mandiTitle: "મંડી ભાવ",
-        weatherTitle: "હવામાન",
-        profileTitle: "ખેડૂત પ્રોફાઇલ",
-        favoritesTitle: "પસંદગીની જાતો",
-        atozTitle: "ખેતી માર્ગદર્શિકા (A-Z)",
-        discTitle: "ખેડૂત ચર્ચા મંચ",
-        privacyTitle: "પ્રાઇવસી પોલિસી",
-        reportsTitle: "AI રિપોર્ટ્સ",
-        schemesTitle: "સરકારી યોજનાઓ",
-        expertTitle: "નિષ્ણાત સલાહ",
-        pestTitle: "જીવાત ચેતવણી",
-        calcTitle: "વાવણી કેલ્ક્યુલેટર",
-        drawerHead: "📋 મેનુ અને સેટિંગ્સ",
-        completeProfileText: "તમારી પ્રોફાઇલ પૂર્ણ કરો >",
-        mProfile: "મારી પ્રોફાઇલ / સેટિંગ્સ",
-        mFav: "મનપસંદ જાતો",
-        mCrops: "બધી જાતો",
-        mSchedule: "સ્પ્રે શેડ્યુલ",
-        mProtection: "પાક સુરક્ષા",
-        mChems: "દવાઓ અને કેમિકલ્સ",
-        mServices: "અન્ય સેવાઓ",
-        mPrivacy: "પ્રાઇવસી પોલિસી",
-        mRate: "પ્લે સ્ટોર પર રેટ કરો",
-        mShare: "મિત્રોને શેર કરો",
-        mHelp: "વ્હોટ્સએપ હેલ્પલાઇન",
-        mLogout: "લોગઆઉટ",
-        solHead: "⚡ ત્વરિત ઉકેલ (AI તપાસ)",
-        camBtn: "કેમેરાથી ફોટો લો",
-        galBtn: "ગેલેરીથી પસંદ કરો",
-        diagBtn: "🔍 રોગ ઓળખો",
-        diagRepHead: "🌿 AI રોગ નિદાન અહેવાલ",
-        wapBtn: "ડોક્ટરને WhatsApp કરો",
-        chatYou: "તમે",
-        chatDoc: "ડોક્ટર",
-        chatThinking: "વિચારી રહ્યો છું...",
-        chatErr: "ક્ષમા કરશો, જવાબ મળ્યો નથી.",
-        chatNetErrHead: "ભૂલ",
-        chatNetErrDesc: "ઇન્ટરનેટ કનેક્શન સમસ્યા.",
-        aiDocTitle: "AI ડોક્ટર ચૅટ",
-        searchPlaceholder: "🔍 કાકડી, ટામેટા અથવા તરબૂચ લખો..."
-      },
-      kn: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "ನಮಸ್ಕಾರ, ರೈತ ಬಂಧು!",
-        txtChangeProf: "✏️ ಪ್ರೊಫೈಲ್ ಬದಲಾಯಿಸಿ",
-        txtAiTitle: "🎙️ AI ಕೃಷಿ ವೈದ್ಯರೊಂದಿಗೆ ಮಾತನಾಡಿ",
-        aiSubText: "ಟ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ಬೆಳೆ ಅಥವಾ ರೋಗದ ಹೆಸರು ಹೇಳಿ...",
-        txtSprayAdvice: "ಸಿಂಪರಣೆಗೆ ಬೆಳಿಗ್ಗೆ ಅಥವಾ ಸಂಜೆ ಸಮಯ ಆರಿಸಿ",
-        gCrops: "ಎಲ್ಲಾ ತಳಿಗಳು",
-        gProt: "ಬೆಳೆ ರಕ್ಷಣೆ",
-        gSched: "ಸಿಂಪರಣೆ ವೇಳಾಪಟ್ಟಿ",
-        gAtoz: "ಬೇಸಾಯ ಮಾರ್ಗದರ್ಶಿ (A-Z)",
-        gDisc: "ರೈತ ಚರ್ಚೆ",
-        gAdv: "ಸಲಹೆಗಾರರು",
-        gComp: "ಎಲ್ಲಾ ಕಂಪನಿ ಬೀಜಗಳು",
-        gChem: "ಔಷಧಗಳು ಮತ್ತು ರಾಸಾಯನಿಕಗಳು",
-        gServ: "ಇತರೆ ಸೇವೆಗಳು",
-        txtPlaySub: "ಪ್ಲೇ ಸ್ಟೋರ್‌ನಲ್ಲಿ ರೇಟ್ ಮಾಡಿ ಮತ್ತು ಆಪ್ ಹಂಚಿಕೊಳ್ಳಿ.",
-        txtRateBtn: "ರೇಟ್ ಮಾಡಿ",
-        txtVideoHead: "📺 ಇತ್ತೀಚಿನ ಕೃಷಿ ವಿಡಿಯೋಗಳು",
-        txtSeeAll: "ಎಲ್ಲವನ್ನೂ ನೋಡಿ >",
-        txtSocialHead: "ಸಾಮಾಜಿಕ ಜಾಲತಾಣಗಳಲ್ಲಿ ಸಂಪರ್ಕಿಸಿ",
-        fabText: "ತ್ವರಿತ ಪರಿಹಾರ",
-        navHome: "ಮುಖಪುಟ",
-        navCrops: "ತಳಿಗಳು",
-        navSched: "ವೇಳಾಪಟ್ಟಿ",
-        navProt: "ರಕ್ಷಣೆ",
-        navHelp: "ಸಹಾಯವಾಣಿ",
-        cropsTitle: "ಬೆಳೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
-        protTitle: "ರೋಗ ಪತ್ತೆಗೆ ಬೆಳೆ ಆಯ್ಕೆಮಾಡಿ:",
-        schedTitle: "ಸಿಂಪರಣೆ ವೇಳಾಪಟ್ಟಿಗೆ ಬೆಳೆ ಆಯ್ಕೆಮಾಡಿ:",
-        compTitle: "ಬೀಜ ಕಂಪನಿ ಆಯ್ಕೆಮಾಡಿ:",
-        chemTitle: "ಔಷಧಗಳು ಮತ್ತು ರಾಸಾಯನಿಕಗಳು",
-        mandiTitle: "ಮಾರುಕಟ್ಟೆ ದರ",
-        weatherTitle: "ಹವಾಮಾನ",
-        profileTitle: "ರೈತ ಪ್ರೊಫೈಲ್",
-        favoritesTitle: "ನೆಚ್ಚಿನ ತಳಿಗಳು",
-        atozTitle: "ಬೇಸಾಯ ಮಾರ್ಗದರ್ಶಿ (A-Z)",
-        discTitle: "ರೈತ ಚರ್ಚಾ ವೇದಿಕೆ",
-        privacyTitle: "ಗೌಪ್ಯತಾ ನೀತಿ",
-        reportsTitle: "AI ವರದಿಗಳು",
-        schemesTitle: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು",
-        expertTitle: "ತಜ್ಞರ ಸಲಹೆ",
-        pestTitle: "ಕೀಟ ಎಚ್ಚರಿಕೆ",
-        calcTitle: "ಬಿತ್ತನೆ ಮತ್ತು ಕೊಯ್ಲು ಕ್ಯಾಲ್ಕುಲೇಟರ್",
-        drawerHead: "📋 ಮೆನು ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
-        completeProfileText: "ಪ್ರೊಫೈಲ್ ಪೂರ್ಣಗೊಳಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ >",
-        mProfile: "ನನ್ನ ಪ್ರೊಫೈಲ್ / ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
-        mFav: "ನೆಚ್ಚಿನ ತಳಿಗಳು",
-        mCrops: "ಎಲ್ಲಾ ತಳಿಗಳು",
-        mSchedule: "ಸಿಂಪರಣೆ ವೇಳಾಪಟ್ಟಿ",
-        mProtection: "ಬೆಳೆ ರಕ್ಷಣೆ",
-        mChems: "ಔಷಧಗಳು ಮತ್ತು ರಾಸಾಯನಿಕಗಳು",
-        mServices: "ಇತರೆ ಸೇವೆಗಳು",
-        mPrivacy: "ಗೌಪ್ಯತಾ ನೀತಿ",
-        mRate: "ಪ್ಲೇ ಸ್ಟೋರ್‌ನಲ್ಲಿ ರೇಟ್ ಮಾಡಿ",
-        mShare: "ರೈತ ಮಿತ್ರರಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ",
-        mHelp: "ವಾಟ್ಸಾಪ್ ಸಹಾಯವಾಣಿ",
-        mLogout: "ಲಾಗ್ ಔಟ್",
-        solHead: "⚡ ತ್ವರಿತ ಪರಿಹಾರ (AI ತಪಾಸಣೆ)",
-        camBtn: "ಕ್ಯಾಮೆರಾದಿಂದ ಫೋಟೋ ತೆಗೆಯಿರಿ",
-        galBtn: "ಗ್ಯಾಲರಿಯಿಂದ ಆರಿಸಿ",
-        diagBtn: "🔍 ರೋಗ ಪತ್ತೆಹಚ್ಚಿ",
-        diagRepHead: "🌿 AI ರೋಗ ಪತ್ತೆ ವರದಿ",
-        wapBtn: "ವೈದ್ಯರಿಗೆ WhatsApp ಮಾಡಿ",
-        chatYou: "ನೀವು",
-        chatDoc: "ವೈದ್ಯರು",
-        chatThinking: "ಯೋಚಿಸುತ್ತಿದ್ದೇನೆ...",
-        chatErr: "ಕ್ಷಮಿಸಿ, ಉತ್ತರ ಸಿಕ್ಕಿಲ್ಲ.",
-        chatNetErrHead: "ದೋಷ",
-        chatNetErrDesc: "ಇಂಟರ್ನೆಟ್ ಅಥವಾ ಸರ್ವರ್ ಸಮಸ್ಯೆ.",
-        aiDocTitle: "AI ವೈದ್ಯ ಚಾಟ್",
-        searchPlaceholder: "🔍 ಸೌತೆಕಾಯಿ, ಟೊಮೇಟೊ ಅಥವಾ ಕಲ್ಲಂಗಡಿ..."
-      },
-      pa: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!",
-        txtChangeProf: "✏️ ਪ੍ਰੋਫਾਇਲ ਬਦਲੋ",
-        txtAiTitle: "🎙️ ਏ.ਆਈ. ਖੇਤੀ ਡਾਕਟਰ ਨਾਲ ਗੱਲ ਕਰੋ",
-        aiSubText: "ਟੈਪ ਕਰੋ ਅਤੇ ਫਸਲ ਜਾਂ ਬਿਮਾਰੀ ਦਾ ਨਾਮ ਬੋਲੋ...",
-        txtSprayAdvice: "ਸਪ੍ਰੇ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ",
-        gCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ",
-        gProt: "ਫਸਲ ਸੁਰੱਖਿਆ",
-        gSched: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ",
-        gAtoz: "ਖੇਤੀ ਕਿਵੇਂ ਕਰੀਏ (A-Z)",
-        gDisc: "ਕਿਸਾਨ ਚਰਚਾ",
-        gAdv: "ਸਲਾਹਕਾਰ",
-        gComp: "ਸਭ ਕੰਪਨੀ ਬੀਜ",
-        gChem: "ਦਵਾਈਆਂ ਅਤੇ ਕੈਮੀਕਲ",
-        gServ: "ਹੋਰ ਸੇਵਾਵਾਂ",
-        txtPlaySub: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ ਅਤੇ ਐਪ ਸ਼ੇਅਰ ਕਰੋ।",
-        txtRateBtn: "ਰੇਟ ਕਰੋ",
-        txtVideoHead: "📺 ਤਾਜ਼ਾ ਖੇਤੀ ਵੀਡੀਓ",
-        txtSeeAll: "ਸਾਰੇ ਦੇਖੋ >",
-        txtSocialHead: "ਸਾਡੇ ਨਾਲ ਸੋਸ਼ਲ ਮੀਡੀਆ 'ਤੇ ਜੁੜੋ",
-        fabText: "ਤੁਰੰਤ ਹੱਲ",
-        navHome: "ਹੋਮ",
-        navCrops: "ਕਿਸਮਾਂ",
-        navSched: "ਸ਼ਡਿਊਲ",
-        navProt: "ਸੁਰੱਖਿਆ",
-        navHelp: "ਹੈਲਪਲਾਈਨ",
-        cropsTitle: "ਫਸਲ ਚੁਣੋ:",
-        protTitle: "ਰੋਗ ਨਿਦਾਨ ਲਈ ਫਸਲ ਚੁਣੋ:",
-        schedTitle: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ ਲਈ ਫਸਲ ਚੁਣੋ:",
-        compTitle: "ਬੀਜ ਕੰਪਨੀ ਚੁਣੋ:",
-        chemTitle: "ਦਵਾਈਆਂ ਅਤੇ ਕੈਮੀਕਲ",
-        mandiTitle: "ਮੰਡੀ ਭਾਅ",
-        weatherTitle: "ਮੌਸਮ",
-        profileTitle: "ਕਿਸਾਨ ਪ੍ਰੋਫਾਇਲ",
-        favoritesTitle: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
-        atozTitle: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
-        discTitle: "ਕਿਸਾਨ ਚਰਚਾ ਮੰਚ",
-        privacyTitle: "ਪਰਦਾਫ਼ਾਸ਼ ਨੀਤੀ",
-        reportsTitle: "AI ਰਿਪੋਰਟਾਂ",
-        schemesTitle: "ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ",
-        expertTitle: "ਮਾਹਰ ਸਲਾਹ",
-        pestTitle: "ਕੀੜੇ ਚੇਤਾਵਨੀ",
-        calcTitle: "ਬਿਜਾਈ ਕੈਲਕੁਲੇਟਰ",
-        drawerHead: "📋 ਮੀਨੂ ਅਤੇ ਸੈਟਿੰਗਾਂ",
-        completeProfileText: "ਆਪਣੀ ਪ੍ਰੋਫਾਇਲ ਪੂਰੀ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ >",
-        mProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਇਲ / ਸੈਟਿੰਗਾਂ",
-        mFav: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
-        mCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ",
-        mSchedule: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ",
-        mProtection: "ਫਸਲ ਸੁਰੱਖਿਆ",
-        mChems: "ਦਵਾਈਆਂ ਅਤੇ ਕੈਮੀਕਲ",
-        mServices: "ਹੋਰ ਸੇਵਾਵਾਂ",
-        mPrivacy: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
-        mRate: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ",
-        mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
-        mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
-        mLogout: "ਲਾਗਆਉਟ",
-        solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
-        camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
-        galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
-        diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
-        diagRepHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ",
-        wapBtn: "ਡਾਕਟਰ ਨੂੰ ਵਟਸਐਪ ਕਰੋ",
-        chatYou: "ਤੁਸੀਂ",
-        chatDoc: "ਡਾਕਟਰ",
-        chatThinking: "ਸੋਚ ਰਿਹਾ ਹਾਂ...",
-        chatErr: "ਮਾਫ਼ ਕਰਨਾ, ਜਵਾਬ ਨਹੀਂ ਮਿਲਿਆ।",
-        chatNetErrHead: "ਗਲਤੀ",
-        chatNetErrDesc: "ਇੰਟਰਨੈੱਟ ਸਮੱਸਿਆ।",
-        aiDocTitle: "AI ਡਾਕਟਰ ਚੈਟ",
-        searchPlaceholder: "🔍 ਖੀਰਾ, ਟਮਾਟਰ ਜਾਂ ਤਰਬੂਜ ਲਿਖੋ..."
-      },
-      en: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "Ram-Ram, Farmer Brother!",
-        txtChangeProf: "✏️ Edit Profile",
-        txtAiTitle: "🎙️ Talk to AI Agri Doctor",
-        aiSubText: "Tap and speak crop or disease name...",
-        txtSprayAdvice: "Choose morning or evening for spraying",
-        gCrops: "All Varieties",
-        gProt: "Crop Protection",
-        gSched: "Spray Schedule",
-        gAtoz: "Farming Guide (A-Z)",
-        gDisc: "Farmer Discussion",
-        gAdv: "Advisor",
-        gComp: "All Company Seeds",
-        gChem: "Chemicals & Medicines",
-        gServ: "Other Services",
-        txtPlaySub: "Rate us on Play Store and share app.",
-        txtRateBtn: "Rate Us",
-        txtVideoHead: "📺 Latest Agri Videos & Reels",
-        txtSeeAll: "See All >",
-        txtSocialHead: "Connect with us on Social Media",
-        fabText: "Instant Solution",
-        navHome: "Home",
-        navCrops: "Varieties",
-        navSched: "Schedule",
-        navProt: "Protection",
-        navHelp: "Helpline",
-        cropsTitle: "Select Crop:",
-        protTitle: "Select Crop for Disease Diagnosis:",
-        schedTitle: "Select Crop for Spray Schedule:",
-        compTitle: "Select Seed Company:",
-        chemTitle: "Chemicals & Medicines",
-        mandiTitle: "Mandi Prices",
-        weatherTitle: "Weather",
-        profileTitle: "Farmer Profile",
-        favoritesTitle: "Favorite Varieties",
-        atozTitle: "Farming Guide (A-Z)",
-        discTitle: "Farmer Discussion Forum",
-        privacyTitle: "Privacy Policy",
-        reportsTitle: "AI Disease Reports",
-        schemesTitle: "Government Schemes",
-        expertTitle: "Expert Advice",
-        pestTitle: "Pest Alerts",
-        calcTitle: "Sowing & Harvest Calculator",
-        drawerHead: "📋 Menu & Settings",
-        completeProfileText: "Tap to complete your profile >",
-        mProfile: "My Profile / Settings",
-        mFav: "Favorite Varieties (Bookmarks)",
-        mCrops: "All Varieties",
-        mSchedule: "Spray Schedule",
-        mProtection: "Crop Protection (Diagnosis)",
-        mChems: "Chemicals & Medicines",
-        mServices: "Other Services (Weather, Mandi)",
-        mPrivacy: "Terms & Privacy Policy",
-        mRate: "Rate on Google Play Store",
-        mShare: "Share App with Farmers",
-        mHelp: "WhatsApp Helpline",
-        mLogout: "Logout",
-        solHead: "⚡ Instant Solution (AI Diagnosis)",
-        camBtn: "Take Photo from Camera",
-        galBtn: "Choose from Gallery",
-        diagBtn: "🔍 Diagnose Disease & Get Cure",
-        diagRepHead: "🌿 AI Disease Diagnosis Report & Cautions",
-        wapBtn: "Send this report to Doctor on WhatsApp",
-        chatYou: "You",
-        chatDoc: "Doctor",
-        chatThinking: "Thinking...",
-        chatErr: "Sorry, could not get a response. Please try again.",
-        chatNetErrHead: "Error",
-        chatNetErrDesc: "Network or server issue.",
-        aiDocTitle: "AI Sabzi Doctor Chat",
-        searchPlaceholder: "🔍 Type cucumber, tomato or watermelon..."
-      },
-      ml: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "നമസ്കാരം, കർഷക സുഹൃത്തേ!",
-        txtChangeProf: "✏️ പ്രൊഫൈൽ മാറ്റുക",
-        txtAiTitle: "🎙️ AI കാർഷിക ഡോക്ടറുമായി സംസാരിക്കുക",
-        aiSubText: "ടാപ്പ് ചെയ്ത് വിളയുടെയോ രോഗത്തിന്റെയോ പേര് പറയുക...",
-        txtSprayAdvice: "തളിക്കാൻ രാവിലെയോ വൈകുന്നേരമോ തിരഞ്ഞെടുക്കുക",
-        gCrops: "എല്ലാ ഇനങ്ങളും",
-        gProt: "വിള സംരക്ഷണം",
-        gSched: "സ്പ്രേ ഷെഡ്യൂൾ",
-        gAtoz: "കൃഷി ഗൈഡ് (A-Z)",
-        gDisc: "കർഷക ചർച്ച",
-        gAdv: "ഉപദേശകൻ",
-        gComp: "എല്ലാ കമ്പനി വിത്തുകളും",
-        gChem: "മരുന്നുകളും രാസവസ്തുക്കളും",
-        gServ: "മറ്റ് സേവനങ്ങൾ",
-        txtPlaySub: "പ്ലേ സ്റ്റോറിൽ റേറ്റ് ചെയ്ത് ആപ്പ് പങ്കിടുക.",
-        txtRateBtn: "റേറ്റ് ചെയ്യുക",
-        txtVideoHead: "📺 പുതിയ കാർഷിക വീഡിയോകൾ",
-        txtSeeAll: "എല്ലാം കാണുക >",
-        txtSocialHead: "സോഷ്യൽ മീഡിയയിൽ ബന്ധപ്പെടുക",
-        fabText: "ഉടനടി പരിഹാരം",
-        navHome: "ഹോം",
-        navCrops: "ഇനങ്ങൾ",
-        navSched: "ഷെഡ്യൂൾ",
-        navProt: "സുരക്ഷ",
-        navHelp: "ഹെൽപ്പ്‌ലൈൻ",
-        cropsTitle: "വിള തിരഞ്ഞെടുക്കുക:",
-        protTitle: "രോഗനിർണയത്തിന് വിള തിരഞ്ഞെടുക്കുക:",
-        schedTitle: "സ്പ്രേ ഷെഡ്യൂളിന് വിള തിരഞ്ഞെടുക്കുക:",
-        compTitle: "വിത്ത് കമ്പനി തിരഞ്ഞെടുക്കുക:",
-        chemTitle: "മരുന്നുകളും രാസവസ്തുക്കളും",
-        mandiTitle: "വിപണി വില",
-        weatherTitle: "കാലാവസ്ഥ",
-        profileTitle: "കർഷക പ്രൊഫൈൽ",
-        favoritesTitle: "ഇഷ്ടപ്പെട്ട ഇനങ്ങൾ",
-        atozTitle: "കൃഷി ഗൈഡ് (A-Z)",
-        discTitle: "കർഷക ചർച്ചാ വേദി",
-        privacyTitle: "സ്വകാര്യതാ നയം",
-        reportsTitle: "AI റിപ്പോർട്ടുകൾ",
-        schemesTitle: "സർക്കാർ പദ്ധതികൾ",
-        expertTitle: "വിദഗ്ധ ഉപദേശം",
-        pestTitle: "കീട മുന്നറിയിപ്പ്",
-        calcTitle: "വിത & വിളവെടുപ്പ് കാൽക്കുലേറ്റർ",
-        drawerHead: "📋 മെനു & ക്രമീകരണങ്ങൾ",
-        completeProfileText: "പ്രൊഫൈൽ പൂർത്തിയാക്കാൻ ടാപ്പ് ചെയ്യുക >",
-        mProfile: "എന്റെ പ്രൊഫൈൽ / ക്രമീകരണങ്ങൾ",
-        mFav: "ഇഷ്ടപ്പെട്ട ഇനങ്ങൾ",
-        mCrops: "എല്ലാ ഇനങ്ങളും",
-        mSchedule: "സ്പ്രേ ഷെഡ്യൂൾ",
-        mProtection: "വിള സംരക്ഷണം",
-        mChems: "മരുന്നുകളും രാസവസ്തുക്കളും",
-        mServices: "മറ്റ് സേവനങ്ങൾ",
-        mPrivacy: "സ്വകാര്യതാ നയം",
-        mRate: "പ്ലേ സ്റ്റോറിൽ റೇറ്റ് ചെയ്യുക",
-        mShare: "സുഹൃത്തുക്കൾക്ക് പങ്കിടുക",
-        mHelp: "വാട്സ്ആപ്പ് ഹെൽപ്പ്‌ലൈൻ",
-        mLogout: "ലോഗ് ഔട്ട്",
-        solHead: "⚡ ഉടനടി പരിഹാരം (AI പരിശോധന)",
-        camBtn: "ക്യാമറയിൽ ഫോട്ടോ എടുക്കുക",
-        galBtn: "ഗാലറിയിൽ നിന്ന് തിരഞ്ഞെടുക്കുക",
-        diagBtn: "🔍 രോഗം കണ്ടെത്തുക",
-        diagRepHead: "🌿 AI രോഗനിർണയ റിപ്പോർട്ട്",
-        wapBtn: "ഡോക്ടർക്ക് WhatsApp അയക്കുക",
-        chatYou: "നിങ്ങൾ",
-        chatDoc: "ഡോക്ടർ",
-        chatThinking: "ആലോചിക്കുന്നു...",
-        chatErr: "ക്ഷമിക്കണം, മറുപടി ലഭിച്ചില്ല.",
-        chatNetErrHead: "പിശക്",
-        chatNetErrDesc: "ഇന്റർനെറ്റ് അല്ലെങ്കിൽ സെർവർ പ്രശ്നം.",
-        aiDocTitle: "AI ഡോക്ടർ ചാറ്റ്",
-        searchPlaceholder: "🔍 വെള്ളരിക്ക, തക്കാളി അല്ലെങ്കിൽ തണ്ണിമത്തൻ..."
-      },
-      or: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "ନମସ୍କାର, କୃଷକ ଭାଇ!",
-        txtChangeProf: "✏️ ପ୍ରୋଫାଇଲ୍ ବଦଳାନ୍ତୁ",
-        txtAiTitle: "🎙️ AI କୃଷି ଡାକ୍ତରଙ୍କ ସହ କଥା ହୁଅନ୍ତୁ",
-        aiSubText: "ଟ୍ୟାପ୍ କରନ୍ତୁ ଏବଂ ଫସଲ ବା ରୋଗର ନାମ କୁହନ୍ତୁ...",
-        txtSprayAdvice: "ସ୍ପ୍ରେ ପାଇଁ ସକାଳ ବା ସନ୍ଧ୍ୟା ସମୟ ବାଛନ୍ତୁ",
-        gCrops: "ସମସ୍ତ କିସମ",
-        gProt: "ଫସଲ ସୁରକ୍ଷା",
-        gSched: "ସ୍ପ୍ରେ ସିଡ୍ୟୁଲ୍",
-        gAtoz: "ଚାଷ ଗାଇଡ୍ (A-Z)",
-        gDisc: "କୃଷକ ଆଲୋଚନା",
-        gAdv: "ପରାମର୍ଶଦାତା",
-        gComp: "ସମସ୍ତ କମ୍ପାନୀ ବିହନ",
-        gChem: "ଔଷଧ ଓ କେମିକାଲ୍",
-        gServ: "ଅନ୍ୟାନ୍ୟ ସେବା",
-        txtPlaySub: "ପ୍ଲେ ଷ୍ଟୋରରେ ରେଟିଂ ଦିଅନ୍ତୁ ଏବଂ ଆପ୍ ସେୟାର କରନ୍ତୁ।",
-        txtRateBtn: "ରେଟିଂ",
-        txtVideoHead: "📺 ସଦ୍ୟତମ କୃଷି ଭିଡିଓ",
-        txtSeeAll: "ସବୁ ଦେଖନ୍ତୁ >",
-        txtSocialHead: "ସୋସିଆଲ୍ ମିଡିଆରେ ଯୋଡ଼ି ହୁଅନ୍ତୁ",
-        fabText: "ତୁରନ୍ତ ସମାଧାନ",
-        navHome: "ହୋମ୍",
-        navCrops: "କିସମ",
-        navSched: "ସିଡ୍ୟୁଲ୍",
-        navProt: "ସୁରକ୍ଷା",
-        navHelp: "ହେଲ୍ପଲାଇନ୍",
-        cropsTitle: "ଫସଲ ବାଛନ୍ତୁ:",
-        protTitle: "ରୋଗ ନିଦାନ ପାଇଁ ଫସଲ ବାଛନ୍ତୁ:",
-        schedTitle: "ସ୍ପ୍ରେ ସିଡ୍ୟୁଲ୍ ପାଇଁ ଫସଲ ବାଛନ୍ତୁ:",
-        compTitle: "ବିହନ କମ୍ପାନୀ ବାଛନ୍ତୁ:",
-        chemTitle: "ଔଷଧ ଓ କେମିକାଲ୍",
-        mandiTitle: "ମଣ୍ଡି ଦର",
-        weatherTitle: "ପାଣିପାଗ",
-        profileTitle: "କୃଷକ ପ୍ରୋଫାଇଲ୍",
-        favoritesTitle: "ପସନ୍ଦର କିସମ",
-        atozTitle: "ଚାଷ ଗାଇଡ୍ (A-Z)",
-        discTitle: "କୃଷକ ଆଲୋଚନା ମଞ୍ଚ",
-        privacyTitle: "ଗୋପନୀୟତା ନୀତି",
-        reportsTitle: "AI ରିପୋର୍ଟ",
-        schemesTitle: "ସରକାରୀ ଯୋଜନା",
-        expertTitle: "ବିଶେଷଜ୍ଞ ପରାମର୍ଶ",
-        pestTitle: "କୀଟ ସତର୍କତା",
-        calcTitle: "ବୁଣା ଓ ଅମଳ କାଲକୁଲେଟର",
-        drawerHead: "📋 ମେନୁ ଓ ସେଟିଂସ୍",
-        completeProfileText: "ପ୍ରୋଫାଇଲ୍ ସମ୍ପୂର୍ଣ୍ଣ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ >",
-        mProfile: "ମୋ ପ୍ରୋଫାଇଲ୍ / ସେଟିଂସ୍",
-        mFav: "ପସନ୍ଦର କିସମ",
-        mCrops: "ସମସ୍ତ କିସମ",
-        mSchedule: "ସ୍ପ୍ରେ ସିଡ୍ୟୁଲ୍",
-        mProtection: "ଫସଲ ସୁରକ୍ଷା",
-        mChems: "ଔଷଧ ଓ କେମିକାଲ୍",
-        mServices: "ଅନ୍ୟାନ୍ୟ ସେବା",
-        mPrivacy: "ଗୋପନୀୟତା ନୀତି",
-        mRate: "ପ୍ଲେ ଷ୍ଟୋରରେ ରେଟିଂ ଦିଅନ୍ତୁ",
-        mShare: "ସାଙ୍ଗମାନଙ୍କୁ ସେୟାର କରନ୍ତୁ",
-        mHelp: "ହ୍ୱାଟ୍ସଆପ୍ ହେଲ୍ପଲାଇନ୍",
-        mLogout: "ଲଗଆଉଟ୍",
-        solHead: "⚡ ତୁରନ୍ତ ସମାଧାନ (AI ଯାଞ୍ଚ)",
-        camBtn: "କ୍ୟାମେରାରୁ ଫଟୋ ନିଅନ୍ତୁ",
-        galBtn: "ଗ୍ୟାଲେରୀରୁ ବାଛନ୍ତୁ",
-        diagBtn: "🔍 ରୋଗ ଚିହ୍ନଟ କରନ୍ତୁ",
-        diagRepHead: "🌿 AI ରୋଗ ନିଦାନ ରିପୋର୍ଟ",
-        wapBtn: "ଡାକ୍ତରଙ୍କୁ WhatsApp କରନ୍ତୁ",
-        chatYou: "ଆପଣ",
-        chatDoc: "ଡାକ୍ତର",
-        chatThinking: "ଭାବୁଛି...",
-        chatErr: "କ୍ଷମା କରିବେ, ଉତ୍ତର ମିଳିଲା ନାହିଁ।",
-        chatNetErrHead: "ତ୍ରୁଟି",
-        chatNetErrDesc: "ଇଣ୍ଟରନେଟ୍ ବା ସର୍ଭର ସମସ୍ୟା।",
-        aiDocTitle: "AI ଡାକ୍ତର ଚାଟ୍",
-        searchPlaceholder: "🔍 କାକୁଡ଼ି, ଟମାଟୋ ବା ତରଭୁଜ ଲେଖନ୍ତୁ..."
-      },
-      as: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "নমস্কাৰ, কৃষক বন্ধু!",
-        txtChangeProf: "✏️ প্ৰফাইল সলনি কৰক",
-        txtAiTitle: "🎙️ AI কৃষি চিকিৎসকৰ সৈতে কথা পাতক",
-        aiSubText: "টেপ কৰক আৰু শস্য বা ৰোগৰ নাম কওক...",
-        txtSprayAdvice: "স্প্ৰে'ৰ বাবে পুৱা বা গধূলিৰ সময় বাছনি কৰক",
-        gCrops: "সকলো জাত",
-        gProt: "শস্য সুৰক্ষা",
-        gSched: "স্প্ৰে' তালিকা",
-        gAtoz: "খেতি নিৰ্দেশিকা (A-Z)",
-        gDisc: "কৃষক আলোচনা",
-        gAdv: "পৰামৰ্শদাতা",
-        gComp: "সকলো কোম্পানীৰ বীজ",
-        gChem: "দৰব আৰু ৰাসায়নিক",
-        gServ: "অন্যান্য সেৱাসমূহ",
-        txtPlaySub: "প্লে ষ্ট'ৰত ৰেটিং দিয়ক আৰু এপ শ্বেয়াৰ কৰক।",
-        txtRateBtn: "ৰেটিং দিয়ক",
-        txtVideoHead: "📺 শেহতীয়া কৃষি ভিডিঅ'",
-        txtSeeAll: "সকলো চাওক >",
-        txtSocialHead: "ছ'চিয়েল মিডিয়াত সংযুক্ত হওক",
-        fabText: "তৎকাল সমাধান",
-        navHome: "হোম",
-        navCrops: "জাতসমূহ",
-        navSched: "তালিকা",
-        navProt: "সুৰক্ষা",
-        navHelp: "হেল্পলাইন",
-        cropsTitle: "শস্য বাছনি কৰক:",
-        protTitle: "ৰোগ নিৰ্ণয়ৰ বাবে শস্য বাছনি কৰক:",
-        schedTitle: "স্প্ৰে' তালিকাৰ বাবে শস্য বাছনি কৰক:",
-        compTitle: "বীজ কোম্পানী বাছনি কৰক:",
-        chemTitle: "দৰব আৰু ৰাসায়নিক",
-        mandiTitle: "বজাৰৰ দৰ",
-        weatherTitle: "বতৰ",
-        profileTitle: "কৃষক প্ৰফাইল",
-        favoritesTitle: "পছন্দৰ জাত",
-        atozTitle: "খেতি নিৰ্দেশিকা (A-Z)",
-        discTitle: "কৃষক আলোচনা মঞ্চ",
-        privacyTitle: "গোপনীয়তা নীতি",
-        reportsTitle: "AI প্ৰতিবেদন",
-        schemesTitle: "চৰকাৰী আঁচনি",
-        expertTitle: "বিশেষজ্ঞ পৰামৰ্শ",
-        pestTitle: "পোক-পতংগৰ সতৰ্কবাণী",
-        calcTitle: "বপন আৰু চপোৱা কেলকুলেটৰ",
-        drawerHead: "📋 মেনু আৰু ছেটিংছ",
-        completeProfileText: "প্ৰফাইল সম্পূৰ্ণ কৰিবলৈ টেপ কৰক >",
-        mProfile: "মোৰ প্ৰফাইল / ছেটিংছ",
-        mFav: "পছন্দৰ জাত",
-        mCrops: "সকলো জাত",
-        mSchedule: "স্প্ৰে' তালিকা",
-        mProtection: "শস্য সুৰক্ষা",
-        mChems: "দৰব আৰু ৰাসায়নিক",
-        mServices: "অন্যান্য সেৱাসমূহ",
-        mPrivacy: "গোপনীয়তা নীতি",
-        mRate: "প্লে ষ্ট'ৰত ৰেটিং দিয়ক",
-        mShare: "বন্ধুসকলক শ্বেয়াৰ কৰক",
-        mHelp: "হোৱাটছএপ হেল্পলাইন",
-        mLogout: "লগ আউট",
-        solHead: "⚡ তৎকাল সমাধান (AI পৰীক্ষা)",
-        camBtn: "কেমেৰাৰে ফটো তোলক",
-        galBtn: "গেলেৰীৰ পৰা বাছনি কৰক",
-        diagBtn: "🔍 ৰোগ চিনাক্ত কৰক",
-        diagRepHead: "🌿 AI ৰোগ নিৰ্ণয় প্ৰতিবেদন",
-        wapBtn: "চিকিৎসকক WhatsApp কৰক",
-        chatYou: "আপুনি",
-        chatDoc: "চিকিৎসক",
-        chatThinking: "ভাবি আছোঁ...",
-        chatErr: "ক্ষমা কৰিব, উত্তৰ পোৱা নগ'ল।",
-        chatNetErrHead: "ত্ৰুটি",
-        chatNetErrDesc: "ইণ্টাৰনেট বা ছাৰ্ভাৰ সমস্যা।",
-        aiDocTitle: "AI চিকিৎসক চেট",
-        searchPlaceholder: "🔍 তিয়ঁহ, বিলাহী বা তৰমুজ লিখক..."
+        searchPlaceholder: "🔍 खीरा, टमाटर या तरबूज लिखें...",
+        catHeadTitle: "🌱 सभी किस्में श्रेणियां",
+        catSubTitle: "फसल श्रेणी चुनें:",
+        catVeg: "सब्जियां",
+        catFruit: "फल",
+        catFlower: "फूल",
+        catCereal: "अनाज",
+        catOther: "अन्य",
+        protCatHead: "🛡️ फसल सुरक्षा श्रेणी चुनें:",
+        protCatSub: "अपनी फसल की श्रेणी चुनें:",
+        schedCatHead: "🗓️ स्प्रे शेड्यूल श्रेणी चुनें:",
+        schedCatSub: "अपनी फसल की श्रेणी चुनें:"
       }
     };
+
+    const uiTemplateSource = Object.assign({}, translations.hi);
 
     function dismissSplashScreen() {
       const splash = document.getElementById('splashScreen');
@@ -2083,9 +1368,10 @@
     }
 
     async function translateTextForApp(text, targetLang) {
-      if (!text || !String(text).trim() || targetLang === 'hi') return text;
+      if (!text || !String(text).trim()) return text;
       const clean = String(text).trim();
-      if (/^https?:\/\//i.test(clean) || /^[0-9\s.,+\-/%₹°():|]+$/.test(clean)) return text;
+      if (!targetLang || targetLang === 'hi') return clean;
+      if (/^https?:\/\//i.test(clean) || /^[0-9\s.,+\-/%₹°():|]+$/.test(clean)) return clean;
 
       const cacheKey = `${targetLang}::${clean}`;
       if (phraseMapToTarget[cacheKey]) return phraseMapToTarget[cacheKey];
@@ -2102,79 +1388,80 @@
           }
         }
       } catch (e) {}
-      return text;
+      return clean;
     }
 
-    async function translateVisibleHomeElements(langCode) {
-      const t = translations[langCode];
-      const searchInput = document.getElementById('homeSearch');
-      if (searchInput) {
-        if (t && t.searchPlaceholder) {
-          searchInput.placeholder = t.searchPlaceholder;
-        } else if (langCode !== 'hi') {
-          searchInput.placeholder = await translateTextForApp("खीरा, टमाटर या तरबूज लिखें...", langCode);
+    async function getLanguageBundle(langCode) {
+      if (translations[langCode]) return translations[langCode];
+      if (!langCode || langCode === 'hi') return uiTemplateSource;
+
+      const bundle = {};
+      const entries = Object.entries(uiTemplateSource);
+      for (const [k, v] of entries) {
+        if (k === 'headerTitle') {
+          bundle[k] = v;
         } else {
-          searchInput.placeholder = translations.hi.searchPlaceholder;
+          bundle[k] = await translateTextForApp(v, langCode);
         }
       }
-
-      if (langCode !== 'hi') {
-        for (const st of (window.activeStories || [])) {
-          if (st.title) st.title = await translateTextForApp(st.title, langCode);
-          if (st.desc) st.desc = await translateTextForApp(st.desc, langCode);
-        }
-        renderStoriesBar();
-
-        for (const v of (videoRecords || [])) {
-          if (v.title) v.title = await translateTextForApp(v.title, langCode);
-        }
-        renderDynamicVideos();
-      }
+      translations[langCode] = bundle;
+      return bundle;
     }
 
-    async function translateAllLoadedSheetRecords(langCode) {
-      if (!langCode || langCode === 'hi') return;
-
-      for (const r of sheetRecords) {
-        r.crop = await translateTextForApp(r.crop, langCode);
-        r.variety = await translateTextForApp(r.variety, langCode);
-        r.segment = await translateTextForApp(r.segment, langCode);
-        r.features = await translateTextForApp(r.features, langCode);
-        r.maturity = await translateTextForApp(r.maturity, langCode);
-        r.resistance = await translateTextForApp(r.resistance, langCode);
-        r.category = await translateTextForApp(r.category, langCode);
-      }
-
-      for (const cat of Object.keys(protectionRecords)) {
-        for (const crop of Object.keys(protectionRecords[cat])) {
-          for (const item of protectionRecords[cat][crop]) {
-            item.name = await translateTextForApp(item.name, langCode);
-            item.symptoms = await translateTextForApp(item.symptoms, langCode);
-            item.cure = await translateTextForApp(item.cure, langCode);
-          }
-        }
-      }
-
-      for (const cat of Object.keys(scheduleRecords)) {
-        for (const crop of Object.keys(scheduleRecords[cat])) {
-          for (const step of scheduleRecords[cat][crop]) {
-            step.time = await translateTextForApp(step.time, langCode);
-            step.med = await translateTextForApp(step.med, langCode);
-            step.purpose = await translateTextForApp(step.purpose, langCode);
-          }
+    async function translateQuickCropLabels(langCode) {
+      const pills = document.querySelectorAll('#quickCropContainer .quick-pill');
+      for (const pill of pills) {
+        const baseCrop = pill.getAttribute('data-crop');
+        const labelSpan = pill.querySelector('.q-label');
+        if (baseCrop && labelSpan) {
+          labelSpan.innerText = await translateTextForApp(baseCrop, langCode);
         }
       }
     }
 
-    function applyLanguageUI() {
-      const t = translations[currentLang] || translations['hi'];
-      if (!t) return;
+    async function translateCalculatorOptions(langCode) {
+      const map = [
+        ['optCalcTom', 'टमाटर (लगभग 90-100 दिन)'],
+        ['optCalcCuc', 'खीरा (लगभग 50-60 दिन)'],
+        ['optCalcChi', 'मिर्च (लगभग 70-80 दिन)'],
+        ['optCalcWat', 'तरबूज (लगभग 80-90 दिन)'],
+        ['optCalcCau', 'फूलगोभी (लगभग 70-85 दिन)'],
+        ['optCalcOkr', 'भिंडी (लगभग 50-60 दिन)']
+      ];
+      for (const [id, src] of map) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = await translateTextForApp(src, langCode);
+      }
+    }
+
+    async function applyLanguageUI() {
+      const t = await getLanguageBundle(currentLang);
       const setTxt = (id, val) => {
         const el = document.getElementById(id);
         if (el && val !== undefined) el.innerText = val;
       };
+      const setHtml = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val !== undefined) el.innerHTML = val;
+      };
+      const setPh = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val !== undefined) el.placeholder = val;
+      };
 
       setTxt('headerTitle', t.headerTitle);
+      setTxt('txtSplashSub', t.splashSub);
+      setTxt('txtLoading', t.loading);
+      setTxt('txtLangModalSub', t.langModalSub);
+      setTxt('txtLoginSub', t.loginSub);
+      setTxt('txtPhoneLabel', t.phoneLabel);
+      setPh('loginPhone', t.phonePlaceholder);
+      setTxt('txtOtpBtn', t.otpBtn);
+      setTxt('txtOtpVer', t.otpVer);
+      setTxt('txtOtpSuccess', t.otpSuccess);
+      setTxt('txtSkipLogin', t.skipLogin);
+      setTxt('txtNotifHead', t.notifHead);
+
       setTxt('txtChangeProf', t.txtChangeProf);
       setTxt('txtAiTitle', t.txtAiTitle);
       setTxt('aiAssistantSubText', t.aiSubText);
@@ -2188,6 +1475,7 @@
       setTxt('gComp', t.gComp);
       setTxt('gChem', t.gChem);
       setTxt('gServ', t.gServ);
+      setTxt('txtPlayHead', t.playHead);
       setTxt('txtPlaySub', t.txtPlaySub);
       setTxt('txtRateBtn', t.txtRateBtn);
       setTxt('txtVideoHead', t.txtVideoHead);
@@ -2214,6 +1502,7 @@
       setTxt('mShare', t.mShare);
       setTxt('mHelp', t.mHelp);
       setTxt('mLogout', t.mLogout);
+
       setTxt('txtSolHead', t.solHead);
       setTxt('txtCam', t.camBtn);
       setTxt('txtGal', t.galBtn);
@@ -2226,10 +1515,111 @@
       setTxt('txtSchedCropHead', t.schedTitle);
       setTxt('txtCompHead', t.compTitle);
       setTxt('chemHeadTitle', t.chemTitle);
+      setTxt('chemSubTitle', t.chemSubTitle);
+      setTxt('c1', t.c1);
+      setTxt('c2', t.c2);
+      setTxt('c3', t.c3);
+      setTxt('c4', t.c4);
+
+      setTxt('s1', t.s1);
+      setTxt('s2', t.s2);
+      setTxt('s3', t.s3);
+      setTxt('s4', t.s4);
+      setTxt('s5', t.s5);
+      setTxt('s6', t.s6);
+      setTxt('s7', t.s7);
+      setTxt('s8', t.s8);
+      setTxt('s9', t.s9);
+
+      setTxt('mandiHeadTitle', t.mandiHeadTitle);
+      setTxt('mandiUpdateTime', t.mandiUpdateTime);
+      setTxt('th1', t.th1);
+      setTxt('th2', t.th2);
+      setTxt('th3', t.th3);
+
+      setTxt('lblWind', t.lblWind);
+      setTxt('lblHum', t.lblHum);
+
+      setTxt('profHeadTitle', t.profHeadTitle);
+      setTxt('lblPName', t.lblPName);
+      setTxt('lblPPhone', t.lblPPhone);
+      setTxt('lblPState', t.lblPState);
+      setTxt('lblPCrops', t.lblPCrops);
+      setTxt('btnSaveProf', t.btnSaveProf);
+
+      setTxt('favHeadTitle', t.favHeadTitle);
+      setTxt('favSubTitle', t.favSubTitle);
+
+      setTxt('atozHeadTitle', t.atozHeadTitle);
+      setTxt('atozSubTitle', t.atozSubTitle);
+
+      setTxt('discHeadTitle', t.discHeadTitle);
+      setTxt('lblAuthor', t.lblAuthor);
+      setTxt('lblDiscText', t.lblDiscText);
+      setTxt('lblDiscPhoto', t.lblDiscPhoto);
+      setTxt('btnDiscPost', t.btnDiscPost);
+      setTxt('discListTitle', t.discListTitle);
+
+      setTxt('privHeadTitle', t.privHeadTitle);
+      setTxt('privDiscHead', t.privDiscHead);
+      setTxt('privPolHead', t.privPolHead);
+
+      setTxt('repHeadTitle', t.repHeadTitle);
+      setTxt('repSubTitle', t.repSubTitle);
+
+      setTxt('govHeadTitle', t.govHeadTitle);
+      setTxt('gov1Title', t.gov1Title);
+      setTxt('gov1Desc', t.gov1Desc);
+      setTxt('gov2Title', t.gov2Title);
+      setTxt('gov2Desc', t.gov2Desc);
+      setTxt('btnGovPortal', t.btnGovPortal);
+
+      setTxt('expHeadTitle', t.expHeadTitle);
+      setTxt('pestHeadTitle', t.pestHeadTitle);
+
+      setTxt('calcHeadTitle', t.calcHeadTitle);
+      setTxt('lblCalcCrop', t.lblCalcCrop);
+      setTxt('lblCalcDate', t.lblCalcDate);
+      setTxt('btnCalcRun', t.btnCalcRun);
+      setTxt('calcResHead', t.calcResHead);
+      setTxt('calcResultText', t.calcResultText);
+
+      setTxt('chatHeadTitle', t.chatHeadTitle);
+      setTxt('chatSubTitle', t.chatSubTitle);
+      setHtml('chatWelcomeMsg', t.chatWelcomeMsg);
+      setPh('aiUserChatInput', t.chatInputPlaceholder);
+      setTxt('chatSendBtn', t.chatSendBtn);
+      setPh('homeSearch', t.searchPlaceholder);
+
+      setTxt('catHeadTitle', t.catHeadTitle);
+      setTxt('catSubTitle', t.catSubTitle);
+      setTxt('catItemVeg', t.catVeg);
+      setTxt('catItemFruit', t.catFruit);
+      setTxt('catItemFlower', t.catFlower);
+      setTxt('catItemCereal', t.catCereal);
+      setTxt('catItemOther', t.catOther);
+
+      setTxt('protCatHead', t.protCatHead);
+      setTxt('protCatSub', t.protCatSub);
+      setTxt('protItemVeg', t.catVeg);
+      setTxt('protItemCereal', t.catCereal);
+      setTxt('protItemFruit', t.catFruit);
+      setTxt('protItemFlower', t.catFlower);
+      setTxt('protItemOther', t.catOther);
+
+      setTxt('schedCatHead', t.schedCatHead);
+      setTxt('schedCatSub', t.schedCatSub);
+      setTxt('schedItemVeg', t.catVeg);
+      setTxt('schedItemCereal', t.catCereal);
+      setTxt('schedItemFruit', t.catFruit);
+      setTxt('schedItemFlower', t.catFlower);
+      setTxt('schedItemOther', t.catOther);
 
       updateProfileUI();
       updateLangToggleButtonLabel(currentLang);
-      translateVisibleHomeElements(currentLang);
+      await translateQuickCropLabels(currentLang);
+      await translateCalculatorOptions(currentLang);
+      await translateVisibleHomeElements(currentLang);
     }
 
     async function setAppLanguage(langCode) {
@@ -2238,15 +1628,12 @@
       const langModal = document.getElementById('languageSelectModal');
       if (langModal) langModal.classList.remove('active');
       highlightActiveLangChip(langCode);
-      applyLanguageUI();
+      await applyLanguageUI();
       if (!localStorage.getItem('is_logged_in')) {
         const loginModal = document.getElementById('loginScreenModal');
         if (loginModal) loginModal.classList.add('active');
       }
       await loadAllSheetsData();
-      if (langCode !== 'hi') {
-        await translateAllLoadedSheetRecords(langCode);
-      }
     }
 
     function toggleAppLanguage() {
@@ -2317,6 +1704,10 @@
           reply = data;
         }
 
+        if (currentLang && currentLang !== 'hi') {
+          reply = await translateTextForApp(reply, currentLang);
+        }
+
         container.innerHTML += `
           <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
             <b>👨‍⚕️ AI ${t.chatDoc}:</b> ${reply.replace(/\n/g, '<br>')}
@@ -2367,7 +1758,7 @@
       };
 
       rec.onerror = rec.onend = function() {
-        chatInput.placeholder = currentLang === 'en' ? 'Type your question here...' : 'उदा. टमाटर के पत्ते मुड़ रहे हैं...';
+        chatInput.placeholder = (translations[currentLang] && translations[currentLang].chatInputPlaceholder) || 'उदा. टमाटर के पत्ते मुड़ रहे हैं...';
         if(micBtn) micBtn.classList.remove('mic-active-anim');
       };
 
@@ -2379,7 +1770,7 @@
       openScreen('screen-sowing-calc', t.calcTitle);
     }
 
-    function calculateCropSchedule() {
+    async function calculateCropSchedule() {
       let crop = document.getElementById('calcCropSelect').value;
       let dateVal = document.getElementById('calcDateInput').value;
       if(!dateVal) { alert(currentLang === 'en' ? 'Please select sowing date!' : 'कृपया बुवाई की तारीख चुनें!'); return; }
@@ -2397,18 +1788,20 @@
 
       let options = { year: 'numeric', month: 'long', day: 'numeric' };
       let loc = currentLang === 'en' ? 'en-US' : 'hi-IN';
-      let resultHTML = currentLang === 'en' ? `
-        <b>🌱 Crop:</b> ${crop}<br>
-        <b>📅 Sowing Date:</b> ${sowingDate.toLocaleDateString(loc, options)}<br><br>
-        <b>🌿 1st Fertilizer (Growth):</b> ${fertilizerDate1.toLocaleDateString(loc, options)}<br>
-        <b>⚡ 2nd Fertilizer (Flower/Fruit):</b> ${fertilizerDate2.toLocaleDateString(loc, options)}<br>
-        <b style="color:#16a34a;">🎯 Estimated Harvest Date: ${harvestDate.toLocaleDateString(loc, options)}</b>
-      ` : `
-        <b>🌱 फसल:</b> ${crop}<br>
-        <b>📅 बुवाई की तारीख:</b> ${sowingDate.toLocaleDateString(loc, options)}<br><br>
-        <b>🌿 पहली खाद (बेसल/ग्रोथ) का समय:</b> ${fertilizerDate1.toLocaleDateString(loc, options)}<br>
-        <b>⚡ दूसरी खाद (फूल व फल विकास) का समय:</b> ${fertilizerDate2.toLocaleDateString(loc, options)}<br>
-        <b style="color:#16a34a;">🎯 अनुमानित कटाई शुरू होने की तारीख: ${harvestDate.toLocaleDateString(loc, options)}</b>
+
+      let cropDisplay = await translateTextForApp(crop, currentLang);
+      let lCrop = await translateTextForApp("फसल", currentLang);
+      let lSow = await translateTextForApp("बुवाई की तारीख", currentLang);
+      let lF1 = await translateTextForApp("पहली खाद (बेसल/ग्रोथ) का समय", currentLang);
+      let lF2 = await translateTextForApp("दूसरी खाद (फूल व फल विकास) का समय", currentLang);
+      let lHarv = await translateTextForApp("अनुमानित कटाई शुरू होने की तारीख", currentLang);
+
+      let resultHTML = `
+        <b>🌱 ${lCrop}:</b> ${cropDisplay}<br>
+        <b>📅 ${lSow}:</b> ${sowingDate.toLocaleDateString(loc, options)}<br><br>
+        <b>🌿 ${lF1}:</b> ${fertilizerDate1.toLocaleDateString(loc, options)}<br>
+        <b>⚡ ${lF2}:</b> ${fertilizerDate2.toLocaleDateString(loc, options)}<br>
+        <b style="color:#16a34a;">🎯 ${lHarv}: ${harvestDate.toLocaleDateString(loc, options)}</b>
       `;
       document.getElementById('calcResultText').innerHTML = resultHTML;
     }
@@ -2447,7 +1840,7 @@
       const tbody = document.getElementById('mandiTableBody');
 
       if (cachedMandiData && cachedMandiData.length > 0) {
-        renderMandiTable(cachedMandiData);
+        await renderMandiTable(cachedMandiData);
         return;
       }
 
@@ -2460,33 +1853,34 @@
           let userDistrict = (localStorage.getItem('farmer_state') || 'Sri Ganganagar').toLowerCase();
           let filtered = data.records.filter(r => (r.district || '').toLowerCase().includes(userDistrict) || (r.state || '').toLowerCase().includes('rajasthan'));
           cachedMandiData = filtered.length > 0 ? filtered : data.records;
-          renderMandiTable(cachedMandiData);
+          await renderMandiTable(cachedMandiData);
         } else {
-          loadingDiv.innerHTML = currentLang === 'en' ? "⚠️ Live mandi data not available." : "⚠️ वर्तमान में लाइव मंडी डेटा उपलब्ध नहीं है।";
+          loadingDiv.innerHTML = await translateTextForApp("⚠️ वर्तमान में लाइव मंडी डेटा उपलब्ध नहीं है।", currentLang);
         }
       } catch (err) {
-        loadingDiv.innerHTML = currentLang === 'en' ? "⚠️ Network error loading mandi prices." : "⚠️ मंडी डेटा लोड करने में इंटरनेट कनेक्शन की समस्या आई।";
+        loadingDiv.innerHTML = await translateTextForApp("⚠️ मंडी डेटा लोड करने में इंटरनेट कनेक्शन की समस्या आई।", currentLang);
       }
     }
 
-    function renderMandiTable(records) {
+    async function renderMandiTable(records) {
       const loadingDiv = document.getElementById('mandiLoading');
       const tableElem = document.getElementById('mandiTableElement');
       const tbody = document.getElementById('mandiTableBody');
 
       tbody.innerHTML = '';
-      records.forEach(r => {
-        let commName = r.commodity || '-';
-        let emoji = getCropEmoji(commName);
+      for (const r of records) {
+        let stateStr = await translateTextForApp(r.state || '-', currentLang);
+        let distStr = await translateTextForApp(r.district || '', currentLang);
+        let marketStr = await translateTextForApp(r.market || '-', currentLang);
+        let commName = await translateTextForApp(r.commodity || '-', currentLang);
+        let emoji = getCropEmoji(r.commodity || '');
         tbody.innerHTML += `
           <tr>
-            <td>${r.state || '-'}<br><small style="color:#6b7280;">${r.district || ''}</small></td>
-            <td><b>${r.market || '-'}</b></td>
-            <td>${emoji} <b>${commName}</b></td>
-            <td>₹${r.min_price || '-'}</td>
-            <td><span style="color:#16a34a; font-weight:bold;">₹${r.max_price || '-'}</span></td>
+            <td>${stateStr} (${distStr})</td>
+            <td><b>${marketStr}</b></td>
+            <td>${emoji} <b>${commName}</b> — ₹${r.min_price || '-'} - <span style="color:#16a34a; font-weight:bold;">₹${r.max_price || '-'}</span></td>
           </tr>`;
-      });
+      }
       loadingDiv.style.display = 'none';
       tableElem.style.display = 'table';
     }
@@ -2685,10 +2079,48 @@
       }
     }
 
+    async function renderPrivacyView() {
+      const discEl = document.getElementById('privacyDisclaimerText');
+      const polEl = document.getElementById('privacyPolicyText');
+      if (discEl && privacyData.disclaimer) discEl.innerHTML = privacyData.disclaimer;
+      if (polEl && privacyData.policy) polEl.innerHTML = privacyData.policy;
+    }
+
+    async function renderNotificationsView() {
+      const notifContainer = document.getElementById('notificationListContent');
+      if (!notifContainer) return;
+      if (notificationsData.length > 0) {
+        let notifHtml = '';
+        for (const n of notificationsData) {
+          notifHtml += `
+            <div class="schedule-step" style="border-left:4px solid #16a34a; margin-bottom:10px;">
+              <b>🌾 ${n.title}</b>
+              <p style="margin-top:4px;">${n.desc}</p>
+            </div>`;
+        }
+        notifContainer.innerHTML = notifHtml;
+      } else {
+        const emptyMsg = await translateTextForApp("कोई सूचना उपलब्ध नहीं है।", currentLang);
+        notifContainer.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">${emptyMsg}</div>`;
+      }
+    }
+
     async function loadAllSheetsData() {
       showLoader();
       try {
         let allData = await fetchSheetTabWithCategory('Sheet1');
+        if (currentLang && currentLang !== 'hi') {
+          for (const r of allData) {
+            r.crop = await translateTextForApp(r.crop, currentLang);
+            r.variety = await translateTextForApp(r.variety, currentLang);
+            r.segment = await translateTextForApp(r.segment, currentLang);
+            r.features = await translateTextForApp(r.features, currentLang);
+            r.weight = await translateTextForApp(r.weight, currentLang);
+            r.maturity = await translateTextForApp(r.maturity, currentLang);
+            r.resistance = await translateTextForApp(r.resistance, currentLang);
+            r.category = await translateTextForApp(r.category, currentLang);
+          }
+        }
         sheetRecords = allData;
 
         try {
@@ -2697,43 +2129,40 @@
           let privRows = parseCSV(privText);
           let disclaimerHtml = "";
           let policyHtml = "";
-          privRows.forEach((cols, idx) => {
-            if(idx > 0 && cols[0]) {
+          for (let idx = 1; idx < privRows.length; idx++) {
+            const cols = privRows[idx];
+            if (cols[0]) {
               let title = (cols[0] || '').toLowerCase();
-              let desc = cols[1] || '';
-              if(title.includes('डिस्क्लेमर') || title.includes('disclaimer') || title.includes('अस्वीकरण') || title.includes('महत्वपूर्ण')) {
-                disclaimerHtml += `<p style="margin-bottom:8px;"><b>${cols[0]}:</b> ${desc}</p>`;
-              } else if(title.includes('गोपनीयता') || title.includes('privacy') || title.includes('नीति')) {
-                policyHtml += `<p style="margin-bottom:8px;">${desc}</p>`;
+              let tTitle = await translateTextForApp(cols[0], currentLang);
+              let tDesc = await translateTextForApp(cols[1] || '', currentLang);
+              if (title.includes('डिस्क्लेमर') || title.includes('disclaimer') || title.includes('अस्वीकरण') || title.includes('महत्वपूर्ण')) {
+                disclaimerHtml += `<p style="margin-bottom:8px;"><b>${tTitle}:</b> ${tDesc}</p>`;
+              } else if (title.includes('गोपनीयता') || title.includes('privacy') || title.includes('नीति')) {
+                policyHtml += `<p style="margin-bottom:8px;">${tDesc}</p>`;
               } else {
-                disclaimerHtml += `<p style="margin-bottom:8px;"><b>${cols[0]}:</b> ${desc}</p>`;
+                disclaimerHtml += `<p style="margin-bottom:8px;"><b>${tTitle}:</b> ${tDesc}</p>`;
               }
             }
-          });
-          if(disclaimerHtml) document.getElementById('privacyDisclaimerText').innerHTML = disclaimerHtml;
-          if(policyHtml) document.getElementById('privacyPolicyText').innerHTML = policyHtml;
+          }
+          privacyData = { disclaimer: disclaimerHtml, policy: policyHtml };
+          await renderPrivacyView();
         } catch(e) {}
 
         try {
           const resNotif = await fetch(BASE_SHEET_URL + encodeURIComponent('Notifications'));
           const notifText = await resNotif.text();
           let notifRows = parseCSV(notifText);
-          let notifContainer = document.getElementById('notificationListContent');
-          if(notifRows.length > 1) {
-            let notifHtml = '';
-            notifRows.forEach((cols, idx) => {
-              if(idx > 0 && cols[0]) {
-                let title = cols[0] || 'सूचना';
-                let desc = cols[1] || '';
-                notifHtml += `
-                  <div class="schedule-step" style="border-left:4px solid #16a34a; margin-bottom:10px;">
-                    <b>🌾 ${title}</b>
-                    <p style="margin-top:4px;">${desc}</p>
-                  </div>`;
-              }
-            });
-            notifContainer.innerHTML = notifHtml || `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई सूचना उपलब्ध नहीं है।</div>`;
+          notificationsData = [];
+          for (let idx = 1; idx < notifRows.length; idx++) {
+            const cols = notifRows[idx];
+            if (cols[0]) {
+              notificationsData.push({
+                title: await translateTextForApp(cols[0] || 'सूचना', currentLang),
+                desc: await translateTextForApp(cols[1] || '', currentLang)
+              });
+            }
           }
+          await renderNotificationsView();
         } catch(e) {}
 
         let schedSabzi = await fetchScheduleTab('Schedule', 'सब्जियां');
@@ -2744,11 +2173,15 @@
 
         let allSchedRows = [...schedSabzi, ...schedAnaaj, ...schedPhal, ...schedPhool, ...schedOther];
         scheduleRecords = {};
-        allSchedRows.forEach(s => {
+        for (const s of allSchedRows) {
+          const tCrop = await translateTextForApp(s.crop, currentLang);
+          const tTime = await translateTextForApp(s.time, currentLang);
+          const tMed = await translateTextForApp(s.med, currentLang);
+          const tPurpose = await translateTextForApp(s.purpose, currentLang);
           if(!scheduleRecords[s.category]) scheduleRecords[s.category] = {};
-          if(!scheduleRecords[s.category][s.crop]) scheduleRecords[s.category][s.crop] = [];
-          scheduleRecords[s.category][s.crop].push({ time: s.time, med: s.med, purpose: s.purpose, photo: s.photo });
-        });
+          if(!scheduleRecords[s.category][tCrop]) scheduleRecords[s.category][tCrop] = [];
+          scheduleRecords[s.category][tCrop].push({ time: tTime, med: tMed, purpose: tPurpose, photo: s.photo });
+        }
 
         let protSabzi = await fetchProtectionTab('Protection', 'सब्जियां');
         let protAnaaj = await fetchProtectionTab('Cereal crop protection', 'अनाज');
@@ -2758,39 +2191,82 @@
 
         let allProtRows = [...protSabzi, ...protAnaaj, ...protPhal, ...protPhool, ...protOther];
         protectionRecords = {};
-        allProtRows.forEach(p => {
+        for (const p of allProtRows) {
+          const tCrop = await translateTextForApp(p.crop, currentLang);
+          const tName = await translateTextForApp(p.name, currentLang);
+          const tSym = await translateTextForApp(p.symptoms, currentLang);
+          const tCure = await translateTextForApp(p.cure, currentLang);
           if(!protectionRecords[p.category]) protectionRecords[p.category] = {};
-          if(!protectionRecords[p.category][p.crop]) protectionRecords[p.category][p.crop] = [];
-          protectionRecords[p.category][p.crop].push({ name: p.name, symptoms: p.symptoms, cure: p.cure, photo: p.photo });
-        });
+          if(!protectionRecords[p.category][tCrop]) protectionRecords[p.category][tCrop] = [];
+          protectionRecords[p.category][tCrop].push({ name: tName, symptoms: tSym, cure: tCure, photo: p.photo });
+        }
 
         const res4 = await fetch(BASE_SHEET_URL + encodeURIComponent('Chemicals'));
-        chemicalsRecords = parseCSV(await res4.text()).map(cols => ({
+        const rawChems = parseCSV(await res4.text()).map(cols => ({
           name: cols[0] || '', type: cols[1] || '', tech: cols[2] || '', use: cols[3] || '', dose: cols[4] || '', photo: cols[5] || ''
         })).filter(r => r.name && !r.name.includes('दवा') && !r.name.toLowerCase().includes('name'));
 
+        chemicalsRecords = [];
+        for (const c of rawChems) {
+          chemicalsRecords.push({
+            name: await translateTextForApp(c.name, currentLang),
+            type: await translateTextForApp(c.type, currentLang),
+            tech: await translateTextForApp(c.tech, currentLang),
+            use: await translateTextForApp(c.use, currentLang),
+            dose: await translateTextForApp(c.dose, currentLang),
+            photo: c.photo
+          });
+        }
+
         const resAtoZ = await fetch(BASE_SHEET_URL + encodeURIComponent('AtoZ'));
         atozGuideRecords = {};
-        parseCSV(await resAtoZ.text()).forEach(cols => {
+        const atozRows = parseCSV(await resAtoZ.text());
+        for (const cols of atozRows) {
           if(cols[0] && !cols[0].includes('Crop') && !cols[0].toLowerCase().includes('crop')) {
-            let crop = getStandardCropName(cols[0]);
+            let crop = await translateTextForApp(getStandardCropName(cols[0]), currentLang);
             atozGuideRecords[crop] = {
-              soil: cols[1]||'', sowing: cols[2]||'', seed: cols[3]||'',
-              fertilizer: cols[4]||'', weed: cols[5]||'', irrigation: cols[6]||'',
-              care: cols[7]||'', harvesting: cols[8]||'', postHarvest: cols[9]||''
+              soil: await translateTextForApp(cols[1]||'', currentLang),
+              sowing: await translateTextForApp(cols[2]||'', currentLang),
+              seed: await translateTextForApp(cols[3]||'', currentLang),
+              fertilizer: await translateTextForApp(cols[4]||'', currentLang),
+              weed: await translateTextForApp(cols[5]||'', currentLang),
+              irrigation: await translateTextForApp(cols[6]||'', currentLang),
+              care: await translateTextForApp(cols[7]||'', currentLang),
+              harvesting: await translateTextForApp(cols[8]||'', currentLang),
+              postHarvest: await translateTextForApp(cols[9]||'', currentLang)
             };
           }
-        });
+        }
 
         const resStories = await fetch(BASE_SHEET_URL + encodeURIComponent('Stories'));
-        dailyStories = parseCSV(await resStories.text()).map(cols => ({
+        const rawStories = parseCSV(await resStories.text()).map(cols => ({
           title: cols[0]||'स्टोरी', type: cols[1]||'photo', url: cols[2]||'', icon: cols[3]||'🌱', desc: cols[4]||''
         })).filter(r => r.title && r.title !== 'Title' && !r.title.toLowerCase().includes('title'));
 
+        dailyStories = [];
+        for (const st of rawStories) {
+          dailyStories.push({
+            title: await translateTextForApp(st.title, currentLang),
+            type: st.type,
+            url: st.url,
+            icon: st.icon,
+            desc: await translateTextForApp(st.desc, currentLang)
+          });
+        }
+
         const resVideos = await fetch(BASE_SHEET_URL + encodeURIComponent('Videos'));
-        videoRecords = parseCSV(await resVideos.text()).map(cols => ({
+        const rawVideos = parseCSV(await resVideos.text()).map(cols => ({
           title: cols[0]||'कृषि वीडियो', thumbnail: cols[1]||'', videoUrl: cols[2]||''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title'));
+
+        videoRecords = [];
+        for (const v of rawVideos) {
+          videoRecords.push({
+            title: await translateTextForApp(v.title, currentLang),
+            thumbnail: v.thumbnail,
+            videoUrl: v.videoUrl
+          });
+        }
 
         renderStoriesBar();
         renderDynamicVideos();
@@ -2798,6 +2274,16 @@
         console.log("Sheet error:", e);
       } finally {
         hideLoader();
+      }
+    }
+
+    async function translateVisibleHomeElements(langCode) {
+      const searchInput = document.getElementById('homeSearch');
+      if (searchInput) {
+        const t = translations[langCode];
+        searchInput.placeholder = (t && t.searchPlaceholder)
+          ? t.searchPlaceholder
+          : await translateTextForApp("खीरा, टमाटर या तरबूज लिखें...", langCode);
       }
     }
 
@@ -2849,8 +2335,11 @@
 
       const days = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
       const months = ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
-      document.getElementById('weatherDateTime').innerText = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} | ${timeStr}`;
-      document.getElementById('detailDate').innerText = `📅 ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} | ${timeStr}`;
+      const dayLabel = await translateTextForApp(days[now.getDay()], currentLang);
+      const monthLabel = await translateTextForApp(months[now.getMonth()], currentLang);
+      const dateFormatted = `📅 ${dayLabel}, ${now.getDate()} ${monthLabel} | ${timeStr}`;
+      document.getElementById('weatherDateTime').innerText = dateFormatted;
+      document.getElementById('detailDate').innerText = dateFormatted;
 
       let isNight = hours < 6 || hours >= 18;
       const weatherCard = document.getElementById('weatherCardMain');
@@ -2863,31 +2352,35 @@
         if(detailWeatherCard) detailWeatherCard.classList.remove('night-mode');
       }
 
+      const cityLabel = await translateTextForApp(userCurrentCity, currentLang);
+      const speedUnit = await translateTextForApp("किमी/घंटा", currentLang);
+
       try {
         let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(userCurrentCity)}&units=metric&appid=1ef9978d109e4e0e73382c850ac00e37&lang=hi`);
         let data = await res.json();
         if(data.cod === 200) {
-          let desc = data.weather[0].description;
+          let desc = await translateTextForApp(data.weather[0].description, currentLang);
           let icon = isNight ? '🌙' : '☀️';
-          if(desc.includes('बादल')) icon = '☁️';
-          if(desc.includes('वर्षा') || desc.includes('बारिश')) icon = '🌧️';
+          if(data.weather[0].description.includes('बादल')) icon = '☁️';
+          if(data.weather[0].description.includes('वर्षा') || data.weather[0].description.includes('बारिश')) icon = '🌧️';
 
-          document.getElementById('weatherPlace').innerText = `📍 ${data.name}`;
+          document.getElementById('weatherPlace').innerText = `📍 ${cityLabel}`;
           document.getElementById('weatherTemp').innerText = `${Math.round(data.main.temp)}°C`;
           document.getElementById('weatherDesc').innerText = desc;
           document.getElementById('weatherIcon').innerHTML = icon;
 
-          document.getElementById('detailCity').innerText = `📍 ${data.name}`;
+          document.getElementById('detailCity').innerText = `📍 ${cityLabel}`;
           document.getElementById('detailTemp').innerText = `${Math.round(data.main.temp)}°C`;
           document.getElementById('detailDesc').innerText = desc;
           document.getElementById('detailWeatherIcon').innerHTML = icon;
-          document.getElementById('detailWind').innerText = `${data.wind.speed} ${currentLang === 'en' ? 'km/h' : 'किमी/घंटा'}`;
+          document.getElementById('detailWind').innerText = `${data.wind.speed} ${speedUnit}`;
           document.getElementById('detailHumidity').innerText = `${data.main.humidity}%`;
         }
       } catch(e) {
-        document.getElementById('weatherPlace').innerText = `📍 ${userCurrentCity}`;
+        const fallbackDesc = await translateTextForApp(isNight ? "साफ़ रात" : "साफ़ आसमान", currentLang);
+        document.getElementById('weatherPlace').innerText = `📍 ${cityLabel}`;
         document.getElementById('weatherTemp').innerText = `26°C`;
-        document.getElementById('weatherDesc').innerText = isNight ? `Clear Night` : `Clear Sky`;
+        document.getElementById('weatherDesc').innerText = fallbackDesc;
       }
     }
 
@@ -2915,7 +2408,7 @@
       openScreen('screen-all-categories', t.gCrops);
     }
 
-    function showCropsForCategory(categoryName) {
+    async function showCropsForCategory(categoryName) {
       let filteredRecords = sheetRecords.filter(r => r.category.toLowerCase().includes(categoryName.toLowerCase()));
       let cropsObj = {};
       filteredRecords.forEach(r => {
@@ -2929,14 +2422,16 @@
       container.innerHTML = '';
 
       if(crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी (${categoryName}) में अभी कोई फसल उपलब्ध नहीं है।</div>`;
+        const emptyTxt = await translateTextForApp("इस श्रेणी में अभी कोई फसल उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">${emptyTxt}</div>`;
       } else {
         crops.forEach(c => {
           let displayHtml = getCropDisplayHtml(c, cropsObj[c]);
           container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${c}', '${categoryName}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
-      openScreen('screen-crops', categoryName);
+      const catTitle = await translateTextForApp(categoryName, currentLang);
+      openScreen('screen-crops', catTitle);
     }
 
     function filterByCropAndCategory(cropName, categoryName) {
@@ -2954,7 +2449,7 @@
       openScreen('screen-protection-categories', t.gProt);
     }
 
-    function showProtectionCropsListByCategory(categoryName) {
+    async function showProtectionCropsListByCategory(categoryName) {
       let container = document.getElementById('protectionCropsContainer');
       container.innerHTML = '';
 
@@ -2962,7 +2457,8 @@
       let crops = Object.keys(catData).sort();
 
       if(crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई फसल सुरक्षा डेटा उपलब्ध नहीं है।</div>`;
+        const emptyTxt = await translateTextForApp("इस श्रेणी में अभी कोई फसल सुरक्षा डेटा उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">${emptyTxt}</div>`;
       } else {
         crops.forEach(c => {
           let firstPhoto = (catData[c] && catData[c][0] && catData[c][0].photo) ? [catData[c][0].photo] : [];
@@ -2970,7 +2466,8 @@
           container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName}', '${c}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
-      openScreen('screen-protection-crops', categoryName);
+      const catTitle = await translateTextForApp(categoryName, currentLang);
+      openScreen('screen-protection-crops', catTitle);
     }
 
     function showScheduleCategoriesScreen() {
@@ -2978,7 +2475,7 @@
       openScreen('screen-schedule-categories', t.gSched);
     }
 
-    function showScheduleCropsListByCategory(categoryName) {
+    async function showScheduleCropsListByCategory(categoryName) {
       let container = document.getElementById('scheduleCropsContainer');
       container.innerHTML = '';
 
@@ -2986,7 +2483,8 @@
       let crops = Object.keys(catData).sort();
 
       if(crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">इस श्रेणी में अभी कोई शेड्यूल उपलब्ध नहीं है।</div>`;
+        const emptyTxt = await translateTextForApp("इस श्रेणी में अभी कोई शेड्यूल उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">${emptyTxt}</div>`;
       } else {
         crops.forEach(c => {
           let firstPhoto = (catData[c] && catData[c][0] && catData[c][0].photo) ? [catData[c][0].photo] : [];
@@ -2994,17 +2492,22 @@
           container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName}', '${c}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
-      openScreen('screen-schedule-crops', categoryName);
+      const catTitle = await translateTextForApp(categoryName, currentLang);
+      openScreen('screen-schedule-crops', catTitle);
     }
 
-    function showFavoritesScreen() {
+    async function showFavoritesScreen() {
       let favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       let list = sheetRecords.filter(r => favs.includes(r.variety));
       let container = document.getElementById('favoritesContainer');
       container.innerHTML = '';
       if(list.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ ${currentLang === 'en' ? 'No bookmarks saved yet.' : 'आपने अभी तक कोई किस्म सेव नहीं की है।'}</div>`;
+        const emptyMsg = await translateTextForApp("आपने अभी तक कोई किस्म सेव नहीं की है।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ ${emptyMsg}</div>`;
       } else {
+        const lFeat = await translateTextForApp("विशेषता:", currentLang);
+        const lMat = await translateTextForApp("पकने का समय:", currentLang);
+        const lRem = await translateTextForApp("पसंद से हटाएं", currentLang);
         list.forEach(v => {
           container.innerHTML += `
             <div class="variety-card">
@@ -3013,9 +2516,9 @@
                 <span class="badge-company">${v.company}</span>
               </div>
               <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
-              <div class="var-info-row">⭐ <b>${currentLang === 'en' ? 'Features:' : 'विशेषता:'}</b> ${v.features}</div>
-              <div class="var-info-row">⏱️ <b>${currentLang === 'en' ? 'Maturity:' : 'पकने का समय:'}</b> ${v.maturity}</div>
-              <button type="button" class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety}'); showFavoritesScreen();">❌ ${currentLang === 'en' ? 'Remove from favorites' : 'पसंद से हटाएं'}</button>
+              <div class="var-info-row">⭐ <b>${lFeat}</b> ${v.features}</div>
+              <div class="var-info-row">⏱️ <b>${lMat}</b> ${v.maturity}</div>
+              <button type="button" class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety}'); showFavoritesScreen();">❌ ${lRem}</button>
             </div>`;
         });
       }
@@ -3023,11 +2526,25 @@
       openScreen('screen-favorites', t.favoritesTitle);
     }
 
-    function renderVarietiesList(list, title) {
+    async function renderVarietiesList(list, title) {
       let container = document.getElementById('varietiesContainer');
       container.innerHTML = '';
       let favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
-      if(list.length === 0) { container.innerHTML = `<div class="variety-card" style="text-align:center;">${currentLang === 'en' ? 'Data not available.' : 'डेटा उपलब्ध नहीं है।'}</div>`; openScreen('screen-seeds', title); return; }
+      if(list.length === 0) {
+        const noData = await translateTextForApp("डेटा उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">${noData}</div>`;
+        openScreen('screen-seeds', title);
+        return;
+      }
+
+      const lSeg = await translateTextForApp("सीजन/प्रकार:", currentLang);
+      const lFeat = await translateTextForApp("विशेषता:", currentLang);
+      const lWt = await translateTextForApp("वजन/साइज:", currentLang);
+      const lMat = await translateTextForApp("पकने का समय:", currentLang);
+      const lRes = await translateTextForApp("रोग प्रतिरोध:", currentLang);
+      const lOrd = await translateTextForApp("बीज ऑर्डर करें", currentLang);
+      const lSaved = await translateTextForApp("सेव्ड है", currentLang);
+      const lSave = await translateTextForApp("सेव करें", currentLang);
 
       list.forEach(v => {
         let photosHtml = '';
@@ -3037,7 +2554,7 @@
           photosHtml += '</div>';
         }
         let isSaved = favs.includes(v.variety);
-        let saveBtnText = isSaved ? (currentLang === 'en' ? '⭐ Saved' : '⭐ सेव्ड है') : (currentLang === 'en' ? '⭐ Save' : '⭐ सेव करें');
+        let saveBtnText = isSaved ? `⭐ ${lSaved}` : `⭐ ${lSave}`;
         let saveBtnBg = isSaved ? "#fef3c7" : "#f3f4f6";
 
         container.innerHTML += `
@@ -3049,14 +2566,14 @@
             </div>
             <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
 
-            <div class="var-info-row">🌱 <b>${currentLang === 'en' ? 'Segment:' : 'सीजन/प्रकार:'}</b> ${v.segment}</div>
-            <div class="var-info-row">⭐ <b>${currentLang === 'en' ? 'Features:' : 'विशेषता:'}</b> ${v.features}</div>
-            <div class="var-info-row">⚖️ <b>${currentLang === 'en' ? 'Weight/Size:' : 'वजन/साइज:'}</b> ${v.weight}</div>
-            <div class="var-info-row">⏱️ <b>${currentLang === 'en' ? 'Maturity:' : 'पकने का समय:'}</b> ${v.maturity}</div>
-            <div class="var-info-row">🛡️ <b>${currentLang === 'en' ? 'Resistance:' : 'रोग प्रतिरोध:'}</b> ${v.resistance}</div>
+            <div class="var-info-row">🌱 <b>${lSeg}</b> ${v.segment}</div>
+            <div class="var-info-row">⭐ <b>${lFeat}</b> ${v.features}</div>
+            <div class="var-info-row">⚖️ <b>${lWt}</b> ${v.weight}</div>
+            <div class="var-info-row">⏱️ <b>${lMat}</b> ${v.maturity}</div>
+            <div class="var-info-row">🛡️ <b>${lRes}</b> ${v.resistance}</div>
 
             <div style="display:flex; gap:8px; margin-top:14px;">
-              <a href="https://wa.me/916378475002?text=नमस्ते%20${encodeURIComponent(v.company)}%20की%20${encodeURIComponent(v.variety)}%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 ${currentLang === 'en' ? 'Order Seeds' : 'बीज ऑर्डर करें'}</a>
+              <a href="https://wa.me/916378475002?text=नमस्ते%20${encodeURIComponent(v.company)}%20की%20${encodeURIComponent(v.variety)}%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 ${lOrd}</a>
               <button type="button" class="btn-action" style="flex:1; background:${saveBtnBg}; color:#b45309; border:1px solid #fde68a;" onclick="toggleBookmark('${v.variety}'); renderVarietiesList(${JSON.stringify(list).replace(/"/g, '&quot;')}, '${title}');">${saveBtnText}</button>
             </div>
           </div>`;
@@ -3064,19 +2581,21 @@
       openScreen('screen-seeds', title);
     }
 
-    function toggleBookmark(varietyName) {
+    async function toggleBookmark(varietyName) {
       let favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       if(favs.includes(varietyName)) {
         favs = favs.filter(f => f !== varietyName);
-        alert(`⭐ ${varietyName} ${currentLang === 'en' ? 'removed from favorites!' : 'को पसंदीदा से हटा दिया गया!'}`);
+        const msg = await translateTextForApp("को पसंदीदा से हटा दिया गया!", currentLang);
+        alert(`⭐ ${varietyName} ${msg}`);
       } else {
         favs.push(varietyName);
-        alert(`⭐ ${varietyName} ${currentLang === 'en' ? 'saved to favorites!' : 'पसंद में सेव हो गया!'}`);
+        const msg = await translateTextForApp("पसंद में सेव हो गया!", currentLang);
+        alert(`⭐ ${varietyName} ${msg}`);
       }
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
     }
 
-    function showCropDiseasesList(categoryName, crop) {
+    async function showCropDiseasesList(categoryName, crop) {
       document.getElementById('cropDiseaseHeading').innerText = `${crop}:`;
       let container = document.getElementById('cropDiseasesContainer');
       container.innerHTML = '';
@@ -3084,7 +2603,8 @@
       let items = (protectionRecords[categoryName] && protectionRecords[categoryName][crop]) ? protectionRecords[categoryName][crop] : [];
 
       if(items.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center;">डेटा उपलब्ध नहीं है।</div>`;
+        const noData = await translateTextForApp("डेटा उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">${noData}</div>`;
       } else {
         items.forEach(d => {
           let p = (d.photo && d.photo.trim().startsWith('http'))
@@ -3105,7 +2625,7 @@
       openScreen('screen-crop-diseases', crop);
     }
 
-    function openCropScheduleDetail(categoryName, crop) {
+    async function openCropScheduleDetail(categoryName, crop) {
       document.getElementById('scheduleCropTitle').innerText = `${crop}`;
       let container = document.getElementById('scheduleStepsContainer');
       container.innerHTML = '';
@@ -3113,7 +2633,8 @@
       let steps = (scheduleRecords[categoryName] && scheduleRecords[categoryName][crop]) ? scheduleRecords[categoryName][crop] : [];
 
       if(steps.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center;">शेड्यूल डेटा उपलब्ध नहीं है।</div>`;
+        const noData = await translateTextForApp("शेड्यूल डेटा उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">${noData}</div>`;
       } else {
         steps.forEach(s => {
           let p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
@@ -3162,12 +2683,16 @@
       openScreen('screen-chemicals', t.chemTitle);
     }
 
-    function filterChemicalsByCategory(cat) {
+    async function filterChemicalsByCategory(cat) {
       let container = document.getElementById('chemicalListContainer');
-      document.getElementById('chemicalListTitle').innerText = `${cat}:`;
+      const tCat = await translateTextForApp(cat, currentLang);
+      document.getElementById('chemicalListTitle').innerText = `${tCat}:`;
       container.innerHTML = '';
-      let list = chemicalsRecords.filter(c => (c.type||'').toLowerCase().includes(cat.toLowerCase()));
-      if(list.length === 0) container.innerHTML = `<div class="variety-card" style="text-align:center;">दवाइयाँ उपलब्ध नहीं हैं।</div>`;
+      let list = chemicalsRecords.filter(c => (c.type||'').toLowerCase().includes(tCat.toLowerCase()) || (c.type||'').toLowerCase().includes(cat.toLowerCase()));
+      if(list.length === 0) {
+        const noChem = await translateTextForApp("दवाइयाँ उपलब्ध नहीं हैं।", currentLang);
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">${noChem}</div>`;
+      }
       list.forEach(c => {
         let p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${c.name}"></div>` : '';
         container.innerHTML += `
@@ -3183,7 +2708,7 @@
             </div>
           </div>`;
       });
-      openScreen('screen-chemical-list', cat);
+      openScreen('screen-chemical-list', tCat);
     }
 
     function showOtherServicesScreen() {
@@ -3203,32 +2728,38 @@
       fetchLiveMandiPrices();
     }
 
-    function showExpertAdviceScreen() {
+    async function showExpertAdviceScreen() {
       let container = document.getElementById('tipsContainer');
       container.innerHTML = '';
       if(tipsRecords.length > 0) {
-        tipsRecords.forEach(t => {
-          container.innerHTML += `<div class="schedule-step"><b>💡 ${t.title}</b><p>${t.desc}</p></div>`;
-        });
+        for (const t of tipsRecords) {
+          const tTitle = await translateTextForApp(t.title, currentLang);
+          const tDesc = await translateTextForApp(t.desc, currentLang);
+          container.innerHTML += `<div class="schedule-step"><b>💡 ${tTitle}</b><p>${tDesc}</p></div>`;
+        }
       } else {
-        container.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">कोई सुझाव उपलब्ध नहीं है।</div>`;
+        const emptyMsg = await translateTextForApp("कोई सुझाव उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div class="schedule-step" style="text-align:center; color:#6b7280;">${emptyMsg}</div>`;
       }
-      const t = translations[currentLang] || translations['hi'];
-      openScreen('screen-expert-advice', t.expertTitle);
+      const tr = translations[currentLang] || translations['hi'];
+      openScreen('screen-expert-advice', tr.expertTitle);
     }
 
-    function showPestAlertScreen() {
+    async function showPestAlertScreen() {
       let container = document.getElementById('alertsContainer');
       container.innerHTML = '';
       if(alertsRecords.length > 0) {
-        alertsRecords.forEach(a => {
-          container.innerHTML += `<div style="background:#fef2f2; padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid #dc2626;"><b>⚠️ ${a.title}</b><p style="margin-top:4px; color:#374151;">${a.desc}</p></div>`;
-        });
+        for (const a of alertsRecords) {
+          const tTitle = await translateTextForApp(a.title, currentLang);
+          const tDesc = await translateTextForApp(a.desc, currentLang);
+          container.innerHTML += `<div style="background:#fef2f2; padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid #dc2626;"><b>⚠️ ${tTitle}</b><p style="margin-top:4px; color:#374151;">${tDesc}</p></div>`;
+        }
       } else {
-        container.innerHTML = `<div style="padding:10px; text-align:center; color:#6b7280;">कोई कीट अलर्ट उपलब्ध नहीं है।</div>`;
+        const emptyMsg = await translateTextForApp("कोई कीट अलर्ट उपलब्ध नहीं है।", currentLang);
+        container.innerHTML = `<div style="padding:10px; text-align:center; color:#6b7280;">${emptyMsg}</div>`;
       }
-      const t = translations[currentLang] || translations['hi'];
-      openScreen('screen-pest-alert', t.pestTitle);
+      const tr = translations[currentLang] || translations['hi'];
+      openScreen('screen-pest-alert', tr.pestTitle);
     }
 
     function showAiReportsScreen() {
@@ -3242,38 +2773,49 @@
     }
 
     async function showPrivacyPolicyScreen() {
+      await renderPrivacyView();
       const t = translations[currentLang] || translations['hi'];
       openScreen('screen-privacy', t.privacyTitle);
     }
 
     function contactAdvisor() { window.open('https://wa.me/916378475002?text=नमस्ते%20जी,%20सलाह%20चाहिए।', '_blank'); }
     function shareAppWithFriends() { window.open(`https://wa.me/?text=${encodeURIComponent('CROP & SABZI DOCTOR ऐप देखें: ' + window.location.href)}`, '_blank'); }
-    function appLogout() { if(confirm('लॉगआउट करना चाहते हैं?')) { localStorage.clear(); location.reload(); } }
+    async function appLogout() {
+      const msg = await translateTextForApp("लॉगआउट करना चाहते हैं?", currentLang);
+      if(confirm(msg)) { localStorage.clear(); location.reload(); }
+    }
 
-    function triggerManualSearch() {
+    async function triggerManualSearch() {
       let val = document.getElementById('homeSearch').value.trim().toLowerCase();
-      if(!val) { alert('कृपया फसल का नाम लिखें!'); return; }
-      renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(val) || r.crop.toLowerCase().includes(val)), 'सर्च परिणाम');
+      if(!val) {
+        const msg = await translateTextForApp("कृपया फसल का नाम लिखें!", currentLang);
+        alert(msg);
+        return;
+      }
+      const resTitle = await translateTextForApp("सर्च परिणाम", currentLang);
+      renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(val) || r.crop.toLowerCase().includes(val)), resTitle);
     }
     function handleSearchKeyPress(e) { if(e.key === 'Enter') triggerManualSearch(); }
 
-    function startVoiceSearch() {
+    async function startVoiceSearch() {
       let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        alert('आपका ब्राउज़र बोलकर सर्च करने की सुविधा सपोर्ट नहीं करता है।');
+        const msg = await translateTextForApp("आपका ब्राउज़र बोलकर सर्च करने की सुविधा सपोर्ट नहीं करता है।", currentLang);
+        alert(msg);
         return;
       }
       let rec = new SpeechRecognition();
-      rec.lang = 'hi-IN';
+      rec.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
       rec.interimResults = false;
       rec.maxAlternatives = 1;
 
       let searchInput = document.getElementById('homeSearch');
       let micBtn = document.getElementById('voiceSearchBtn');
+      const listeningPh = await translateTextForApp("🎙️ सुन रहा हूँ, बोलिए...", currentLang);
 
       rec.onstart = function() {
         searchInput.value = "";
-        searchInput.placeholder = '🎙️ सुन रहा हूँ, बोलिए...';
+        searchInput.placeholder = listeningPh;
         micBtn.classList.add('listening');
       };
 
@@ -3281,11 +2823,11 @@
         let spokenText = e.results[0][0].transcript.trim();
         searchInput.value = spokenText;
         micBtn.classList.remove('listening');
-        renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(spokenText.toLowerCase()) || r.crop.toLowerCase().includes(spokenText.toLowerCase())), `सर्च: ${spokenText}`);
+        renderVarietiesList(sheetRecords.filter(r => r.variety.toLowerCase().includes(spokenText.toLowerCase()) || r.crop.toLowerCase().includes(spokenText.toLowerCase())), spokenText);
       };
 
       rec.onerror = rec.onend = function() {
-        searchInput.placeholder = '🔍 खीरा, टमाटर या तरबूज लिखें...';
+        searchInput.placeholder = (translations[currentLang] && translations[currentLang].searchPlaceholder) || '🔍 खीरा, टमाटर या तरबूज लिखें...';
         micBtn.classList.remove('listening');
       };
 
@@ -3294,7 +2836,11 @@
 
     async function sendOtpCode() {
       let phone = document.getElementById('loginPhone').value.trim();
-      if(phone.length !== 10) { alert('10 अंकों का सही नंबर लिखें!'); return; }
+      if(phone.length !== 10) {
+        const msg = await translateTextForApp("10 अंकों का सही नंबर लिखें!", currentLang);
+        alert(msg);
+        return;
+      }
       document.getElementById('phoneInputGroup').style.display = 'none';
       document.getElementById('otpInputGroup').style.display = 'block';
       setTimeout(() => {
@@ -3372,7 +2918,8 @@
 
     async function runSmartDiagnosis() {
       let btn = document.getElementById('btnDiagnose');
-      btn.innerText = '⏳ AI जांच कर रहा है...';
+      const origBtnText = btn.innerText;
+      btn.innerText = await translateTextForApp("⏳ AI जांच कर रहा है...", currentLang);
       btn.disabled = true;
       try {
         let res = await fetch(APPS_SCRIPT_URL, {
@@ -3392,17 +2939,20 @@
         }
 
         if(resultText) {
+          if (currentLang && currentLang !== 'hi') {
+            resultText = await translateTextForApp(resultText, currentLang);
+          }
           document.getElementById('smartSymptoms').innerHTML = resultText.replace(/\n/g, '<br>');
           document.getElementById('btnDocWhatsapp').href = `https://wa.me/916378475002?text=${encodeURIComponent(resultText)}`;
           document.getElementById('docResultCard').style.display = 'block';
-          speakAiAnswer('रोग की जांच पूरी हो गई है, रिपोर्ट स्क्रीन पर देख सकते हैं।');
+          speakAiAnswer(resultText);
         } else {
-          alert('परिणाम नहीं मिला।');
+          alert(await translateTextForApp("परिणाम नहीं मिला।", currentLang));
         }
       } catch(e) {
-        alert("त्रुटि: " + e.message);
+        alert("Error: " + e.message);
       } finally {
-        btn.innerText = '🔍 रोग पहचानें व उपचार पाएं';
+        btn.innerText = origBtnText;
         btn.disabled = false;
       }
     }
@@ -3412,10 +2962,11 @@
       document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || '';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
       document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
-      openScreen('screen-profile', 'किसान प्रोफाइल');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-profile', t.profileTitle);
     }
 
-    function saveFarmerProfile() {
+    async function saveFarmerProfile() {
       let name = document.getElementById('profNameInput').value.trim();
       let phone = document.getElementById('profPhoneInput').value.trim();
       let state = document.getElementById('profStateInput').value.trim();
@@ -3429,7 +2980,7 @@
       syncFarmerDataToGoogleSheet(name, phone, state, crops);
       updateProfileUI();
 
-      alert('✅ प्रोफाइल सुरक्षित और गूगल शीट में सिंक हो गई!');
+      alert(await translateTextForApp("✅ प्रोफाइल सुरक्षित और गूगल शीट में सिंक हो गई!", currentLang));
       goBack();
     }
 
@@ -3440,23 +2991,34 @@
       crops.forEach(c => {
         container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${c}')"><div class="list-left"><span class="list-icon">${getCropEmoji(c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
       });
-      openScreen('screen-atoz-crops', 'A-Z');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-atoz-crops', t.atozTitle);
     }
 
-    function openAtoZDetail(crop) {
+    async function openAtoZDetail(crop) {
       let d = atozGuideRecords[crop] || { soil: "उपलब्ध नहीं", sowing: "उपलब्ध नहीं", seed: "उपलब्ध नहीं", fertilizer: "उपलब्ध नहीं", weed: "उपलब्ध नहीं", irrigation: "उपलब्ध नहीं", care: "उपलब्ध नहीं", harvesting: "उपलब्ध नहीं", postHarvest: "उपलब्ध नहीं" };
+      const s1 = await translateTextForApp("ज़मीन की तैयारी", currentLang);
+      const s2 = await translateTextForApp("पनीरी व रोपण", currentLang);
+      const s3 = await translateTextForApp("बीज चयन व मात्रा", currentLang);
+      const s4 = await translateTextForApp("खाद प्रबंधन", currentLang);
+      const s5 = await translateTextForApp("खरपतवार नियंत्रण", currentLang);
+      const s6 = await translateTextForApp("सिंचाई प्रबंधन", currentLang);
+      const s7 = await translateTextForApp("पौधे की सुरक्षा", currentLang);
+      const s8 = await translateTextForApp("फसल की कटाई", currentLang);
+      const s9 = await translateTextForApp("कटाई के बाद प्रबंधन", currentLang);
+
       document.getElementById('atozDetailContainer').innerHTML = `
         <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
           <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(crop)} ${crop}</h3>
-          <div class="schedule-step"><b>1. 🟫</b><p>${d.soil}</p></div>
-          <div class="schedule-step"><b>2. 🌱</b><p>${d.sowing}</p></div>
-          <div class="schedule-step"><b>3. 📦</b><p>${d.seed}</p></div>
-          <div class="schedule-step"><b>4. 🧪</b><p>${d.fertilizer}</p></div>
-          <div class="schedule-step"><b>5. 🌿</b><p>${d.weed}</p></div>
-          <div class="schedule-step"><b>6. 💧</b><p>${d.irrigation}</p></div>
-          <div class="schedule-step"><b>7. 🛡️</b><p>${d.care}</p></div>
-          <div class="schedule-step"><b>8. ✂️</b><p>${d.harvesting}</p></div>
-          <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰</b><p>${d.postHarvest}</p></div>
+          <div class="schedule-step"><b>1. 🟫 ${s1}</b><p>${d.soil}</p></div>
+          <div class="schedule-step"><b>2. 🌱 ${s2}</b><p>${d.sowing}</p></div>
+          <div class="schedule-step"><b>3. 📦 ${s3}</b><p>${d.seed}</p></div>
+          <div class="schedule-step"><b>4. 🧪 ${s4}</b><p>${d.fertilizer}</p></div>
+          <div class="schedule-step"><b>5. 🌿 ${s5}</b><p>${d.weed}</p></div>
+          <div class="schedule-step"><b>6. 💧 ${s6}</b><p>${d.irrigation}</p></div>
+          <div class="schedule-step"><b>7. 🛡️ ${s7}</b><p>${d.care}</p></div>
+          <div class="schedule-step"><b>8. ✂️ ${s8}</b><p>${d.harvesting}</p></div>
+          <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 ${s9}</b><p>${d.postHarvest}</p></div>
         </div>`;
       openScreen('screen-atoz-detail', crop);
     }
@@ -3464,16 +3026,17 @@
     function openFarmerDiscussionScreen() {
       document.getElementById('discussionAuthor').value = localStorage.getItem('farmer_name') || '';
       loadDiscussionPosts();
-      openScreen('screen-farmer-discussion', 'किसान चर्चा मंच');
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-farmer-discussion', t.discTitle);
     }
 
-    function submitDiscussionPost() {
+    async function submitDiscussionPost() {
       let author = document.getElementById('discussionAuthor').value.trim();
       let text = document.getElementById('discussionText').value.trim();
       let fileInput = document.getElementById('discussionImageInput');
 
       if(!author || !text) {
-        alert('कृपया अपना नाम और चर्चा/सवाल दोनों लिखें!');
+        alert(await translateTextForApp("कृपया अपना नाम और चर्चा/सवाल दोनों लिखें!", currentLang));
         return;
       }
 
@@ -3502,21 +3065,24 @@
       }
     }
 
-    function savePost(author, text, imgUrl) {
+    async function savePost(author, text, imgUrl) {
       let posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
       posts.unshift({ id: Date.now(), author, text, image: imgUrl, comments: [], date: 'आज' });
       localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
       document.getElementById('discussionText').value = '';
       document.getElementById('discussionImageInput').value = '';
-      alert('✅ पोस्ट सफलतापूर्वक हो गई!');
+      alert(await translateTextForApp("✅ पोस्ट सफलतापूर्वक हो गई!", currentLang));
       loadDiscussionPosts();
     }
 
-    function addCommentToPost(postId) {
+    async function addCommentToPost(postId) {
       let commentInput = document.getElementById(`commentInput_${postId}`);
       let commentText = commentInput.value.trim();
-      let authorName = localStorage.getItem('farmer_name') || 'किसान साथी';
-      if(!commentText) { alert('कृपया अपना सुझाव/कमेंट लिखें!'); return; }
+      let authorName = localStorage.getItem('farmer_name') || await translateTextForApp("किसान साथी", currentLang);
+      if(!commentText) {
+        alert(await translateTextForApp("कृपया अपना सुझाव/कमेंट लिखें!", currentLang));
+        return;
+      }
 
       let posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
       let post = posts.find(p => p.id === postId);
@@ -3529,39 +3095,47 @@
       }
     }
 
-    function loadDiscussionPosts() {
+    async function loadDiscussionPosts() {
       let container = document.getElementById('discussionPostsContainer');
       let posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
       if(posts.length === 0) {
         posts = [{ id: 1, author: "रामेश्वर लाल", text: "इस बार टमाटर की कौन सी वैरायटी लगाएं?", image: "", comments: [{ author: "मोहन किसान", text: "भाई GS-10 या US-440 लगाओ, बम्पर पैदावार है।" }], date: "आज" }];
       }
       container.innerHTML = '';
-      posts.forEach(p => {
+      const cPh = await translateTextForApp("अपना सुझाव / कमेंट लिखें...", currentLang);
+      const cBtn = await translateTextForApp("भेजें", currentLang);
+      const noCmt = await translateTextForApp("अभी कोई सुझाव नहीं है।", currentLang);
+
+      for (const p of posts) {
+        const pAuthor = await translateTextForApp(p.author, currentLang);
+        const pText = await translateTextForApp(p.text, currentLang);
         let imgHtml = p.image ? `<div style="margin-top:8px; text-align:center;"><img src="${p.image}" style="max-height:200px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #e5e7eb; cursor:pointer;" onclick="openImageModal('${p.image}')"></div>` : '';
 
         let commentsHtml = '<div style="margin-top:10px; border-top:1px dashed #cbd5e1; padding-top:8px;">';
         if(p.comments && p.comments.length > 0) {
-          p.comments.forEach(cm => {
-            commentsHtml += `<div style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cm.author}:</b> ${cm.text}</div>`;
-          });
+          for (const cm of p.comments) {
+            const cmAuthor = await translateTextForApp(cm.author, currentLang);
+            const cmText = await translateTextForApp(cm.text, currentLang);
+            commentsHtml += `<div style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cmAuthor}:</b> ${cmText}</div>`;
+          }
         } else {
-          commentsHtml += `<p style="font-size:11.5px; color:#64748b; margin-bottom:6px;">अभी कोई सुझाव नहीं है।</p>`;
+          commentsHtml += `<p style="font-size:11.5px; color:#64748b; margin-bottom:6px;">${noCmt}</p>`;
         }
         commentsHtml += `
           <div style="display:flex; gap:6px; margin-top:8px;">
-            <input type="text" id="commentInput_${p.id}" class="form-control" placeholder="अपना सुझाव / कमेंट लिखें..." style="padding:6px 10px; font-size:13px;">
-            <button type="button" class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost(${p.id})">भेजें</button>
+            <input type="text" id="commentInput_${p.id}" class="form-control" placeholder="${cPh}" style="padding:6px 10px; font-size:13px;">
+            <button type="button" class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost(${p.id})">${cBtn}</button>
           </div>
         `;
 
         container.innerHTML += `
           <div class="variety-card" style="border-left:4px solid #0284c7;">
-            <b style="color:#0369a1; font-size:14px;">👤 ${p.author}</b>
-            <p style="margin:6px 0; color:#1f2937; font-size:14px;">${p.text}</p>
+            <b style="color:#0369a1; font-size:14px;">👤 ${pAuthor}</b>
+            <p style="margin:6px 0; color:#1f2937; font-size:14px;">${pText}</p>
             ${imgHtml}
             ${commentsHtml}
           </div>`;
-      });
+      }
     }
 
     function openImageModal(url) {
@@ -3570,10 +3144,11 @@
     }
     function closeImageModal() { document.getElementById('imagePreviewModal').classList.remove('active'); }
 
-    function openNotificationModal() {
+    async function openNotificationModal() {
       document.getElementById('notificationModal').classList.add('active');
+      await renderNotificationsView();
       let notifRows = document.querySelectorAll('#notificationListContent .schedule-step');
-      if(notifRows.length > 0) {
+      if(notifRows.length > 0 && notifRows[0].querySelector('b')) {
         let firstTitle = notifRows[0].querySelector('b').innerText.replace('🌾 ', '');
         localStorage.setItem('last_seen_notification', firstTitle);
       }
@@ -3610,7 +3185,7 @@
         } else {
           currentLang = savedLang;
           highlightActiveLangChip(currentLang);
-          applyLanguageUI();
+          await applyLanguageUI();
           if (!localStorage.getItem('is_logged_in')) {
             const loginModal = document.getElementById('loginScreenModal');
             if (loginModal) loginModal.classList.add('active');
@@ -3618,11 +3193,8 @@
         }
 
         detectUserLocation();
-        fetchLiveWeather();
+        await fetchLiveWeather();
         await loadAllSheetsData();
-        if (currentLang && currentLang !== 'hi') {
-          await translateAllLoadedSheetRecords(currentLang);
-        }
       } catch (err) {
         console.error("Init error:", err);
       } finally {
