@@ -66,7 +66,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
-    /* डार्क मोड स्टाइल */
+    /* डार्क मोड स्टाइल (सभी कार्ड, अलर्ट, बैज और मोडल के लिए पूर्ण कंट्रास्ट) */
     body.dark-mode {
       background-color: #0f172a !important;
       color: #f8fafc !important;
@@ -85,10 +85,108 @@
     body.dark-mode .doc-result-card,
     body.dark-mode .chem-card,
     body.dark-mode .disease-card,
+    body.dark-mode .stories-wrapper,
+    body.dark-mode .quick-pill,
     body.dark-mode #aiChatMessagesContainer {
       background-color: #1e2937 !important;
       color: #f8fafc !important;
       border-color: #334155 !important;
+    }
+
+    body.dark-mode .pest-alert-card {
+      background-color: #2a161d !important;
+      border-color: #7f1d1d !important;
+      border-left-color: #ef4444 !important;
+    }
+
+    body.dark-mode .disease-cure-box {
+      background-color: #0f2e22 !important;
+      border-left-color: #10b981 !important;
+      color: #a7f3d0 !important;
+    }
+
+    body.dark-mode .chem-tech {
+      background-color: #2d1b2e !important;
+      color: #f9a8d4 !important;
+    }
+
+    body.dark-mode .chem-dose {
+      background-color: #0f2e22 !important;
+      color: #6ee7b7 !important;
+    }
+
+    body.dark-mode .badge-variety {
+      background-color: #143322 !important;
+      border-color: #166534 !important;
+      color: #86efac !important;
+    }
+
+    body.dark-mode .badge-company {
+      background-color: #172554 !important;
+      border-color: #1e40af !important;
+      color: #93c5fd !important;
+    }
+
+    body.dark-mode .bookmark-btn {
+      background-color: #273548 !important;
+      border-color: #475569 !important;
+      color: #fbbf24 !important;
+    }
+    body.dark-mode .bookmark-btn.saved {
+      background-color: #422006 !important;
+      border-color: #b45309 !important;
+      color: #fde047 !important;
+    }
+
+    body.dark-mode .upload-opt-btn {
+      background-color: #273548 !important;
+      border-color: #22c55e !important;
+    }
+
+    body.dark-mode .playstore-banner {
+      background: linear-gradient(135deg, #172554 0%, #1e2937 100%) !important;
+      border-color: #1d4ed8 !important;
+    }
+
+    body.dark-mode .weather-detail-stat {
+      background-color: #273548 !important;
+      border-color: #334155 !important;
+    }
+
+    body.dark-mode .mandi-table th {
+      background-color: #143322 !important;
+      color: #86efac !important;
+      border-color: #334155 !important;
+    }
+    body.dark-mode .mandi-table td {
+      border-color: #334155 !important;
+      color: #f8fafc !important;
+    }
+    body.dark-mode .mandi-table tr:nth-child(even) {
+      background-color: #162030 !important;
+    }
+
+    body.dark-mode .form-control,
+    body.dark-mode select.form-control,
+    body.dark-mode input.form-control,
+    body.dark-mode textarea.form-control {
+      background-color: #0f172a !important;
+      color: #f8fafc !important;
+      border-color: #475569 !important;
+    }
+
+    body.dark-mode .discussion-comment-item {
+      background-color: #273548 !important;
+      color: #f8fafc !important;
+    }
+
+    body.dark-mode .profile-card-widget {
+      background-color: #143322 !important;
+      border-color: #166534 !important;
+    }
+
+    body.dark-mode .drawer-item {
+      border-bottom-color: #334155 !important;
     }
 
     body.dark-mode #aiChatMessagesContainer > div {
@@ -175,7 +273,8 @@
 
     /* लाइव मौसम कार्ड */
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; transition: background 0.3s ease; }
-    .weather-card.night-mode { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; color: #f8fafc; }
+    .weather-card.night-mode,
+    body.dark-mode .weather-card { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; color: #f8fafc; }
     .weather-card.night-mode h4, .weather-card.night-mode .weather-datetime, .weather-card.night-mode .weather-temp { color: #f8fafc !important; }
     .weather-card.night-mode .weather-header-row { border-bottom-color: #475569; }
 
@@ -323,6 +422,8 @@
     .disease-cure-box { font-size: 13.5px; color: #065f46; background: #ecfdf5; padding: 8px 10px; border-radius: 8px; border-left: 4px solid #10b981; font-weight: 600; }
     .disease-photo { max-height: 180px; width: 100%; object-fit: contain; border-radius: 8px; margin-top: 10px; cursor: pointer; border: 1px solid #e2e8f0; background: #fafafa; }
 
+    .pest-alert-card { background: #fef2f2; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #fecaca; border-left: 4px solid #dc2626; }
+
     .chem-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fbcfe8; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #db2777; }
     .chem-title { font-size: 16px; font-weight: bold; color: #9d174d; margin-bottom: 8px; border-bottom: 1px dashed #fbcfe8; padding-bottom: 4px; }
     .chem-body-row { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
@@ -339,6 +440,9 @@
 
     .btn-action { display: block; width: 100%; padding: 12px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 14.5px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
     .btn-wa { background: #10b981; color: white; }
+
+    .bookmark-btn { background: #f3f4f6; color: #b45309; border: 1px solid #fde68a; }
+    .bookmark-btn.saved { background: #fef3c7; }
 
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 8px 0; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
     .nav-tab { text-align: center; font-size: 10px; color: #6b7280; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
@@ -510,7 +614,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.1
+      CROP & SABZI DOCTOR • v10.2
     </div>
   </div>
 
@@ -679,7 +783,7 @@
     </div>
 
     <!-- प्ले स्टोर डायरेक्ट लिंक बैनर -->
-    <div style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
+    <div class="playstore-banner" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
       <div>
         <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
         <p style="font-size:12px; color:#334155; margin-top:2px;" id="txtPlaySub">हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।</p>
@@ -915,21 +1019,52 @@
     </div>
   </div>
 
-  <!-- SCREEN: बुवाई और कटाई कैलकुलेटर -->
+  <!-- SCREEN: बुवाई और कटाई कैलकुलेटर (सभी फसलों सहित) -->
   <div id="screen-sowing-calc" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; padding:16px;">
       <div class="form-group">
-        <select id="calcCropSelect" class="form-control">
+        <label style="font-size:12.5px; color:#4b5563; margin-bottom:4px; display:block;" id="lblCalcCrop">🌱 फसल चुनें:</label>
+        <select id="calcCropSelect" class="form-control" onchange="calculateCropSchedule()">
           <option value="टमाटर">🍅 टमाटर</option>
           <option value="खीरा">🥒 खीरा</option>
           <option value="मिर्च">🌶️ मिर्च</option>
+          <option value="शिमला मिर्च">🫑 शिमला मिर्च</option>
           <option value="तरबूज">🍉 तरबूज</option>
+          <option value="खरबूजा">🍈 खरबूजा</option>
           <option value="फूलगोभी">🥦 फूलगोभी</option>
+          <option value="पत्तागोभी">🥬 पत्तागोभी</option>
           <option value="भिंडी">🥒 भिंडी</option>
+          <option value="बैंगन">🍆 बैंगन</option>
+          <option value="करेला">🥒 करेला</option>
+          <option value="लौकी">🥒 लौकी</option>
+          <option value="तोरई">🥒 तोरई</option>
+          <option value="कद्दू">🎃 कद्दू</option>
+          <option value="मटर">🌱 मटर</option>
+          <option value="मूली">🥕 मूली</option>
+          <option value="गाजर">🥕 गाजर</option>
+          <option value="प्याज">🧅 प्याज</option>
+          <option value="आलू">🥔 आलू</option>
+          <option value="स्वीट कॉर्न / मक्का">🌽 स्वीट कॉर्न / मक्का</option>
+          <option value="गेहूँ">🌾 गेहूँ</option>
+          <option value="धान">🌾 धान</option>
+          <option value="सरसों">🌼 सरसों</option>
+          <option value="चना">🌱 चना</option>
+          <option value="सोयाबीन">🌱 सोयाबीन</option>
+          <option value="गन्ना">🎋 गन्ना</option>
+          <option value="जीरा">🌿 जीरा</option>
+          <option value="गैंदा">🌼 गैंदा</option>
+          <option value="गुलाब">🌹 गुलाब</option>
+          <option value="गुलदाउदी">🌼 गुलदाउदी</option>
+          <option value="आम">🥭 आम</option>
+          <option value="अमरूद">🍈 अमरूद</option>
+          <option value="पपीता">🍈 पपीता</option>
+          <option value="अनार">🍎 अनार</option>
+          <option value="केला">🍌 केला</option>
         </select>
       </div>
       <div class="form-group">
-        <input type="date" id="calcDateInput" class="form-control">
+        <label style="font-size:12.5px; color:#4b5563; margin-bottom:4px; display:block;" id="lblCalcDate">📅 बुवाई की तारीख चुनें:</label>
+        <input type="date" id="calcDateInput" class="form-control" onchange="calculateCropSchedule()">
       </div>
       <button class="btn-action btn-wa" style="background:#d97706; margin-top:12px;" onclick="calculateCropSchedule()" id="btnCalcRun">📊 कैलकुलेट करें</button>
     </div>
@@ -977,11 +1112,11 @@
         <p style="font-size:14px; color:#4b5563; font-weight:600; margin-top:4px;" id="detailDesc">साफ़ आसमान</p>
       </div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-        <div style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
+        <div class="weather-detail-stat" style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
           <p style="font-size:12px; font-weight:600; color:#166534;" id="lblWind">💨 हवा की गति</p>
           <b style="font-size:15px; color:#15803d;" id="detailWind">6 km/h</b>
         </div>
-        <div style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
+        <div class="weather-detail-stat" style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
           <p style="font-size:12px; font-weight:600; color:#166534;" id="lblHum">💧 हवा में नमी</p>
           <b style="font-size:15px; color:#15803d;" id="detailHumidity">45%</b>
         </div>
@@ -1579,10 +1714,47 @@
       try { rec.start(); } catch (err) {}
     }
 
+    function populateCalculatorCropsFromSheets() {
+      const sel = document.getElementById('calcCropSelect');
+      if (!sel) return;
+      const existing = new Set(Array.from(sel.options).map(o => o.value));
+      const allSheetCrops = new Set();
+
+      sheetRecords.forEach(r => { if (r.crop) allSheetCrops.add(r.crop); });
+      Object.keys(atozGuideRecords).forEach(c => { if (c) allSheetCrops.add(c); });
+
+      Array.from(allSheetCrops).sort().forEach(cropName => {
+        if (!existing.has(cropName) && cropName.toLowerCase() !== 'crop') {
+          const opt = document.createElement('option');
+          opt.value = cropName;
+          opt.textContent = `${getCropEmoji(cropName)} ${cropName}`;
+          sel.appendChild(opt);
+          existing.add(cropName);
+        }
+      });
+    }
+
     function showSowingCalculatorScreen() {
       const t = getT();
+      populateCalculatorCropsFromSheets();
       openScreen('screen-sowing-calc', t.calcTitle);
       calculateCropSchedule();
+    }
+
+    function getDaysToHarvestForCrop(crop) {
+      const c = (crop || '').toLowerCase();
+      if (c.includes('मूली')) return 40;
+      if (c.includes('खीरा') || c.includes('भिंडी') || c.includes('तोरई')) return 55;
+      if (c.includes('लौकी') || c.includes('करेला')) return 60;
+      if (c.includes('पत्तागोभी') || c.includes('मटर')) return 70;
+      if (c.includes('मिर्च') || c.includes('शिमला') || c.includes('बैंगन')) return 75;
+      if (c.includes('फूलगोभी') || c.includes('गाजर') || c.includes('स्वीट कॉर्न') || c.includes('मक्का')) return 80;
+      if (c.includes('तरबूज') || c.includes('खरबूजा') || c.includes('आलू')) return 85;
+      if (c.includes('टमाटर') || c.includes('कद्दू')) return 90;
+      if (c.includes('प्याज') || c.includes('सरसों') || c.includes('चना') || c.includes('सोयाबीन') || c.includes('जीरा')) return 115;
+      if (c.includes('धान') || c.includes('गेहूँ')) return 130;
+      if (c.includes('गन्ना') || c.includes('पपीता') || c.includes('केला')) return 300;
+      return 85;
     }
 
     async function calculateCropSchedule() {
@@ -1591,11 +1763,7 @@
       if (!dateVal) return;
 
       const sowingDate = new Date(dateVal);
-      let daysToHarvest = 90;
-      if (crop === 'खीरा' || crop === 'भिंडी') daysToHarvest = 55;
-      if (crop === 'मिर्च') daysToHarvest = 75;
-      if (crop === 'तरबूज') daysToHarvest = 85;
-      if (crop === 'फूलगोभी') daysToHarvest = 78;
+      const daysToHarvest = getDaysToHarvestForCrop(crop);
 
       const fertilizerDate1 = new Date(sowingDate); fertilizerDate1.setDate(sowingDate.getDate() + 15);
       const fertilizerDate2 = new Date(sowingDate); fertilizerDate2.setDate(sowingDate.getDate() + 35);
@@ -1787,15 +1955,18 @@
       if (!cropName) return '🌱';
       const c = cropName.trim().toLowerCase();
       if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
+      if (c.includes('शिमला') || c.includes('capsicum')) return '🫑';
       if (c.includes('मिर्च') || c.includes('chilli') || c.includes('chili')) return '🌶️';
       if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
       if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
       if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
+      if (c.includes('पत्तागोभी') || c.includes('cabbage')) return '🥬';
       if (c.includes('कद्दू') || c.includes('pumpkin')) return '🎃';
       if (c.includes('करेला') || c.includes('bitter')) return '🥒';
       if (c.includes('लौकी') || c.includes('bottle')) return '🥒';
       if (c.includes('गाजर') || c.includes('carrot')) return '🥕';
       if (c.includes('आलू') || c.includes('potato')) return '🥔';
+      if (c.includes('प्याज') || c.includes('onion')) return '🧅';
       if (c.includes('बैंगन') || c.includes('brinjal')) return '🍆';
       if (c.includes('गेहूँ') || c.includes('wheat')) return '🌾';
       if (c.includes('धान') || c.includes('paddy') || c.includes('rice')) return '🌾';
@@ -2104,6 +2275,7 @@
           title: cols[0] || 'कृषि वीडियो', thumbnail: cols[1] || '', videoUrl: cols[2] || ''
         })).filter(r => r.title && !r.title.includes('Title') && !r.title.toLowerCase().includes('title')) : [];
 
+        populateCalculatorCropsFromSheets();
         renderStoriesBar();
         renderDynamicVideos();
 
@@ -2476,7 +2648,7 @@
         }
         const isSaved = favs.includes(v.variety);
         const saveBtnText = isSaved ? "⭐ सेव हुआ" : "☆";
-        const saveBtnBg = isSaved ? "#fef3c7" : "#f3f4f6";
+        const savedClass = isSaved ? "saved" : "";
 
         container.innerHTML += `
           <div class="variety-card">
@@ -2497,7 +2669,7 @@
 
             <div style="display:flex; gap:8px; margin-top:14px;">
               <a href="https://wa.me/916378475002?text=${encodeURIComponent(v.company + ' - ' + v.variety)}" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 खरीदे बीज</a>
-              <button class="btn-action" style="flex:1; background:${saveBtnBg}; color:#b45309; border:1px solid #fde68a;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
+              <button class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
             </div>
           </div>`;
       });
@@ -2517,7 +2689,7 @@
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
       if (btnElem) {
         btnElem.innerText = savedNow ? "⭐ सेव हुआ" : "☆";
-        btnElem.style.background = savedNow ? "#fef3c7" : "#f3f4f6";
+        btnElem.classList.toggle('saved', savedNow);
       }
     }
 
@@ -2666,8 +2838,8 @@
     function showPestAlertScreen() {
       const container = document.getElementById('alertsContainer');
       container.innerHTML = alertsRecords.length > 0
-        ? alertsRecords.map(a => `<div style="background:#fef2f2; padding:12px; border-radius:10px; margin-bottom:10px; border-left:4px solid #dc2626;"><b>⚠️ ${a.title}</b><p style="margin-top:4px; color:#374151; font-size:13.5px;">${a.desc}</p>${a.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${a.date}</span>` : ''}</div>`).join('')
-        : `<div style="padding:14px; text-align:center; color:#6b7280; background:white; border-radius:10px;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
+        ? alertsRecords.map(a => `<div class="pest-alert-card"><b>⚠️ ${a.title}</b><p style="margin-top:4px; font-size:13.5px;">${a.desc}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${a.date}</span>` : ''}</div>`).join('')
+        : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
       const t = getT();
       openScreen('screen-pest-alert', t.pestTitle);
     }
@@ -2962,7 +3134,7 @@
         let commentsHtml = '<div style="margin-top:10px; border-top:1px dashed #cbd5e1; padding-top:8px;">';
         if (p.comments && p.comments.length > 0) {
           p.comments.forEach(cm => {
-            commentsHtml += `<div style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cm.author}:</b> ${cm.text}</div>`;
+            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cm.author}:</b> ${cm.text}</div>`;
           });
         }
         commentsHtml += `
