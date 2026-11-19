@@ -112,13 +112,52 @@
       color: #f8fafc !important; 
     }
 
-    button, .menu-box, .list-item, .social-link, .btn-action, .fab-solution, .story-item, .video-card-item, .upload-opt-btn {
+    button, .menu-box, .list-item, .social-link, .btn-action, .fab-solution, .story-item, .video-card-item, .upload-opt-btn, .lang-chip {
       transition: transform 0.1s ease, opacity 0.1s ease;
       cursor: pointer;
     }
-    button:active, .menu-box:active, .list-item:active, .social-link:active, .btn-action:active, .fab-solution:active, .story-item:active, .video-card-item:active, .upload-opt-btn:active {
+    button:active, .menu-box:active, .list-item:active, .social-link:active, .btn-action:active, .fab-solution:active, .story-item:active, .video-card-item:active, .upload-opt-btn:active, .lang-chip:active {
       transform: scale(0.95);
       opacity: 0.8;
+    }
+
+    /* 12 भाषा स्ट्रिप स्टाइल */
+    .lang-strip-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 4px;
+      margin-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .lang-strip-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .lang-chip {
+      flex: 0 0 auto;
+      background: #ffffff;
+      color: #1b5e20;
+      border: 1.5px solid #86efac;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .lang-chip.active {
+      background: #1b5e20;
+      color: #ffffff;
+      border-color: #1b5e20;
+    }
+    body.dark-mode .lang-chip {
+      background: #1e2937;
+      color: #f8fafc;
+      border-color: #334155;
+    }
+    body.dark-mode .lang-chip.active {
+      background: #16a34a;
+      color: #ffffff;
+      border-color: #16a34a;
     }
 
     /* टॉप हेडर */
@@ -380,7 +419,7 @@
     <p style="font-size:13px; font-weight:bold; color:#166534;" id="txtLoading">🌾 डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...</p>
   </div>
 
-  <!-- भाषा चयन स्क्रीन मोडल -->
+  <!-- भाषा चयन स्क्रीन मोडल (12 भाषाएं) -->
   <div class="login-modal-overlay" id="languageSelectModal">
     <div class="login-card" style="max-width: 380px;">
       <div style="text-align:center; margin-bottom:14px;">
@@ -390,12 +429,18 @@
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
-        <button class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('hi')">🇮🇳 हिंदी</button>
-        <button class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('en')">🇬🇧 English</button>
-        <button class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('pa')">🇵🇦 ਪੰਜਾਬੀ</button>
-        <button class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('rj')">🐪 राजस्थानी</button>
-        <button class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('gu')">🦁 ગુજરાતી</button>
-        <button class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('mr')">🚩 मराठी</button>
+        <button class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('hi')">हिंदी</button>
+        <button class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('mr')">मराठी</button>
+        <button class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('bn')">বাংলা</button>
+        <button class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('te')">తెలుగు</button>
+        <button class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('ta')">தமிழ்</button>
+        <button class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+        <button class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
+        <button class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
+        <button class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('en')">English</button>
+        <button class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('ml')">മലയാളം</button>
+        <button class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
+        <button class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('as')">অসমীয়া</button>
       </div>
     </div>
   </div>
@@ -566,6 +611,22 @@
 
   <!-- SCREEN 1: होम स्क्रीन -->
   <div id="screen-home" class="screen active">
+
+    <!-- 12 भाषा स्ट्रिप -->
+    <div class="lang-strip-bar" id="languageStrip">
+      <button type="button" class="lang-chip active" data-lang="hi" onclick="setAppLanguage('hi')">हिंदी</button>
+      <button type="button" class="lang-chip" data-lang="mr" onclick="setAppLanguage('mr')">मराठी</button>
+      <button type="button" class="lang-chip" data-lang="bn" onclick="setAppLanguage('bn')">বাংলা</button>
+      <button type="button" class="lang-chip" data-lang="te" onclick="setAppLanguage('te')">తెలుగు</button>
+      <button type="button" class="lang-chip" data-lang="ta" onclick="setAppLanguage('ta')">தமிழ்</button>
+      <button type="button" class="lang-chip" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+      <button type="button" class="lang-chip" data-lang="kn" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
+      <button type="button" class="lang-chip" data-lang="pa" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
+      <button type="button" class="lang-chip" data-lang="en" onclick="setAppLanguage('en')">English</button>
+      <button type="button" class="lang-chip" data-lang="ml" onclick="setAppLanguage('ml')">മലയാളം</button>
+      <button type="button" class="lang-chip" data-lang="or" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
+      <button type="button" class="lang-chip" data-lang="as" onclick="setAppLanguage('as')">অসমীয়া</button>
+    </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
       <div style="font-size:13px; font-weight:bold; color:#1b5e20;" id="welcomeMsg">
@@ -1148,6 +1209,7 @@
         document.getElementById('languageSelectModal').classList.add('active');
       } else {
         currentLang = savedLang;
+        highlightActiveLangChip(currentLang);
         applyLanguageUI();
         if (!localStorage.getItem('is_logged_in')) {
           document.getElementById('loginScreenModal').classList.add('active');
@@ -1577,14 +1639,14 @@
         gComp: "All ਕੰਪਨੀ ਬੀਜ",
         gChem: "ਦਵਾਈਆਂ Chemicals",
         gServ: "Other ਸੇਵਾਵਾਂ",
-        txtPlaySub: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ और ਐਪ ਸ਼ੇਅਰ ਕਰੋ।",
+        txtPlaySub: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ ਅਤੇ ਐਪ ਸ਼ੇਅਰ ਕਰੋ।",
         txtRateBtn: "ਰੇਟ ਕਰੋ",
         txtVideoHead: "📺 ਤਾਜ਼ਾ ਖੇਤੀ ਵੀਡੀਓ",
         txtSeeAll: "ਸਾਰੇ ਦੇਖੋ >",
         txtSocialHead: "ਸਾਡੇ ਨਾਲ ਸੋਸ਼ਲ ਮੀਡੀਆ 'ਤੇ ਜੁੜੋ",
         fabText: "ਤੁਰੰਤ ਹੱਲ",
         navHome: "ਹੋਮ",
-        navCrops: "ਕیسمਾਂ",
+        navCrops: "ਕਿਸਮਾਂ",
         navSched: "ਸ਼ਡਿਊਲ",
         navProt: "ਸੁਰੱਖਿਆ",
         navHelp: "ਹੈਲਪਲਾਈਨ",
@@ -1594,9 +1656,9 @@
         compTitle: "ਬੀਜ ਕੰਪਨੀ ਚੁਣੋ:",
         chemTitle: "ਦਵਾਈਆਂ Chemicals",
         mandiTitle: "ਮੰਡੀ ਭਾਅ",
-        weatherTitle: "ਮੌसम",
+        weatherTitle: "ਮੌਸਮ",
         profileTitle: "ਕਿਸਾਨ ਪ੍ਰੋਫાઇલ",
-        favoritesTitle: "ਮਨਪसੰਦ ਕਿਸਮਾਂ",
+        favoritesTitle: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
         atozTitle: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
         discTitle: "ਕਿਸਾਨ ਚਰਚਾ ਮੰਚ",
         privacyTitle: "ਪਰਦਾਫ਼ਾਸ਼ ਨੀਤੀ",
@@ -1608,102 +1670,30 @@
         drawerHead: "📋 ਮੀਨੂ ਅਤੇ ਸੈਟਿੰਗਾਂ",
         completeProfileText: "ਆਪਣੀ ਪ੍ਰੋਫાઇલ ਪੂਰੀ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ >",
         mProfile: "ਮੇਰੀ ਪ੍ਰੋਫાઇલ / ਸੈਟਿੰਗਾਂ",
-        mFav: "ਮਨਪसੰਦ ਕਿਸਮਾਂ",
+        mFav: "ਮਨਪਸੰਦ ਕਿਸਮਾਂ",
         mCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ",
         mSchedule: "ਸਪ੍ਰੇ ਸ਼ਡਿਊਲ",
         mProtection: "ਫਸਲ ਸੁਰੱਖਿਆ",
         mChems: "ਦਵਾਈਆਂ Chemicals",
         mServices: "Other ਸੇਵਾਵਾਂ",
-        mPrivacy: "ਨਿਯਮ और ਸ਼ਰਤਾਂ",
+        mPrivacy: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
         mRate: "ਪਲੇ ਸਟੋਰ 'ਤੇ ਰੇਟ ਕਰੋ",
         mShare: "ਐਪ ਸ਼ੇਅਰ ਕਰੋ",
         mHelp: "ਵਟਸਐਪ ਹੈਲਪਲਾਈਨ",
         mLogout: "ਲਾਗਆਉਟ",
         solHead: "⚡ ਤੁਰੰਤ ਹੱਲ (AI ਜਾਂਚ)",
         camBtn: "ਕੈਮਰੇ ਤੋਂ ਫੋਟੋ ਲਓ",
-        galBtn: "ਗैलरी ਤੋਂ ਚੁਣੋ",
+        galBtn: "ਗੈਲਰੀ ਤੋਂ ਚੁਣੋ",
         diagBtn: "🔍 ਰੋਗ ਪਛਾਣੋ",
         diagRepHead: "🌿 AI ਰੋਗ ਰਿਪੋਰਟ",
         wapBtn: "ਡਾਕਟਰ ਨੂੰ ਵਟਸਐਪ ਕਰੋ",
-        chatYou: "ਤुਸੀਂ",
+        chatYou: "ਤੁਸੀਂ",
         chatDoc: "ਡਾਕਟਰ",
         chatThinking: "ਸੋਚ ਰਿਹਾ ਹਾਂ...",
         chatErr: "ਮਾਫ਼ ਕਰਨਾ, ਜਵਾਬ ਨਹੀਂ ਮਿਲਿਆ।",
         chatNetErrHead: "ਗਲਤੀ",
         chatNetErrDesc: "ਇੰਟਰਨੈੱਟ ਸਮੱਸਿਆ।",
         aiDocTitle: "AI ਡਾਕਟਰ ਚੈਟ"
-      },
-      rj: {
-        headerTitle: "CROP & SABZI DOCTOR",
-        welcomeMsg: "राम-राम, किसान भाई!",
-        txtChangeProf: "✏️ प्रोफाइल बदल",
-        txtAiTitle: "🎙️ AI कृषि डॉक्टर सू बोलकर बात करो",
-        aiSubText: "टैप करो अर फसल या बीमारी रो नाम बोलो...",
-        txtSprayAdvice: "स्प्रे खातिर सुबह या शाम रो समै चुणो",
-        gCrops: "सगळी किस्में",
-        gProt: "फसल सुरक्षा",
-        gSched: "स्प्रे शेड्यूल",
-        gAtoz: "खेती कियाँ करां (A-Z)",
-        gDisc: "किसान चर्चा",
-        gAdv: "सलाहकार",
-        gComp: "All कंपनी बीज",
-        gChem: "दवाइयाँ Chemicals",
-        gServ: "Other सेवाएं",
-        txtPlaySub: "प्ले स्टोर पर रेट करो अर ऐप शेयर करो।",
-        txtRateBtn: "रेट करो",
-        txtVideoHead: "📺 ताजो कृषि वीडियो",
-        txtSeeAll: "सगळा देखगो >",
-        txtSocialHead: "म्हारा साथै सोशल मीडिया पर जुड़ो",
-        fabText: "तुरंत समाधान",
-        navHome: "होम",
-        navCrops: "किस्में",
-        navSched: "शेड्यूल",
-        navProt: "सुरक्षा",
-        navHelp: "हेल्पलाइन",
-        cropsTitle: "फसल चुणो:",
-        protTitle: "रोग निवारण खातिर फसल चुणो:",
-        schedTitle: "स्प्रे शेड्यूल खातिर फसल चुणो:",
-        compTitle: "सीड कंपनी चुणो:",
-        chemTitle: "दवाइयाँ Chemicals",
-        mandiTitle: "मंडी भाव",
-        weatherTitle: "मौसम",
-        profileTitle: "किसान प्रोफाइल",
-        favoritesTitle: "पसंदीदा किस्में",
-        atozTitle: "खेती गाइड (A-Z)",
-        discTitle: "किसान चर्चा मंच",
-        privacyTitle: "गोपनीयता नीति",
-        reportsTitle: "AI जांच रिपोर्ट",
-        schemesTitle: "सरकारी योजना",
-        expertTitle: "एक्सपर्ट सुझाव",
-        pestTitle: "कीट अलर्ट",
-        calcTitle: "बुवाई कैलकुलेटर",
-        drawerHead: "📋 मेन्यू व सेटिंग्स",
-        completeProfileText: "प्रोफाइल पूरी करने खातिर टैप करो >",
-        mProfile: "मेरी प्रोफाइल / सेटिंग्स",
-        mFav: "पसंदीदा किस्में",
-        mCrops: "सगळी किस्में",
-        mSchedule: "स्प्रे शेड्यूल",
-        mProtection: "फसल सुरक्षा",
-        mChems: "दवाइयाँ Chemicals",
-        mServices: "Other सेवाएं",
-        mPrivacy: "गोपनीयता नीति",
-        mRate: "प्ले स्टोर पर रेट करो",
-        mShare: "किसान साथियों ने शेयर करो",
-        mHelp: "व्हाट्सएप हेल्पलाइन",
-        mLogout: "लॉगआउट",
-        solHead: "⚡ तुरंत समाधान (AI जांच)",
-        camBtn: "कैमरा सू फोटो लो",
-        galBtn: "गैलरी सू चुणो",
-        diagBtn: "🔍 रोग पहचानो",
-        diagRepHead: "🌿 AI रोग निदान रिपोर्ट",
-        wapBtn: "डॉक्टर ने WhatsApp करो",
-        chatYou: "आप",
-        chatDoc: "डॉक्टर",
-        chatThinking: "सोच रह्यो हूँ...",
-        chatErr: "माफ करजो, उत्तर कोनी मिल्यो।",
-        chatNetErrHead: "एरर",
-        chatNetErrDesc: "इंटरनेट कनेक्शन में समस्या है।",
-        aiDocTitle: "AI सब्जी डॉक्टर चैट"
       },
       gu: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1717,7 +1707,7 @@
         gSched: "સ્પ્રે શેડ્યુલ",
         gAtoz: "ખેતી કેવી રીતે કરવી (A-Z)",
         gDisc: "ખેડૂત ચર્ચા",
-        gAdv: "સલાहકાર",
+        gAdv: "સલાહકાર",
         gComp: "All કંપની બીજ",
         gChem: "દવાઓ Chemicals",
         gServ: "Other સેવાઓ",
@@ -1762,7 +1752,7 @@
         mRate: "પ્લે સ્ટોર પર રેટ કરો",
         mShare: "મિત્રોને શેર કરો",
         mHelp: "વ્હોટ્સએપ હેલ્પલાઇન",
-        mLogout: "લોગઆ웃",
+        mLogout: "લોગઆઉટ",
         solHead: "⚡ ત્વરિત ઉકેલ (AI તપાસ)",
         camBtn: "કેમેરાથી ફોટો લો",
         galBtn: "ગેલેરીથી પસંદ કરો",
@@ -1773,9 +1763,9 @@
         chatDoc: "ડોક્ટર",
         chatThinking: "વિચારી રહ્યો છું...",
         chatErr: "ક્ષમા કરશો, જવાબ મળ્યો નથી.",
-        chatNetErrHead: "ભूल",
+        chatNetErrHead: "ભૂલ",
         chatNetErrDesc: "ઇન્ટરનેટ કનેક્શન સમસ્યા.",
-        aiDocTitle: "AI ડોક્ટર ચेट"
+        aiDocTitle: "AI ડોક્ટર ચૅટ"
       },
       mr: {
         headerTitle: "CROP & SABZI DOCTOR",
@@ -1797,7 +1787,7 @@
         txtRateBtn: "रेट करा",
         txtVideoHead: "📺 ताज्या कृषी व्हिडिओ",
         txtSeeAll: "सर्व पहा >",
-        txtSocialHead: "सोशल मीडियावर आमचेसे जोडा",
+        txtSocialHead: "सोशल मीडियावर आमच्याशी जोडा",
         fabText: "तातडीने उपाय",
         navHome: "होम",
         navCrops: "जाती",
@@ -1847,14 +1837,21 @@
         chatErr: "क्षमस्व, मिळाले नाही.",
         chatNetErrHead: "त्रुटी",
         chatNetErrDesc: "इंटरनेट कनेक्शन समस्या.",
-        aiDocTitle: "AI डॉक्टर चेट"
+        aiDocTitle: "AI डॉक्टर चॅट"
       }
     };
+
+    function highlightActiveLangChip(langCode) {
+      document.querySelectorAll('#languageStrip .lang-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === langCode);
+      });
+    }
 
     function setAppLanguage(langCode) {
       currentLang = langCode;
       localStorage.setItem('app_lang', langCode);
       document.getElementById('languageSelectModal').classList.remove('active');
+      highlightActiveLangChip(langCode);
       applyLanguageUI();
       if (!localStorage.getItem('is_logged_in')) {
         document.getElementById('loginScreenModal').classList.add('active');
@@ -2598,7 +2595,7 @@
       let list = chemicalsRecords.filter(c => (c.type||'').toLowerCase().includes(cat.toLowerCase()));
       if(list.length === 0) container.innerHTML = `<div class="variety-card" style="text-align:center;">दवाइयाँ उपलब्ध नहीं हैं।</div>`;
       list.forEach(c => {
-        let p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}'}" alt="${c.name}"></div>` : '';
+        let p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')}" alt="${c.name}"></div>` : '';
         container.innerHTML += `
           <div class="chem-card">
             <div class="chem-title">🧪 ${c.name} (${c.type})</div>
