@@ -107,7 +107,8 @@
     body.dark-mode .disease-card,
     body.dark-mode .stories-wrapper,
     body.dark-mode .quick-pill,
-    body.dark-mode #aiChatMessagesContainer {
+    body.dark-mode #aiChatMessagesContainer,
+    body.dark-mode .video-card-item {
       background-color: #1e2937 !important;
       color: #f8fafc !important;
       border-color: #334155 !important;
@@ -613,7 +614,7 @@
     <div class="profile-card-widget" onclick="openProfileScreen()">
       <h4>
         <span id="drawerUserName">👤 किसान प्रोफाइल</span>
-        <span id="profilePercentBadge" style="font-size:11px; color:#15803d; font-weight:bold;">40%</span>
+        <span id="profilePercentBadge" style="font-size:11px; color:#15803d; font-weight:bold;">25%</span>
       </h4>
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="profileProgressBar"></div>
@@ -637,7 +638,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.4
+      CROP & SABZI DOCTOR • v10.5
     </div>
   </div>
 
@@ -2694,17 +2695,23 @@
       });
     }
 
+    let storyTimerId = null;
     function openStoryPlayer(idx) {
       const st = window.activeStories[idx];
+      if (!st) return;
+      if (storyTimerId) clearTimeout(storyTimerId);
       const modal = document.getElementById('storyPlayerModal');
       document.getElementById('storyTopTitle').innerText = st.title;
       document.getElementById('storyCaptionText').innerText = st.desc || '';
       document.getElementById('storyImageDisplay').style.display = 'block';
       document.getElementById('storyImageDisplay').src = st.url;
       modal.classList.add('active');
-      setTimeout(() => { closeStoryPlayer(); }, 5000);
+      storyTimerId = setTimeout(() => { closeStoryPlayer(); }, 5000);
     }
-    function closeStoryPlayer() { document.getElementById('storyPlayerModal').classList.remove('active'); }
+    function closeStoryPlayer() {
+      if (storyTimerId) clearTimeout(storyTimerId);
+      document.getElementById('storyPlayerModal').classList.remove('active');
+    }
 
     function getWeatherCodeIconAndDesc(code, isNight) {
       if (code === 0) return { icon: isNight ? '🌙' : '☀️', desc: 'साफ़ आसमान' };
@@ -3280,6 +3287,7 @@
         document.getElementById('loginOtp').value = "1234";
         localStorage.setItem('farmer_phone', phone);
         localStorage.setItem('is_logged_in', 'true');
+        updateProfileUI();
         syncFarmerDataToGoogleSheet("नया किसान", phone, userCurrentCity, "");
         setTimeout(() => { document.getElementById('loginScreenModal').classList.remove('active'); }, 600);
       }, 1000);
@@ -3381,6 +3389,7 @@
       document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || '';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
       document.getElementById('profStateInput').value = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
+      document.getElementById('profCropsInput').value = localStorage.getItem('farmer_crops') || '';
       const t = getT();
       openScreen('screen-profile', t.profileTitle);
     }
@@ -3388,12 +3397,13 @@
     function saveFarmerProfile() {
       const name = document.getElementById('profNameInput').value.trim();
       const phone = document.getElementById('profPhoneInput').value.trim();
-      const state = document.getElementById('profStateInput').value.trim();
+      const state = document.getElementById('profStateInput').value.trim() || 'Sri Ganganagar';
       const crops = document.getElementById('profCropsInput').value.trim();
 
       localStorage.setItem('farmer_name', name);
       localStorage.setItem('farmer_phone', phone);
       localStorage.setItem('farmer_state', state);
+      localStorage.setItem('farmer_crops', crops);
       userCurrentCity = state;
 
       syncFarmerDataToGoogleSheet(name, phone, state, crops);
@@ -3471,7 +3481,12 @@
     function savePost(author, text, imgUrl) {
       const posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
       posts.unshift({ id: Date.now(), author, text, image: imgUrl, comments: [], date: 'आज' });
-      localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
+      try {
+        localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
+      } catch (e) {
+        alert('स्टोरेज भर गया है, बिना फोटो के पोस्ट करें।');
+        return;
+      }
       document.getElementById('discussionText').value = '';
       document.getElementById('discussionImageInput').value = '';
       loadDiscussionPosts();
@@ -3506,7 +3521,7 @@
         let commentsHtml = '<div style="margin-top:10px; border-top:1px dashed #cbd5e1; padding-top:8px;">';
         if (p.comments && p.comments.length > 0) {
           p.comments.forEach(cm => {
-            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cm.author}:</b> ${cm.text}</div>`;
+            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b>💬 ${cm.author}:</b> ${cm.text}</div>`;
           });
         }
         commentsHtml += `
@@ -3518,8 +3533,8 @@
 
         container.innerHTML += `
           <div class="variety-card" style="border-left:4px solid #0284c7;">
-            <b style="color:#0369a1; font-size:14px;">👤 ${p.author}</b>
-            <p style="margin:6px 0; color:#1f2937; font-size:14px;">${p.text}</p>
+            <b>👤 ${p.author}</b>
+            <p style="margin:6px 0; font-size:14px;">${p.text}</p>
             ${imgHtml}
             ${commentsHtml}
           </div>`;
@@ -3542,13 +3557,17 @@
       const name = localStorage.getItem('farmer_name');
       const phone = localStorage.getItem('farmer_phone');
       const state = localStorage.getItem('farmer_state');
+      const crops = localStorage.getItem('farmer_crops');
       const t = getT();
       document.getElementById('welcomeMsg').innerText = name ? `🌾 ${name}` : t.welcomeMsg;
+      const drawerUser = document.getElementById('drawerUserName');
+      if (drawerUser) drawerUser.innerText = name ? `👤 ${name}` : '👤 किसान प्रोफाइल';
 
-      let pct = 25;
-      if (name) pct += 25;
-      if (phone) pct += 25;
-      if (state) pct += 25;
+      let pct = 20;
+      if (name) pct += 20;
+      if (phone) pct += 20;
+      if (state) pct += 20;
+      if (crops) pct += 20;
       const bar = document.getElementById('profileProgressBar');
       const badge = document.getElementById('profilePercentBadge');
       if (bar) bar.style.width = `${pct}%`;
