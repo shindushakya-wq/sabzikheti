@@ -18,7 +18,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .splash-logo-box {
@@ -91,7 +91,6 @@
       border-color: #334155 !important;
     }
 
-    /* डार्क मोड में चैट मैसेज बबल्स और इनपुट फिक्स */
     body.dark-mode #aiChatMessagesContainer > div {
       background-color: #273548 !important;
       color: #f8fafc !important;
@@ -263,7 +262,6 @@
       border-color: #334155;
     }
 
-    /* माइक सक्रिय होने पर एनिमेशन */
     @keyframes micListeningPulse {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
       70% { transform: scale(1.12); box-shadow: 0 0 0 12px rgba(22, 163, 74, 0); }
@@ -407,7 +405,7 @@
   <!-- स्प्लैश स्क्रीन एनीमेशन -->
   <div id="splashScreen">
     <div class="splash-logo-box">
-      <img src="https://i.postimg.cc/xCGvN3rt/IMG-20261116-WA7746.jpg" alt="Logo">
+      <img src="https://i.postimg.cc/xCGvN3rt/IMG-20261116-WA7746.jpg" alt="Logo" onerror="this.style.display='none'">
     </div>
     <div class="splash-title">CROP & SABZI DOCTOR</div>
     <div class="splash-sub">🌾 कृषि सहायक ऐप</div>
@@ -429,18 +427,18 @@
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
-        <button class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('hi')">हिंदी</button>
-        <button class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('mr')">मराठी</button>
-        <button class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('bn')">বাংলা</button>
-        <button class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('te')">తెలుగు</button>
-        <button class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('ta')">தமிழ்</button>
-        <button class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('gu')">ગુજરાતી</button>
-        <button class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
-        <button class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
-        <button class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('en')">English</button>
-        <button class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('ml')">മലയാളം</button>
-        <button class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
-        <button class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('as')">অসমীয়া</button>
+        <button type="button" class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('hi')">हिंदी</button>
+        <button type="button" class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('mr')">मराठी</button>
+        <button type="button" class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('bn')">বাংলা</button>
+        <button type="button" class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('te')">తెలుగు</button>
+        <button type="button" class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('ta')">தமிழ்</button>
+        <button type="button" class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+        <button type="button" class="btn-action" style="background:#f0fdf4; color:#166534; border:1.5px solid #86efac;" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
+        <button type="button" class="btn-action" style="background:#fefce8; color:#854d0e; border:1.5px solid #fef08a;" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
+        <button type="button" class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd;" onclick="setAppLanguage('en')">English</button>
+        <button type="button" class="btn-action" style="background:#fdf2f8; color:#be185d; border:1.5px solid #fbcfe8;" onclick="setAppLanguage('ml')">മലയാളം</button>
+        <button type="button" class="btn-action" style="background:#fff7ed; color:#c2410c; border:1.5px solid #fed7aa;" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
+        <button type="button" class="btn-action" style="background:#f3e8ff; color:#6b21a8; border:1.5px solid #e9d5ff;" onclick="setAppLanguage('as')">অসমীয়া</button>
       </div>
     </div>
   </div>
@@ -460,7 +458,7 @@
           <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
           <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
         </div>
-        <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="txtOtpBtn">📲 ओटीपी (OTP) भेजें</button>
+        <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="txtOtpBtn">📲 ओटीपी (OTP) भेजें</button>
       </div>
 
       <div class="form-group" id="otpInputGroup" style="display:none;">
@@ -470,7 +468,7 @@
       </div>
 
       <div style="text-align:center; margin-top:14px; border-top:1px solid #f3f4f6; padding-top:12px;">
-        <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
+        <button type="button" onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
           ⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें
         </button>
       </div>
@@ -484,8 +482,8 @@
       <span class="header-title" id="headerTitle">CROP & SABZI DOCTOR</span>
     </div>
     <div class="header-actions">
-      <button class="dark-mode-btn" onclick="toggleDarkMode()" title="डार्क मोड">🌙</button>
-      <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 भाषा</button>
+      <button type="button" class="dark-mode-btn" onclick="toggleDarkMode()" title="डार्क मोड">🌙</button>
+      <button type="button" class="lang-toggle-btn" id="langToggleBtn" onclick="toggleAppLanguage()">🌐 भाषा</button>
       <div class="bell-wrapper" onclick="openNotificationModal()" title="नोटिफिकेशन">
         <span class="bell-icon">🔔</span>
         <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
@@ -499,7 +497,7 @@
     <div class="modal-box">
       <div class="modal-header">
         <h3 style="color:#1b5e20;" id="txtNotifHead">🔔 ताज़ा अपडेट व सूचनाएं</h3>
-        <button class="modal-close" onclick="closeNotificationModal()">✕</button>
+        <button type="button" class="modal-close" onclick="closeNotificationModal()">✕</button>
       </div>
       <div id="notificationListContent">
         <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳ लोड हो रहा है...</div>
@@ -512,7 +510,7 @@
   <div class="drawer-content" id="drawerContent">
     <div class="drawer-header">
       <h3 id="txtDrawerHead">📋 मेन्यू व सेटिंग्स</h3>
-      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+      <button type="button" class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
 
     <div class="profile-card-widget" onclick="openProfileScreen()">
@@ -542,12 +540,12 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v9.1 PRO
+      CROP & SABZI DOCTOR • v9.2 PRO
     </div>
   </div>
 
   <!-- तुरंत समाधान फ्लोटिंग बटन -->
-  <button class="fab-solution" onclick="openSolutionModal()">
+  <button type="button" class="fab-solution" onclick="openSolutionModal()">
     <span>⚡</span>
     <span id="fabText">तुरंत समाधान</span>
   </button>
@@ -557,7 +555,7 @@
     <div class="modal-box">
       <div class="modal-header">
         <h3 id="txtSolHead">⚡ तुरंत समाधान (AI रोग जांच)</h3>
-        <button class="modal-close" onclick="closeSolutionModal()">✕</button>
+        <button type="button" class="modal-close" onclick="closeSolutionModal()">✕</button>
       </div>
 
       <div class="upload-options">
@@ -576,7 +574,7 @@
 
       <img id="solutionPreviewImg" class="preview-img" alt="रोगी पौधा">
 
-      <button id="btnDiagnose" class="btn-action btn-wa" style="display:none; background:#1b5e20; margin-bottom:10px;" onclick="runSmartDiagnosis()">
+      <button type="button" id="btnDiagnose" class="btn-action btn-wa" style="display:none; background:#1b5e20; margin-bottom:10px;" onclick="runSmartDiagnosis()">
         🔍 रोग पहचानें व उपचार पाएं
       </button>
 
@@ -601,7 +599,7 @@
           <span style="font-size:20px;" id="storyTopIcon">🌱</span>
           <b style="font-size:14px;" id="storyTopTitle">ताज़ा स्टोरी</b>
         </div>
-        <button class="story-close-btn" onclick="closeStoryPlayer()">✕</button>
+        <button type="button" class="story-close-btn" onclick="closeStoryPlayer()">✕</button>
       </div>
     </div>
     <img id="storyImageDisplay" class="story-media-view" style="display:none;" src="" alt="Story">
@@ -652,7 +650,7 @@
     <!-- लाइव मौसम कार्ड -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
-        <h4 id="weatherPlace">📍 श्रीलंका नगर</h4>
+        <h4 id="weatherPlace">📍 श्री गंगानगर</h4>
         <span class="weather-datetime" id="weatherDateTime">--:-- --</span>
       </div>
       <div class="weather-body-row">
@@ -671,8 +669,8 @@
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 खीरा, टमाटर या तरबूज लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
-        <button class="search-icon-btn" onclick="triggerManualSearch()" title="सर्च करें">🔍</button>
-        <button class="voice-btn" id="voiceSearchBtn" onclick="startVoiceSearch()" title="बोलकर सर्च करें">🎙️</button>
+        <button type="button" class="search-icon-btn" onclick="triggerManualSearch()" title="सर्च करें">🔍</button>
+        <button type="button" class="voice-btn" id="voiceSearchBtn" onclick="startVoiceSearch()" title="बोलकर सर्च करें">🎙️</button>
       </div>
     </div>
 
@@ -754,7 +752,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: सभी किस्में - श्रेणियां (Categories) -->
+  <!-- SCREEN: सभी किस्में - श्रेणियां -->
   <div id="screen-all-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; padding: 14px; margin-bottom: 12px;">
       <h3 style="color:#1b5e20; font-size:16px; margin-bottom:4px;" id="catHeadTitle">🌱 सभी किस्में श्रेणियां</h3>
@@ -784,7 +782,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: फसल सुरक्षा - श्रेणियां (Categories) -->
+  <!-- SCREEN: फसल सुरक्षा - श्रेणियां -->
   <div id="screen-protection-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b91c1c; padding: 14px; margin-bottom: 12px;">
       <h3 style="color:#b91c1c; font-size:16px; margin-bottom:4px;">🛡️ फसल सुरक्षा श्रेणी चुनें:</h3>
@@ -814,7 +812,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: स्प्रे शेड्यूल - श्रेणियां (Categories) -->
+  <!-- SCREEN: स्प्रे शेड्यूल - श्रेणियां -->
   <div id="screen-schedule-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b45309; padding: 14px; margin-bottom: 12px;">
       <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;">🗓️ स्प्रे शेड्यूल श्रेणी चुनें:</h3>
@@ -859,8 +857,8 @@
 
     <div style="display:flex; gap:8px; align-items:center;">
       <input type="text" id="aiUserChatInput" class="form-control" placeholder="उदा. टमाटर के पत्ते मुड़ रहे हैं..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
-      <button class="btn-action" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="बोलकर पूछें">🎙️</button>
-      <button class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()" id="chatSendBtn">भेजें</button>
+      <button type="button" class="btn-action" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="बोलकर पूछें">🎙️</button>
+      <button type="button" class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()" id="chatSendBtn">भेजें</button>
     </div>
   </div>
 
@@ -883,7 +881,7 @@
       <div class="form-group"><label id="lblAuthor">आपका नाम:</label><input type="text" id="discussionAuthor" class="form-control" placeholder="नाम लिखें"></div>
       <div class="form-group"><label id="lblDiscText">आपकी चर्चा / सवाल:</label><textarea id="discussionText" class="form-control" rows="3" placeholder="अपनी समस्या या चर्चा यहाँ लिखें..."></textarea></div>
       <div class="form-group"><label id="lblDiscPhoto">फोटो जोड़ें (वैकल्पिक):</label><input type="file" id="discussionImageInput" accept="image/*" class="form-control" style="padding:6px;"></div>
-      <button class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" onclick="submitDiscussionPost()" id="btnDiscPost">📤 चर्चा पोस्ट करें</button>
+      <button type="button" class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" onclick="submitDiscussionPost()" id="btnDiscPost">📤 चर्चा पोस्ट करें</button>
     </div>
     <h4 style="font-size:14px; color:#1b5e20; margin-bottom:10px;" id="discListTitle">📢 किसानों की ताज़ा चर्चाएं व सुझाव (Comments):</h4>
     <div id="discussionPostsContainer"></div>
@@ -995,7 +993,7 @@
         <label id="lblCalcDate">बुवाई की तारीख (Sowing Date):</label>
         <input type="date" id="calcDateInput" class="form-control">
       </div>
-      <button class="btn-action btn-wa" style="background:#d97706; margin-top:12px;" onclick="calculateCropSchedule()" id="btnCalcRun">📊 सही समय गणना करें</button>
+      <button type="button" class="btn-action btn-wa" style="background:#d97706; margin-top:12px;" onclick="calculateCropSchedule()" id="btnCalcRun">📊 सही समय गणना करें</button>
     </div>
 
     <div class="doc-result-card" id="calcResultBox" style="display:block; background:#fffbeb; border:1.5px solid #fde68a;">
@@ -1046,7 +1044,7 @@
   <div id="screen-weather-detail" class="screen">
     <div class="variety-card" id="detailWeatherCard">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 style="color:#1b5e20; font-size:17px;" id="detailCity">📍 श्रीलंका नगर</h3>
+        <h3 style="color:#1b5e20; font-size:17px;" id="detailCity">📍 श्री गंगानगर</h3>
         <span style="font-size:12px; color:#166534; font-weight:bold;" id="detailDate">--:-- --</span>
       </div>
       <div style="text-align:center; padding:15px 0;">
@@ -1112,7 +1110,7 @@
       <div class="form-group"><label id="lblPPhone">मोबाइल नंबर:</label><input type="tel" id="profPhoneInput" class="form-control" placeholder="उदा. 9876543210"></div>
       <div class="form-group"><label id="lblPState">गाँव / ज़िला / राज्य:</label><input type="text" id="profStateInput" class="form-control" placeholder="उदा. Sri Ganganagar"></div>
       <div class="form-group"><label id="lblPCrops">मुख्य फसलें:</label><input type="text" id="profCropsInput" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा"></div>
-      <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾 प्रोफाइल सुरक्षित करें</button>
+      <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾 प्रोफाइल सुरक्षित करें</button>
     </div>
   </div>
 
@@ -1122,7 +1120,7 @@
     <div id="cropsContainer"></div>
   </div>
 
-  <!-- SCREEN: किस्में सूची (किसी फसल की सारी वैरायटी) -->
+  <!-- SCREEN: किस्में सूची -->
   <div id="screen-seeds" class="screen">
     <div id="varietiesContainer"></div>
   </div>
@@ -1175,293 +1173,16 @@
     <div class="nav-tab" onclick="contactAdvisor()"><span>💬</span><span id="navHelp">हेल्पलाइन</span></div>
   </div>
 
+  <!-- इमेज प्रीव्यू मोडल -->
+  <div class="image-preview-modal" id="imagePreviewModal" onclick="closeImageModal()">
+    <button type="button" class="image-preview-close" onclick="closeImageModal()">✕</button>
+    <img id="fullScreenPreviewImg" class="image-preview-content" src="" alt="Preview">
+  </div>
+
   <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        let splash = document.getElementById('splashScreen');
-        if(splash) {
-          splash.style.opacity = '0';
-          splash.style.visibility = 'hidden';
-          setTimeout(() => splash.remove(), 500);
-        }
-      }, 2000);
-    });
-
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9PbEg0GvfHYO0a42seATSJtE1f_3MDTK50Ot_bCP-pwbAXWNXeNgDP5r4NJjfO6o/exec";
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-      let isDark = document.body.classList.contains('dark-mode');
-      localStorage.setItem('dark_mode', isDark ? 'true' : 'false');
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if(localStorage.getItem('dark_mode') === 'true') {
-        document.body.classList.add('dark-mode');
-      }
-
-      let savedLang = localStorage.getItem('app_lang');
-      if (!savedLang) {
-        document.getElementById('languageSelectModal').classList.add('active');
-      } else {
-        currentLang = savedLang;
-        highlightActiveLangChip(currentLang);
-        applyLanguageUI();
-        if (!localStorage.getItem('is_logged_in')) {
-          document.getElementById('loginScreenModal').classList.add('active');
-        }
-      }
-
-      detectUserLocation();
-      let todayStr = new Date().toISOString().split('T')[0];
-      let dateInput = document.getElementById('calcDateInput');
-      if(dateInput) dateInput.value = todayStr;
-    });
-
-    function speakAiAnswer(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        let cleanText = text.replace(/[*#_]/g, '');
-        let utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
-        utterance.rate = 1.0;
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-
-    function startVoiceAssistant() {
-      const t = translations[currentLang] || translations['hi'];
-      openScreen('screen-ai-doctor-chat', t.aiDocTitle);
-    }
-
-    function handleAiChatKeyPress(e) {
-      if(e.key === 'Enter') sendUserChatMessage();
-    }
-
-    async function sendUserChatMessage() {
-      let inputElem = document.getElementById('aiUserChatInput');
-      let msg = inputElem.value.trim();
-      if(!msg) return;
-
-      let container = document.getElementById('aiChatMessagesContainer');
-      const t = translations[currentLang] || translations['hi'];
-
-      container.innerHTML += `
-        <div style="background:#eff6ff; padding:10px 12px; border-radius:10px; border-left:4px solid #2563eb; font-size:13.5px; color:#1e40af; align-self:flex-end; max-width:85%;">
-          <b>👤 ${t.chatYou}:</b> ${msg}
-        </div>`;
-
-      inputElem.value = '';
-      container.scrollTop = container.scrollHeight;
-
-      let loadingId = 'loading_' + Date.now();
-      container.innerHTML += `
-        <div id="${loadingId}" style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
-          <b>👨‍⚕️ AI ${t.chatDoc}:</b> ${t.chatThinking} ⏳
-        </div>`;
-      container.scrollTop = container.scrollHeight;
-
-      try {
-        let res = await fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ notes: msg, lang: currentLang })
-        });
-        let data = await res.json();
-
-        let loadingDiv = document.getElementById(loadingId);
-        if(loadingDiv) loadingDiv.remove();
-
-        let reply = t.chatErr;
-        if (data.result) {
-          reply = data.result;
-        } else if (data.परिणाम) {
-          reply = data.परिणाम;
-        } else if (typeof data === 'string') {
-          reply = data;
-        }
-
-        container.innerHTML += `
-          <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
-            <b>👨‍⚕️ AI ${t.chatDoc}:</b> ${reply.replace(/\n/g, '<br>')}
-          </div>`;
-
-        container.scrollTop = container.scrollHeight;
-        speakAiAnswer(reply);
-
-      } catch (err) {
-        let loadingDiv = document.getElementById(loadingId);
-        if(loadingDiv) loadingDiv.remove();
-
-        container.innerHTML += `
-          <div style="background:#fee2e2; padding:10px 12px; border-radius:10px; border-left:4px solid #dc2626; font-size:13.5px; color:#991b1b; max-width:85%;">
-            <b>⚠️ ${t.chatNetErrHead}:</b> ${t.chatNetErrDesc}
-          </div>`;
-        container.scrollTop = container.scrollHeight;
-      }
-    }
-
-    function startChatVoiceInput() {
-      if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); }
-
-      let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        alert(currentLang === 'en' ? 'Speech recognition not supported.' : 'आपका ब्राउज़र बोलकर टाइप करने की सुविधा सपोर्ट नहीं करता।');
-        return;
-      }
-
-      let rec = new SpeechRecognition();
-      rec.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
-      rec.interimResults = false;
-      rec.maxAlternatives = 1;
-
-      let chatInput = document.getElementById('aiUserChatInput');
-      let micBtn = document.querySelector('button[onclick="startChatVoiceInput()"]');
-
-      rec.onstart = function() {
-        chatInput.placeholder = currentLang === 'en' ? '🎙️ Listening...' : '🎙️ सुन रहा हूँ, बोलिए...';
-        if(micBtn) micBtn.classList.add('mic-active-anim');
-      };
-
-      rec.onresult = (e) => {
-        let spokenText = e.results[0][0].transcript;
-        chatInput.value = spokenText;
-        if(micBtn) micBtn.classList.remove('mic-active-anim');
-        sendUserChatMessage();
-      };
-
-      rec.onerror = rec.onend = function() {
-        chatInput.placeholder = currentLang === 'en' ? 'Type your question here...' : 'उदा. टमाटर के पत्ते मुड़ रहे हैं...';
-        if(micBtn) micBtn.classList.remove('mic-active-anim');
-      };
-
-      try { rec.start(); } catch (err) {}
-    }
-
-    function showSowingCalculatorScreen() {
-      const t = translations[currentLang] || translations['hi'];
-      openScreen('screen-sowing-calc', t.calcTitle);
-    }
-
-    function calculateCropSchedule() {
-      let crop = document.getElementById('calcCropSelect').value;
-      let dateVal = document.getElementById('calcDateInput').value;
-      if(!dateVal) { alert(currentLang === 'en' ? 'Please select sowing date!' : 'कृपया बुवाई की तारीख चुनें!'); return; }
-
-      let sowingDate = new Date(dateVal);
-      let daysToHarvest = 90;
-      if(crop === 'खीरा' || crop === 'भिंडी') daysToHarvest = 55;
-      if(crop === 'मिर्च') daysToHarvest = 75;
-      if(crop === 'तरबूज') daysToHarvest = 85;
-      if(crop === 'फूलगोभी') daysToHarvest = 78;
-
-      let fertilizerDate1 = new Date(sowingDate); fertilizerDate1.setDate(sowingDate.getDate() + 15);
-      let fertilizerDate2 = new Date(sowingDate); fertilizerDate2.setDate(sowingDate.getDate() + 35);
-      let harvestDate = new Date(sowingDate); harvestDate.setDate(sowingDate.getDate() + daysToHarvest);
-
-      let options = { year: 'numeric', month: 'long', day: 'numeric' };
-      let loc = currentLang === 'en' ? 'en-US' : 'hi-IN';
-      let resultHTML = currentLang === 'en' ? `
-        <b>🌱 Crop:</b> ${crop}<br>
-        <b>📅 Sowing Date:</b> ${sowingDate.toLocaleDateString(loc, options)}<br><br>
-        <b>🌿 1st Fertilizer (Growth):</b> ${fertilizerDate1.toLocaleDateString(loc, options)}<br>
-        <b>⚡ 2nd Fertilizer (Flower/Fruit):</b> ${fertilizerDate2.toLocaleDateString(loc, options)}<br>
-        <b style="color:#16a34a;">🎯 Estimated Harvest Date: ${harvestDate.toLocaleDateString(loc, options)}</b>
-      ` : `
-        <b>🌱 फसल:</b> ${crop}<br>
-        <b>📅 बुवाई की तारीख:</b> ${sowingDate.toLocaleDateString(loc, options)}<br><br>
-        <b>🌿 पहली खाद (बेसल/ग्रोथ) का समय:</b> ${fertilizerDate1.toLocaleDateString(loc, options)}<br>
-        <b>⚡ दूसरी खाद (फूल व फल विकास) का समय:</b> ${fertilizerDate2.toLocaleDateString(loc, options)}<br>
-        <b style="color:#16a34a;">🎯 अनुमानित कटाई शुरू होने की तारीख: ${harvestDate.toLocaleDateString(loc, options)}</b>
-      `;
-      document.getElementById('calcResultText').innerHTML = resultHTML;
-    }
-
-    function detectUserLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          let lat = position.coords.latitude;
-          let lon = position.coords.longitude;
-          try {
-            let res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=hi`);
-            let data = await res.json();
-            if (data && (data.city || data.principalSubdivision)) {
-              let detectedCity = data.city || data.principalSubdivision;
-              userCurrentCity = detectedCity;
-              localStorage.setItem('farmer_state', detectedCity);
-              fetchLiveWeather();
-            }
-          } catch(e) {}
-        }, () => {});
-      }
-    }
-
-    let touchstartY = 0;
-    window.addEventListener('touchstart', e => { touchstartY = e.changedTouches[0].screenY; });
-    window.addEventListener('touchend', e => {
-      let touchendY = e.changedTouches[0].screenY;
-      if (touchendY - touchstartY > 120 && window.scrollY === 0) {
-        location.reload();
-      }
-    });
-
-    let cachedMandiData = null;
-    async function fetchLiveMandiPrices() {
-      const loadingDiv = document.getElementById('mandiLoading');
-      const tableElem = document.getElementById('mandiTableElement');
-      const tbody = document.getElementById('mandiTableBody');
-
-      if (cachedMandiData && cachedMandiData.length > 0) {
-        renderMandiTable(cachedMandiData);
-        return;
-      }
-
-      try {
-        const apiUrl = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=50";
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-
-        if (data && data.records && data.records.length > 0) {
-          let userDistrict = (localStorage.getItem('farmer_state') || 'Sri Ganganagar').toLowerCase();
-          let filtered = data.records.filter(r => (r.district || '').toLowerCase().includes(userDistrict) || (r.state || '').toLowerCase().includes('rajasthan'));
-          cachedMandiData = filtered.length > 0 ? filtered : data.records;
-          renderMandiTable(cachedMandiData);
-        } else {
-          loadingDiv.innerHTML = currentLang === 'en' ? "⚠️ Live mandi data not available." : "⚠️ वर्तमान में लाइव मंडी डेटा उपलब्ध नहीं है।";
-        }
-      } catch (err) {
-        loadingDiv.innerHTML = currentLang === 'en' ? "⚠️ Network error loading mandi prices." : "⚠️ मंडी डेटा लोड करने में इंटरनेट कनेक्शन की समस्या आई।";
-      }
-    }
-
-    function renderMandiTable(records) {
-      const loadingDiv = document.getElementById('mandiLoading');
-      const tableElem = document.getElementById('mandiTableElement');
-      const tbody = document.getElementById('mandiTableBody');
-
-      tbody.innerHTML = '';
-      records.forEach(r => {
-        let commName = r.commodity || '-';
-        let emoji = getCropEmoji(commName);
-        tbody.innerHTML += `
-          <tr>
-            <td>${r.state || '-'}<br><small style="color:#6b7280;">${r.district || ''}</small></td>
-            <td><b>${r.market || '-'}</b></td>
-            <td>${emoji} <b>${commName}</b></td>
-            <td>₹${r.min_price || '-'}</td>
-            <td><span style="color:#16a34a; font-weight:bold;">₹${r.max_price || '-'}</span></td>
-          </tr>`;
-      });
-      loadingDiv.style.display = 'none';
-      tableElem.style.display = 'table';
-    }
-
-    const navHistory = ['screen-home'];
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
+    const navHistory = ['screen-home'];
 
     let sheetRecords = [];
     let scheduleRecords = {};
@@ -1477,6 +1198,8 @@
     let imageMimeType = "image/jpeg";
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let currentLang = localStorage.getItem('app_lang') || 'hi';
+    let cachedMandiData = null;
+    const phraseMapToTarget = {};
 
     const langDisplayNames = {
       hi: "हिंदी",
@@ -1934,10 +1657,54 @@
       }
     };
 
-    const phraseMapToTarget = {};
+    function dismissSplashScreen() {
+      const splash = document.getElementById('splashScreen');
+      if (splash) {
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+        setTimeout(() => {
+          if (splash && splash.parentNode) splash.remove();
+        }, 450);
+      }
+    }
+
+    // सेफ्टी टाइमर ताकि स्प्लैश स्क्रीन कभी न अटके
+    setTimeout(dismissSplashScreen, 1600);
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+
+    function showLoader() {
+      const l = document.getElementById('appLoader');
+      if (l) l.style.display = 'flex';
+    }
+    function hideLoader() {
+      const l = document.getElementById('appLoader');
+      if (l) l.style.display = 'none';
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('dark_mode', isDark ? 'true' : 'false');
+    }
+
+    function highlightActiveLangChip(langCode) {
+      document.querySelectorAll('#languageStrip .lang-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === langCode);
+      });
+    }
+
+    function updateLangToggleButtonLabel(langCode) {
+      const btn = document.getElementById('langToggleBtn');
+      if (!btn) return;
+      const label = langDisplayNames[langCode] || "भाषा";
+      btn.innerText = `🌐 ${label}`;
+    }
 
     async function translateTextForApp(text, targetLang) {
-      if (!text || !String(text).trim()) return text;
+      if (!text || !String(text).trim() || targetLang === 'hi') return text;
       const clean = String(text).trim();
       if (/^https?:\/\//i.test(clean) || /^[0-9\s.,+\-/%₹°():|]+$/.test(clean)) return text;
 
@@ -1960,28 +1727,34 @@
     }
 
     async function translateVisibleHomeElements(langCode) {
+      const t = translations[langCode];
       const searchInput = document.getElementById('homeSearch');
       if (searchInput) {
-        const t = translations[langCode];
-        searchInput.placeholder = (t && t.searchPlaceholder)
-          ? t.searchPlaceholder
-          : await translateTextForApp("खीरा, टमाटर या तरबूज लिखें...", langCode);
+        if (t && t.searchPlaceholder) {
+          searchInput.placeholder = t.searchPlaceholder;
+        } else if (langCode !== 'hi') {
+          searchInput.placeholder = await translateTextForApp("खीरा, टमाटर या तरबूज लिखें...", langCode);
+        } else {
+          searchInput.placeholder = translations.hi.searchPlaceholder;
+        }
       }
 
-      for (const st of (window.activeStories || [])) {
-        if (st.title) st.title = await translateTextForApp(st.title, langCode);
-        if (st.desc) st.desc = await translateTextForApp(st.desc, langCode);
-      }
-      renderStoriesBar();
+      if (langCode !== 'hi') {
+        for (const st of (window.activeStories || [])) {
+          if (st.title) st.title = await translateTextForApp(st.title, langCode);
+          if (st.desc) st.desc = await translateTextForApp(st.desc, langCode);
+        }
+        renderStoriesBar();
 
-      for (const v of (videoRecords || [])) {
-        if (v.title) v.title = await translateTextForApp(v.title, langCode);
+        for (const v of (videoRecords || [])) {
+          if (v.title) v.title = await translateTextForApp(v.title, langCode);
+        }
+        renderDynamicVideos();
       }
-      renderDynamicVideos();
     }
 
     async function translateAllLoadedSheetRecords(langCode) {
-      if (langCode === 'hi') return;
+      if (!langCode || langCode === 'hi') return;
 
       for (const r of sheetRecords) {
         r.crop = await translateTextForApp(r.crop, langCode);
@@ -2014,89 +1787,323 @@
       }
     }
 
-    function updateLangToggleButtonLabel(langCode) {
-      const btn = document.getElementById('langToggleBtn');
-      if (!btn) return;
-      const label = langDisplayNames[langCode] || "भाषा";
-      btn.innerText = `🌐 ${label}`;
-    }
+    function applyLanguageUI() {
+      const t = translations[currentLang] || translations['hi'];
+      if (!t) return;
+      const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val !== undefined) el.innerText = val;
+      };
 
-    function highlightActiveLangChip(langCode) {
-      document.querySelectorAll('#languageStrip .lang-chip').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === langCode);
-      });
+      setTxt('headerTitle', t.headerTitle);
+      setTxt('txtChangeProf', t.txtChangeProf);
+      setTxt('txtAiTitle', t.txtAiTitle);
+      setTxt('aiAssistantSubText', t.aiSubText);
+      setTxt('txtSprayAdvice', t.txtSprayAdvice);
+      setTxt('gCrops', t.gCrops);
+      setTxt('gProt', t.gProt);
+      setTxt('gSched', t.gSched);
+      setTxt('gAtoz', t.gAtoz);
+      setTxt('gDisc', t.gDisc);
+      setTxt('gAdv', t.gAdv);
+      setTxt('gComp', t.gComp);
+      setTxt('gChem', t.gChem);
+      setTxt('gServ', t.gServ);
+      setTxt('txtPlaySub', t.txtPlaySub);
+      setTxt('txtRateBtn', t.txtRateBtn);
+      setTxt('txtVideoHead', t.txtVideoHead);
+      setTxt('txtSeeAll', t.txtSeeAll);
+      setTxt('txtSocialHead', t.txtSocialHead);
+      setTxt('fabText', t.fabText);
+      setTxt('navHome', t.navHome);
+      setTxt('navCrops', t.navCrops);
+      setTxt('navSched', t.navSched);
+      setTxt('navProt', t.navProt);
+      setTxt('navHelp', t.navHelp);
+
+      setTxt('txtDrawerHead', t.drawerHead);
+      setTxt('txtCompleteProfile', t.completeProfileText);
+      setTxt('mProfile', t.mProfile);
+      setTxt('mFav', t.mFav);
+      setTxt('mCrops', t.mCrops);
+      setTxt('mSchedule', t.mSchedule);
+      setTxt('mProtection', t.mProtection);
+      setTxt('mChems', t.mChems);
+      setTxt('mServices', t.mServices);
+      setTxt('mPrivacy', t.mPrivacy);
+      setTxt('mRate', t.mRate);
+      setTxt('mShare', t.mShare);
+      setTxt('mHelp', t.mHelp);
+      setTxt('mLogout', t.mLogout);
+      setTxt('txtSolHead', t.solHead);
+      setTxt('txtCam', t.camBtn);
+      setTxt('txtGal', t.galBtn);
+      setTxt('btnDiagnose', t.diagBtn);
+      setTxt('txtDiagRepHead', t.diagRepHead);
+      setTxt('txtWapBtn', t.wapBtn);
+
+      updateProfileUI();
+      updateLangToggleButtonLabel(currentLang);
+      translateVisibleHomeElements(currentLang);
     }
 
     async function setAppLanguage(langCode) {
       currentLang = langCode;
       localStorage.setItem('app_lang', langCode);
-      document.getElementById('languageSelectModal').classList.remove('active');
+      const langModal = document.getElementById('languageSelectModal');
+      if (langModal) langModal.classList.remove('active');
       highlightActiveLangChip(langCode);
       applyLanguageUI();
       if (!localStorage.getItem('is_logged_in')) {
-        document.getElementById('loginScreenModal').classList.add('active');
+        const loginModal = document.getElementById('loginScreenModal');
+        if (loginModal) loginModal.classList.add('active');
       }
       await loadAllSheetsData();
-      await translateAllLoadedSheetRecords(langCode);
+      if (langCode !== 'hi') {
+        await translateAllLoadedSheetRecords(langCode);
+      }
     }
 
     function toggleAppLanguage() {
-      document.getElementById('languageSelectModal').classList.add('active');
+      const langModal = document.getElementById('languageSelectModal');
+      if (langModal) langModal.classList.add('active');
     }
 
-    function applyLanguageUI() {
+    function speakAiAnswer(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        let cleanText = text.replace(/[*#_]/g, '');
+        let utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function startVoiceAssistant() {
       const t = translations[currentLang] || translations['hi'];
-      if(!t) return;
-      document.getElementById('headerTitle').innerText = t.headerTitle;
-      document.getElementById('welcomeMsg').innerText = t.welcomeMsg;
-      document.getElementById('txtChangeProf').innerText = t.txtChangeProf;
-      document.getElementById('txtAiTitle').innerText = t.txtAiTitle;
-      document.getElementById('aiAssistantSubText').innerText = t.aiSubText;
-      document.getElementById('txtSprayAdvice').innerText = t.txtSprayAdvice;
-      document.getElementById('gCrops').innerText = t.gCrops;
-      document.getElementById('gProt').innerText = t.gProt;
-      document.getElementById('gSched').innerText = t.gSched;
-      document.getElementById('gAtoz').innerText = t.gAtoz;
-      document.getElementById('gDisc').innerText = t.gDisc;
-      document.getElementById('gAdv').innerText = t.gAdv;
-      document.getElementById('gComp').innerText = t.gComp;
-      document.getElementById('gChem').innerText = t.gChem;
-      document.getElementById('gServ').innerText = t.gServ;
-      document.getElementById('txtPlaySub').innerText = t.txtPlaySub;
-      document.getElementById('txtRateBtn').innerText = t.txtRateBtn;
-      document.getElementById('txtVideoHead').innerText = t.txtVideoHead;
-      document.getElementById('txtSeeAll').innerText = t.txtSeeAll;
-      document.getElementById('txtSocialHead').innerText = t.txtSocialHead;
-      document.getElementById('fabText').innerText = t.fabText;
-      document.getElementById('navHome').innerText = t.navHome;
-      document.getElementById('navCrops').innerText = t.navCrops;
-      document.getElementById('navSched').innerText = t.navSched;
-      document.getElementById('navProt').innerText = t.navProt;
-      document.getElementById('navHelp').innerText = t.navHelp;
+      openScreen('screen-ai-doctor-chat', t.aiDocTitle);
+    }
 
-      document.getElementById('txtDrawerHead').innerText = t.drawerHead;
-      document.getElementById('txtCompleteProfile').innerText = t.completeProfileText;
-      document.getElementById('mProfile').innerText = t.mProfile;
-      document.getElementById('mFav').innerText = t.mFav;
-      document.getElementById('mCrops').innerText = t.mCrops;
-      document.getElementById('mSchedule').innerText = t.mSchedule;
-      document.getElementById('mProtection').innerText = t.mProtection;
-      document.getElementById('mChems').innerText = t.mChems;
-      document.getElementById('mServices').innerText = t.mServices;
-      document.getElementById('mPrivacy').innerText = t.mPrivacy;
-      document.getElementById('mRate').innerText = t.mRate;
-      document.getElementById('mShare').innerText = t.mShare;
-      document.getElementById('mHelp').innerText = t.mHelp;
-      document.getElementById('mLogout').innerText = t.mLogout;
-      document.getElementById('txtSolHead').innerText = t.solHead;
-      document.getElementById('txtCam').innerText = t.camBtn;
-      document.getElementById('txtGal').innerText = t.galBtn;
-      document.getElementById('btnDiagnose').innerText = t.diagBtn;
-      document.getElementById('txtDiagRepHead').innerText = t.diagRepHead;
-      document.getElementById('txtWapBtn').innerText = t.wapBtn;
+    function handleAiChatKeyPress(e) {
+      if(e.key === 'Enter') sendUserChatMessage();
+    }
 
-      updateLangToggleButtonLabel(currentLang);
-      translateVisibleHomeElements(currentLang);
+    async function sendUserChatMessage() {
+      let inputElem = document.getElementById('aiUserChatInput');
+      let msg = inputElem.value.trim();
+      if(!msg) return;
+
+      let container = document.getElementById('aiChatMessagesContainer');
+      const t = translations[currentLang] || translations['hi'];
+
+      container.innerHTML += `
+        <div style="background:#eff6ff; padding:10px 12px; border-radius:10px; border-left:4px solid #2563eb; font-size:13.5px; color:#1e40af; align-self:flex-end; max-width:85%;">
+          <b>👤 ${t.chatYou}:</b> ${msg}
+        </div>`;
+
+      inputElem.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      let loadingId = 'loading_' + Date.now();
+      container.innerHTML += `
+        <div id="${loadingId}" style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
+          <b>👨‍⚕️ AI ${t.chatDoc}:</b> ${t.chatThinking} ⏳
+        </div>`;
+      container.scrollTop = container.scrollHeight;
+
+      try {
+        let res = await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ notes: msg, lang: currentLang })
+        });
+        let data = await res.json();
+
+        let loadingDiv = document.getElementById(loadingId);
+        if(loadingDiv) loadingDiv.remove();
+
+        let reply = t.chatErr;
+        if (data.result) {
+          reply = data.result;
+        } else if (data.परिणाम) {
+          reply = data.परिणाम;
+        } else if (typeof data === 'string') {
+          reply = data;
+        }
+
+        container.innerHTML += `
+          <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534; max-width:85%;">
+            <b>👨‍⚕️ AI ${t.chatDoc}:</b> ${reply.replace(/\n/g, '<br>')}
+          </div>`;
+
+        container.scrollTop = container.scrollHeight;
+        speakAiAnswer(reply);
+
+      } catch (err) {
+        let loadingDiv = document.getElementById(loadingId);
+        if(loadingDiv) loadingDiv.remove();
+
+        container.innerHTML += `
+          <div style="background:#fee2e2; padding:10px 12px; border-radius:10px; border-left:4px solid #dc2626; font-size:13.5px; color:#991b1b; max-width:85%;">
+            <b>⚠️ ${t.chatNetErrHead}:</b> ${t.chatNetErrDesc}
+          </div>`;
+        container.scrollTop = container.scrollHeight;
+      }
+    }
+
+    function startChatVoiceInput() {
+      if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); }
+
+      let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert(currentLang === 'en' ? 'Speech recognition not supported.' : 'आपका ब्राउज़र बोलकर टाइप करने की सुविधा सपोर्ट नहीं करता।');
+        return;
+      }
+
+      let rec = new SpeechRecognition();
+      rec.lang = currentLang === 'en' ? 'en-US' : 'hi-IN';
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+
+      let chatInput = document.getElementById('aiUserChatInput');
+      let micBtn = document.querySelector('button[onclick="startChatVoiceInput()"]');
+
+      rec.onstart = function() {
+        chatInput.placeholder = currentLang === 'en' ? '🎙️ Listening...' : '🎙️ सुन रहा हूँ, बोलिए...';
+        if(micBtn) micBtn.classList.add('mic-active-anim');
+      };
+
+      rec.onresult = (e) => {
+        let spokenText = e.results[0][0].transcript;
+        chatInput.value = spokenText;
+        if(micBtn) micBtn.classList.remove('mic-active-anim');
+        sendUserChatMessage();
+      };
+
+      rec.onerror = rec.onend = function() {
+        chatInput.placeholder = currentLang === 'en' ? 'Type your question here...' : 'उदा. टमाटर के पत्ते मुड़ रहे हैं...';
+        if(micBtn) micBtn.classList.remove('mic-active-anim');
+      };
+
+      try { rec.start(); } catch (err) {}
+    }
+
+    function showSowingCalculatorScreen() {
+      const t = translations[currentLang] || translations['hi'];
+      openScreen('screen-sowing-calc', t.calcTitle);
+    }
+
+    function calculateCropSchedule() {
+      let crop = document.getElementById('calcCropSelect').value;
+      let dateVal = document.getElementById('calcDateInput').value;
+      if(!dateVal) { alert(currentLang === 'en' ? 'Please select sowing date!' : 'कृपया बुवाई की तारीख चुनें!'); return; }
+
+      let sowingDate = new Date(dateVal);
+      let daysToHarvest = 90;
+      if(crop === 'खीरा' || crop === 'भिंडी') daysToHarvest = 55;
+      if(crop === 'मिर्च') daysToHarvest = 75;
+      if(crop === 'तरबूज') daysToHarvest = 85;
+      if(crop === 'फूलगोभी') daysToHarvest = 78;
+
+      let fertilizerDate1 = new Date(sowingDate); fertilizerDate1.setDate(sowingDate.getDate() + 15);
+      let fertilizerDate2 = new Date(sowingDate); fertilizerDate2.setDate(sowingDate.getDate() + 35);
+      let harvestDate = new Date(sowingDate); harvestDate.setDate(sowingDate.getDate() + daysToHarvest);
+
+      let options = { year: 'numeric', month: 'long', day: 'numeric' };
+      let loc = currentLang === 'en' ? 'en-US' : 'hi-IN';
+      let resultHTML = currentLang === 'en' ? `
+        <b>🌱 Crop:</b> ${crop}<br>
+        <b>📅 Sowing Date:</b> ${sowingDate.toLocaleDateString(loc, options)}<br><br>
+        <b>🌿 1st Fertilizer (Growth):</b> ${fertilizerDate1.toLocaleDateString(loc, options)}<br>
+        <b>⚡ 2nd Fertilizer (Flower/Fruit):</b> ${fertilizerDate2.toLocaleDateString(loc, options)}<br>
+        <b style="color:#16a34a;">🎯 Estimated Harvest Date: ${harvestDate.toLocaleDateString(loc, options)}</b>
+      ` : `
+        <b>🌱 फसल:</b> ${crop}<br>
+        <b>📅 बुवाई की तारीख:</b> ${sowingDate.toLocaleDateString(loc, options)}<br><br>
+        <b>🌿 पहली खाद (बेसल/ग्रोथ) का समय:</b> ${fertilizerDate1.toLocaleDateString(loc, options)}<br>
+        <b>⚡ दूसरी खाद (फूल व फल विकास) का समय:</b> ${fertilizerDate2.toLocaleDateString(loc, options)}<br>
+        <b style="color:#16a34a;">🎯 अनुमानित कटाई शुरू होने की तारीख: ${harvestDate.toLocaleDateString(loc, options)}</b>
+      `;
+      document.getElementById('calcResultText').innerHTML = resultHTML;
+    }
+
+    function detectUserLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+          try {
+            let res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=hi`);
+            let data = await res.json();
+            if (data && (data.city || data.principalSubdivision)) {
+              let detectedCity = data.city || data.principalSubdivision;
+              userCurrentCity = detectedCity;
+              localStorage.setItem('farmer_state', detectedCity);
+              fetchLiveWeather();
+            }
+          } catch(e) {}
+        }, () => {});
+      }
+    }
+
+    let touchstartY = 0;
+    window.addEventListener('touchstart', e => { touchstartY = e.changedTouches[0].screenY; });
+    window.addEventListener('touchend', e => {
+      let touchendY = e.changedTouches[0].screenY;
+      if (touchendY - touchstartY > 120 && window.scrollY === 0) {
+        location.reload();
+      }
+    });
+
+    async function fetchLiveMandiPrices() {
+      const loadingDiv = document.getElementById('mandiLoading');
+      const tableElem = document.getElementById('mandiTableElement');
+      const tbody = document.getElementById('mandiTableBody');
+
+      if (cachedMandiData && cachedMandiData.length > 0) {
+        renderMandiTable(cachedMandiData);
+        return;
+      }
+
+      try {
+        const apiUrl = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=50";
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+
+        if (data && data.records && data.records.length > 0) {
+          let userDistrict = (localStorage.getItem('farmer_state') || 'Sri Ganganagar').toLowerCase();
+          let filtered = data.records.filter(r => (r.district || '').toLowerCase().includes(userDistrict) || (r.state || '').toLowerCase().includes('rajasthan'));
+          cachedMandiData = filtered.length > 0 ? filtered : data.records;
+          renderMandiTable(cachedMandiData);
+        } else {
+          loadingDiv.innerHTML = currentLang === 'en' ? "⚠️ Live mandi data not available." : "⚠️ वर्तमान में लाइव मंडी डेटा उपलब्ध नहीं है।";
+        }
+      } catch (err) {
+        loadingDiv.innerHTML = currentLang === 'en' ? "⚠️ Network error loading mandi prices." : "⚠️ मंडी डेटा लोड करने में इंटरनेट कनेक्शन की समस्या आई।";
+      }
+    }
+
+    function renderMandiTable(records) {
+      const loadingDiv = document.getElementById('mandiLoading');
+      const tableElem = document.getElementById('mandiTableElement');
+      const tbody = document.getElementById('mandiTableBody');
+
+      tbody.innerHTML = '';
+      records.forEach(r => {
+        let commName = r.commodity || '-';
+        let emoji = getCropEmoji(commName);
+        tbody.innerHTML += `
+          <tr>
+            <td>${r.state || '-'}<br><small style="color:#6b7280;">${r.district || ''}</small></td>
+            <td><b>${r.market || '-'}</b></td>
+            <td>${emoji} <b>${commName}</b></td>
+            <td>₹${r.min_price || '-'}</td>
+            <td><span style="color:#16a34a; font-weight:bold;">₹${r.max_price || '-'}</span></td>
+          </tr>`;
+      });
+      loadingDiv.style.display = 'none';
+      tableElem.style.display = 'table';
     }
 
     function getStandardCropName(raw) {
@@ -2177,8 +2184,19 @@
       return '🌱';
     }
 
-    function showLoader() { document.getElementById('appLoader').style.display = 'flex'; }
-    function hideLoader() { document.getElementById('appLoader').style.display = 'none'; }
+    function parseCSV(text) {
+      return text.split(/\r?\n/).map(row => {
+        let cols = [], inQ = false, cur = '';
+        for(let i=0; i<row.length; i++) {
+          let ch = row[i];
+          if(ch === '"') inQ = !inQ;
+          else if(ch === ',' && !inQ) { cols.push(cur.trim().replace(/^"|"$/g, '')); cur = ''; }
+          else cur += ch;
+        }
+        cols.push(cur.trim().replace(/^"|"$/g, ''));
+        return cols;
+      }).filter(r => r.length > 0);
+    }
 
     async function fetchSheetTabWithCategory(sheetName) {
       try {
@@ -2288,7 +2306,6 @@
         let allData = await fetchSheetTabWithCategory('Sheet1');
         sheetRecords = allData;
 
-        // Privacy (गोपनीयता नीति) डेटा गूगल शीट से लोड करना
         try {
           const resPrivacy = await fetch(BASE_SHEET_URL + encodeURIComponent('Privacy'));
           const privText = await resPrivacy.text();
@@ -2312,7 +2329,6 @@
           if(policyHtml) document.getElementById('privacyPolicyText').innerHTML = policyHtml;
         } catch(e) {}
 
-        // Notifications डेटा लोड करना
         try {
           const resNotif = await fetch(BASE_SHEET_URL + encodeURIComponent('Notifications'));
           const notifText = await resNotif.text();
@@ -2400,20 +2416,6 @@
       }
     }
 
-    function parseCSV(text) {
-      return text.split(/\r?\n/).map(row => {
-        let cols = [], inQ = false, cur = '';
-        for(let i=0; i<row.length; i++) {
-          let ch = row[i];
-          if(ch === '"') inQ = !inQ;
-          else if(ch === ',' && !inQ) { cols.push(cur.trim().replace(/^"|"$/g, '')); cur = ''; }
-          else cur += ch;
-        }
-        cols.push(cur.trim().replace(/^"|"$/g, ''));
-        return cols;
-      }).filter(r => r.length > 0);
-    }
-
     function renderStoriesBar() {
       const container = document.getElementById('storiesBarContainer');
       if(!container) return;
@@ -2441,6 +2443,7 @@
 
     function openStoryPlayer(idx) {
       let st = window.activeStories[idx];
+      if (!st) return;
       const modal = document.getElementById('storyPlayerModal');
       document.getElementById('storyTopTitle').innerText = st.title;
       document.getElementById('storyCaptionText').innerText = st.desc || '';
@@ -2625,7 +2628,7 @@
               <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
               <div class="var-info-row">⭐ <b>${currentLang === 'en' ? 'Features:' : 'विशेषता:'}</b> ${v.features}</div>
               <div class="var-info-row">⏱️ <b>${currentLang === 'en' ? 'Maturity:' : 'पकने का समय:'}</b> ${v.maturity}</div>
-              <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety}'); showFavoritesScreen();">❌ ${currentLang === 'en' ? 'Remove from favorites' : 'पसंद से हटाएं'}</button>
+              <button type="button" class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety}'); showFavoritesScreen();">❌ ${currentLang === 'en' ? 'Remove from favorites' : 'पसंद से हटाएं'}</button>
             </div>`;
         });
       }
@@ -2667,7 +2670,7 @@
 
             <div style="display:flex; gap:8px; margin-top:14px;">
               <a href="https://wa.me/916378475002?text=नमस्ते%20${encodeURIComponent(v.company)}%20की%20${encodeURIComponent(v.variety)}%20बीज%20चाहिए।" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 ${currentLang === 'en' ? 'Order Seeds' : 'बीज ऑर्डर करें'}</a>
-              <button class="btn-action" style="flex:1; background:${saveBtnBg}; color:#b45309; border:1px solid #fde68a;" onclick="toggleBookmark('${v.variety}'); renderVarietiesList(${JSON.stringify(list).replace(/"/g, '&quot;')}, '${title}');">${saveBtnText}</button>
+              <button type="button" class="btn-action" style="flex:1; background:${saveBtnBg}; color:#b45309; border:1px solid #fde68a;" onclick="toggleBookmark('${v.variety}'); renderVarietiesList(${JSON.stringify(list).replace(/"/g, '&quot;')}, '${title}');">${saveBtnText}</button>
             </div>
           </div>`;
       });
@@ -3037,6 +3040,7 @@
       userCurrentCity = state;
 
       syncFarmerDataToGoogleSheet(name, phone, state, crops);
+      updateProfileUI();
 
       alert('✅ प्रोफाइल सुरक्षित और गूगल शीट में सिंक हो गई!');
       goBack();
@@ -3159,7 +3163,7 @@
         commentsHtml += `
           <div style="display:flex; gap:6px; margin-top:8px;">
             <input type="text" id="commentInput_${p.id}" class="form-control" placeholder="अपना सुझाव / कमेंट लिखें..." style="padding:6px 10px; font-size:13px;">
-            <button class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost(${p.id})">भेजें</button>
+            <button type="button" class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost(${p.id})">भेजें</button>
           </div>
         `;
 
@@ -3189,30 +3193,53 @@
       document.getElementById('notifBadge').style.display = 'none';
     }
 
-    window.onload = async function() {
-      updateProfileUI();
-      fetchLiveWeather();
-      await loadAllSheetsData();
-      if (currentLang && currentLang !== 'hi') {
-        await translateAllLoadedSheetRecords(currentLang);
-      }
-    };
-
     function updateProfileUI() {
       let name = localStorage.getItem('farmer_name') || 'किसान भाई';
-      document.getElementById('welcomeMsg').innerText = `राम-राम, ${name} जी!`;
+      const el = document.getElementById('welcomeMsg');
+      if (el) el.innerText = `राम-राम, ${name} जी!`;
     }
 
     function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
     function closeNotificationModal() { document.getElementById('notificationModal').classList.remove('active'); }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        if (localStorage.getItem('dark_mode') === 'true') {
+          document.body.classList.add('dark-mode');
+        }
+
+        let todayStr = new Date().toISOString().split('T')[0];
+        let dateInput = document.getElementById('calcDateInput');
+        if (dateInput) dateInput.value = todayStr;
+
+        let savedLang = localStorage.getItem('app_lang');
+        if (!savedLang) {
+          const langModal = document.getElementById('languageSelectModal');
+          if (langModal) langModal.classList.add('active');
+        } else {
+          currentLang = savedLang;
+          highlightActiveLangChip(currentLang);
+          applyLanguageUI();
+          if (!localStorage.getItem('is_logged_in')) {
+            const loginModal = document.getElementById('loginScreenModal');
+            if (loginModal) loginModal.classList.add('active');
+          }
+        }
+
+        detectUserLocation();
+        fetchLiveWeather();
+        await loadAllSheetsData();
+        if (currentLang && currentLang !== 'hi') {
+          await translateAllLoadedSheetRecords(currentLang);
+        }
+      } catch (err) {
+        console.error("Init error:", err);
+      } finally {
+        hideLoader();
+        setTimeout(dismissSplashScreen, 1200);
+      }
+    });
   </script>
-
-  <!-- इमेज प्रीव्यू मोडल -->
-  <div class="image-preview-modal" id="imagePreviewModal" onclick="closeImageModal()">
-    <button class="image-preview-close" onclick="closeImageModal()">✕</button>
-    <img id="fullScreenPreviewImg" class="image-preview-content" src="" alt="Preview">
-  </div>
-
 </body>
 </html>
