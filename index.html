@@ -510,7 +510,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.0
+      CROP & SABZI DOCTOR • v10.1
     </div>
   </div>
 
@@ -1842,6 +1842,23 @@
       }
     }
 
+    function isPlaceholderOrHeaderRow(c0, c1, c2, index) {
+      const s0 = (c0 || '').trim().toLowerCase();
+      const s1 = (c1 || '').trim().toLowerCase();
+      const s2 = (c2 || '').trim().toLowerCase();
+      const combined = `${s0} ${s1} ${s2}`;
+      if (index === 0 && (
+        s0.includes('title') || s0.includes('शीर्षक') || s0.includes('तारीख') ||
+        s0.startsWith('a (') || s1.startsWith('b (') || s2.startsWith('c (')
+      )) {
+        return true;
+      }
+      if (combined.includes('a (title') || combined.includes('b (description') || combined.includes('b (desc') || combined.includes('c (type')) {
+        return true;
+      }
+      return false;
+    }
+
     function parseTitleDescSheet(csvText, fallbackTitle) {
       if (!csvText) return [];
       const rows = parseCSV(csvText);
@@ -1851,12 +1868,14 @@
         const c1 = (cols[1] || '').trim();
         const c2 = (cols[2] || '').trim();
         if (!c0 && !c1 && !c2) return;
-        const low0 = c0.toLowerCase();
-        if (index === 0 && (low0 === 'title' || low0 === 'शीर्षक' || low0 === 'तारीख और समय')) return;
+        if (isPlaceholderOrHeaderRow(c0, c1, c2, index)) return;
+
         if (c2 && (c0.includes('/') || c0.includes('-') || c0.includes('202'))) {
           list.push({ title: c1 || fallbackTitle, desc: c2, date: c0 });
+        } else if (c2 && !c1) {
+          list.push({ title: c0 || fallbackTitle, desc: c2, date: '' });
         } else {
-          list.push({ title: c0 || fallbackTitle, desc: c1 || c2, date: '' });
+          list.push({ title: c0 || fallbackTitle, desc: c1 || c2, date: c2 || '' });
         }
       });
       return list;
@@ -2421,10 +2440,13 @@
                 <span class="badge-company">${v.company}</span>
               </div>
               <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
-              <div class="var-info-row">⭐ <b>${v.features}</b></div>
-              <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight}</span></div>
-              <div class="var-info-row">⏱️ <b>${v.maturity}</b></div>
-              <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance}</span></div>
+              <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${v.company || '-'}</span></div>
+              <div class="var-info-row">🌾 <b>फसल:</b> <span>${v.crop || '-'}</span></div>
+              <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${v.segment || '-'}</span></div>
+              <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${v.features || '-'}</span></div>
+              <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight || '-'}</span></div>
+              <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${v.maturity || '-'}</span></div>
+              <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance || '-'}</span></div>
               <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">❌ हटाएं</button>
             </div>`;
         });
@@ -2465,11 +2487,13 @@
             </div>
             <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
 
-            <div class="var-info-row">🌱 ${v.segment}</div>
-            <div class="var-info-row">⭐ ${v.features}</div>
-            <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight}</span></div>
-            <div class="var-info-row">⏱️ ${v.maturity}</div>
-            <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance}</span></div>
+            <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${v.company || '-'}</span></div>
+            <div class="var-info-row">🌾 <b>फसल:</b> <span>${v.crop || '-'}</span></div>
+            <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${v.segment || '-'}</span></div>
+            <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${v.features || '-'}</span></div>
+            <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight || '-'}</span></div>
+            <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${v.maturity || '-'}</span></div>
+            <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance || '-'}</span></div>
 
             <div style="display:flex; gap:8px; margin-top:14px;">
               <a href="https://wa.me/916378475002?text=${encodeURIComponent(v.company + ' - ' + v.variety)}" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 खरीदे बीज</a>
@@ -2517,9 +2541,9 @@
 
           container.innerHTML += `
             <div class="disease-card">
-              <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span>${d.name}</div>
-              <div class="disease-symptom">${d.symptoms}</div>
-              <div class="disease-cure-box">${d.cure}</div>
+              <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>रोग:</b> ${d.name}</div>
+              <div class="disease-symptom">🔍 <b>लक्षण:</b> ${d.symptoms}</div>
+              <div class="disease-cure-box">💊 <b>उपचार:</b> ${d.cure}</div>
               ${p}
             </div>`;
         });
@@ -2541,7 +2565,7 @@
       } else {
         steps.forEach(s => {
           const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
-          container.innerHTML += `<div class="schedule-step"><b>⏱️ ${s.time}</b><p>${s.med}</p><p>${s.purpose}</p>${p}</div>`;
+          container.innerHTML += `<div class="schedule-step"><b>⏱️ समय: ${s.time}</b><p>🧪 <b>दवा:</b> ${s.med}</p><p>🎯 <b>उद्देश्य:</b> ${s.purpose}</p>${p}</div>`;
         });
       }
       openScreen('screen-crop-schedule', crop);
@@ -2602,9 +2626,9 @@
             <div class="chem-title">🧪 ${c.name} (${c.type})</div>
             <div class="chem-body-row">
               <div class="chem-info-side">
-                <div class="chem-tech">${c.tech}</div>
-                <div class="chem-use">${c.use}</div>
-                <div class="chem-dose">💧 ${c.dose}</div>
+                <div class="chem-tech">🔬 <b>तकनीक:</b> ${c.tech}</div>
+                <div class="chem-use">🌿 <b>उपयोग:</b> ${c.use}</div>
+                <div class="chem-dose">💧 <b>खुराक:</b> ${c.dose}</div>
               </div>
               ${p}
             </div>
