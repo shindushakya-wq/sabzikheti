@@ -3612,7 +3612,10 @@
           refreshActiveScreenOnTranslation();
         }
       }
-    });
+    });    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
   </script>
 
   <!-- इमेज प्रीव्यू मोडल -->
