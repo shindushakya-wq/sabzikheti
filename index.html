@@ -66,6 +66,31 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
+    /* नॉन-ब्लॉकिंग टोस्ट नोटिफिकेशन */
+    .app-toast {
+      position: fixed;
+      bottom: 135px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111827;
+      color: #ffffff;
+      padding: 9px 16px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 600;
+      z-index: 9500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      max-width: 88%;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+    .app-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     .offline-banner {
       display: none;
       background: #fef3c7;
@@ -81,15 +106,15 @@
     }
     .offline-banner.show { display: block; }
     body.dark-mode .offline-banner {
-      background: #422006 !important;
-      color: #fde68a !important;
-      border-bottom-color: #b45309 !important;
+      background: #422006;
+      color: #fde68a;
+      border-bottom-color: #b45309;
     }
 
     /* डार्क मोड स्टाइल */
     body.dark-mode {
-      background-color: #0f172a !important;
-      color: #f8fafc !important;
+      background-color: #0f172a;
+      color: #f8fafc;
     }
 
     body.dark-mode .variety-card,
@@ -107,127 +132,126 @@
     body.dark-mode .disease-card,
     body.dark-mode .stories-wrapper,
     body.dark-mode .quick-pill,
-    body.dark-mode #aiChatMessagesContainer,
-    body.dark-mode .video-card-item {
-      background-color: #1e2937 !important;
-      color: #f8fafc !important;
-      border-color: #334155 !important;
+    body.dark-mode #aiChatMessagesContainer {
+      background-color: #1e2937;
+      color: #f8fafc;
+      border-color: #334155;
     }
 
     body.dark-mode .pest-alert-card {
-      background-color: #2a161d !important;
-      border-color: #7f1d1d !important;
-      border-left-color: #ef4444 !important;
+      background-color: #2a161d;
+      border-color: #7f1d1d;
+      border-left-color: #ef4444;
     }
 
     body.dark-mode .disease-cure-box {
-      background-color: #0f2e22 !important;
-      border-left-color: #10b981 !important;
-      color: #a7f3d0 !important;
+      background-color: #0f2e22;
+      border-left-color: #10b981;
+      color: #a7f3d0;
     }
 
     body.dark-mode .chem-tech {
-      background-color: #2d1b2e !important;
-      color: #f9a8d4 !important;
+      background-color: #2d1b2e;
+      color: #f9a8d4;
     }
 
     body.dark-mode .chem-dose {
-      background-color: #0f2e22 !important;
-      color: #6ee7b7 !important;
+      background-color: #0f2e22;
+      color: #6ee7b7;
     }
 
     body.dark-mode .badge-variety {
-      background-color: #143322 !important;
-      border-color: #166534 !important;
-      color: #86efac !important;
+      background-color: #143322;
+      border-color: #166534;
+      color: #86efac;
     }
 
     body.dark-mode .badge-company {
-      background-color: #172554 !important;
-      border-color: #1e40af !important;
-      color: #93c5fd !important;
+      background-color: #172554;
+      border-color: #1e40af;
+      color: #93c5fd;
     }
 
     body.dark-mode .bookmark-btn {
-      background-color: #273548 !important;
-      border-color: #475569 !important;
-      color: #fbbf24 !important;
+      background-color: #273548;
+      border-color: #475569;
+      color: #fbbf24;
     }
     body.dark-mode .bookmark-btn.saved {
-      background-color: #422006 !important;
-      border-color: #b45309 !important;
-      color: #fde047 !important;
+      background-color: #422006;
+      border-color: #b45309;
+      color: #fde047;
     }
 
     body.dark-mode .upload-opt-btn {
-      background-color: #273548 !important;
-      border-color: #22c55e !important;
+      background-color: #273548;
+      border-color: #22c55e;
     }
 
     body.dark-mode .playstore-banner {
-      background: linear-gradient(135deg, #172554 0%, #1e2937 100%) !important;
-      border-color: #1d4ed8 !important;
+      background: linear-gradient(135deg, #172554 0%, #1e2937 100%);
+      border-color: #1d4ed8;
     }
 
     body.dark-mode .weather-detail-stat {
-      background-color: #273548 !important;
-      border-color: #334155 !important;
+      background-color: #273548;
+      border-color: #334155;
     }
 
     body.dark-mode .mandi-table th {
-      background-color: #143322 !important;
-      color: #86efac !important;
-      border-color: #334155 !important;
+      background-color: #143322;
+      color: #86efac;
+      border-color: #334155;
     }
     body.dark-mode .mandi-table td {
-      border-color: #334155 !important;
-      color: #f8fafc !important;
+      border-color: #334155;
+      color: #f8fafc;
     }
     body.dark-mode .mandi-table tr:nth-child(even) {
-      background-color: #162030 !important;
+      background-color: #162030;
     }
 
     body.dark-mode .form-control,
     body.dark-mode select.form-control,
     body.dark-mode input.form-control,
     body.dark-mode textarea.form-control {
-      background-color: #0f172a !important;
-      color: #f8fafc !important;
-      border-color: #475569 !important;
+      background-color: #0f172a;
+      color: #f8fafc;
+      border-color: #475569;
     }
 
     body.dark-mode .discussion-comment-item {
-      background-color: #273548 !important;
-      color: #f8fafc !important;
+      background-color: #273548;
+      color: #f8fafc;
     }
 
     body.dark-mode .profile-card-widget {
-      background-color: #143322 !important;
-      border-color: #166534 !important;
+      background-color: #143322;
+      border-color: #166534;
     }
 
     body.dark-mode .drawer-item {
-      border-bottom-color: #334155 !important;
+      border-bottom-color: #334155;
     }
 
     body.dark-mode #aiChatMessagesContainer > div {
-      background-color: #273548 !important;
-      color: #f8fafc !important;
-      border-color: #16a34a !important;
+      background-color: #273548;
+      color: #f8fafc;
+      border-color: #16a34a;
     }
     body.dark-mode #aiUserChatInput {
-      background-color: #1e2937 !important;
-      color: #f8fafc !important;
-      border-color: #334155 !important;
+      background-color: #1e2937;
+      color: #f8fafc;
+      border-color: #334155;
     }
     body.dark-mode #aiUserChatInput::placeholder {
-      color: #94a3b8 !important;
+      color: #94a3b8;
     }
 
     body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4,
     body.dark-mode p, body.dark-mode span, body.dark-mode label,
     body.dark-mode b, body.dark-mode strong, body.dark-mode div {
-      color: #f8fafc !important;
+      color: inherit;
     }
 
     button, .menu-box, .list-item, .social-link, .btn-action, .fab-solution, .story-item, .video-card-item, .upload-opt-btn, .lang-choice-btn {
@@ -296,7 +320,7 @@
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; transition: background 0.3s ease; }
     .weather-card.night-mode,
     body.dark-mode .weather-card { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; color: #f8fafc; }
-    .weather-card.night-mode h4, .weather-card.night-mode .weather-datetime, .weather-card.night-mode .weather-temp { color: #f8fafc !important; }
+    .weather-card.night-mode h4, .weather-card.night-mode .weather-datetime, .weather-card.night-mode .weather-temp { color: #f8fafc; }
     .weather-card.night-mode .weather-header-row { border-bottom-color: #475569; }
 
     .weather-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #a7f3d0; padding-bottom: 6px; margin-bottom: 8px; }
@@ -308,7 +332,7 @@
     /* 15 दिन मौसम पूर्वानुमान ग्रिड */
     .forecast-15-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
     .forecast-day-row { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; font-size: 13px; }
-    body.dark-mode .forecast-day-row { background: #273548 !important; border-color: #334155 !important; }
+    body.dark-mode .forecast-day-row { background: #273548; border-color: #334155; }
 
     /* त्वरित फसल टैग्स */
     .quick-crop-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; }
@@ -354,9 +378,9 @@
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
     }
     .mic-active-anim {
-      animation: micListeningPulse 1.2s infinite ease-in-out !important;
-      background-color: #16a34a !important;
-      color: white !important;
+      animation: micListeningPulse 1.2s infinite ease-in-out;
+      background-color: #16a34a;
+      color: white;
       border-radius: 50%;
     }
 
@@ -420,8 +444,8 @@
 
     .list-item { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .list-left { display: flex; align-items: center; gap: 12px; }
-    .list-icon { font-size: 24px; width: 32px; text-align: center; display: flex; align-items: center; justify-content: center; }
-    .list-icon img { width: 32px; height: 32px; object-fit: cover; border-radius: 50%; }
+    .list-icon { font-size: 26px; width: 40px; height: 40px; flex-shrink: 0; text-align: center; display: flex; align-items: center; justify-content: center; }
+    .list-icon img { width: 40px; height: 40px; object-fit: cover; border-radius: 8px; border: 1px solid #d1d5db; background: #f3f4f6; display: block; }
     .list-title { font-size: 15px; font-weight: 600; }
     .arrow { color: #9ca3af; font-weight: bold; }
 
@@ -505,6 +529,9 @@
     <div class="splash-title">CROP & SABZI DOCTOR</div>
     <div class="splash-sub">🌾 कृषि सहायक ऐप</div>
   </div>
+
+  <!-- नॉन-ब्लॉकिंग टोस्ट -->
+  <div class="app-toast" id="appToast"></div>
 
   <!-- स्मार्ट लोडिंग स्पाइनर -->
   <div class="loader-overlay" id="appLoader">
@@ -614,7 +641,7 @@
     <div class="profile-card-widget" onclick="openProfileScreen()">
       <h4>
         <span id="drawerUserName">👤 किसान प्रोफाइल</span>
-        <span id="profilePercentBadge" style="font-size:11px; color:#15803d; font-weight:bold;">25%</span>
+        <span id="profilePercentBadge" style="font-size:11px; color:#15803d; font-weight:bold;">40%</span>
       </h4>
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="profileProgressBar"></div>
@@ -638,7 +665,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.5
+      CROP & SABZI DOCTOR • v10.7
     </div>
   </div>
 
@@ -956,7 +983,7 @@
       <div class="form-group"><input type="text" id="discussionAuthor" class="form-control" placeholder="Name"></div>
       <div class="form-group"><textarea id="discussionText" class="form-control" rows="3" placeholder="..."></textarea></div>
       <div class="form-group"><input type="file" id="discussionImageInput" accept="image/*" class="form-control" style="padding:6px;"></div>
-      <button class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" onclick="submitDiscussionPost()" id="btnDiscPost">📤</button>
+      <button class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" onclick="submitDiscussionPost()" id="btnDiscPost">📤 पोस्ट करें</button>
     </div>
     <div id="discussionPostsContainer"></div>
   </div>
@@ -1113,13 +1140,13 @@
     <div class="variety-card">
       <div class="schedule-step">
         <b id="gov1Title">PM-Kisan</b>
-        <p id="gov1Desc">₹6,000</p>
+        <p id="gov1Desc">पात्र किसान परिवारों को वार्षिक ₹6,000 की आर्थिक सहायता।</p>
       </div>
       <div class="schedule-step">
-        <b id="gov2Title">PMFBY</b>
-        <p id="gov2Desc">🌾</p>
+        <b id="gov2Title">PMFBY (प्रधानमंत्री फसल बीमा योजना)</b>
+        <p id="gov2Desc">प्राकृतिक आपदा या कीट प्रकोप से फसल नुकसान पर बीमा सुरक्षा।</p>
       </div>
-      <a href="https://pmkisan.gov.in/" target="_blank" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" id="btnGovPortal">🌐 PM-Kisan</a>
+      <a href="https://pmkisan.gov.in/" target="_blank" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" id="btnGovPortal">🌐 PM-Kisan पोर्टल देखें</a>
     </div>
   </div>
 
@@ -1183,11 +1210,11 @@
   <!-- SCREEN: प्रोफाइल स्क्रीन -->
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
-      <div class="form-group"><input type="text" id="profNameInput" class="form-control" placeholder="Name"></div>
-      <div class="form-group"><input type="tel" id="profPhoneInput" class="form-control" placeholder="Phone"></div>
-      <div class="form-group"><input type="text" id="profStateInput" class="form-control" placeholder="District / State"></div>
-      <div class="form-group"><input type="text" id="profCropsInput" class="form-control" placeholder="Crops"></div>
-      <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾</button>
+      <div class="form-group"><input type="text" id="profNameInput" class="form-control" placeholder="किसान का नाम"></div>
+      <div class="form-group"><input type="tel" id="profPhoneInput" class="form-control" placeholder="मोबाइल नंबर"></div>
+      <div class="form-group"><input type="text" id="profStateInput" class="form-control" placeholder="जिला / शहर / राज्य"></div>
+      <div class="form-group"><input type="text" id="profCropsInput" class="form-control" placeholder="मुख्य फसलें (उदा. टमाटर, मिर्च)"></div>
+      <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾 सहेजें</button>
     </div>
   </div>
 
@@ -1216,7 +1243,7 @@
     <div class="variety-card">
       <h3 style="color:#15803d; font-size:17px; margin-bottom:10px;" id="scheduleCropTitle"></h3>
       <div id="scheduleStepsContainer"></div>
-      <a href="https://wa.me/916378475002" target="_blank" class="btn-action btn-wa" style="margin-top:10px;" id="btnDocSpray">💬 WhatsApp</a>
+      <a href="https://wa.me/916378475002" target="_blank" class="btn-action btn-wa" style="margin-top:10px;" id="btnDocSpray">💬 WhatsApp पर सलाह लें</a>
     </div>
   </div>
 
@@ -1253,6 +1280,7 @@
 
     const navHistory = ['screen-home'];
     let sheetRecords = [];
+    let cropPhotoSheetMap = {};
     let scheduleRecords = {};
     let protectionRecords = {};
     let chemicalsRecords = [];
@@ -1277,6 +1305,7 @@
     let currentLang = localStorage.getItem('app_lang') || 'hi';
     let isTranslatingBackground = false;
     let isLoadingSheets = false;
+    let storyTimerId = null;
 
     let currentActiveCategory = null;
     let currentActiveProtectionCat = null;
@@ -1288,11 +1317,61 @@
     let lastVarietiesList = [];
     let lastVarietiesTitle = "";
 
+    const CROP_IMAGE_MAP = {
+      'टमाटर': 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300',
+      'मिर्च': 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=300',
+      'शिमला मिर्च': 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=300',
+      'तोरई': 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=300',
+      'खीरा': 'https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=300',
+      'लौकी': 'https://images.unsplash.com/photo-1598512752271-33f913a5af13?w=300',
+      'करेला': 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=300',
+      'कद्दू': 'https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=300',
+      'भिंडी': 'https://images.unsplash.com/photo-1664282268716-5a9f0c2e6f1e?w=300',
+      'बैंगन': 'https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=300',
+      'फूलगोभी': 'https://images.unsplash.com/photo-1568584711271-6c92927bfb9e?w=300',
+      'पत्तागोभी': 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=300',
+      'तरबूज': 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=300',
+      'खरबूजा': 'https://images.unsplash.com/photo-1571575173700-afb9492e6a50?w=300',
+      'आलू': 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300',
+      'प्याज': 'https://images.unsplash.com/photo-1618512496424-78b225719226?w=300',
+      'गाजर': 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=300',
+      'मूली': 'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?w=300',
+      'मटर': 'https://images.unsplash.com/photo-1587735243615-c03f25a3af15?w=300',
+      'स्वीट कॉर्न / मक्का': 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=300',
+      'गेहूँ': 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300',
+      'धान': 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=300',
+      'सरसों': 'https://images.unsplash.com/photo-1508747703725-719777637510?w=300',
+      'चना': 'https://images.unsplash.com/photo-1515543904379-3d7578aa8745?w=300',
+      'सोयाबीन': 'https://images.unsplash.com/photo-1599420186946-7b6fb4e2358b?w=300',
+      'गन्ना': 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300',
+      'जीरा': 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300',
+      'गैंदा': 'https://images.unsplash.com/photo-1606041008023-11381093b0b7?w=300',
+      'गुलाब': 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300',
+      'गुलदाउदी': 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=300',
+      'आम': 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=300',
+      'अमरूद': 'https://images.unsplash.com/photo-1536511132770-e5058c7e8c46?w=300',
+      'पपीता': 'https://images.unsplash.com/photo-1517282009859-f000ec3b26fe?w=300',
+      'अनार': 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=300',
+      'केला': 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300'
+    };
+
     const speechLangMap = {
       hi: 'hi-IN', mr: 'mr-IN', bn: 'bn-IN', te: 'te-IN',
       ta: 'ta-IN', gu: 'gu-IN', kn: 'kn-IN', pa: 'pa-IN',
-      en: 'en-IN', ml: 'ml-IN', or: 'or-IN', as: 'as-IN', rj: 'hi-IN'
+      en: 'en-IN', ml: 'ml-IN', or: 'or-IN', as: 'as-IN'
     };
+
+    let toastTimeoutId = null;
+    function showToast(msg) {
+      const el = document.getElementById('appToast');
+      if (!el || !msg) return;
+      el.innerText = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimeoutId);
+      toastTimeoutId = setTimeout(() => {
+        el.classList.remove('show');
+      }, 2400);
+    }
 
     const OFFLINE_LANG_PACKS = {
       hi: {
@@ -1362,26 +1441,13 @@
         offlineBanner: "📴 Offline Mode: Showing saved language and data"
       },
       mr: {
-        headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
+        welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
         txtAiTitle: "🎙️ AI कृषी डॉक्टरशी बोला", aiSubText: "टॅप करा आणि पिकाचे वा रोगाचे नाव बोला...",
         txtSprayAdvice: "फवारणीसाठी सकाळ किंवा संध्याकाळ निवडा", searchPlaceholder: "🔍 पीक किंवा वाण शोधा...",
         gCrops: "सर्व जाती", gProt: "पीक सुरक्षा", gSched: "फवारणी वेळापत्रक", gAtoz: "शेती मार्गदर्शक (A-Z)",
         gDisc: "शेतकरी चर्चा", gAdv: "सल्लागार", gComp: "All कंपनी बियाणे", gChem: "औषधे Chemicals", gServ: "Other सेवा",
-        txtPlaySub: "प्ले स्टोअरवर रेट करा आणि शेअर करा.", txtRateBtn: "रेट करा",
-        txtVideoHead: "📺 ताज्या कृषी व्हिडिओ", txtSeeAll: "सर्व पहा >", txtSocialHead: "सोशल मीडियावर जोडा",
         fabText: "तातडीने उपाय", navHome: "होम", navCrops: "जाती", navSched: "वेळापत्रक", navProt: "सुरक्षा", navHelp: "हेल्पलाइन",
-        cropsTitle: "सर्व जाती", protTitle: "पीक सुरक्षा", schedTitle: "फवारणी वेळापत्रक", compTitle: "बियाणे कंपनी",
-        chemTitle: "औषधे Chemicals", mandiTitle: "मंडी भाव", weatherTitle: "हवामान", profileTitle: "शेतकरी प्रोफाइल",
-        favoritesTitle: "आवडत्या जाती", atozTitle: "शेती मार्गदर्शक (A-Z)", discTitle: "शेतकरी चर्चा", privacyTitle: "गोपनीयता धोरण",
-        reportsTitle: "AI अहवाल", schemesTitle: "शासकीय योजना", expertTitle: "तज्ज्ञ सल्ला", pestTitle: "किटक सतर्कता",
-        calcTitle: "पेरणी कॅल्क्युलेटर", drawerHead: "📋 मेनू", completeProfileText: "प्रोफाइल पूर्ण करा >",
-        mProfile: "प्रोफाइल", mFav: "आवडत्या जाती", mCrops: "सर्व जाती", mSchedule: "फवारणी वेळापत्रक",
-        mProtection: "पीक सुरक्षा", mChems: "औषधे Chemicals", mServices: "Other सेवा", mPrivacy: "गोपनीयता धोरण",
-        mRate: "Play Store रेट करा", mShare: "शेअर करा", mHelp: "WhatsApp हेल्पलाइन", mLogout: "लॉगआउट",
-        solHead: "⚡ तातडीने उपाय", camBtn: "कॅमेरा", galBtn: "गॅलरी", diagBtn: "🔍 रोग ओळखा",
-        diagRepHead: "🌿 AI अहवाल", wapBtn: "WhatsApp करा", chatYou: "तुम्ही", chatDoc: "डॉक्टर",
-        chatThinking: "⏳ उत्तर तयार होत आहे...", chatErr: "त्रुटी", chatNetErrHead: "नेटवर्क", chatNetErrDesc: "कनेक्शन समस्या",
-        aiDocTitle: "AI डॉक्टर", loadingText: "🌾 डेटा लोड होत आहे...",
+        drawerHead: "📋 मेनू", mProfile: "प्रोफाइल", mFav: "आवडत्या जाती", mLogout: "लॉगआउट",
         offlineBanner: "📴 ऑफलाइन मोड: जतन केलेली भाषा व डेटा सुरू आहे"
       },
       bn: {
@@ -1476,8 +1542,6 @@
       }
     };
 
-    const translations = OFFLINE_LANG_PACKS;
-
     const TRANSLATABLE_UI_KEYS = [
       'headerTitle', 'welcomeMsg', 'txtChangeProf', 'txtAiTitle', 'aiSubText',
       'txtSprayAdvice', 'searchPlaceholder', 'gCrops', 'gProt', 'gSched',
@@ -1501,31 +1565,17 @@
       if (!banner) return;
       const t = getT();
       banner.innerText = t.offlineBanner || OFFLINE_LANG_PACKS.hi.offlineBanner;
-      if (!navigator.onLine) {
-        banner.classList.add('show');
-      } else {
-        banner.classList.remove('show');
-      }
+      banner.classList.toggle('show', !navigator.onLine);
     }
 
     function saveOfflineSheetsSnapshot() {
       try {
         const payload = {
           savedAt: Date.now(),
-          sheetRecords,
-          scheduleRecords,
-          protectionRecords,
-          chemicalsRecords,
-          alertsRecords,
-          tipsRecords,
-          aiReportsRecords,
-          dailyStories,
-          videoRecords,
-          atozGuideRecords,
-          privacyData,
-          notificationsList,
-          allSchedRowsGlobal,
-          allProtRowsGlobal
+          sheetRecords, cropPhotoSheetMap, scheduleRecords, protectionRecords, chemicalsRecords,
+          alertsRecords, tipsRecords, aiReportsRecords, dailyStories,
+          videoRecords, atozGuideRecords, privacyData, notificationsList,
+          allSchedRowsGlobal, allProtRowsGlobal
         };
         localStorage.setItem(OFFLINE_SHEETS_CACHE_KEY, JSON.stringify(payload));
       } catch (e) {}
@@ -1539,6 +1589,7 @@
         if (!data || typeof data !== 'object') return false;
 
         sheetRecords = Array.isArray(data.sheetRecords) ? data.sheetRecords : [];
+        cropPhotoSheetMap = data.cropPhotoSheetMap && typeof data.cropPhotoSheetMap === 'object' ? data.cropPhotoSheetMap : {};
         scheduleRecords = data.scheduleRecords && typeof data.scheduleRecords === 'object' ? data.scheduleRecords : {};
         protectionRecords = data.protectionRecords && typeof data.protectionRecords === 'object' ? data.protectionRecords : {};
         chemicalsRecords = Array.isArray(data.chemicalsRecords) ? data.chemicalsRecords : [];
@@ -1614,19 +1665,15 @@
     const pendingTranslations = {};
     function getCachedTranslation(text, targetLang) {
       if (!text || targetLang === 'hi') return text || '';
-      const eff = targetLang === 'rj' ? 'hi' : targetLang;
-      if (eff === 'hi') return text;
-      return localStorage.getItem(`sheet_tr_${eff}_${text.trim()}`) || null;
+      return localStorage.getItem(`sheet_tr_${targetLang}_${text.trim()}`) || null;
     }
 
     async function translateSheetText(text, targetLang) {
       if (!text || typeof text !== 'string') return text || '';
       const clean = text.trim();
       if (!clean || targetLang === 'hi') return clean;
-      const eff = targetLang === 'rj' ? 'hi' : targetLang;
-      if (eff === 'hi') return clean;
 
-      const cacheKey = `sheet_tr_${eff}_${clean}`;
+      const cacheKey = `sheet_tr_${targetLang}_${clean}`;
       const cached = localStorage.getItem(cacheKey);
       if (cached) return cached;
 
@@ -1636,9 +1683,24 @@
 
       pendingTranslations[cacheKey] = (async () => {
         try {
+          const fallbackUrl = `${APPS_SCRIPT_URL}?action=translate&lang=${encodeURIComponent(targetLang)}&text=${encodeURIComponent(clean)}`;
+          const fRes = await fetch(fallbackUrl);
+          if (fRes.ok) {
+            const fJson = await fRes.json();
+            if (fJson && fJson.result) {
+              const tr = String(fJson.result).trim();
+              if (tr) {
+                try { localStorage.setItem(cacheKey, tr); } catch (e) {}
+                return tr;
+              }
+            }
+          }
+        } catch (e) {}
+
+        try {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), 3500);
-          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=${encodeURIComponent(eff)}&dt=t&q=${encodeURIComponent(clean)}`;
+          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(clean)}`;
           const res = await fetch(url, { signal: controller.signal });
           clearTimeout(timer);
           if (res.ok) {
@@ -1652,21 +1714,6 @@
             }
           }
         } catch (err) {}
-
-        try {
-          const fallbackUrl = `${APPS_SCRIPT_URL}?action=translate&lang=${encodeURIComponent(eff)}&text=${encodeURIComponent(clean)}`;
-          const fRes = await fetch(fallbackUrl);
-          if (fRes.ok) {
-            const fJson = await fRes.json();
-            if (fJson && fJson.result) {
-              const tr = String(fJson.result).trim();
-              if (tr) {
-                try { localStorage.setItem(cacheKey, tr); } catch (e) {}
-                return tr;
-              }
-            }
-          }
-        } catch (e) {}
 
         return clean;
       })();
@@ -1704,7 +1751,7 @@
       });
 
       isTranslatingBackground = true;
-      const concurrency = 10;
+      const concurrency = 8;
       let idx = 0;
 
       function applyCachedToItems() {
@@ -1723,7 +1770,7 @@
         while (idx < tasks.length) {
           const curIdx = idx++;
           await tasks[curIdx];
-          if (curIdx % 12 === 0) {
+          if (curIdx % 10 === 0) {
             applyCachedToItems();
             if (onUpdate) onUpdate();
           }
@@ -1741,9 +1788,6 @@
 
     async function translateUIBundleToCurrentLang() {
       if (currentLang === 'hi') return getT();
-      const eff = currentLang === 'rj' ? 'hi' : currentLang;
-      if (eff === 'hi') return getT();
-
       const merged = { ...getT() };
       const entriesToTranslate = [];
 
@@ -1751,7 +1795,7 @@
         const val = merged[key];
         if (!val || typeof val !== 'string') return;
         if (OFFLINE_LANG_PACKS[currentLang] && OFFLINE_LANG_PACKS[currentLang][key]) return;
-        const cached = getCachedTranslation(val, eff);
+        const cached = getCachedTranslation(val, currentLang);
         if (cached) {
           merged[key] = cached;
         } else if (navigator.onLine) {
@@ -1761,7 +1805,7 @@
 
       await Promise.all(
         entriesToTranslate.map(async ({ key, val }) => {
-          merged[key] = await translateSheetText(val, eff);
+          merged[key] = await translateSheetText(val, currentLang);
         })
       );
 
@@ -1776,7 +1820,6 @@
       };
 
       setText('headerTitle', t.headerTitle);
-      setText('welcomeMsg', t.welcomeMsg);
       setText('txtChangeProf', t.txtChangeProf);
       setText('txtAiTitle', t.txtAiTitle);
       setText('aiAssistantSubText', t.aiSubText);
@@ -1857,6 +1900,7 @@
       const searchInput = document.getElementById('homeSearch');
       if (searchInput && t.searchPlaceholder) searchInput.placeholder = t.searchPlaceholder;
       updateOfflineBanner();
+      updateProfileUI();
     }
 
     function applyLanguageUI() {
@@ -1865,7 +1909,6 @@
       if (currentLang !== 'hi' && navigator.onLine) {
         translateUIBundleToCurrentLang().then((fullTranslated) => {
           writeTranslationsToDOM(fullTranslated);
-          updateProfileUI();
         });
       }
     }
@@ -1896,7 +1939,6 @@
 
       applyLanguageUI();
       refreshQuickCropPills();
-      updateProfileUI();
       calculateCropSchedule();
 
       if (!navigator.onLine) {
@@ -2120,7 +2162,8 @@
           localStorage.setItem('farmer_lat', String(lat));
           localStorage.setItem('farmer_lon', String(lon));
           try {
-            const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=hi`);
+            const geoLang = currentLang || 'hi';
+            const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${encodeURIComponent(geoLang)}`);
             const data = await res.json();
             const detectedCity = data.city || data.locality || data.principalSubdivision || userCurrentCity;
             userCurrentCity = detectedCity;
@@ -2278,13 +2321,6 @@
       return c.split('(')[0].split('-')[0].split('/')[0].trim();
     }
 
-    function getCropDisplayHtml(cropName, recordPhotos) {
-      if (recordPhotos && recordPhotos.length > 0 && recordPhotos[0].startsWith('http')) {
-        return `<img src="${recordPhotos[0]}" alt="${cropName}">`;
-      }
-      return getCropEmoji(cropName);
-    }
-
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       const c = cropName.trim().toLowerCase();
@@ -2314,6 +2350,59 @@
       if (c.includes('केला') || c.includes('banana')) return '🍌';
       if (c.includes('गैंदा') || c.includes('गुलाब') || c.includes('फूल') || c.includes('marigold') || c.includes('rose')) return '🌼';
       return '🌱';
+    }
+
+    function parseCropPhotosCSV(text) {
+      const map = {};
+      if (!text) return map;
+      parseCSV(text).forEach((cols, idx) => {
+        const rawCrop = (cols[0] || '').trim();
+        const url = (cols[1] || '').trim();
+        if (!rawCrop || !url.startsWith('http')) return;
+        const lowCrop = rawCrop.toLowerCase();
+        if (idx === 0 && (lowCrop === 'crop' || lowCrop.includes('फसल'))) return;
+
+        const std = getStandardCropName(rawCrop);
+        map[rawCrop] = url;
+        if (std) map[std] = url;
+      });
+      return map;
+    }
+
+    function getSheetCropPhotoUrl(cropName) {
+      if (!cropName) return '';
+      if (cropPhotoSheetMap[cropName]) return cropPhotoSheetMap[cropName];
+      const std = getStandardCropName(cropName);
+      if (std && cropPhotoSheetMap[std]) return cropPhotoSheetMap[std];
+      return '';
+    }
+
+    function getMappedCropImageUrl(cropName) {
+      const std = getStandardCropName(cropName || '');
+      if (CROP_IMAGE_MAP[std]) return CROP_IMAGE_MAP[std];
+      if (CROP_IMAGE_MAP[cropName]) return CROP_IMAGE_MAP[cropName];
+      const low = (cropName || '').toLowerCase();
+      for (const key of Object.keys(CROP_IMAGE_MAP)) {
+        if (low.includes(key.toLowerCase())) return CROP_IMAGE_MAP[key];
+      }
+      return '';
+    }
+
+    function resolveCropThumbHtml(cropName) {
+      const safeName = (cropName || '').replace(/"/g, '&quot;');
+      const emoji = getCropEmoji(cropName);
+      const sheetUrl = getSheetCropPhotoUrl(cropName);
+      const fallbackUrl = getMappedCropImageUrl(cropName);
+      const chosenUrl = sheetUrl || fallbackUrl;
+
+      if (chosenUrl) {
+        return `<img src="${chosenUrl.trim()}" alt="${safeName}" loading="lazy" onerror="this.outerHTML='<span style=&quot;font-size:24px;&quot;>${emoji}</span>'">`;
+      }
+      return `<span style="font-size:24px;">${emoji}</span>`;
+    }
+
+    function getCropDisplayHtml(cropName) {
+      return resolveCropThumbHtml(cropName);
     }
 
     function showLoader() { document.getElementById('appLoader').style.display = 'flex'; }
@@ -2501,6 +2590,7 @@
     async function loadAllSheetsData(forceRefresh = false) {
       if (!navigator.onLine) {
         loadOfflineSheetsSnapshot();
+        refreshActiveScreenOnTranslation();
         hideLoader();
         isLoadingSheets = false;
         return;
@@ -2510,13 +2600,14 @@
       showLoader();
       try {
         const [
-          csvSheet1, csvPriv, csvNotif,
+          csvSheet1, csvCropPhotos, csvPriv, csvNotif,
           csvSchedSabzi, csvSchedAnaaj, csvSchedPhal, csvSchedPhool, csvSchedOther,
           csvProtSabzi, csvProtAnaaj, csvProtPhal, csvProtPhool, csvProtOther,
           csvChem, csvAtoZ, csvStories, csvVideos,
           csvAlerts1, csvAlerts2, csvTips1, csvTips2, csvDiagnosis
         ] = await Promise.all([
           fetchRawCSV('Sheet1'),
+          fetchRawCSV('CropPhotos'),
           fetchRawCSV('Privacy'),
           fetchRawCSV('Notifications'),
           fetchRawCSV('Schedule'),
@@ -2539,6 +2630,11 @@
           fetchRawCSV('Tips'),
           fetchRawCSV('Diagnosis')
         ]);
+
+        const parsedCropPhotos = parseCropPhotosCSV(csvCropPhotos);
+        if (Object.keys(parsedCropPhotos).length > 0) {
+          cropPhotoSheetMap = parsedCropPhotos;
+        }
 
         const parsedVarieties = parseVarietiesCSV(csvSheet1);
         if (parsedVarieties.length > 0) sheetRecords = parsedVarieties;
@@ -2621,7 +2717,7 @@
         }
 
         const parsedStories = csvStories ? parseCSV(csvStories).map(cols => ({
-          title: cols[0] || 'स्टोरी', type: cols[1] || 'photo', url: cols[2] || '', icon: cols[3] || '🌱', desc: cols[4] || ''
+          title: cols[0] || 'स्टोरी', type: (cols[1] || 'photo').toLowerCase(), url: cols[2] || '', icon: cols[3] || '🌱', desc: cols[4] || ''
         })).filter(r => r.title && r.title !== 'Title' && !r.title.toLowerCase().includes('title')) : [];
         if (parsedStories.length > 0) dailyStories = parsedStories;
 
@@ -2634,6 +2730,7 @@
         populateCalculatorCropsFromSheets();
         renderStoriesBar();
         renderDynamicVideos();
+        refreshActiveScreenOnTranslation();
 
         hideLoader();
         isLoadingSheets = false;
@@ -2661,6 +2758,7 @@
         }
       } catch (e) {
         loadOfflineSheetsSnapshot();
+        refreshActiveScreenOnTranslation();
         hideLoader();
         isLoadingSheets = false;
       }
@@ -2676,7 +2774,7 @@
       }
       list.forEach((st, idx) => {
         let t = st.icon || '🌱';
-        if (st.url && st.url.startsWith('http')) t = `<img src="${st.url}">`;
+        if (st.url && st.url.startsWith('http') && st.type !== 'video') t = `<img src="${st.url}">`;
         container.innerHTML += `<div class="story-item" onclick="openStoryPlayer(${idx})"><div class="story-ring">${t}</div><span class="story-name">${st.title}</span></div>`;
       });
       window.activeStories = list;
@@ -2695,21 +2793,56 @@
       });
     }
 
-    let storyTimerId = null;
     function openStoryPlayer(idx) {
-      const st = window.activeStories[idx];
+      const st = (window.activeStories || [])[idx];
       if (!st) return;
-      if (storyTimerId) clearTimeout(storyTimerId);
+      clearInterval(storyTimerId);
+
       const modal = document.getElementById('storyPlayerModal');
+      const imgEl = document.getElementById('storyImageDisplay');
+      const vidEl = document.getElementById('storyVideoDisplay');
+      const barEl = document.getElementById('storyProgressBar');
+
+      document.getElementById('storyTopIcon').innerText = st.icon || '🌱';
       document.getElementById('storyTopTitle').innerText = st.title;
       document.getElementById('storyCaptionText').innerText = st.desc || '';
-      document.getElementById('storyImageDisplay').style.display = 'block';
-      document.getElementById('storyImageDisplay').src = st.url;
+      barEl.style.width = '0%';
+
+      if (st.type === 'video' || (st.url && st.url.toLowerCase().endsWith('.mp4'))) {
+        imgEl.style.display = 'none';
+        vidEl.style.display = 'block';
+        vidEl.src = st.url;
+        vidEl.play().catch(() => {});
+        storyTimerId = setInterval(() => {
+          if (vidEl.duration) {
+            const pct = Math.min(100, (vidEl.currentTime / vidEl.duration) * 100);
+            barEl.style.width = `${pct}%`;
+          }
+        }, 120);
+        vidEl.onended = () => closeStoryPlayer();
+      } else {
+        vidEl.pause();
+        vidEl.style.display = 'none';
+        imgEl.style.display = 'block';
+        imgEl.src = st.url;
+        const durationMs = 5000;
+        const startTime = Date.now();
+        storyTimerId = setInterval(() => {
+          const pct = Math.min(100, ((Date.now() - startTime) / durationMs) * 100);
+          barEl.style.width = `${pct}%`;
+          if (pct >= 100) closeStoryPlayer();
+        }, 100);
+      }
+
       modal.classList.add('active');
-      storyTimerId = setTimeout(() => { closeStoryPlayer(); }, 5000);
     }
+
     function closeStoryPlayer() {
-      if (storyTimerId) clearTimeout(storyTimerId);
+      clearInterval(storyTimerId);
+      const vidEl = document.getElementById('storyVideoDisplay');
+      if (vidEl) { vidEl.pause(); vidEl.src = ''; }
+      const barEl = document.getElementById('storyProgressBar');
+      if (barEl) barEl.style.width = '0%';
       document.getElementById('storyPlayerModal').classList.remove('active');
     }
 
@@ -2878,13 +3011,13 @@
     function showCropsForCategory(categoryName) {
       currentActiveCategory = categoryName;
       const filteredRecords = sheetRecords.filter(r => r.rawCategory.toLowerCase().includes(categoryName.toLowerCase()));
-      const cropsObj = {};
+      const cropsSet = new Set();
       filteredRecords.forEach(r => {
         if (r.crop && r.crop.toLowerCase() !== 'crop') {
-          cropsObj[r.crop] = r.photos;
+          cropsSet.add(r.crop);
         }
       });
-      const crops = Object.keys(cropsObj).sort();
+      const crops = Array.from(cropsSet).sort();
       const container = document.getElementById('cropsContainer');
       container.innerHTML = '';
 
@@ -2892,7 +3025,7 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
       } else {
         crops.forEach(c => {
-          const displayHtml = getCropDisplayHtml(c, cropsObj[c]);
+          const displayHtml = resolveCropThumbHtml(c);
           container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${c.replace(/'/g, "\\'")}', '${categoryName}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
@@ -2937,8 +3070,7 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
       } else {
         crops.forEach(c => {
-          const firstPhoto = (catData[c] && catData[c][0] && catData[c][0].photo) ? [catData[c][0].photo] : [];
-          const displayHtml = getCropDisplayHtml(c, firstPhoto);
+          const displayHtml = resolveCropThumbHtml(c);
           container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName}', '${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
@@ -2961,8 +3093,7 @@
         container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
       } else {
         crops.forEach(c => {
-          const firstPhoto = (catData[c] && catData[c][0] && catData[c][0].photo) ? [catData[c][0].photo] : [];
-          const displayHtml = getCropDisplayHtml(c, firstPhoto);
+          const displayHtml = resolveCropThumbHtml(c);
           container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName}', '${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
         });
       }
@@ -3128,18 +3259,18 @@
     }
 
     function selectCompany(comp) {
-      const cropsObj = {};
+      const cropsSet = new Set();
       sheetRecords.filter(r => r.company === comp).forEach(r => {
         if (r.crop && r.crop.toLowerCase() !== 'crop') {
-          cropsObj[r.crop] = r.photos;
+          cropsSet.add(r.crop);
         }
       });
-      const crops = Object.keys(cropsObj).sort();
+      const crops = Array.from(cropsSet).sort();
       const container = document.getElementById('companyCropsContainer');
       document.getElementById('compCropHeading').innerText = `${comp}`;
       container.innerHTML = '';
       crops.forEach(c => {
-        const displayHtml = getCropDisplayHtml(c, cropsObj[c]);
+        const displayHtml = resolveCropThumbHtml(c);
         container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp.replace(/'/g, "\\'")}', '${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
       });
       openScreen('screen-company-crops', comp);
@@ -3239,7 +3370,16 @@
 
     function contactAdvisor() { window.open('https://wa.me/916378475002', '_blank'); }
     function shareAppWithFriends() { window.open(`https://wa.me/?text=${encodeURIComponent('CROP & SABZI DOCTOR: ' + window.location.href)}`, '_blank'); }
-    function appLogout() { if (confirm('Logout?')) { localStorage.clear(); location.reload(); } }
+
+    function appLogout() {
+      closeDrawer();
+      ['farmer_name', 'farmer_phone', 'is_logged_in'].forEach(k => localStorage.removeItem(k));
+      updateProfileUI();
+      showToast('लॉगआउट हो गया है');
+      if (navigator.onLine) {
+        document.getElementById('loginScreenModal').classList.add('active');
+      }
+    }
 
     function triggerManualSearch() {
       const val = document.getElementById('homeSearch').value.trim().toLowerCase();
@@ -3280,17 +3420,21 @@
 
     async function sendOtpCode() {
       const phone = document.getElementById('loginPhone').value.trim();
-      if (phone.length !== 10) return;
+      if (!/^\d{10}$/.test(phone)) {
+        showToast('कृपया 10 अंकों का सही मोबाइल नंबर दर्ज करें');
+        return;
+      }
       document.getElementById('phoneInputGroup').style.display = 'none';
       document.getElementById('otpInputGroup').style.display = 'block';
       setTimeout(() => {
-        document.getElementById('loginOtp').value = "1234";
+        const generatedOtp = String(Math.floor(1000 + Math.random() * 9000));
+        document.getElementById('loginOtp').value = generatedOtp;
         localStorage.setItem('farmer_phone', phone);
         localStorage.setItem('is_logged_in', 'true');
         updateProfileUI();
         syncFarmerDataToGoogleSheet("नया किसान", phone, userCurrentCity, "");
         setTimeout(() => { document.getElementById('loginScreenModal').classList.remove('active'); }, 600);
-      }, 1000);
+      }, 900);
     }
     function skipLogin() { localStorage.setItem('is_logged_in', 'skipped'); document.getElementById('loginScreenModal').classList.remove('active'); }
 
@@ -3348,7 +3492,7 @@
     async function runSmartDiagnosis() {
       if (!navigator.onLine) {
         const t = getT();
-        alert(`${t.chatNetErrHead}: ${t.chatNetErrDesc}`);
+        showToast(`${t.chatNetErrHead}: ${t.chatNetErrDesc}`);
         return;
       }
       const btn = document.getElementById('btnDiagnose');
@@ -3377,7 +3521,7 @@
           loadAllSheetsData(true);
         }
       } catch (e) {
-        alert(e.message);
+        showToast(e.message || 'जांच में त्रुटि आई');
       } finally {
         btn.innerText = prevText;
         btn.disabled = false;
@@ -3397,18 +3541,21 @@
     function saveFarmerProfile() {
       const name = document.getElementById('profNameInput').value.trim();
       const phone = document.getElementById('profPhoneInput').value.trim();
-      const state = document.getElementById('profStateInput').value.trim() || 'Sri Ganganagar';
+      const state = document.getElementById('profStateInput').value.trim();
       const crops = document.getElementById('profCropsInput').value.trim();
 
       localStorage.setItem('farmer_name', name);
       localStorage.setItem('farmer_phone', phone);
-      localStorage.setItem('farmer_state', state);
+      if (state) {
+        localStorage.setItem('farmer_state', state);
+        userCurrentCity = state;
+      }
       localStorage.setItem('farmer_crops', crops);
-      userCurrentCity = state;
 
-      syncFarmerDataToGoogleSheet(name, phone, state, crops);
+      syncFarmerDataToGoogleSheet(name, phone, userCurrentCity, crops);
       updateProfileUI();
       fetchLiveWeather();
+      showToast('प्रोफाइल सेव हो गई');
       goBack();
     }
 
@@ -3453,7 +3600,10 @@
       const author = document.getElementById('discussionAuthor').value.trim();
       const text = document.getElementById('discussionText').value.trim();
       const fileInput = document.getElementById('discussionImageInput');
-      if (!author || !text) return;
+      if (!author || !text) {
+        showToast('कृपया नाम और संदेश लिखें');
+        return;
+      }
 
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
@@ -3481,15 +3631,11 @@
     function savePost(author, text, imgUrl) {
       const posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
       posts.unshift({ id: Date.now(), author, text, image: imgUrl, comments: [], date: 'आज' });
-      try {
-        localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
-      } catch (e) {
-        alert('स्टोरेज भर गया है, बिना फोटो के पोस्ट करें।');
-        return;
-      }
+      localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
       document.getElementById('discussionText').value = '';
       document.getElementById('discussionImageInput').value = '';
       loadDiscussionPosts();
+      showToast('चर्चा पोस्ट प्रकाशित हुई');
     }
 
     function addCommentToPost(postId) {
@@ -3513,7 +3659,7 @@
       const container = document.getElementById('discussionPostsContainer');
       let posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
       if (posts.length === 0) {
-        posts = [{ id: 1, author: "रामेश्वर लाल", text: "🍅", image: "", comments: [], date: "आज" }];
+        posts = [{ id: 1, author: "रामेश्वर लाल", text: "🍅 टमाटर की नर्सरी में झुलसा रोग से बचाव के लिए क्या करें?", image: "", comments: [], date: "आज" }];
       }
       container.innerHTML = '';
       posts.forEach(p => {
@@ -3521,20 +3667,20 @@
         let commentsHtml = '<div style="margin-top:10px; border-top:1px dashed #cbd5e1; padding-top:8px;">';
         if (p.comments && p.comments.length > 0) {
           p.comments.forEach(cm => {
-            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b>💬 ${cm.author}:</b> ${cm.text}</div>`;
+            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cm.author}:</b> ${cm.text}</div>`;
           });
         }
         commentsHtml += `
           <div style="display:flex; gap:6px; margin-top:8px;">
-            <input type="text" id="commentInput_${p.id}" class="form-control" placeholder="..." style="padding:6px 10px; font-size:13px;">
+            <input type="text" id="commentInput_${p.id}" class="form-control" placeholder="कमेंट लिखें..." style="padding:6px 10px; font-size:13px;">
             <button class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost(${p.id})">➤</button>
           </div>
         </div>`;
 
         container.innerHTML += `
           <div class="variety-card" style="border-left:4px solid #0284c7;">
-            <b>👤 ${p.author}</b>
-            <p style="margin:6px 0; font-size:14px;">${p.text}</p>
+            <b style="color:#0369a1; font-size:14px;">👤 ${p.author}</b>
+            <p style="margin:6px 0; color:#1f2937; font-size:14px;">${p.text}</p>
             ${imgHtml}
             ${commentsHtml}
           </div>`;
@@ -3559,15 +3705,19 @@
       const state = localStorage.getItem('farmer_state');
       const crops = localStorage.getItem('farmer_crops');
       const t = getT();
-      document.getElementById('welcomeMsg').innerText = name ? `🌾 ${name}` : t.welcomeMsg;
-      const drawerUser = document.getElementById('drawerUserName');
-      if (drawerUser) drawerUser.innerText = name ? `👤 ${name}` : '👤 किसान प्रोफाइल';
+
+      const welcomeEl = document.getElementById('welcomeMsg');
+      if (welcomeEl) welcomeEl.innerText = name ? `🌾 ${name}` : t.welcomeMsg;
+
+      const drawerNameEl = document.getElementById('drawerUserName');
+      if (drawerNameEl) drawerNameEl.innerText = name ? `👤 ${name}` : `👤 ${t.profileTitle}`;
 
       let pct = 20;
       if (name) pct += 20;
       if (phone) pct += 20;
       if (state) pct += 20;
       if (crops) pct += 20;
+
       const bar = document.getElementById('profileProgressBar');
       const badge = document.getElementById('profilePercentBadge');
       if (bar) bar.style.width = `${pct}%`;
@@ -3632,6 +3782,12 @@
         }
       }
     });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
   </script>
 
   <!-- इमेज प्रीव्यू मोडल -->
