@@ -598,7 +598,7 @@
   </div>
 
   <!-- टॉप हेडर -->
-  <div class="app-header">
+  <div class="app-header" id="mainAppHeader">
     <div style="display:flex; align-items:center;">
       <span class="back-btn" id="headerBack" onclick="goBack()">←</span>
       <span class="header-title" id="headerTitle">CROP & SABZI DOCTOR</span>
@@ -665,7 +665,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.7
+      CROP & SABZI DOCTOR • v10.8
     </div>
   </div>
 
@@ -964,7 +964,7 @@
 
     <div style="display:flex; gap:8px; align-items:center;">
       <input type="text" id="aiUserChatInput" class="form-control" placeholder="अपना सवाल लिखें..." onkeypress="handleAiChatKeyPress(event)" style="flex:1;">
-      <button class="btn-action" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="Mic">🎙️</button>
+      <button class="btn-action" id="chatMicBtn" style="background:#dc2626; color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;" onclick="startChatVoiceInput()" title="Mic">🎙️</button>
       <button class="btn-action btn-wa" style="background:#1b5e20; padding:10px 16px; width:auto; border-radius:10px;" onclick="sendUserChatMessage()" id="chatSendBtn">➤</button>
     </div>
   </div>
@@ -1278,7 +1278,7 @@
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v1';
 
-    const navHistory = ['screen-home'];
+    const navHistory = [{ id: 'screen-home', title: 'CROP & SABZI DOCTOR' }];
     let sheetRecords = [];
     let cropPhotoSheetMap = {};
     let scheduleRecords = {};
@@ -1373,6 +1373,14 @@
       }, 2400);
     }
 
+    function syncBannerOffset() {
+      const header = document.getElementById('mainAppHeader');
+      const banner = document.getElementById('offlineBanner');
+      if (header && banner) {
+        banner.style.top = `${header.offsetHeight}px`;
+      }
+    }
+
     const OFFLINE_LANG_PACKS = {
       hi: {
         headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, किसान भाई!", txtChangeProf: "✏️ प्रोफाइल बदलें",
@@ -1405,7 +1413,8 @@
         lblCalcCrop: "🌱 फसल चुनें:", lblCalcDate: "📅 बुवाई की तारीख चुनें:", btnCalcRun: "📊 कैलकुलेट करें",
         lblWind: "💨 हवा की गति", lblHum: "💧 हवा में नमी", lblForecast15: "📅 अगले 15 दिनों का मौसम पूर्वानुमान",
         btnSaveProf: "💾 सहेजें", btnDocSpray: "💬 WhatsApp पर सलाह लें",
-        offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है"
+        offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
+        voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है"
       },
       en: {
         headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!", txtChangeProf: "✏️ Edit Profile",
@@ -1438,7 +1447,8 @@
         lblCalcCrop: "🌱 Select Crop:", lblCalcDate: "📅 Select Sowing Date:", btnCalcRun: "📊 Calculate",
         lblWind: "💨 Wind Speed", lblHum: "💧 Humidity", lblForecast15: "📅 Next 15 Days Weather Forecast",
         btnSaveProf: "💾 Save Profile", btnDocSpray: "💬 Ask on WhatsApp",
-        offlineBanner: "📴 Offline Mode: Showing saved language and data"
+        offlineBanner: "📴 Offline Mode: Showing saved language and data",
+        voiceNotSupported: "Voice input is not supported on this browser"
       },
       mr: {
         welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
@@ -1557,10 +1567,11 @@
       'catItemFlower', 'catItemGrain', 'catItemOther', 'protCatHead', 'schedCatHead',
       'chatHeadTitle', 'chatSubHead', 'chatSendBtn', 'lblCalcCrop', 'lblCalcDate',
       'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15', 'btnSaveProf', 'btnDocSpray',
-      'offlineBanner'
+      'offlineBanner', 'voiceNotSupported'
     ];
 
     function updateOfflineBanner() {
+      syncBannerOffset();
       const banner = document.getElementById('offlineBanner');
       if (!banner) return;
       const t = getT();
@@ -1622,7 +1633,8 @@
     }
 
     function toggleDarkMode() {
-      const isDark = document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
       localStorage.setItem('dark_mode', String(isDark));
     }
 
@@ -1632,31 +1644,31 @@
       const id = activeScreen.id;
 
       if (id === 'screen-crops' && currentActiveCategory) {
-        showCropsForCategory(currentActiveCategory);
+        showCropsForCategory(currentActiveCategory, true);
       } else if (id === 'screen-seeds' && lastVarietiesList.length > 0) {
-        renderVarietiesList(lastVarietiesList, lastVarietiesTitle);
+        renderVarietiesList(lastVarietiesList, lastVarietiesTitle, true);
       } else if (id === 'screen-protection-crops' && currentActiveProtectionCat) {
-        showProtectionCropsListByCategory(currentActiveProtectionCat);
+        showProtectionCropsListByCategory(currentActiveProtectionCat, true);
       } else if (id === 'screen-crop-diseases' && currentActiveProtectionCat && currentActiveProtectionCrop) {
-        showCropDiseasesList(currentActiveProtectionCat, currentActiveProtectionCrop);
+        showCropDiseasesList(currentActiveProtectionCat, currentActiveProtectionCrop, true);
       } else if (id === 'screen-schedule-crops' && currentActiveScheduleCat) {
-        showScheduleCropsListByCategory(currentActiveScheduleCat);
+        showScheduleCropsListByCategory(currentActiveScheduleCat, true);
       } else if (id === 'screen-crop-schedule' && currentActiveScheduleCat && currentActiveScheduleCrop) {
-        openCropScheduleDetail(currentActiveScheduleCat, currentActiveScheduleCrop);
+        openCropScheduleDetail(currentActiveScheduleCat, currentActiveScheduleCrop, true);
       } else if (id === 'screen-chemical-list' && currentActiveChemicalCat) {
-        filterChemicalsByCategory(currentActiveChemicalCat);
+        filterChemicalsByCategory(currentActiveChemicalCat, true);
       } else if (id === 'screen-atoz-crops') {
-        showAtoZCropsScreen();
+        showAtoZCropsScreen(true);
       } else if (id === 'screen-atoz-detail' && currentActiveAtoZCrop) {
-        openAtoZDetail(currentActiveAtoZCrop);
+        openAtoZDetail(currentActiveAtoZCrop, true);
       } else if (id === 'screen-companies') {
-        showCompaniesList();
+        showCompaniesList(true);
       } else if (id === 'screen-pest-alert') {
-        showPestAlertScreen();
+        showPestAlertScreen(true);
       } else if (id === 'screen-expert-advice') {
-        showExpertAdviceScreen();
+        showExpertAdviceScreen(true);
       } else if (id === 'screen-ai-reports') {
-        showAiReportsScreen();
+        showAiReportsScreen(true);
       } else if (id === 'screen-mandi-bhav' && cachedMandiData && cachedMandiData.length > 0) {
         renderMandiTable(cachedMandiData);
       }
@@ -1683,21 +1695,6 @@
 
       pendingTranslations[cacheKey] = (async () => {
         try {
-          const fallbackUrl = `${APPS_SCRIPT_URL}?action=translate&lang=${encodeURIComponent(targetLang)}&text=${encodeURIComponent(clean)}`;
-          const fRes = await fetch(fallbackUrl);
-          if (fRes.ok) {
-            const fJson = await fRes.json();
-            if (fJson && fJson.result) {
-              const tr = String(fJson.result).trim();
-              if (tr) {
-                try { localStorage.setItem(cacheKey, tr); } catch (e) {}
-                return tr;
-              }
-            }
-          }
-        } catch (e) {}
-
-        try {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), 3500);
           const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(clean)}`;
@@ -1715,74 +1712,82 @@
           }
         } catch (err) {}
 
+        try {
+          const fallbackUrl = `${APPS_SCRIPT_URL}?action=translate&lang=${encodeURIComponent(targetLang)}&text=${encodeURIComponent(clean)}`;
+          const fRes = await fetch(fallbackUrl);
+          if (fRes.ok) {
+            const fJson = await fRes.json();
+            if (fJson && fJson.result) {
+              const tr = String(fJson.result).trim();
+              if (tr) {
+                try { localStorage.setItem(cacheKey, tr); } catch (e) {}
+                return tr;
+              }
+            }
+          }
+        } catch (e) {}
+
         return clean;
       })();
 
       return await pendingTranslations[cacheKey];
     }
 
-    function runBackgroundTranslation(items, fields, onUpdate) {
+    function applyCachedStringsToObjectList(items, fields) {
       if (!Array.isArray(items) || currentLang === 'hi') return;
-      const tasks = [];
-      const uniqueStrings = new Set();
-
       items.forEach(item => {
         fields.forEach(f => {
           const val = item[f];
           if (val && typeof val === 'string') {
             const cached = getCachedTranslation(val, currentLang);
-            if (cached) {
-              item[f] = cached;
-            } else if (navigator.onLine) {
-              uniqueStrings.add(val.trim());
+            if (cached) item[f] = cached;
+          }
+        });
+      });
+    }
+
+    function runBackgroundTranslation(items, fields, onUpdate) {
+      if (!Array.isArray(items) || currentLang === 'hi') return;
+      applyCachedStringsToObjectList(items, fields);
+      if (onUpdate) onUpdate();
+
+      if (!navigator.onLine) return;
+
+      const uniqueStrings = new Set();
+      items.forEach(item => {
+        fields.forEach(f => {
+          const val = item[f];
+          if (val && typeof val === 'string') {
+            const clean = val.trim();
+            if (clean && !localStorage.getItem(`sheet_tr_${currentLang}_${clean}`)) {
+              uniqueStrings.add(clean);
             }
           }
         });
       });
 
-      if (uniqueStrings.size === 0) {
-        if (onUpdate) onUpdate();
-        refreshActiveScreenOnTranslation();
-        return;
-      }
+      if (uniqueStrings.size === 0) return;
 
-      uniqueStrings.forEach(str => {
-        tasks.push(translateSheetText(str, currentLang));
-      });
-
+      const tasks = Array.from(uniqueStrings).map(str => translateSheetText(str, currentLang));
       isTranslatingBackground = true;
       const concurrency = 8;
       let idx = 0;
-
-      function applyCachedToItems() {
-        items.forEach(item => {
-          fields.forEach(f => {
-            const val = item[f];
-            if (val && typeof val === 'string') {
-              const cached = getCachedTranslation(val, currentLang);
-              if (cached) item[f] = cached;
-            }
-          });
-        });
-      }
 
       async function worker() {
         while (idx < tasks.length) {
           const curIdx = idx++;
           await tasks[curIdx];
-          if (curIdx % 10 === 0) {
-            applyCachedToItems();
+          if (curIdx % 8 === 0) {
+            applyCachedStringsToObjectList(items, fields);
             if (onUpdate) onUpdate();
           }
         }
       }
 
-      const workers = Array.from({ length: Math.min(concurrency, tasks.length) }, worker);
-      Promise.all(workers).then(() => {
-        applyCachedToItems();
+      Promise.all(Array.from({ length: Math.min(concurrency, tasks.length) }, worker)).then(() => {
+        applyCachedStringsToObjectList(items, fields);
         isTranslatingBackground = false;
         if (onUpdate) onUpdate();
-        refreshActiveScreenOnTranslation();
       });
     }
 
@@ -1819,7 +1824,10 @@
         if (el && val) el.innerText = val;
       };
 
-      setText('headerTitle', t.headerTitle);
+      const activeScreen = document.querySelector('.screen.active');
+      if (!activeScreen || activeScreen.id === 'screen-home') {
+        setText('headerTitle', t.headerTitle);
+      }
       setText('txtChangeProf', t.txtChangeProf);
       setText('txtAiTitle', t.txtAiTitle);
       setText('aiAssistantSubText', t.aiSubText);
@@ -2050,9 +2058,13 @@
     }
 
     function startChatVoiceInput() {
+      const t = getT();
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) return;
+      if (!SpeechRecognition) {
+        showToast(t.voiceNotSupported);
+        return;
+      }
 
       const rec = new SpeechRecognition();
       rec.lang = speechLangMap[currentLang] || 'hi-IN';
@@ -2060,7 +2072,7 @@
       rec.maxAlternatives = 1;
 
       const chatInput = document.getElementById('aiUserChatInput');
-      const micBtn = document.querySelector('button[onclick="startChatVoiceInput()"]');
+      const micBtn = document.getElementById('chatMicBtn');
 
       rec.onstart = function () {
         if (micBtn) micBtn.classList.add('mic-active-anim');
@@ -2077,7 +2089,12 @@
         if (micBtn) micBtn.classList.remove('mic-active-anim');
       };
 
-      try { rec.start(); } catch (err) {}
+      try {
+        rec.start();
+      } catch (err) {
+        if (micBtn) micBtn.classList.remove('mic-active-anim');
+        showToast(t.voiceNotSupported);
+      }
     }
 
     function populateCalculatorCropsFromSheets() {
@@ -2214,17 +2231,35 @@
       loadingDiv.innerHTML = '⏳ मंडी भाव लोड हो रहे हैं...';
 
       try {
-        const apiUrl = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=50";
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        if (data && data.records && data.records.length > 0) {
-          const userDistrict = (userCurrentCity || 'Sri Ganganagar').toLowerCase().split(',')[0].trim();
-          const filtered = data.records.filter(r =>
-            (r.district || '').toLowerCase().includes(userDistrict) ||
-            (r.market || '').toLowerCase().includes(userDistrict) ||
-            (r.state || '').toLowerCase().includes(userDistrict)
-          );
-          cachedMandiData = filtered.length > 0 ? filtered : data.records;
+        const userDistrict = (userCurrentCity || 'Sri Ganganagar').split(',')[0].trim();
+        let records = [];
+
+        const distUrl = `https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=30&filters[district]=${encodeURIComponent(userDistrict)}`;
+        const dRes = await fetch(distUrl);
+        if (dRes.ok) {
+          const dJson = await dRes.json();
+          if (dJson && Array.isArray(dJson.records) && dJson.records.length > 0) {
+            records = dJson.records;
+          }
+        }
+
+        if (records.length === 0) {
+          const fallbackUrl = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=50";
+          const fRes = await fetch(fallbackUrl);
+          const fJson = await fRes.json();
+          if (fJson && Array.isArray(fJson.records)) {
+            const lowDist = userDistrict.toLowerCase();
+            const matched = fJson.records.filter(r =>
+              (r.district || '').toLowerCase().includes(lowDist) ||
+              (r.market || '').toLowerCase().includes(lowDist) ||
+              (r.state || '').toLowerCase().includes(lowDist)
+            );
+            records = matched.length > 0 ? matched : fJson.records;
+          }
+        }
+
+        if (records.length > 0) {
+          cachedMandiData = records;
           renderMandiTable(cachedMandiData);
         } else {
           loadingDiv.innerHTML = "मंडी डेटा उपलब्ध नहीं है।";
@@ -2399,10 +2434,6 @@
         return `<img src="${chosenUrl.trim()}" alt="${safeName}" loading="lazy" onerror="this.outerHTML='<span style=&quot;font-size:24px;&quot;>${emoji}</span>'">`;
       }
       return `<span style="font-size:24px;">${emoji}</span>`;
-    }
-
-    function getCropDisplayHtml(cropName) {
-      return resolveCropThumbHtml(cropName);
     }
 
     function showLoader() { document.getElementById('appLoader').style.display = 'flex'; }
@@ -2984,23 +3015,37 @@
       }
     }
 
-    function openScreen(screenId, title) {
+    function openScreen(screenId, title, isBackStep = false) {
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(screenId).classList.add('active');
-      document.getElementById('headerTitle').innerText = title;
+      const targetScreen = document.getElementById(screenId);
+      if (targetScreen) targetScreen.classList.add('active');
+      document.getElementById('headerTitle').innerText = title || 'CROP & SABZI DOCTOR';
       document.getElementById('headerBack').style.display = screenId !== 'screen-home' ? 'inline-block' : 'none';
-      if (screenId !== 'screen-home') navHistory.push(screenId);
+
+      if (!isBackStep && screenId !== 'screen-home') {
+        const topItem = navHistory[navHistory.length - 1];
+        if (!topItem || topItem.id !== screenId) {
+          navHistory.push({ id: screenId, title: title || 'CROP & SABZI DOCTOR' });
+        }
+      }
       window.scrollTo(0, 0);
+      syncBannerOffset();
     }
 
     function goBack() {
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-      navHistory.pop();
-      const prev = navHistory[navHistory.length - 1] || 'screen-home';
+      if (navHistory.length > 1) {
+        navHistory.pop();
+      }
+      const prev = navHistory[navHistory.length - 1] || { id: 'screen-home', title: 'CROP & SABZI DOCTOR' };
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(prev).classList.add('active');
-      if (prev === 'screen-home') document.getElementById('headerBack').style.display = 'none';
+      const prevEl = document.getElementById(prev.id);
+      if (prevEl) prevEl.classList.add('active');
+      document.getElementById('headerTitle').innerText = prev.title || 'CROP & SABZI DOCTOR';
+      document.getElementById('headerBack').style.display = prev.id !== 'screen-home' ? 'inline-block' : 'none';
+      window.scrollTo(0, 0);
+      syncBannerOffset();
     }
 
     function showAllCategoriesScreen() {
@@ -3008,7 +3053,7 @@
       openScreen('screen-all-categories', t.gCrops);
     }
 
-    function showCropsForCategory(categoryName) {
+    function showCropsForCategory(categoryName, isRefresh = false) {
       currentActiveCategory = categoryName;
       const filteredRecords = sheetRecords.filter(r => r.rawCategory.toLowerCase().includes(categoryName.toLowerCase()));
       const cropsSet = new Set();
@@ -3017,25 +3062,34 @@
           cropsSet.add(r.crop);
         }
       });
-      const crops = Array.from(cropsSet).sort();
+      const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: c }));
       const container = document.getElementById('cropsContainer');
-      container.innerHTML = '';
 
-      if (crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-      } else {
-        crops.forEach(c => {
-          const displayHtml = resolveCropThumbHtml(c);
-          container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${c.replace(/'/g, "\\'")}', '${categoryName}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
-        });
+      const draw = () => {
+        container.innerHTML = '';
+        if (cropRows.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+        } else {
+          cropRows.forEach(item => {
+            const displayHtml = resolveCropThumbHtml(item.origCrop);
+            container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${item.origCrop.replace(/'/g, "\\'")}', '${categoryName.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${item.displayCrop}</span></div><span class="arrow">&gt;</span></div>`;
+          });
+        }
+      };
+
+      draw();
+      if (!isRefresh) {
+        openScreen('screen-crops', categoryName);
       }
-      openScreen('screen-crops', categoryName);
       if (currentLang !== 'hi') {
         translateSheetText(categoryName, currentLang).then(tr => {
           if (document.getElementById('screen-crops').classList.contains('active')) {
             document.getElementById('headerTitle').innerText = tr;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-crops') curTop.title = tr;
           }
         });
+        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
       }
     }
 
@@ -3059,22 +3113,38 @@
       openScreen('screen-protection-categories', t.gProt);
     }
 
-    function showProtectionCropsListByCategory(categoryName) {
+    function showProtectionCropsListByCategory(categoryName, isRefresh = false) {
       currentActiveProtectionCat = categoryName;
       const container = document.getElementById('protectionCropsContainer');
-      container.innerHTML = '';
       const catData = protectionRecords[categoryName] || {};
-      const crops = Object.keys(catData).sort();
+      const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: c }));
 
-      if (crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-      } else {
-        crops.forEach(c => {
-          const displayHtml = resolveCropThumbHtml(c);
-          container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName}', '${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
-        });
+      const draw = () => {
+        container.innerHTML = '';
+        if (cropRows.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+        } else {
+          cropRows.forEach(item => {
+            const displayHtml = resolveCropThumbHtml(item.origCrop);
+            container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${item.displayCrop}</span></div><span class="arrow">&gt;</span></div>`;
+          });
+        }
+      };
+
+      draw();
+      if (!isRefresh) {
+        openScreen('screen-protection-crops', categoryName);
       }
-      openScreen('screen-protection-crops', categoryName);
+      if (currentLang !== 'hi') {
+        translateSheetText(categoryName, currentLang).then(tr => {
+          if (document.getElementById('screen-protection-crops').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = tr;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-protection-crops') curTop.title = tr;
+          }
+        });
+        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      }
     }
 
     function showScheduleCategoriesScreen() {
@@ -3082,40 +3152,113 @@
       openScreen('screen-schedule-categories', t.gSched);
     }
 
-    function showScheduleCropsListByCategory(categoryName) {
+    function showScheduleCropsListByCategory(categoryName, isRefresh = false) {
       currentActiveScheduleCat = categoryName;
       const container = document.getElementById('scheduleCropsContainer');
-      container.innerHTML = '';
       const catData = scheduleRecords[categoryName] || {};
-      const crops = Object.keys(catData).sort();
+      const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: c }));
 
-      if (crops.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-      } else {
-        crops.forEach(c => {
-          const displayHtml = resolveCropThumbHtml(c);
-          container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName}', '${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
-        });
+      const draw = () => {
+        container.innerHTML = '';
+        if (cropRows.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+        } else {
+          cropRows.forEach(item => {
+            const displayHtml = resolveCropThumbHtml(item.origCrop);
+            container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${item.displayCrop}</span></div><span class="arrow">&gt;</span></div>`;
+          });
+        }
+      };
+
+      draw();
+      if (!isRefresh) {
+        openScreen('screen-schedule-crops', categoryName);
       }
-      openScreen('screen-schedule-crops', categoryName);
+      if (currentLang !== 'hi') {
+        translateSheetText(categoryName, currentLang).then(tr => {
+          if (document.getElementById('screen-schedule-crops').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = tr;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-schedule-crops') curTop.title = tr;
+          }
+        });
+        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      }
     }
 
     function showFavoritesScreen() {
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
-      const list = sheetRecords.filter(r => favs.includes(r.variety));
+      const list = sheetRecords.filter(r => favs.includes(r.variety)).map(v => ({ ...v }));
       const container = document.getElementById('favoritesContainer');
-      container.innerHTML = '';
-      if (list.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
-      } else {
-        list.forEach(v => {
+
+      const draw = () => {
+        container.innerHTML = '';
+        if (list.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
+        } else {
+          list.forEach(v => {
+            container.innerHTML += `
+              <div class="variety-card">
+                <div class="var-header-row">
+                  <span class="badge-variety">${getCropEmoji(v.crop)} ${v.variety}</span>
+                  <span class="badge-company">${v.company}</span>
+                </div>
+                <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
+                <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${v.company || '-'}</span></div>
+                <div class="var-info-row">🌾 <b>फसल:</b> <span>${v.crop || '-'}</span></div>
+                <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${v.segment || '-'}</span></div>
+                <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${v.features || '-'}</span></div>
+                <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight || '-'}</span></div>
+                <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${v.maturity || '-'}</span></div>
+                <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance || '-'}</span></div>
+                <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">❌ हटाएं</button>
+              </div>`;
+          });
+        }
+      };
+
+      draw();
+      const t = getT();
+      openScreen('screen-favorites', t.favoritesTitle);
+      if (currentLang !== 'hi') {
+        runBackgroundTranslation(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance'], draw);
+      }
+    }
+
+    function renderVarietiesList(list, title, isRefresh = false) {
+      lastVarietiesList = list;
+      lastVarietiesTitle = title;
+      const renderItems = list.map(v => ({ ...v }));
+      const container = document.getElementById('varietiesContainer');
+      const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
+
+      const draw = () => {
+        container.innerHTML = '';
+        if (renderItems.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+          return;
+        }
+
+        renderItems.forEach(v => {
+          let photosHtml = '';
+          if (v.photos && v.photos.length > 0) {
+            photosHtml += '<div class="var-photo-grid">';
+            v.photos.forEach(img => { photosHtml += `<img src="${img}" class="var-photo" onclick="openImageModal('${img}')">`; });
+            photosHtml += '</div>';
+          }
+          const isSaved = favs.includes(v.variety);
+          const saveBtnText = isSaved ? "⭐ सेव हुआ" : "☆";
+          const savedClass = isSaved ? "saved" : "";
+
           container.innerHTML += `
             <div class="variety-card">
+              ${photosHtml}
               <div class="var-header-row">
                 <span class="badge-variety">${getCropEmoji(v.crop)} ${v.variety}</span>
                 <span class="badge-company">${v.company}</span>
               </div>
               <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
+
               <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${v.company || '-'}</span></div>
               <div class="var-info-row">🌾 <b>फसल:</b> <span>${v.crop || '-'}</span></div>
               <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${v.segment || '-'}</span></div>
@@ -3123,61 +3266,29 @@
               <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight || '-'}</span></div>
               <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${v.maturity || '-'}</span></div>
               <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance || '-'}</span></div>
-              <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">❌ हटाएं</button>
+
+              <div style="display:flex; gap:8px; margin-top:14px;">
+                <a href="https://wa.me/916378475002?text=${encodeURIComponent(v.company + ' - ' + v.variety)}" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 खरीदे बीज</a>
+                <button class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
+              </div>
             </div>`;
         });
-      }
-      const t = getT();
-      openScreen('screen-favorites', t.favoritesTitle);
-    }
+      };
 
-    function renderVarietiesList(list, title) {
-      lastVarietiesList = list;
-      lastVarietiesTitle = title;
-      const container = document.getElementById('varietiesContainer');
-      container.innerHTML = '';
-      const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
-      if (list.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      draw();
+      if (!isRefresh) {
         openScreen('screen-seeds', title);
-        return;
       }
-
-      list.forEach(v => {
-        let photosHtml = '';
-        if (v.photos.length > 0) {
-          photosHtml += '<div class="var-photo-grid">';
-          v.photos.forEach(img => { photosHtml += `<img src="${img}" class="var-photo" onclick="openImageModal('${img}')">`; });
-          photosHtml += '</div>';
-        }
-        const isSaved = favs.includes(v.variety);
-        const saveBtnText = isSaved ? "⭐ सेव हुआ" : "☆";
-        const savedClass = isSaved ? "saved" : "";
-
-        container.innerHTML += `
-          <div class="variety-card">
-            ${photosHtml}
-            <div class="var-header-row">
-              <span class="badge-variety">${getCropEmoji(v.crop)} ${v.variety}</span>
-              <span class="badge-company">${v.company}</span>
-            </div>
-            <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
-
-            <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${v.company || '-'}</span></div>
-            <div class="var-info-row">🌾 <b>फसल:</b> <span>${v.crop || '-'}</span></div>
-            <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${v.segment || '-'}</span></div>
-            <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${v.features || '-'}</span></div>
-            <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight || '-'}</span></div>
-            <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${v.maturity || '-'}</span></div>
-            <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance || '-'}</span></div>
-
-            <div style="display:flex; gap:8px; margin-top:14px;">
-              <a href="https://wa.me/916378475002?text=${encodeURIComponent(v.company + ' - ' + v.variety)}" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 खरीदे बीज</a>
-              <button class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
-            </div>
-          </div>`;
-      });
-      openScreen('screen-seeds', title);
+      if (currentLang !== 'hi') {
+        translateSheetText(title, currentLang).then(tr => {
+          if (document.getElementById('screen-seeds').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = tr;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-seeds') curTop.title = tr;
+          }
+        });
+        runBackgroundTranslation(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance'], draw);
+      }
     }
 
     function toggleBookmark(varietyName, btnElem) {
@@ -3197,65 +3308,109 @@
       }
     }
 
-    function showCropDiseasesList(categoryName, crop) {
+    function showCropDiseasesList(categoryName, crop, isRefresh = false) {
       currentActiveProtectionCat = categoryName;
       currentActiveProtectionCrop = crop;
-      document.getElementById('cropDiseaseHeading').innerText = `${crop}`;
+      const headingEl = document.getElementById('cropDiseaseHeading');
       const container = document.getElementById('cropDiseasesContainer');
-      container.innerHTML = '';
+      const items = ((protectionRecords[categoryName] && protectionRecords[categoryName][crop]) ? protectionRecords[categoryName][crop] : []).map(d => ({ ...d }));
 
-      const items = (protectionRecords[categoryName] && protectionRecords[categoryName][crop]) ? protectionRecords[categoryName][crop] : [];
+      const draw = () => {
+        container.innerHTML = '';
+        if (items.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+        } else {
+          items.forEach(d => {
+            const p = (d.photo && d.photo.trim().startsWith('http'))
+              ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${d.name}">`
+              : '';
+            const iconEmoji = getCropEmoji(crop);
 
-      if (items.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-      } else {
-        items.forEach(d => {
-          const p = (d.photo && d.photo.trim().startsWith('http'))
-            ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${d.name}">`
-            : '';
-          const iconEmoji = getCropEmoji(crop);
+            container.innerHTML += `
+              <div class="disease-card">
+                <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>रोग:</b> ${d.name}</div>
+                <div class="disease-symptom">🔍 <b>लक्षण:</b> ${d.symptoms}</div>
+                <div class="disease-cure-box">💊 <b>उपचार:</b> ${d.cure}</div>
+                ${p}
+              </div>`;
+          });
+        }
+      };
 
-          container.innerHTML += `
-            <div class="disease-card">
-              <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>रोग:</b> ${d.name}</div>
-              <div class="disease-symptom">🔍 <b>लक्षण:</b> ${d.symptoms}</div>
-              <div class="disease-cure-box">💊 <b>उपचार:</b> ${d.cure}</div>
-              ${p}
-            </div>`;
-        });
+      headingEl.innerText = crop;
+      draw();
+      if (!isRefresh) {
+        openScreen('screen-crop-diseases', crop);
       }
-      openScreen('screen-crop-diseases', crop);
+      if (currentLang !== 'hi') {
+        translateSheetText(crop, currentLang).then(tr => {
+          headingEl.innerText = tr;
+          if (document.getElementById('screen-crop-diseases').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = tr;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-crop-diseases') curTop.title = tr;
+          }
+        });
+        runBackgroundTranslation(items, ['name', 'symptoms', 'cure'], draw);
+      }
     }
 
-    function openCropScheduleDetail(categoryName, crop) {
+    function openCropScheduleDetail(categoryName, crop, isRefresh = false) {
       currentActiveScheduleCat = categoryName;
       currentActiveScheduleCrop = crop;
-      document.getElementById('scheduleCropTitle').innerText = `${crop}`;
+      const titleEl = document.getElementById('scheduleCropTitle');
       const container = document.getElementById('scheduleStepsContainer');
-      container.innerHTML = '';
+      const steps = ((scheduleRecords[categoryName] && scheduleRecords[categoryName][crop]) ? scheduleRecords[categoryName][crop] : []).map(s => ({ ...s }));
 
-      const steps = (scheduleRecords[categoryName] && scheduleRecords[categoryName][crop]) ? scheduleRecords[categoryName][crop] : [];
+      const draw = () => {
+        container.innerHTML = '';
+        if (steps.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+        } else {
+          steps.forEach(s => {
+            const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
+            container.innerHTML += `<div class="schedule-step"><b>⏱️ समय: ${s.time}</b><p>🧪 <b>दवा:</b> ${s.med}</p><p>🎯 <b>उद्देश्य:</b> ${s.purpose}</p>${p}</div>`;
+          });
+        }
+      };
 
-      if (steps.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-      } else {
-        steps.forEach(s => {
-          const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
-          container.innerHTML += `<div class="schedule-step"><b>⏱️ समय: ${s.time}</b><p>🧪 <b>दवा:</b> ${s.med}</p><p>🎯 <b>उद्देश्य:</b> ${s.purpose}</p>${p}</div>`;
-        });
+      titleEl.innerText = crop;
+      draw();
+      if (!isRefresh) {
+        openScreen('screen-crop-schedule', crop);
       }
-      openScreen('screen-crop-schedule', crop);
+      if (currentLang !== 'hi') {
+        translateSheetText(crop, currentLang).then(tr => {
+          titleEl.innerText = tr;
+          if (document.getElementById('screen-crop-schedule').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = tr;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-crop-schedule') curTop.title = tr;
+          }
+        });
+        runBackgroundTranslation(steps, ['time', 'med', 'purpose'], draw);
+      }
     }
 
-    function showCompaniesList() {
-      const comps = [...new Set(sheetRecords.map(r => r.company))].sort();
+    function showCompaniesList(isRefresh = false) {
+      const compRows = [...new Set(sheetRecords.map(r => r.company))].sort().map(c => ({ origComp: c, displayComp: c }));
       const container = document.getElementById('companiesContainer');
-      container.innerHTML = '';
-      comps.forEach(c => {
-        container.innerHTML += `<div class="list-item" onclick="selectCompany('${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
-      });
+
+      const draw = () => {
+        container.innerHTML = '';
+        compRows.forEach(item => {
+          container.innerHTML += `<div class="list-item" onclick="selectCompany('${item.origComp.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${item.displayComp}</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      };
+
+      draw();
       const t = getT();
-      openScreen('screen-companies', t.compTitle);
+      if (!isRefresh) {
+        openScreen('screen-companies', t.compTitle);
+      }
+      if (currentLang !== 'hi') {
+        runBackgroundTranslation(compRows, ['displayComp'], draw);
+      }
     }
 
     function selectCompany(comp) {
@@ -3265,15 +3420,30 @@
           cropsSet.add(r.crop);
         }
       });
-      const crops = Array.from(cropsSet).sort();
+      const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: c }));
       const container = document.getElementById('companyCropsContainer');
-      document.getElementById('compCropHeading').innerText = `${comp}`;
-      container.innerHTML = '';
-      crops.forEach(c => {
-        const displayHtml = resolveCropThumbHtml(c);
-        container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp.replace(/'/g, "\\'")}', '${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
-      });
+      const headingEl = document.getElementById('compCropHeading');
+      headingEl.innerText = comp;
+
+      const draw = () => {
+        container.innerHTML = '';
+        cropRows.forEach(item => {
+          const displayHtml = resolveCropThumbHtml(item.origCrop);
+          container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${item.displayCrop}</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      };
+
+      draw();
       openScreen('screen-company-crops', comp);
+      if (currentLang !== 'hi') {
+        translateSheetText(comp, currentLang).then(tr => {
+          headingEl.innerText = tr;
+          if (document.getElementById('screen-company-crops').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = tr;
+          }
+        });
+        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      }
     }
 
     function filterByCompanyAndCrop(comp, crop) {
@@ -3285,32 +3455,50 @@
       openScreen('screen-chemicals', t.chemTitle);
     }
 
-    function filterChemicalsByCategory(cat) {
+    function filterChemicalsByCategory(cat, isRefresh = false) {
       currentActiveChemicalCat = cat;
       const container = document.getElementById('chemicalListContainer');
-      document.getElementById('chemicalListTitle').innerText = `${cat}`;
-      container.innerHTML = '';
+      const titleEl = document.getElementById('chemicalListTitle');
+      const list = chemicalsRecords.filter(c => (c.type || '').toLowerCase().includes(cat.toLowerCase())).map(c => ({ ...c }));
 
-      const list = chemicalsRecords.filter(c => (c.type || '').toLowerCase().includes(cat.toLowerCase()));
-      if (list.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-      }
-      list.forEach(c => {
-        const p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${c.name}"></div>` : '';
-        container.innerHTML += `
-          <div class="chem-card">
-            <div class="chem-title">🧪 ${c.name} (${c.type})</div>
-            <div class="chem-body-row">
-              <div class="chem-info-side">
-                <div class="chem-tech">🔬 <b>तकनीक:</b> ${c.tech}</div>
-                <div class="chem-use">🌿 <b>उपयोग:</b> ${c.use}</div>
-                <div class="chem-dose">💧 <b>खुराक:</b> ${c.dose}</div>
+      const draw = () => {
+        container.innerHTML = '';
+        if (list.length === 0) {
+          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+        }
+        list.forEach(c => {
+          const p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${c.name}"></div>` : '';
+          container.innerHTML += `
+            <div class="chem-card">
+              <div class="chem-title">🧪 ${c.name} (${c.type})</div>
+              <div class="chem-body-row">
+                <div class="chem-info-side">
+                  <div class="chem-tech">🔬 <b>तकनीक:</b> ${c.tech}</div>
+                  <div class="chem-use">🌿 <b>उपयोग:</b> ${c.use}</div>
+                  <div class="chem-dose">💧 <b>खुराक:</b> ${c.dose}</div>
+                </div>
+                ${p}
               </div>
-              ${p}
-            </div>
-          </div>`;
-      });
-      openScreen('screen-chemical-list', cat);
+            </div>`;
+        });
+      };
+
+      titleEl.innerText = cat;
+      draw();
+      if (!isRefresh) {
+        openScreen('screen-chemical-list', cat);
+      }
+      if (currentLang !== 'hi') {
+        translateSheetText(cat, currentLang).then(tr => {
+          titleEl.innerText = tr;
+          if (document.getElementById('screen-chemical-list').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = tr;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-chemical-list') curTop.title = tr;
+          }
+        });
+        runBackgroundTranslation(list, ['name', 'type', 'tech', 'use', 'dose'], draw);
+      }
     }
 
     function showOtherServicesScreen() {
@@ -3330,31 +3518,64 @@
       fetchLiveMandiPrices();
     }
 
-    function showExpertAdviceScreen() {
+    function showExpertAdviceScreen(isRefresh = false) {
       const container = document.getElementById('tipsContainer');
-      container.innerHTML = tipsRecords.length > 0
-        ? tipsRecords.map(item => `<div class="schedule-step"><b>💡 ${item.title}</b><p>${item.desc}</p>${item.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${item.date}</span>` : ''}</div>`).join('')
-        : `<div class="schedule-step" style="text-align:center; color:#6b7280;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
+      const items = tipsRecords.map(item => ({ ...item }));
+
+      const draw = () => {
+        container.innerHTML = items.length > 0
+          ? items.map(item => `<div class="schedule-step"><b>💡 ${item.title}</b><p>${item.desc}</p>${item.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${item.date}</span>` : ''}</div>`).join('')
+          : `<div class="schedule-step" style="text-align:center; color:#6b7280;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
+      };
+
+      draw();
       const t = getT();
-      openScreen('screen-expert-advice', t.expertTitle);
+      if (!isRefresh) {
+        openScreen('screen-expert-advice', t.expertTitle);
+      }
+      if (currentLang !== 'hi') {
+        runBackgroundTranslation(items, ['title', 'desc'], draw);
+      }
     }
 
-    function showPestAlertScreen() {
+    function showPestAlertScreen(isRefresh = false) {
       const container = document.getElementById('alertsContainer');
-      container.innerHTML = alertsRecords.length > 0
-        ? alertsRecords.map(a => `<div class="pest-alert-card"><b>⚠️ ${a.title}</b><p style="margin-top:4px; font-size:13.5px;">${a.desc}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${a.date}</span>` : ''}</div>`).join('')
-        : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
+      const items = alertsRecords.map(a => ({ ...a }));
+
+      const draw = () => {
+        container.innerHTML = items.length > 0
+          ? items.map(a => `<div class="pest-alert-card"><b>⚠️ ${a.title}</b><p style="margin-top:4px; font-size:13.5px;">${a.desc}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${a.date}</span>` : ''}</div>`).join('')
+          : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
+      };
+
+      draw();
       const t = getT();
-      openScreen('screen-pest-alert', t.pestTitle);
+      if (!isRefresh) {
+        openScreen('screen-pest-alert', t.pestTitle);
+      }
+      if (currentLang !== 'hi') {
+        runBackgroundTranslation(items, ['title', 'desc'], draw);
+      }
     }
 
-    function showAiReportsScreen() {
+    function showAiReportsScreen(isRefresh = false) {
       const container = document.getElementById('aiReportsContainer');
-      container.innerHTML = aiReportsRecords.length > 0
-        ? aiReportsRecords.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${rep.title}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; color:#6b7280; display:block; margin-top:6px;">🕒 ${rep.date}</span>` : ''}</div>`).join('')
-        : `<div class="variety-card" style="text-align:center; color:#6b7280;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
+      const items = aiReportsRecords.map(rep => ({ ...rep }));
+
+      const draw = () => {
+        container.innerHTML = items.length > 0
+          ? items.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${rep.title}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; color:#6b7280; display:block; margin-top:6px;">🕒 ${rep.date}</span>` : ''}</div>`).join('')
+          : `<div class="variety-card" style="text-align:center; color:#6b7280;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
+      };
+
+      draw();
       const t = getT();
-      openScreen('screen-ai-reports', t.reportsTitle);
+      if (!isRefresh) {
+        openScreen('screen-ai-reports', t.reportsTitle);
+      }
+      if (currentLang !== 'hi') {
+        runBackgroundTranslation(items, ['title', 'desc'], draw);
+      }
     }
 
     function showGovSchemesScreen() {
@@ -3389,8 +3610,12 @@
     function handleSearchKeyPress(e) { if (e.key === 'Enter') triggerManualSearch(); }
 
     function startVoiceSearch() {
+      const t = getT();
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) return;
+      if (!SpeechRecognition) {
+        showToast(t.voiceNotSupported);
+        return;
+      }
       const rec = new SpeechRecognition();
       rec.lang = speechLangMap[currentLang] || 'hi-IN';
       rec.interimResults = false;
@@ -3415,7 +3640,12 @@
         micBtn.classList.remove('listening');
       };
 
-      try { rec.start(); } catch (err) {}
+      try {
+        rec.start();
+      } catch (err) {
+        micBtn.classList.remove('listening');
+        showToast(t.voiceNotSupported);
+      }
     }
 
     async function sendOtpCode() {
@@ -3559,34 +3789,66 @@
       goBack();
     }
 
-    function showAtoZCropsScreen() {
+    function showAtoZCropsScreen(isRefresh = false) {
+      const cropRows = Object.keys(atozGuideRecords)
+        .filter(c => c && c.toLowerCase() !== 'crop')
+        .sort()
+        .map(c => ({ origCrop: c, displayCrop: c, rawCrop: atozGuideRecords[c].rawCrop || c }));
       const container = document.getElementById('atozCropsContainer');
-      container.innerHTML = '';
-      const crops = Object.keys(atozGuideRecords).filter(c => c && c.toLowerCase() !== 'crop').sort();
-      crops.forEach(c => {
-        container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${c.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${getCropEmoji(atozGuideRecords[c].rawCrop || c)}</span><span class="list-title">${c}</span></div><span class="arrow">&gt;</span></div>`;
-      });
+
+      const draw = () => {
+        container.innerHTML = '';
+        cropRows.forEach(item => {
+          container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${getCropEmoji(item.rawCrop)}</span><span class="list-title">${item.displayCrop}</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      };
+
+      draw();
       const t = getT();
-      openScreen('screen-atoz-crops', t.atozTitle);
+      if (!isRefresh) {
+        openScreen('screen-atoz-crops', t.atozTitle);
+      }
+      if (currentLang !== 'hi') {
+        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      }
     }
 
-    function openAtoZDetail(crop) {
+    function openAtoZDetail(crop, isRefresh = false) {
       currentActiveAtoZCrop = crop;
-      const d = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
-      document.getElementById('atozDetailContainer').innerHTML = `
-        <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
-          <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${crop}</h3>
-          <div class="schedule-step"><b>1. 🟫 मिट्टी</b><p>${d.soil}</p></div>
-          <div class="schedule-step"><b>2. 🌱 बुवाई</b><p>${d.sowing}</p></div>
-          <div class="schedule-step"><b>3. 📦 बीज दर</b><p>${d.seed}</p></div>
-          <div class="schedule-step"><b>4. 🧪 खाद व उर्वरक</b><p>${d.fertilizer}</p></div>
-          <div class="schedule-step"><b>5. 🌿 खरपतवार प्रबंधन</b><p>${d.weed}</p></div>
-          <div class="schedule-step"><b>6. 💧 सिंचाई</b><p>${d.irrigation}</p></div>
-          <div class="schedule-step"><b>7. 🛡️ फसल सुरक्षा</b><p>${d.care}</p></div>
-          <div class="schedule-step"><b>8. ✂️ तुड़ाई / कटाई</b><p>${d.harvesting}</p></div>
-          <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 भंडारण व मंडी</b><p>${d.postHarvest}</p></div>
-        </div>`;
-      openScreen('screen-atoz-detail', crop);
+      const baseData = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
+      const d = { ...baseData, titleText: crop };
+      const container = document.getElementById('atozDetailContainer');
+
+      const draw = () => {
+        container.innerHTML = `
+          <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
+            <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${d.titleText}</h3>
+            <div class="schedule-step"><b>1. 🟫 मिट्टी</b><p>${d.soil}</p></div>
+            <div class="schedule-step"><b>2. 🌱 बुवाई</b><p>${d.sowing}</p></div>
+            <div class="schedule-step"><b>3. 📦 बीज दर</b><p>${d.seed}</p></div>
+            <div class="schedule-step"><b>4. 🧪 खाद व उर्वरक</b><p>${d.fertilizer}</p></div>
+            <div class="schedule-step"><b>5. 🌿 खरपतवार प्रबंधन</b><p>${d.weed}</p></div>
+            <div class="schedule-step"><b>6. 💧 सिंचाई</b><p>${d.irrigation}</p></div>
+            <div class="schedule-step"><b>7. 🛡️ फसल सुरक्षा</b><p>${d.care}</p></div>
+            <div class="schedule-step"><b>8. ✂️ तुड़ाई / कटाई</b><p>${d.harvesting}</p></div>
+            <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 भंडारण व मंडी</b><p>${d.postHarvest}</p></div>
+          </div>`;
+      };
+
+      draw();
+      if (!isRefresh) {
+        openScreen('screen-atoz-detail', crop);
+      }
+      if (currentLang !== 'hi') {
+        runBackgroundTranslation([d], ['titleText', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest'], () => {
+          draw();
+          if (document.getElementById('screen-atoz-detail').classList.contains('active')) {
+            document.getElementById('headerTitle').innerText = d.titleText;
+            const curTop = navHistory[navHistory.length - 1];
+            if (curTop && curTop.id === 'screen-atoz-detail') curTop.title = d.titleText;
+          }
+        });
+      }
     }
 
     function openFarmerDiscussionScreen() {
@@ -3728,6 +3990,7 @@
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
     function closeNotificationModal() { document.getElementById('notificationModal').classList.remove('active'); }
 
+    window.addEventListener('resize', syncBannerOffset);
     window.addEventListener('online', () => {
       updateOfflineBanner();
       fetchLiveWeather();
