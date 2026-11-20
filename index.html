@@ -384,12 +384,40 @@
       border-radius: 50%;
     }
 
-    /* 3-3 बटन ग्रिड */
+    /* 3-3 बटन ग्रिड + 1 नम्बर बॉटम ग्रेडिएंट फुल-कार्ड फोटो स्टाइल */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-    .menu-box { background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
-    .menu-box .icon { font-size: 28px; margin-bottom: 6px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
-    .menu-box .icon img.menu-photo-img { width: 40px; height: 40px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(0,0,0,0.12); display: block; }
-    .menu-box h3 { font-size: 12px; font-weight: 700; line-height: 1.3; width: 100%; padding: 0 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+    .menu-box { position: relative; overflow: hidden; background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
+    .menu-box .icon { position: relative; z-index: 1; font-size: 28px; margin-bottom: 6px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
+    .menu-box h3 { position: relative; z-index: 2; font-size: 12px; font-weight: 700; line-height: 1.3; width: 100%; padding: 0 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+
+    .menu-box.has-full-photo { padding: 0; justify-content: flex-end; }
+    .menu-box .card-full-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      display: block;
+    }
+    body.dark-mode .menu-box .card-full-bg {
+      filter: brightness(0.82);
+    }
+    .menu-box .card-bottom-gradient {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 20px 6px 8px;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.86) 0%, rgba(15, 23, 42, 0.45) 62%, rgba(15, 23, 42, 0) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-box.has-full-photo h3 {
+      color: #ffffff !important;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+      padding: 0 2px;
+    }
 
     .card-crops { background: #ecfdf5; border-color: #6ee7b7; } .card-crops h3 { color: #047857; }
     .card-protection { background: #fff5f5; border-color: #fca5a5; } .card-protection h3 { color: #b91c1c; }
@@ -666,7 +694,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.9
+      CROP & SABZI DOCTOR • v11.0
     </div>
   </div>
 
@@ -796,41 +824,41 @@
 
     <!-- 3-3 बटन ग्रिड -->
     <div class="grid-menu">
-      <div class="menu-box card-crops" onclick="showAllCategoriesScreen()">
+      <div class="menu-box card-crops" id="menuCard_gCrops" onclick="showAllCategoriesScreen()">
         <div class="icon" id="menuIcon_gCrops" data-fallback="🌱">🌱</div>
-        <h3 id="gCrops">सभी किस्में</h3>
+        <div class="card-label-wrap"><h3 id="gCrops">सभी किस्में</h3></div>
       </div>
-      <div class="menu-box card-protection" onclick="showProtectionCategoriesScreen()">
+      <div class="menu-box card-protection" id="menuCard_gProt" onclick="showProtectionCategoriesScreen()">
         <div class="icon" id="menuIcon_gProt" data-fallback="🛡️">🛡️</div>
-        <h3 id="gProt">फसल सुरक्षा</h3>
+        <div class="card-label-wrap"><h3 id="gProt">फसल सुरक्षा</h3></div>
       </div>
-      <div class="menu-box card-schedule" onclick="showScheduleCategoriesScreen()">
+      <div class="menu-box card-schedule" id="menuCard_gSched" onclick="showScheduleCategoriesScreen()">
         <div class="icon" id="menuIcon_gSched" data-fallback="🗓️">🗓️</div>
-        <h3 id="gSched">स्प्रे शेड्यूल</h3>
+        <div class="card-label-wrap"><h3 id="gSched">स्प्रे शेड्यूल</h3></div>
       </div>
-      <div class="menu-box card-atoz" onclick="showAtoZCropsScreen()">
+      <div class="menu-box card-atoz" id="menuCard_gAtoz" onclick="showAtoZCropsScreen()">
         <div class="icon" id="menuIcon_gAtoz" data-fallback="📖">📖</div>
-        <h3 id="gAtoz">खेती कैसे करें (A-Z)</h3>
+        <div class="card-label-wrap"><h3 id="gAtoz">खेती कैसे करें (A-Z)</h3></div>
       </div>
-      <div class="menu-box card-discussion" onclick="openFarmerDiscussionScreen()">
+      <div class="menu-box card-discussion" id="menuCard_gDisc" onclick="openFarmerDiscussionScreen()">
         <div class="icon" id="menuIcon_gDisc" data-fallback="💬">💬</div>
-        <h3 id="gDisc">किसान चर्चा</h3>
+        <div class="card-label-wrap"><h3 id="gDisc">किसान चर्चा</h3></div>
       </div>
-      <div class="menu-box card-advisor" onclick="contactAdvisor()">
+      <div class="menu-box card-advisor" id="menuCard_gAdv" onclick="contactAdvisor()">
         <div class="icon" id="menuIcon_gAdv" data-fallback="🎧">🎧</div>
-        <h3 id="gAdv">सलाहकार</h3>
+        <div class="card-label-wrap"><h3 id="gAdv">सलाहकार</h3></div>
       </div>
-      <div class="menu-box card-companies" onclick="showCompaniesList()">
+      <div class="menu-box card-companies" id="menuCard_gComp" onclick="showCompaniesList()">
         <div class="icon" id="menuIcon_gComp" data-fallback="🏢">🏢</div>
-        <h3 id="gComp">All कंपनी बीज</h3>
+        <div class="card-label-wrap"><h3 id="gComp">All कंपनी बीज</h3></div>
       </div>
-      <div class="menu-box card-chemicals" onclick="showChemicalsScreen()">
+      <div class="menu-box card-chemicals" id="menuCard_gChem" onclick="showChemicalsScreen()">
         <div class="icon" id="menuIcon_gChem" data-fallback="🧪">🧪</div>
-        <h3 id="gChem">दवाइयाँ Chemicals</h3>
+        <div class="card-label-wrap"><h3 id="gChem">दवाइयाँ Chemicals</h3></div>
       </div>
-      <div class="menu-box card-services" onclick="showOtherServicesScreen()">
+      <div class="menu-box card-services" id="menuCard_gServ" onclick="showOtherServicesScreen()">
         <div class="icon" id="menuIcon_gServ" data-fallback="⚙️">⚙️</div>
-        <h3 id="gServ">Other सेवाएं</h3>
+        <div class="card-label-wrap"><h3 id="gServ">Other सेवाएं</h3></div>
       </div>
     </div>
 
@@ -1415,18 +1443,62 @@
       return map;
     }
 
+    function applyFallbackMenuCard(key) {
+      const cardEl = document.getElementById(`menuCard_${key}`);
+      const iconEl = document.getElementById(`menuIcon_${key}`);
+      const headingEl = document.getElementById(key);
+      if (!cardEl || !iconEl) return;
+
+      const existingBg = cardEl.querySelector('.card-full-bg');
+      if (existingBg) existingBg.remove();
+
+      cardEl.classList.remove('has-full-photo');
+      iconEl.style.display = 'flex';
+      iconEl.innerHTML = iconEl.getAttribute('data-fallback') || '🌱';
+
+      if (headingEl && headingEl.parentElement && headingEl.parentElement.classList.contains('card-bottom-gradient')) {
+        const wrap = headingEl.parentElement;
+        wrap.className = 'card-label-wrap';
+        wrap.appendChild(headingEl);
+      }
+    }
+
     function renderGridButtonPhotos() {
       MENU_BUTTON_KEYS.forEach(key => {
+        const cardEl = document.getElementById(`menuCard_${key}`);
         const iconEl = document.getElementById(`menuIcon_${key}`);
-        if (!iconEl) return;
-        const fallbackEmoji = iconEl.getAttribute('data-fallback') || '🌱';
+        const headingEl = document.getElementById(key);
+        if (!cardEl || !iconEl || !headingEl) return;
+
         const url = (buttonPhotoMap[key] || '').trim();
         if (url && url.startsWith('http')) {
           const safeUrl = url.replace(/"/g, '&quot;');
-          const safeFallback = fallbackEmoji.replace(/'/g, "\\'");
-          iconEl.innerHTML = `<img src="${safeUrl}" alt="${key}" class="menu-photo-img" loading="lazy" onerror="this.parentElement.innerHTML='${safeFallback}';">`;
+          const oldBg = cardEl.querySelector('.card-full-bg');
+          if (oldBg) oldBg.remove();
+
+          cardEl.classList.add('has-full-photo');
+          iconEl.style.display = 'none';
+
+          const bgImg = document.createElement('img');
+          bgImg.src = safeUrl;
+          bgImg.alt = key;
+          bgImg.className = 'card-full-bg';
+          bgImg.loading = 'lazy';
+          bgImg.onerror = function () {
+            applyFallbackMenuCard(key);
+          };
+
+          let gradWrap = cardEl.querySelector('.card-bottom-gradient');
+          if (!gradWrap) {
+            gradWrap = document.createElement('div');
+            gradWrap.className = 'card-bottom-gradient';
+            gradWrap.appendChild(headingEl);
+          }
+
+          cardEl.prepend(bgImg);
+          cardEl.appendChild(gradWrap);
         } else {
-          iconEl.innerHTML = fallbackEmoji;
+          applyFallbackMenuCard(key);
         }
       });
     }
