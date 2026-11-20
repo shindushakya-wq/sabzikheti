@@ -387,7 +387,8 @@
     /* 3-3 बटन ग्रिड */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
-    .menu-box .icon { font-size: 28px; margin-bottom: 6px; }
+    .menu-box .icon { font-size: 28px; margin-bottom: 6px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
+    .menu-box .icon img.menu-photo-img { width: 40px; height: 40px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(0,0,0,0.12); display: block; }
     .menu-box h3 { font-size: 12px; font-weight: 700; line-height: 1.3; width: 100%; padding: 0 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
 
     .card-crops { background: #ecfdf5; border-color: #6ee7b7; } .card-crops h3 { color: #047857; }
@@ -665,7 +666,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v10.8
+      CROP & SABZI DOCTOR • v10.9
     </div>
   </div>
 
@@ -796,39 +797,39 @@
     <!-- 3-3 बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" onclick="showAllCategoriesScreen()">
-        <div class="icon">🌱</div>
+        <div class="icon" id="menuIcon_gCrops" data-fallback="🌱">🌱</div>
         <h3 id="gCrops">सभी किस्में</h3>
       </div>
       <div class="menu-box card-protection" onclick="showProtectionCategoriesScreen()">
-        <div class="icon">🛡️</div>
+        <div class="icon" id="menuIcon_gProt" data-fallback="🛡️">🛡️</div>
         <h3 id="gProt">फसल सुरक्षा</h3>
       </div>
       <div class="menu-box card-schedule" onclick="showScheduleCategoriesScreen()">
-        <div class="icon">🗓️</div>
+        <div class="icon" id="menuIcon_gSched" data-fallback="🗓️">🗓️</div>
         <h3 id="gSched">स्प्रे शेड्यूल</h3>
       </div>
       <div class="menu-box card-atoz" onclick="showAtoZCropsScreen()">
-        <div class="icon">📖</div>
+        <div class="icon" id="menuIcon_gAtoz" data-fallback="📖">📖</div>
         <h3 id="gAtoz">खेती कैसे करें (A-Z)</h3>
       </div>
       <div class="menu-box card-discussion" onclick="openFarmerDiscussionScreen()">
-        <div class="icon">💬</div>
+        <div class="icon" id="menuIcon_gDisc" data-fallback="💬">💬</div>
         <h3 id="gDisc">किसान चर्चा</h3>
       </div>
       <div class="menu-box card-advisor" onclick="contactAdvisor()">
-        <div class="icon">🎧</div>
+        <div class="icon" id="menuIcon_gAdv" data-fallback="🎧">🎧</div>
         <h3 id="gAdv">सलाहकार</h3>
       </div>
       <div class="menu-box card-companies" onclick="showCompaniesList()">
-        <div class="icon">🏢</div>
+        <div class="icon" id="menuIcon_gComp" data-fallback="🏢">🏢</div>
         <h3 id="gComp">All कंपनी बीज</h3>
       </div>
       <div class="menu-box card-chemicals" onclick="showChemicalsScreen()">
-        <div class="icon">🧪</div>
+        <div class="icon" id="menuIcon_gChem" data-fallback="🧪">🧪</div>
         <h3 id="gChem">दवाइयाँ Chemicals</h3>
       </div>
       <div class="menu-box card-services" onclick="showOtherServicesScreen()">
-        <div class="icon">⚙️</div>
+        <div class="icon" id="menuIcon_gServ" data-fallback="⚙️">⚙️</div>
         <h3 id="gServ">Other सेवाएं</h3>
       </div>
     </div>
@@ -1277,10 +1278,12 @@
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v1';
+    const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
 
     const navHistory = [{ id: 'screen-home', title: 'CROP & SABZI DOCTOR' }];
     let sheetRecords = [];
     let cropPhotoSheetMap = {};
+    let buttonPhotoMap = {};
     let scheduleRecords = {};
     let protectionRecords = {};
     let chemicalsRecords = [];
@@ -1379,6 +1382,53 @@
       if (header && banner) {
         banner.style.top = `${header.offsetHeight}px`;
       }
+    }
+
+    function normalizeMenuKey(rawKey) {
+      if (!rawKey) return '';
+      const k = rawKey.trim().toLowerCase();
+      if (k === 'gcrops' || k.includes('variety') || k.includes('किस्मे')) return 'gCrops';
+      if (k === 'gprot' || k.includes('protect') || k.includes('सुरक्षा')) return 'gProt';
+      if (k === 'gsched' || k.includes('sched') || k.includes('शेड्यूल')) return 'gSched';
+      if (k === 'gatoz' || k.includes('atoz') || k.includes('guide') || k.includes('खेती')) return 'gAtoz';
+      if (k === 'gdisc' || k.includes('disc') || k.includes('चर्चा')) return 'gDisc';
+      if (k === 'gadv' || k.includes('adv') || k.includes('सलाहकार')) return 'gAdv';
+      if (k === 'gcomp' || k.includes('comp') || k.includes('कंपनी')) return 'gComp';
+      if (k === 'gchem' || k.includes('chem') || k.includes('दवाइयाँ')) return 'gChem';
+      if (k === 'gserv' || k.includes('serv') || k.includes('सेवाएं')) return 'gServ';
+      return rawKey.trim();
+    }
+
+    function parseButtonPhotosCSV(text) {
+      const map = {};
+      if (!text) return map;
+      parseCSV(text).forEach((cols, idx) => {
+        const rawKey = (cols[0] || '').trim();
+        const url = (cols[1] || '').trim();
+        if (!rawKey || !url.startsWith('http')) return;
+        const lowKey = rawKey.toLowerCase();
+        if (idx === 0 && (lowKey === 'key' || lowKey.includes('photo link'))) return;
+        const normKey = normalizeMenuKey(rawKey);
+        map[normKey] = url;
+        map[rawKey] = url;
+      });
+      return map;
+    }
+
+    function renderGridButtonPhotos() {
+      MENU_BUTTON_KEYS.forEach(key => {
+        const iconEl = document.getElementById(`menuIcon_${key}`);
+        if (!iconEl) return;
+        const fallbackEmoji = iconEl.getAttribute('data-fallback') || '🌱';
+        const url = (buttonPhotoMap[key] || '').trim();
+        if (url && url.startsWith('http')) {
+          const safeUrl = url.replace(/"/g, '&quot;');
+          const safeFallback = fallbackEmoji.replace(/'/g, "\\'");
+          iconEl.innerHTML = `<img src="${safeUrl}" alt="${key}" class="menu-photo-img" loading="lazy" onerror="this.parentElement.innerHTML='${safeFallback}';">`;
+        } else {
+          iconEl.innerHTML = fallbackEmoji;
+        }
+      });
     }
 
     const OFFLINE_LANG_PACKS = {
@@ -1583,7 +1633,7 @@
       try {
         const payload = {
           savedAt: Date.now(),
-          sheetRecords, cropPhotoSheetMap, scheduleRecords, protectionRecords, chemicalsRecords,
+          sheetRecords, cropPhotoSheetMap, buttonPhotoMap, scheduleRecords, protectionRecords, chemicalsRecords,
           alertsRecords, tipsRecords, aiReportsRecords, dailyStories,
           videoRecords, atozGuideRecords, privacyData, notificationsList,
           allSchedRowsGlobal, allProtRowsGlobal
@@ -1601,6 +1651,7 @@
 
         sheetRecords = Array.isArray(data.sheetRecords) ? data.sheetRecords : [];
         cropPhotoSheetMap = data.cropPhotoSheetMap && typeof data.cropPhotoSheetMap === 'object' ? data.cropPhotoSheetMap : {};
+        buttonPhotoMap = data.buttonPhotoMap && typeof data.buttonPhotoMap === 'object' ? data.buttonPhotoMap : {};
         scheduleRecords = data.scheduleRecords && typeof data.scheduleRecords === 'object' ? data.scheduleRecords : {};
         protectionRecords = data.protectionRecords && typeof data.protectionRecords === 'object' ? data.protectionRecords : {};
         chemicalsRecords = Array.isArray(data.chemicalsRecords) ? data.chemicalsRecords : [];
@@ -1615,6 +1666,7 @@
         allSchedRowsGlobal = Array.isArray(data.allSchedRowsGlobal) ? data.allSchedRowsGlobal : [];
         allProtRowsGlobal = Array.isArray(data.allProtRowsGlobal) ? data.allProtRowsGlobal : [];
 
+        renderGridButtonPhotos();
         renderPrivacyUI();
         renderNotificationsUI();
         populateCalculatorCropsFromSheets();
@@ -2631,7 +2683,7 @@
       showLoader();
       try {
         const [
-          csvSheet1, csvCropPhotos, csvPriv, csvNotif,
+          csvSheet1, csvCropPhotos, csvButtonPhotos, csvPriv, csvNotif,
           csvSchedSabzi, csvSchedAnaaj, csvSchedPhal, csvSchedPhool, csvSchedOther,
           csvProtSabzi, csvProtAnaaj, csvProtPhal, csvProtPhool, csvProtOther,
           csvChem, csvAtoZ, csvStories, csvVideos,
@@ -2639,6 +2691,7 @@
         ] = await Promise.all([
           fetchRawCSV('Sheet1'),
           fetchRawCSV('CropPhotos'),
+          fetchRawCSV('ButtonPhotos'),
           fetchRawCSV('Privacy'),
           fetchRawCSV('Notifications'),
           fetchRawCSV('Schedule'),
@@ -2666,6 +2719,12 @@
         if (Object.keys(parsedCropPhotos).length > 0) {
           cropPhotoSheetMap = parsedCropPhotos;
         }
+
+        const parsedButtonPhotos = parseButtonPhotosCSV(csvButtonPhotos);
+        if (Object.keys(parsedButtonPhotos).length > 0) {
+          buttonPhotoMap = parsedButtonPhotos;
+        }
+        renderGridButtonPhotos();
 
         const parsedVarieties = parseVarietiesCSV(csvSheet1);
         if (parsedVarieties.length > 0) sheetRecords = parsedVarieties;
@@ -4021,6 +4080,7 @@
       if (dateInput) dateInput.value = todayStr;
 
       loadOfflineSheetsSnapshot();
+      renderGridButtonPhotos();
       updateOfflineBanner();
       detectUserLocation();
       updateProfileUI();
