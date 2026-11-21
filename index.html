@@ -74,15 +74,15 @@
       transform: translateX(-50%) translateY(20px);
       background: #111827;
       color: #ffffff;
-      padding: 9px 16px;
+      padding: 10px 18px;
       border-radius: 20px;
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 600;
       z-index: 9500;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease, transform 0.25s ease;
-      max-width: 88%;
+      max-width: 90%;
       text-align: center;
       box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
@@ -461,10 +461,10 @@
     .lang-choice-btn { padding: 10px 8px; border-radius: 10px; font-size: 13.5px; font-weight: 700; text-align: center; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1e293b; }
 
     .upload-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-    .upload-opt-btn { background: #f0fdf4; border: 1.5px dashed #86efac; border-radius: 12px; padding: 16px 8px; text-align: center; cursor: pointer; }
-    .upload-opt-btn span { font-size: 28px; display: block; margin-bottom: 6px; }
-    .upload-opt-btn b { font-size: 13px; color: #166534; display: block; }
-    .preview-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; display: none; }
+    .upload-opt-btn { background: #f0fdf4; border: 1.5px dashed #86efac; border-radius: 12px; padding: 14px 8px; text-align: center; cursor: pointer; }
+    .upload-opt-btn span { font-size: 24px; display: block; margin-bottom: 4px; }
+    .upload-opt-btn b { font-size: 12.5px; color: #166534; display: block; }
+    .preview-img { width: 100%; max-height: 180px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; display: none; border: 1px solid #d1d5db; }
     .doc-result-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-top: 12px; display: none; }
 
     .form-group { margin-bottom: 12px; }
@@ -689,12 +689,12 @@
       <li class="drawer-item" onclick="closeDrawer(); showPrivacyPolicyScreen();" style="color:#0369a1; border-top:1px solid #e0f2fe; margin-top:6px;"><span>⚖️</span><span id="mPrivacy">नियम व शर्तें एवं गोपनीयता नीति</span></li>
       <li class="drawer-item" onclick="closeDrawer(); window.open('https://play.google.com/store/apps', '_blank');" style="color:#2563eb; border-top:1px solid #dbeafe;"><span>⭐</span><span id="mRate">गूगल प्ले स्टोर पर रेट करें</span></li>
       <li class="drawer-item" onclick="closeDrawer(); shareAppWithFriends();"><span>📲</span><span id="mShare">किसान साथियों को ऐप शेयर करें</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); contactAdvisor();"><span>💬</span><span id="mHelp">व्हाट्सएप हेल्पलाइन</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); openAdvisorFormScreen();"><span>💬</span><span id="mHelp">सलाहकार से पूछें</span></li>
       <li class="drawer-item" style="color:#dc2626; border-top:1px solid #fee2e2; margin-top:10px;" onclick="appLogout()"><span>🚪</span><span id="mLogout">लॉगआउट (Logout)</span></li>
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.1
+      CROP & SABZI DOCTOR • v11.2
     </div>
   </div>
 
@@ -844,7 +844,7 @@
         <div class="icon" id="menuIcon_gDisc" data-fallback="💬">💬</div>
         <div class="card-label-wrap"><h3 id="gDisc">किसान चर्चा</h3></div>
       </div>
-      <div class="menu-box card-advisor" id="menuCard_gAdv" onclick="contactAdvisor()">
+      <div class="menu-box card-advisor" id="menuCard_gAdv" onclick="openAdvisorFormScreen()">
         <div class="icon" id="menuIcon_gAdv" data-fallback="🎧">🎧</div>
         <div class="card-label-wrap"><h3 id="gAdv">सलाहकार</h3></div>
       </div>
@@ -887,6 +887,58 @@
         <a href="https://www.youtube.com/@NMGKISAN" target="_blank" class="social-link link-yt"><span>▶️</span> YouTube</a>
         <a href="https://www.facebook.com/share/19joE3v9ib/" target="_blank" class="social-link link-fb"><span>🌐</span> Facebook</a>
       </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: सलाहकार फॉर्म स्क्रीन -->
+  <div id="screen-advisor-form" class="screen">
+    <div class="variety-card" style="border-left:5px solid #7e22ce; padding:16px;">
+      <h3 style="color:#6b21a8; font-size:17px; margin-bottom:6px;" id="advFormTitle">🎧 कृषि सलाहकार से सलाह लें</h3>
+      <p style="font-size:12.5px; color:#4b5563; margin-bottom:14px;" id="advFormSub">नीचे अपनी फसल व रोग की जानकारी भरें और सीधे WhatsApp पर भेजें:</p>
+
+      <div class="form-group">
+        <label id="lblAdvName">👤 किसान का नाम:</label>
+        <input type="text" id="advFarmerName" class="form-control" placeholder="अपना नाम लिखें">
+      </div>
+
+      <div class="form-group">
+        <label id="lblAdvLocation">📍 कहाँ से हैं (गांव / जिला / राज्य):</label>
+        <input type="text" id="advLocation" class="form-control" placeholder="उदा. घड़साना, श्रीगंगानगर (राजस्थान)">
+      </div>
+
+      <div class="form-group">
+        <label id="lblAdvCrop">🌱 कौनसी फसल है:</label>
+        <input type="text" id="advCropName" class="form-control" placeholder="उदा. टमाटर, मिर्च, खीरा, गेहूँ...">
+      </div>
+
+      <div class="form-group">
+        <label id="lblAdvDisease">🦠 कौनसा रोग / क्या समस्या है:</label>
+        <textarea id="advDiseaseDesc" class="form-control" rows="3" placeholder="पत्ते मुड़ रहे हैं, पीलापन है, कीट लगा है आदि विस्तार से लिखें..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label id="lblAdvPhoto">📸 रोगी फसल की फोटो (वैकल्पिक):</label>
+        <div class="upload-options" style="margin-bottom:8px;">
+          <div class="upload-opt-btn" onclick="document.getElementById('advCameraInput').click()">
+            <span>📷</span>
+            <b id="txtAdvCam">कैमरा से फोटो</b>
+          </div>
+          <div class="upload-opt-btn" onclick="document.getElementById('advGalleryInput').click()">
+            <span>🖼️</span>
+            <b id="txtAdvGal">गैलरी से चुनें</b>
+          </div>
+        </div>
+        <input type="file" id="advCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleAdvisorPhoto(this)">
+        <input type="file" id="advGalleryInput" accept="image/*" style="display:none;" onchange="handleAdvisorPhoto(this)">
+        <img id="advPreviewImg" class="preview-img" alt="फसल फोटो">
+        <p id="advPhotoNote" style="display:none; font-size:11.5px; color:#b45309; background:#fffbeb; padding:6px 10px; border-radius:8px; border:1px solid #fde68a; margin-top:4px;">
+          💡 WhatsApp खुलने के बाद कृपया वहां 📎 (अटैच) बटन दबाकर यह फोटो भी भेज दें।
+        </p>
+      </div>
+
+      <button class="btn-action btn-wa" style="background:#16a34a; margin-top:12px; font-size:15px;" onclick="submitAdvisorToWhatsApp()" id="btnAdvSubmitWa">
+        ✅ WhatsApp पर सलाहकार को भेजें
+      </button>
     </div>
   </div>
 
@@ -1299,7 +1351,7 @@
     <div class="nav-tab" onclick="showAllCategoriesScreen()"><span>🌱</span><span id="navCrops">किस्में</span></div>
     <div class="nav-tab" onclick="showScheduleCategoriesScreen()"><span>🗓️</span><span id="navSched">शेड्यूल</span></div>
     <div class="nav-tab" onclick="showProtectionCategoriesScreen()"><span>🛡️</span><span id="navProt">सुरक्षा</span></div>
-    <div class="nav-tab" onclick="contactAdvisor()"><span>💬</span><span id="navHelp">हेल्पलाइन</span></div>
+    <div class="nav-tab" onclick="openAdvisorFormScreen()"><span>💬</span><span id="navHelp">सलाहकार</span></div>
   </div>
 
   <script>
@@ -1330,6 +1382,7 @@
 
     let base64ImageRaw = "";
     let imageMimeType = "image/jpeg";
+    let advisorPhotoDataUrl = "";
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let userCoords = {
       lat: parseFloat(localStorage.getItem('farmer_lat') || '29.9038'),
@@ -1403,7 +1456,7 @@
       clearTimeout(toastTimeoutId);
       toastTimeoutId = setTimeout(() => {
         el.classList.remove('show');
-      }, 2400);
+      }, 3200);
     }
 
     function syncBannerOffset() {
@@ -1560,7 +1613,7 @@
         gDisc: "किसान चर्चा", gAdv: "सलाहकार", gComp: "All कंपनी बीज", gChem: "दवाइयाँ Chemicals", gServ: "Other सेवाएं",
         txtPlaySub: "हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।", txtRateBtn: "रेट करें",
         txtVideoHead: "📺 ताज़ा कृषि वीडियो व रील्स", txtSeeAll: "सभी देखें >", txtSocialHead: "हमारे साथ सोशल मीडिया पर जुड़ें",
-        fabText: "तुरंत समाधान", navHome: "होम", navCrops: "किस्में", navSched: "शेड्यूल", navProt: "सुरक्षा", navHelp: "हेल्पलाइन",
+        fabText: "तुरंत समाधान", navHome: "होम", navCrops: "किस्में", navSched: "शेड्यूल", navProt: "सुरक्षा", navHelp: "सलाहकार",
         cropsTitle: "सभी किस्में", protTitle: "फसल सुरक्षा", schedTitle: "स्प्रे शेड्यूल", compTitle: "सीड कंपनी",
         chemTitle: "दवाइयाँ Chemicals", mandiTitle: "मंडी भाव", weatherTitle: "मौसम", profileTitle: "किसान प्रोफाइल",
         favoritesTitle: "पसंदीदा किस्में", atozTitle: "खेती गाइड (A-Z)", discTitle: "किसान चर्चा", privacyTitle: "गोपनीयता नीति",
@@ -1568,7 +1621,7 @@
         calcTitle: "बुवाई कैलकुलेटर", drawerHead: "📋 मेन्यू", completeProfileText: "प्रोफाइल पूरी करें >",
         mProfile: "मेरी प्रोफाइल", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
         mProtection: "फसल सुरक्षा", mChems: "दवाइयाँ Chemicals", mServices: "Other सेवाएं", mPrivacy: "गोपनीयता नीति",
-        mRate: "Play Store रेट करें", mShare: "ऐप शेयर करें", mHelp: "WhatsApp हेल्पलाइन", mLogout: "लॉगआउट",
+        mRate: "Play Store रेट करें", mShare: "ऐप शेयर करें", mHelp: "सलाहकार से पूछें", mLogout: "लॉगआउट",
         solHead: "⚡ तुरंत समाधान", camBtn: "कैमरा", galBtn: "गैलरी", diagBtn: "🔍 रोग पहचानें",
         diagRepHead: "🌿 AI रिपोर्ट", wapBtn: "WhatsApp करें", chatYou: "आप", chatDoc: "डॉक्टर",
         chatThinking: "⏳ जवाब तैयार हो रहा है...", chatErr: "त्रुटि", chatNetErrHead: "नेटवर्क", chatNetErrDesc: "कनेक्शन समस्या",
@@ -1584,7 +1637,12 @@
         lblWind: "💨 हवा की गति", lblHum: "💧 हवा में नमी", lblForecast15: "📅 अगले 15 दिनों का मौसम पूर्वानुमान",
         btnSaveProf: "💾 सहेजें", btnDocSpray: "💬 WhatsApp पर सलाह लें",
         offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
-        voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है"
+        voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है",
+        advFormTitle: "🎧 कृषि सलाहकार से सलाह लें", advFormSub: "नीचे अपनी फसल व रोग की जानकारी भरें और सीधे WhatsApp पर भेजें:",
+        lblAdvName: "👤 किसान का नाम:", lblAdvLocation: "📍 कहाँ से हैं (गांव / जिला / राज्य):",
+        lblAdvCrop: "🌱 कौनसी फसल है:", lblAdvDisease: "🦠 कौनसा रोग / क्या समस्या है:",
+        lblAdvPhoto: "📸 रोगी फसल की फोटो (वैकल्पिक):", txtAdvCam: "कैमरा से फोटो", txtAdvGal: "गैलरी से चुनें",
+        btnAdvSubmitWa: "✅ WhatsApp पर सलाहकार को भेजें"
       },
       en: {
         headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!", txtChangeProf: "✏️ Edit Profile",
@@ -1594,7 +1652,7 @@
         gDisc: "Farmer Discussion", gAdv: "Advisor", gComp: "All Company Seeds", gChem: "Chemicals & Medicines", gServ: "Other Services",
         txtPlaySub: "Rate us on Play Store and share app.", txtRateBtn: "Rate Us",
         txtVideoHead: "📺 Latest Agri Videos & Reels", txtSeeAll: "See All >", txtSocialHead: "Connect with us on Social Media",
-        fabText: "Instant Solution", navHome: "Home", navCrops: "Varieties", navSched: "Schedule", navProt: "Protection", navHelp: "Helpline",
+        fabText: "Instant Solution", navHome: "Home", navCrops: "Varieties", navSched: "Schedule", navProt: "Protection", navHelp: "Advisor",
         cropsTitle: "All Varieties", protTitle: "Crop Protection", schedTitle: "Spray Schedule", compTitle: "Seed Companies",
         chemTitle: "Chemicals", mandiTitle: "Mandi Prices", weatherTitle: "Weather", profileTitle: "Farmer Profile",
         favoritesTitle: "Favorites", atozTitle: "Farming Guide (A-Z)", discTitle: "Discussion", privacyTitle: "Privacy Policy",
@@ -1602,7 +1660,7 @@
         calcTitle: "Sowing Calculator", drawerHead: "📋 Menu", completeProfileText: "Complete profile >",
         mProfile: "My Profile", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
         mProtection: "Crop Protection", mChems: "Chemicals", mServices: "Other Services", mPrivacy: "Privacy Policy",
-        mRate: "Rate Play Store", mShare: "Share App", mHelp: "WhatsApp Helpline", mLogout: "Logout",
+        mRate: "Rate Play Store", mShare: "Share App", mHelp: "Ask Advisor", mLogout: "Logout",
         solHead: "⚡ Instant Solution", camBtn: "Camera", galBtn: "Gallery", diagBtn: "🔍 Diagnose",
         diagRepHead: "🌿 AI Report", wapBtn: "Send on WhatsApp", chatYou: "You", chatDoc: "Doctor",
         chatThinking: "⏳ Generating reply...", chatErr: "Error", chatNetErrHead: "Network", chatNetErrDesc: "Connection issue",
@@ -1618,7 +1676,12 @@
         lblWind: "💨 Wind Speed", lblHum: "💧 Humidity", lblForecast15: "📅 Next 15 Days Weather Forecast",
         btnSaveProf: "💾 Save Profile", btnDocSpray: "💬 Ask on WhatsApp",
         offlineBanner: "📴 Offline Mode: Showing saved language and data",
-        voiceNotSupported: "Voice input is not supported on this browser"
+        voiceNotSupported: "Voice input is not supported on this browser",
+        advFormTitle: "🎧 Ask Agri Advisor", advFormSub: "Fill in your crop and disease details below to send directly on WhatsApp:",
+        lblAdvName: "👤 Farmer Name:", lblAdvLocation: "📍 Where are you from (Village / District / State):",
+        lblAdvCrop: "🌱 Which Crop:", lblAdvDisease: "🦠 Which Disease / Problem:",
+        lblAdvPhoto: "📸 Crop Photo (Optional):", txtAdvCam: "Camera Photo", txtAdvGal: "Choose Gallery",
+        btnAdvSubmitWa: "✅ Send to Advisor on WhatsApp"
       },
       mr: {
         welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
@@ -1626,7 +1689,7 @@
         txtSprayAdvice: "फवारणीसाठी सकाळ किंवा संध्याकाळ निवडा", searchPlaceholder: "🔍 पीक किंवा वाण शोधा...",
         gCrops: "सर्व जाती", gProt: "पीक सुरक्षा", gSched: "फवारणी वेळापत्रक", gAtoz: "शेती मार्गदर्शक (A-Z)",
         gDisc: "शेतकरी चर्चा", gAdv: "सल्लागार", gComp: "All कंपनी बियाणे", gChem: "औषधे Chemicals", gServ: "Other सेवा",
-        fabText: "तातडीने उपाय", navHome: "होम", navCrops: "जाती", navSched: "वेळापत्रक", navProt: "सुरक्षा", navHelp: "हेल्पलाइन",
+        fabText: "तातडीने उपाय", navHome: "होम", navCrops: "जाती", navSched: "वेळापत्रक", navProt: "सुरक्षा", navHelp: "सल्लागार",
         drawerHead: "📋 मेनू", mProfile: "प्रोफाइल", mFav: "आवडत्या जाती", mLogout: "लॉगआउट",
         offlineBanner: "📴 ऑफलाइन मोड: जतन केलेली भाषा व डेटा सुरू आहे"
       },
@@ -1636,7 +1699,7 @@
         txtSprayAdvice: "স্প্রের জন্য সকাল বা সন্ধ্যা বেছে নিন", searchPlaceholder: "🔍 ফসল বা জাত খুঁজুন...",
         gCrops: "সব জাত", gProt: "ফসল সুরক্ষা", gSched: "স্প্রে সময়সূচী", gAtoz: "চাষের গাইড (A-Z)",
         gDisc: "কৃষক আলোচনা", gAdv: "পরামর্শদাতা", gComp: "All কোম্পানি বীজ", gChem: "ওষুধ Chemicals", gServ: "Other পরিষেবা",
-        fabText: "তাত্ক্ষণিক সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুরক্ষা", navHelp: "হেল্পলাইন",
+        fabText: "তাত্ক্ষণিক সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুরক্ষা", navHelp: "পরামর্শদাতা",
         drawerHead: "📋 মেনু", mProfile: "আমার প্রোফাইল", mFav: "পছন্দের জাত", mLogout: "লগআউট",
         offlineBanner: "📴 অফলাইন মোড: সংরক্ষিত ভাষা ও ডেটা চলছে"
       },
@@ -1646,7 +1709,7 @@
         txtSprayAdvice: "పిచికారీకి ఉదయం లేదా సాయంత్రం ఎంచుకోండి", searchPlaceholder: "🔍 పంట లేదా రకం వెతకండి...",
         gCrops: "అన్ని రకాలు", gProt: "పంట రక్షణ", gSched: "స్ప్రే షెడ్యూల్", gAtoz: "సాగు గైడ్ (A-Z)",
         gDisc: "రైతు చర్చ", gAdv: "సలహాదారు", gComp: "All కంపెనీ విత్తనాలు", gChem: "మందులు Chemicals", gServ: "Other సేవలు",
-        fabText: "తక్షణ పరిష్కారం", navHome: "హోమ్", navCrops: "రకాలు", navSched: "షెడ్యూల్", navProt: "రక్షణ", navHelp: "హెల్ప్‌లైన్",
+        fabText: "తక్షణ పరిష్కారం", navHome: "హోమ్", navCrops: "రకాలు", navSched: "షెడ్యూల్", navProt: "రక్షణ", navHelp: "సలహాదారు",
         drawerHead: "📋 మెనూ", mProfile: "నా ప్రొఫైల్", mFav: "ఇష్టమైన రకాలు", mLogout: "లాగ్అవుట్",
         offlineBanner: "📴 ఆఫ్‌లైన్ మోడ్: సేవ్ చేసిన భాష మరియు డేటా నడుస్తోంది"
       },
@@ -1656,7 +1719,7 @@
         txtSprayAdvice: "தெளிப்பதற்கு காலை அல்லது மாலை நேரத்தைத் தேர்ந்தெடுக்கவும்", searchPlaceholder: "🔍 பயிர் அல்லது ரகத்தைத் தேடுங்கள்...",
         gCrops: "அனைத்து ரகங்கள்", gProt: "பயிர் பாதுகாப்பு", gSched: "தெளிப்பு அட்டவணை", gAtoz: "சாகுபடி வழிகாட்டி (A-Z)",
         gDisc: "விவசாயிகள் கலந்துரையாடல்", gAdv: "ஆலோசகர்", gComp: "All கம்பெனி விதைகள்", gChem: "மருந்துகள் Chemicals", gServ: "Other சேவைகள்",
-        fabText: "உடனடி தீர்வு", navHome: "முகப்பு", navCrops: "ரகங்கள்", navSched: "அட்டவணை", navProt: "பாதுகாப்பு", navHelp: "உதவி எண்",
+        fabText: "உடனடி தீர்வு", navHome: "முகப்பு", navCrops: "ரகங்கள்", navSched: "அட்டவணை", navProt: "பாதுகாப்பு", navHelp: "ஆலோசகர்",
         drawerHead: "📋 மெனு", mProfile: "என் சுயவிவரம்", mFav: "விருப்பமான ரகங்கள்", mLogout: "வெளியேறு",
         offlineBanner: "📴 ஆஃப்லைன் பயன்முறை: சேமிக்கப்பட்ட மொழி மற்றும் தரவு இயங்குகிறது"
       },
@@ -1666,7 +1729,7 @@
         txtSprayAdvice: "છંટકાવ માટે સવાર અથવા સાંજનો સમય પસંદ કરો", searchPlaceholder: "🔍 પાક અથવા જાત શોધો...",
         gCrops: "બધી જાતો", gProt: "પાક રક્ષણ", gSched: "સ્પ્રે શેડ્યૂલ", gAtoz: "ખેતી માર્ગદર્શિકા (A-Z)",
         gDisc: "ખેડૂત ચર્ચા", gAdv: "સલાહકાર", gComp: "All કંપની બિયારણ", gChem: "દવાઓ Chemicals", gServ: "Other સેવાઓ",
-        fabText: "ત્વરિત ઉકેલ", navHome: "હોમ", navCrops: "જાતો", navSched: "શેડ્યૂલ", navProt: "રક્ષણ", navHelp: "હેલ્પલાઇન",
+        fabText: "ત્વરિત ઉકેલ", navHome: "હોમ", navCrops: "જાતો", navSched: "શેડ્યૂલ", navProt: "રક્ષણ", navHelp: "સલાહકાર",
         drawerHead: "📋 મેનુ", mProfile: "મારી પ્રોફાઇલ", mFav: "મનપસંદ જાતો", mLogout: "લૉગઆઉટ",
         offlineBanner: "📴 ઑફલાઇન મોડ: સાચવેલી ભાષા અને ડેટા ચાલી રહ્યો છે"
       },
@@ -1676,7 +1739,7 @@
         txtSprayAdvice: "ಸಿಂಪರಣೆಗೆ ಬೆಳಿಗ್ಗೆ ಅಥವಾ ಸಂಜೆ ಸಮಯ ಆರಿಸಿ", searchPlaceholder: "🔍 ಬೆಳೆ ಅಥವಾ ತಳಿ ಹುಡುಕಿ...",
         gCrops: "ಎಲ್ಲಾ ತಳಿಗಳು", gProt: "ಬೆಳೆ ರಕ್ಷಣೆ", gSched: "ಸ್ಪ್ರೇ ವೇಳಾಪಟ್ಟಿ", gAtoz: "ಕೃಷಿ ಮಾರ್ಗದರ್ಶಿ (A-Z)",
         gDisc: "ರೈತ ಚರ್ಚೆ", gAdv: "ಸಲಹೆಗಾರ", gComp: "All ಕಂಪನಿ ಬೀಜಗಳು", gChem: "ಔಷಧಗಳು Chemicals", gServ: "Other ಸೇವೆಗಳು",
-        fabText: "ತ್ವರಿತ ಪರಿಹಾರ", navHome: "ಮುಖಪುಟ", navCrops: "ತಳಿಗಳು", navSched: "ವೇಳಾಪಟ್ಟಿ", navProt: "ರಕ್ಷಣೆ", navHelp: "ಸಹಾಯವಾಣಿ",
+        fabText: "ತ್ವರಿತ ಪರಿಹಾರ", navHome: "ಮುಖಪುಟ", navCrops: "ತಳಿಗಳು", navSched: "ವೇಳಾಪಟ್ಟಿ", navProt: "ರಕ್ಷಣೆ", navHelp: "ಸಲಹೆಗಾರ",
         drawerHead: "📋 ಮೆನು", mProfile: "ನನ್ನ ಪ್ರೊಫೈಲ್", mFav: "ಮೆಚ್ಚಿನ ತಳಿಗಳು", mLogout: "ಲಾಗ್ ಔಟ್",
         offlineBanner: "📴 ಆಫ್‌ಲೈನ್ ಮೋಡ್: ಉಳಿಸಿದ ಭಾಷೆ ಮತ್ತು ಡೇಟಾ ಚಾಲನೆಯಲ್ಲಿದೆ"
       },
@@ -1686,7 +1749,7 @@
         txtSprayAdvice: "ਸਪਰੇਅ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ", searchPlaceholder: "🔍 ਫ਼ਸਲ ਜਾਂ ਕਿਸਮ ਲੱਭੋ...",
         gCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ", gProt: "ਫ਼ਸਲ ਸੁਰੱਖਿਆ", gSched: "ਸਪਰੇਅ ਸ਼ਡਿਊਲ", gAtoz: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
         gDisc: "ਕਿਸਾਨ ਚਰਚਾ", gAdv: "ਸਲਾਹਕਾਰ", gComp: "All ਕੰਪਨੀ ਬੀਜ", gChem: "ਦਵਾਈਆਂ Chemicals", gServ: "Other ਸੇਵਾਵਾਂ",
-        fabText: "ਤੁਰੰਤ ਹੱਲ", navHome: "ਹੋਮ", navCrops: "ਕਿਸਮਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਹੈਲਪਲਾਈਨ",
+        fabText: "ਤੁਰੰਤ ਹੱਲ", navHome: "ਹੋਮ", navCrops: "ਕਿਸਮਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਸਲਾਹਕਾਰ",
         drawerHead: "📋 ਮੇਨੂ", mProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ", mFav: "ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ", mLogout: "ਲੌਗਆਊਟ",
         offlineBanner: "📴 ਔਫਲਾਈਨ ਮੋਡ: ਸੇਵ ਕੀਤੀ ਭਾਸ਼ਾ ਅਤੇ ਡਾਟਾ ਚੱਲ ਰਿਹਾ ਹੈ"
       },
@@ -1696,7 +1759,7 @@
         txtSprayAdvice: "തളിക്കുന്നതിന് രാവിലെയോ വൈകുന്നേരമോ തിരഞ്ഞെടുക്കുക", searchPlaceholder: "🔍 വിള അല്ലെങ്കിൽ ഇനം തിരയുക...",
         gCrops: "എല്ലാ ഇനങ്ങളും", gProt: "വിള സംരക്ഷണം", gSched: "സ്പ്രേ ഷെഡ്യൂൾ", gAtoz: "കൃഷി ഗൈഡ് (A-Z)",
         gDisc: "കർഷക ചർച്ച", gAdv: "ഉപദേശകൻ", gComp: "All കമ്പനി വിത്തുകൾ", gChem: "മരുന്നുകൾ Chemicals", gServ: "Other സേവനങ്ങൾ",
-        fabText: "ഉടനടി പരിഹാരം", navHome: "ഹോം", navCrops: "ഇനങ്ങൾ", navSched: "ഷെഡ്യൂൾ", navProt: "സംരക്ഷണം", navHelp: "ഹെൽപ്പ്‌ലൈൻ",
+        fabText: "ഉടനടി പരിഹാരം", navHome: "ഹോം", navCrops: "ഇനങ്ങൾ", navSched: "ഷെഡ്യൂൾ", navProt: "സംരക്ഷണം", navHelp: "ഉപദേശകൻ",
         drawerHead: "📋 മെനു", mProfile: "എന്റെ പ്രൊഫൈൽ", mFav: "ഇഷ്ടപ്പെട്ട ഇനങ്ങൾ", mLogout: "ലോഗ്ഔട്ട്",
         offlineBanner: "📴 ഓഫ്‌ലൈൻ മോഡ്: സേവ് ചെയ്ത ഭാഷയും ഡാറ്റയും പ്രവർത്തിക്കുന്നു"
       },
@@ -1706,7 +1769,7 @@
         txtSprayAdvice: "ସ୍ପ୍ରେ ପାଇଁ ସକାଳ ବା ସନ୍ଧ୍ୟା ସମୟ ବାଛନ୍ତୁ", searchPlaceholder: "🔍 ଫସଲ ବା କିସମ ଖୋଜନ୍ତୁ...",
         gCrops: "ସବୁ କିସମ", gProt: "ଫସଲ ସୁରକ୍ଷା", gSched: "ସ୍ପ୍ରେ ସିଡ୍ୟୁଲ୍", gAtoz: "ଚାଷ ଗାଇଡ୍ (A-Z)",
         gDisc: "ଚାଷୀ ଆଲୋଚନା", gAdv: "ପରାମର୍ଶଦାତା", gComp: "All କମ୍ପାନୀ ବିହନ", gChem: "ଔଷଧ Chemicals", gServ: "Other ସେବା",
-        fabText: "ତୁରନ୍ତ ସମାଧାନ", navHome: "ହୋମ୍", navCrops: "କିସମ", navSched: "ସିଡ୍ୟୁଲ୍", navProt: "ସୁରକ୍ଷା", navHelp: "ହେଲ୍ପଲାଇନ୍",
+        fabText: "ତୁରନ୍ତ ସମାଧାନ", navHome: "ହୋମ୍", navCrops: "କିସମ", navSched: "ସିଡ୍ୟୁଲ୍", navProt: "ସୁରକ୍ଷା", navHelp: "ପରାମର୍ଶଦାତା",
         drawerHead: "📋 ମେନୁ", mProfile: "ମୋ ପ୍ରୋଫାଇଲ୍", mFav: "ପସନ୍ଦର କିସମ", mLogout: "ଲଗଆଉଟ୍",
         offlineBanner: "📴 ଅଫଲାଇନ୍ ମୋଡ୍: ସେଭ୍ ହୋଇଥିବା ଭାଷା ଓ ଡାଟା ଚାଲୁଛି"
       },
@@ -1716,7 +1779,7 @@
         txtSprayAdvice: "স্প্ৰেৰ বাবে পুৱা বা গধূলিৰ সময় বাছনি কৰক", searchPlaceholder: "🔍 শস্য বা জাত বিচাৰক...",
         gCrops: "সকলো জাত", gProt: "শস্য সুৰক্ষা", gSched: "স্প্ৰে সময়সূচী", gAtoz: "খেতিৰ গাইড (A-Z)",
         gDisc: "কৃষক আলোচনা", gAdv: "পৰামৰ্শদাতা", gComp: "All কোম্পানী বীজ", gChem: "দৰব Chemicals", gServ: "Other সেৱা",
-        fabText: "তৎক্ষণাত সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুৰক্ষা", navHelp: "হেল্পলাইন",
+        fabText: "তৎক্ষণাত সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুৰক্ষা", navHelp: "পৰামৰ্শদাতা",
         drawerHead: "📋 মেনু", mProfile: "মোৰ প্ৰফাইল", mFav: "পছন্দৰ জাত", mLogout: "লগআউট",
         offlineBanner: "📴 অফলাইন মোড: সংৰক্ষিত ভাষা আৰু ডাটা চলি আছে"
       }
@@ -1737,7 +1800,9 @@
       'catItemFlower', 'catItemGrain', 'catItemOther', 'protCatHead', 'schedCatHead',
       'chatHeadTitle', 'chatSubHead', 'chatSendBtn', 'lblCalcCrop', 'lblCalcDate',
       'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15', 'btnSaveProf', 'btnDocSpray',
-      'offlineBanner', 'voiceNotSupported'
+      'offlineBanner', 'voiceNotSupported',
+      'advFormTitle', 'advFormSub', 'lblAdvName', 'lblAdvLocation', 'lblAdvCrop',
+      'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa'
     ];
 
     function updateOfflineBanner() {
@@ -2125,6 +2190,17 @@
       setText('lblForecast15', t.lblForecast15);
       setText('btnSaveProf', t.btnSaveProf);
       setText('btnDocSpray', t.btnDocSpray);
+
+      setText('advFormTitle', t.advFormTitle);
+      setText('advFormSub', t.advFormSub);
+      setText('lblAdvName', t.lblAdvName);
+      setText('lblAdvLocation', t.lblAdvLocation);
+      setText('lblAdvCrop', t.lblAdvCrop);
+      setText('lblAdvDisease', t.lblAdvDisease);
+      setText('lblAdvPhoto', t.lblAdvPhoto);
+      setText('txtAdvCam', t.txtAdvCam);
+      setText('txtAdvGal', t.txtAdvGal);
+      setText('btnAdvSubmitWa', t.btnAdvSubmitWa);
 
       translateStaticCategoryLabels();
 
@@ -3285,6 +3361,85 @@
       syncBannerOffset();
     }
 
+    function openAdvisorFormScreen() {
+      const t = getT();
+      const savedName = localStorage.getItem('farmer_name') || '';
+      const savedState = localStorage.getItem('farmer_state') || userCurrentCity || '';
+      const nameInput = document.getElementById('advFarmerName');
+      const locInput = document.getElementById('advLocation');
+
+      if (nameInput && !nameInput.value && savedName) nameInput.value = savedName;
+      if (locInput && !locInput.value && savedState) locInput.value = savedState;
+
+      openScreen('screen-advisor-form', t.gAdv);
+    }
+
+    function handleAdvisorPhoto(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.src = e.target.result;
+          img.onload = function () {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const maxWidth = 800;
+            const scale = Math.min(1, maxWidth / img.width);
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            advisorPhotoDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+            const prev = document.getElementById('advPreviewImg');
+            prev.src = advisorPhotoDataUrl;
+            prev.style.display = 'block';
+            document.getElementById('advPhotoNote').style.display = 'block';
+          };
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function submitAdvisorToWhatsApp() {
+      const farmerName = (document.getElementById('advFarmerName').value || '').trim();
+      const locationVal = (document.getElementById('advLocation').value || '').trim();
+      const cropVal = (document.getElementById('advCropName').value || '').trim();
+      const diseaseVal = (document.getElementById('advDiseaseDesc').value || '').trim();
+
+      if (!cropVal) {
+        showToast('कृपया फसल का नाम लिखें');
+        document.getElementById('advCropName').focus();
+        return;
+      }
+      if (!diseaseVal) {
+        showToast('कृपया रोग या समस्या लिखें');
+        document.getElementById('advDiseaseDesc').focus();
+        return;
+      }
+      if (!locationVal) {
+        showToast('कृपया अपना गांव / जिला लिखें');
+        document.getElementById('advLocation').focus();
+        return;
+      }
+
+      const lines = [
+        '🌾 *CROP & SABZI DOCTOR - कृषि सलाह अनुरोध*',
+        farmerName ? `👤 *नाम:* ${farmerName}` : '',
+        `📍 *स्थान:* ${locationVal}`,
+        `🌱 *फसल:* ${cropVal}`,
+        `🦠 *रोग / समस्या:* ${diseaseVal}`,
+        advisorPhotoDataUrl ? '📸 *नोट:* मैं इस समस्या की फोटो भी नीचे भेज रहा हूँ।' : ''
+      ].filter(Boolean);
+
+      if (advisorPhotoDataUrl) {
+        showToast('WhatsApp खुलने पर कृपया फोटो भी अटैच करें');
+      }
+
+      const waUrl = `https://wa.me/916378475002?text=${encodeURIComponent(lines.join('\n'))}`;
+      window.open(waUrl, '_blank');
+    }
+
     function showAllCategoriesScreen() {
       const t = getT();
       renderCategoryListIcons();
@@ -3831,7 +3986,7 @@
       openScreen('screen-privacy', t.privacyTitle);
     }
 
-    function contactAdvisor() { window.open('https://wa.me/916378475002', '_blank'); }
+    function contactAdvisor() { openAdvisorFormScreen(); }
     function shareAppWithFriends() { window.open(`https://wa.me/?text=${encodeURIComponent('CROP & SABZI DOCTOR: ' + window.location.href)}`, '_blank'); }
 
     function appLogout() {
