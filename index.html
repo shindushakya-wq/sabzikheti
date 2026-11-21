@@ -694,7 +694,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.0
+      CROP & SABZI DOCTOR • v11.1
     </div>
   </div>
 
@@ -898,23 +898,23 @@
     </div>
     <div id="categoriesContainer">
       <div class="list-item" onclick="showCropsForCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🍅</span><span class="list-title" id="catItemVeg">सब्जियां</span></div>
+        <div class="list-left"><span class="list-icon" id="allCatIcon_सब्जियां" data-fallback="🍅">🍅</span><span class="list-title" id="catItemVeg">सब्जियां</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('फल')">
-        <div class="list-left"><span class="list-icon">🍉</span><span class="list-title" id="catItemFruit">फल</span></div>
+        <div class="list-left"><span class="list-icon" id="allCatIcon_फल" data-fallback="🍉">🍉</span><span class="list-title" id="catItemFruit">फल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🌼</span><span class="list-title" id="catItemFlower">फूल</span></div>
+        <div class="list-left"><span class="list-icon" id="allCatIcon_फूल" data-fallback="🌼">🌼</span><span class="list-title" id="catItemFlower">फूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🌾</span><span class="list-title" id="catItemGrain">अनाज</span></div>
+        <div class="list-left"><span class="list-icon" id="allCatIcon_अनाज" data-fallback="🌾">🌾</span><span class="list-title" id="catItemGrain">अनाज</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showCropsForCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">📦</span><span class="list-title" id="catItemOther">अन्य</span></div>
+        <div class="list-left"><span class="list-icon" id="allCatIcon_अन्य" data-fallback="📦">📦</span><span class="list-title" id="catItemOther">अन्य</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -927,23 +927,23 @@
     </div>
     <div id="protectionCategoriesContainer">
       <div class="list-item" onclick="showProtectionCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">सब्जियां</span></div>
+        <div class="list-left"><span class="list-icon" id="protCatIcon_सब्जियां" data-fallback="🛡️">🛡️</span><span class="list-title" id="protCatLabel_सब्जियां">सब्जियां</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अनाज</span></div>
+        <div class="list-left"><span class="list-icon" id="protCatIcon_अनाज" data-fallback="🛡️">🛡️</span><span class="list-title" id="protCatLabel_अनाज">अनाज</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('फल')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">फल</span></div>
+        <div class="list-left"><span class="list-icon" id="protCatIcon_फल" data-fallback="🛡️">🛡️</span><span class="list-title" id="protCatLabel_फल">फल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">फूल</span></div>
+        <div class="list-left"><span class="list-icon" id="protCatIcon_फूल" data-fallback="🛡️">🛡️</span><span class="list-title" id="protCatLabel_फूल">फूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showProtectionCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🛡️</span><span class="list-title">अन्य</span></div>
+        <div class="list-left"><span class="list-icon" id="protCatIcon_अन्य" data-fallback="🛡️">🛡️</span><span class="list-title" id="protCatLabel_अन्य">अन्य</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -956,23 +956,23 @@
     </div>
     <div id="scheduleCategoriesContainer">
       <div class="list-item" onclick="showScheduleCropsListByCategory('सब्जियां')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">सब्जियां</span></div>
+        <div class="list-left"><span class="list-icon" id="schedCatIcon_सब्जियां" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_सब्जियां">सब्जियां</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अनाज</span></div>
+        <div class="list-left"><span class="list-icon" id="schedCatIcon_अनाज" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_अनाज">अनाज</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फल')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">फल</span></div>
+        <div class="list-left"><span class="list-icon" id="schedCatIcon_फल" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_फल">फल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फूल')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">फूल</span></div>
+        <div class="list-left"><span class="list-icon" id="schedCatIcon_फूल" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_फूल">फूल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अन्य')">
-        <div class="list-left"><span class="list-icon">🗓️</span><span class="list-title">अन्य</span></div>
+        <div class="list-left"><span class="list-icon" id="schedCatIcon_अन्य" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_अन्य">अन्य</span></div>
         <span class="arrow">&gt;</span>
       </div>
     </div>
@@ -1307,11 +1307,13 @@
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v1';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
+    const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
     const navHistory = [{ id: 'screen-home', title: 'CROP & SABZI DOCTOR' }];
     let sheetRecords = [];
     let cropPhotoSheetMap = {};
     let buttonPhotoMap = {};
+    let categoryPhotoMap = {};
     let scheduleRecords = {};
     let protectionRecords = {};
     let chemicalsRecords = [];
@@ -1427,6 +1429,17 @@
       return rawKey.trim();
     }
 
+    function normalizeCategoryKey(rawCat) {
+      if (!rawCat) return '';
+      const c = rawCat.trim().toLowerCase();
+      if (c.includes('सब्ज') || c.includes('veg')) return 'सब्जियां';
+      if (c.includes('अनाज') || c.includes('grain') || c.includes('cereal')) return 'अनाज';
+      if (c.includes('फल') || c.includes('fruit')) return 'फल';
+      if (c.includes('फूल') || c.includes('flower')) return 'फूल';
+      if (c.includes('अन्य') || c.includes('other')) return 'अन्य';
+      return rawCat.trim();
+    }
+
     function parseButtonPhotosCSV(text) {
       const map = {};
       if (!text) return map;
@@ -1441,6 +1454,41 @@
         map[rawKey] = url;
       });
       return map;
+    }
+
+    function parseCategoryPhotosCSV(text) {
+      const map = {};
+      if (!text) return map;
+      parseCSV(text).forEach((cols, idx) => {
+        const rawCat = (cols[0] || '').trim();
+        const url = (cols[1] || '').trim();
+        if (!rawCat || !url.startsWith('http')) return;
+        const lowCat = rawCat.toLowerCase();
+        if (idx === 0 && (lowCat.includes('श्रेणी') || lowCat.includes('category') || lowCat.includes('photo link'))) return;
+        const normCat = normalizeCategoryKey(rawCat);
+        map[normCat] = url;
+        map[rawCat] = url;
+      });
+      return map;
+    }
+
+    function renderCategoryListIcons() {
+      const prefixes = ['allCatIcon_', 'protCatIcon_', 'schedCatIcon_'];
+      CATEGORY_LIST_KEYS.forEach(catKey => {
+        const url = (categoryPhotoMap[catKey] || '').trim();
+        const safeUrl = url.replace(/"/g, '&quot;');
+        prefixes.forEach(prefix => {
+          const iconEl = document.getElementById(`${prefix}${catKey}`);
+          if (!iconEl) return;
+          const fallbackEmoji = iconEl.getAttribute('data-fallback') || '🌱';
+          const safeFallback = fallbackEmoji.replace(/'/g, "\\'");
+          if (url && url.startsWith('http')) {
+            iconEl.innerHTML = `<img src="${safeUrl}" alt="${catKey}" loading="lazy" onerror="this.parentElement.innerHTML='${safeFallback}';">`;
+          } else {
+            iconEl.innerHTML = fallbackEmoji;
+          }
+        });
+      });
     }
 
     function applyFallbackMenuCard(key) {
@@ -1705,7 +1753,7 @@
       try {
         const payload = {
           savedAt: Date.now(),
-          sheetRecords, cropPhotoSheetMap, buttonPhotoMap, scheduleRecords, protectionRecords, chemicalsRecords,
+          sheetRecords, cropPhotoSheetMap, buttonPhotoMap, categoryPhotoMap, scheduleRecords, protectionRecords, chemicalsRecords,
           alertsRecords, tipsRecords, aiReportsRecords, dailyStories,
           videoRecords, atozGuideRecords, privacyData, notificationsList,
           allSchedRowsGlobal, allProtRowsGlobal
@@ -1724,6 +1772,7 @@
         sheetRecords = Array.isArray(data.sheetRecords) ? data.sheetRecords : [];
         cropPhotoSheetMap = data.cropPhotoSheetMap && typeof data.cropPhotoSheetMap === 'object' ? data.cropPhotoSheetMap : {};
         buttonPhotoMap = data.buttonPhotoMap && typeof data.buttonPhotoMap === 'object' ? data.buttonPhotoMap : {};
+        categoryPhotoMap = data.categoryPhotoMap && typeof data.categoryPhotoMap === 'object' ? data.categoryPhotoMap : {};
         scheduleRecords = data.scheduleRecords && typeof data.scheduleRecords === 'object' ? data.scheduleRecords : {};
         protectionRecords = data.protectionRecords && typeof data.protectionRecords === 'object' ? data.protectionRecords : {};
         chemicalsRecords = Array.isArray(data.chemicalsRecords) ? data.chemicalsRecords : [];
@@ -1739,6 +1788,7 @@
         allProtRowsGlobal = Array.isArray(data.allProtRowsGlobal) ? data.allProtRowsGlobal : [];
 
         renderGridButtonPhotos();
+        renderCategoryListIcons();
         renderPrivacyUI();
         renderNotificationsUI();
         populateCalculatorCropsFromSheets();
@@ -1801,7 +1851,14 @@
     const pendingTranslations = {};
     function getCachedTranslation(text, targetLang) {
       if (!text || targetLang === 'hi') return text || '';
-      return localStorage.getItem(`sheet_tr_${targetLang}_${text.trim()}`) || null;
+      const clean = text.trim();
+      if (clean === 'सब्जियां' && targetLang !== 'en') {
+        const bad = localStorage.getItem(`sheet_tr_${targetLang}_${clean}`);
+        if (bad && bad.toLowerCase().includes('background')) {
+          localStorage.removeItem(`sheet_tr_${targetLang}_${clean}`);
+        }
+      }
+      return localStorage.getItem(`sheet_tr_${targetLang}_${clean}`) || null;
     }
 
     async function translateSheetText(text, targetLang) {
@@ -1809,8 +1866,22 @@
       const clean = text.trim();
       if (!clean || targetLang === 'hi') return clean;
 
+      if (clean === 'सब्जियां') {
+        if (targetLang === 'en') return 'Vegetables';
+        if (targetLang === 'mr') return 'भाज्या';
+        if (targetLang === 'bn') return 'সবজি';
+        if (targetLang === 'te') return 'కూరగాయలు';
+        if (targetLang === 'ta') return 'காய்கறிகள்';
+        if (targetLang === 'gu') return 'શાકભાજી';
+        if (targetLang === 'kn') return 'ತರಕಾರಿಗಳು';
+        if (targetLang === 'pa') return 'ਸਬਜ਼ੀਆਂ';
+        if (targetLang === 'ml') return 'പച്ചക്കറികൾ';
+        if (targetLang === 'or') return 'ପରିବା';
+        if (targetLang === 'as') return 'শাক-পাচলি';
+      }
+
       const cacheKey = `sheet_tr_${targetLang}_${clean}`;
-      const cached = localStorage.getItem(cacheKey);
+      const cached = getCachedTranslation(clean, targetLang);
       if (cached) return cached;
 
       if (!navigator.onLine) return clean;
@@ -1827,7 +1898,10 @@
           if (res.ok) {
             const data = await res.json();
             if (Array.isArray(data) && Array.isArray(data[0])) {
-              const translated = data[0].map(item => item[0]).join('').trim();
+              let translated = data[0].map(item => item[0]).join('').trim();
+              if (clean === 'सब्जियां' && translated.toLowerCase().includes('background')) {
+                translated = targetLang === 'en' ? 'Vegetables' : 'सब्जियां';
+              }
               if (translated) {
                 try { localStorage.setItem(cacheKey, translated); } catch (e) {}
                 return translated;
@@ -1883,7 +1957,7 @@
           const val = item[f];
           if (val && typeof val === 'string') {
             const clean = val.trim();
-            if (clean && !localStorage.getItem(`sheet_tr_${currentLang}_${clean}`)) {
+            if (clean && !getCachedTranslation(clean, currentLang)) {
               uniqueStrings.add(clean);
             }
           }
@@ -1939,6 +2013,29 @@
       );
 
       return merged;
+    }
+
+    function translateStaticCategoryLabels() {
+      CATEGORY_LIST_KEYS.forEach(catKey => {
+        const labels = [
+          document.getElementById(`protCatLabel_${catKey}`),
+          document.getElementById(`schedCatLabel_${catKey}`)
+        ].filter(Boolean);
+
+        if (currentLang === 'hi') {
+          labels.forEach(el => { el.innerText = catKey; });
+          return;
+        }
+        const cached = getCachedTranslation(catKey, currentLang);
+        if (cached) {
+          labels.forEach(el => { el.innerText = cached; });
+        }
+        if (navigator.onLine) {
+          translateSheetText(catKey, currentLang).then(tr => {
+            labels.forEach(el => { el.innerText = tr; });
+          });
+        }
+      });
     }
 
     function writeTranslationsToDOM(t) {
@@ -2028,6 +2125,8 @@
       setText('lblForecast15', t.lblForecast15);
       setText('btnSaveProf', t.btnSaveProf);
       setText('btnDocSpray', t.btnDocSpray);
+
+      translateStaticCategoryLabels();
 
       const searchInput = document.getElementById('homeSearch');
       if (searchInput && t.searchPlaceholder) searchInput.placeholder = t.searchPlaceholder;
@@ -2755,7 +2854,7 @@
       showLoader();
       try {
         const [
-          csvSheet1, csvCropPhotos, csvButtonPhotos, csvPriv, csvNotif,
+          csvSheet1, csvCropPhotos, csvButtonPhotos, csvCategoryPhotos, csvPriv, csvNotif,
           csvSchedSabzi, csvSchedAnaaj, csvSchedPhal, csvSchedPhool, csvSchedOther,
           csvProtSabzi, csvProtAnaaj, csvProtPhal, csvProtPhool, csvProtOther,
           csvChem, csvAtoZ, csvStories, csvVideos,
@@ -2764,6 +2863,7 @@
           fetchRawCSV('Sheet1'),
           fetchRawCSV('CropPhotos'),
           fetchRawCSV('ButtonPhotos'),
+          fetchRawCSV('CategoryPhotos'),
           fetchRawCSV('Privacy'),
           fetchRawCSV('Notifications'),
           fetchRawCSV('Schedule'),
@@ -2797,6 +2897,12 @@
           buttonPhotoMap = parsedButtonPhotos;
         }
         renderGridButtonPhotos();
+
+        const parsedCategoryPhotos = parseCategoryPhotosCSV(csvCategoryPhotos);
+        if (Object.keys(parsedCategoryPhotos).length > 0) {
+          categoryPhotoMap = parsedCategoryPhotos;
+        }
+        renderCategoryListIcons();
 
         const parsedVarieties = parseVarietiesCSV(csvSheet1);
         if (parsedVarieties.length > 0) sheetRecords = parsedVarieties;
@@ -3181,6 +3287,7 @@
 
     function showAllCategoriesScreen() {
       const t = getT();
+      renderCategoryListIcons();
       openScreen('screen-all-categories', t.gCrops);
     }
 
@@ -3241,6 +3348,8 @@
 
     function showProtectionCategoriesScreen() {
       const t = getT();
+      renderCategoryListIcons();
+      translateStaticCategoryLabels();
       openScreen('screen-protection-categories', t.gProt);
     }
 
@@ -3280,6 +3389,8 @@
 
     function showScheduleCategoriesScreen() {
       const t = getT();
+      renderCategoryListIcons();
+      translateStaticCategoryLabels();
       openScreen('screen-schedule-categories', t.gSched);
     }
 
@@ -4153,6 +4264,7 @@
 
       loadOfflineSheetsSnapshot();
       renderGridButtonPhotos();
+      renderCategoryListIcons();
       updateOfflineBanner();
       detectUserLocation();
       updateProfileUI();
