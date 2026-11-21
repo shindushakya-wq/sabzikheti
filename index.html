@@ -8,7 +8,6 @@
   <meta name="theme-color" content="#1b5e20">
 
   <style>
-    /* स्प्लैश स्क्रीन एनीमेशन स्टाइल */
     #splashScreen {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -66,7 +65,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
-    /* नॉन-ब्लॉकिंग टोस्ट नोटिफिकेशन */
     .app-toast {
       position: fixed;
       bottom: 135px;
@@ -78,7 +76,7 @@
       border-radius: 20px;
       font-size: 13px;
       font-weight: 600;
-      z-index: 9500;
+      z-index: 10050;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease, transform 0.25s ease;
@@ -111,7 +109,6 @@
       border-bottom-color: #b45309;
     }
 
-    /* डार्क मोड स्टाइल */
     body.dark-mode {
       background-color: #0f172a;
       color: #f8fafc;
@@ -171,6 +168,11 @@
       background-color: #172554;
       border-color: #1e40af;
       color: #93c5fd;
+    }
+
+    body.dark-mode .price-highlight-box {
+      background-color: #143322;
+      border-color: #166534;
     }
 
     body.dark-mode .bookmark-btn {
@@ -264,7 +266,6 @@
       opacity: 0.8;
     }
 
-    /* टॉप हेडर */
     .app-header { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); color: white; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .back-btn { font-size: 20px; cursor: pointer; margin-right: 8px; display: none; }
     .header-title { font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
@@ -279,13 +280,11 @@
 
     .menu-bars-icon { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; font-weight: bold; }
 
-    /* स्मार्ट लोडिंग स्पाइनर ओवरले */
     .loader-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.82); z-index: 5000; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
     body.dark-mode .loader-overlay { background: rgba(15,23,42,0.88); }
     .spinner { width: 42px; height: 42px; border: 4px solid #bbf7d0; border-top: 4px solid #16a34a; border-radius: 50%; animation: spin 0.75s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* साइड मेन्यू ड्रॉअर */
     .drawer-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2100; backdrop-filter: blur(2px); }
     .drawer-overlay.active { display: block; }
     .drawer-content { position: fixed; top: 0; right: -300px; width: 285px; height: 100%; background: #ffffff; z-index: 2200; box-shadow: -4px 0 16px rgba(0,0,0,0.2); transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; display: flex; flex-direction: column; }
@@ -305,11 +304,9 @@
     .drawer-item:active { background: #f9fafb; color: #1b5e20; }
     .drawer-item span:first-child { font-size: 18px; }
 
-    /* स्क्रीन लेआउट */
     .screen { display: none; padding: 14px; max-width: 480px; margin: auto; }
     .screen.active { display: block; }
 
-    /* गोल स्टोरी बार */
     .stories-wrapper { display: flex; gap: 12px; overflow-x: auto; padding: 12px 4px; background: #ffffff; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); -webkit-overflow-scrolling: touch; }
     .stories-wrapper::-webkit-scrollbar { display: none; }
     .story-item { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; text-align: center; }
@@ -317,7 +314,6 @@
     .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* लाइव मौसम कार्ड */
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; transition: background 0.3s ease; }
     .weather-card.night-mode,
     body.dark-mode .weather-card { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; color: #f8fafc; }
@@ -330,17 +326,14 @@
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
 
-    /* 15 दिन मौसम पूर्वानुमान ग्रिड */
     .forecast-15-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
     .forecast-day-row { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; font-size: 13px; }
     body.dark-mode .forecast-day-row { background: #273548; border-color: #334155; }
 
-    /* त्वरित फसल टैग्स */
     .quick-crop-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; }
     .quick-crop-scroll::-webkit-scrollbar { display: none; }
     .quick-pill { background: white; border: 1.5px solid #d1d5db; border-radius: 20px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: #374151; white-space: nowrap; display: flex; align-items: center; gap: 5px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
 
-    /* सर्च बार */
     .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
     .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
@@ -348,7 +341,6 @@
     .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
     @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.25); } }
 
-    /* AI वॉइस असिस्टेंट कार्ड */
     @keyframes pulseAiBox {
       0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); border-color: #4ade80; }
       70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); border-color: #16a34a; }
@@ -385,7 +377,6 @@
       border-radius: 50%;
     }
 
-    /* 3-3 बटन ग्रिड + 1 नम्बर बॉटम ग्रेडिएंट फुल-कार्ड फोटो स्टाइल */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { position: relative; overflow: hidden; background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
     .menu-box .icon { position: relative; z-index: 1; font-size: 28px; margin-bottom: 6px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
@@ -457,7 +448,6 @@
     .modal-header h3 { font-size: 16px; color: #1b5e20; }
     .modal-close { font-size: 20px; cursor: pointer; border: none; background: none; }
 
-    /* भाषा चयन ग्रिड स्टाइल */
     .lang-grid-12 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
     .lang-choice-btn { padding: 10px 8px; border-radius: 10px; font-size: 13.5px; font-weight: 700; text-align: center; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1e293b; }
 
@@ -546,9 +536,9 @@
     .mandi-table td { padding: 10px 8px; border: 1px solid #e5e7eb; color: #374151; }
     .mandi-table tr:nth-child(even) { background: #f9fafb; }
 
-    .login-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
+    .login-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(3px); }
     .login-modal-overlay.active { display: flex; }
-    .login-card { background: white; border-radius: 16px; padding: 22px; max-width: 360px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid #059669; }
+    .login-card { background: white; border-radius: 16px; padding: 20px; max-width: 390px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 5px solid #059669; }
 
     .image-preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 6000; align-items: center; justify-content: center; padding: 20px; }
     .image-preview-modal.active { display: flex; }
@@ -558,7 +548,6 @@
 </head>
 <body>
 
-  <!-- स्प्लैश स्क्रीन एनीमेशन -->
   <div id="splashScreen">
     <div class="splash-logo-box">
       <img src="https://i.postimg.cc/xCGvN3rt/IMG-20261116-WA7746.jpg" alt="Logo">
@@ -567,22 +556,20 @@
     <div class="splash-sub">🌾 कृषि सहायक ऐप</div>
   </div>
 
-  <!-- नॉन-ब्लॉकिंग टोस्ट -->
   <div class="app-toast" id="appToast"></div>
 
-  <!-- स्मार्ट लोडिंग स्पाइनर -->
   <div class="loader-overlay" id="appLoader">
     <div class="spinner"></div>
     <p style="font-size:13px; font-weight:bold; color:#166534;" id="txtLoading">🌾 डेटा लोड हो रहा है...</p>
   </div>
 
-  <!-- पहली बार लोकेशन चुनने का मोडल (राज्य, जिला, शहर, पिनकोड + GPS) -->
+  <!-- लोकेशन बदलने का मोडल -->
   <div class="login-modal-overlay" id="onboardingLocationModal">
-    <div class="login-card" style="max-width: 390px;">
+    <div class="login-card">
       <div style="text-align:center; margin-bottom:12px;">
         <span style="font-size:34px;">📍</span>
         <h3 style="color:#1b5e20; margin-top:4px; font-size:17px;">अपना क्षेत्र चुनें</h3>
-        <p style="font-size:11.5px; color:#6b7280; margin-top:3px;">लिस्ट से चुनें या GPS से अपने आप भरें</p>
+        <p style="font-size:11.5px; color:#6b7280; margin-top:3px;">राज्य, जिला, शहर और पिनकोड चुनें या GPS लगाएं</p>
       </div>
 
       <button type="button" class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd; margin-bottom:12px; padding:9px;" onclick="autoFillLocationFromGps()">
@@ -620,7 +607,7 @@
   <div class="modal-overlay" id="seedOrderModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3>🛒 बीज ऑर्डर फॉर्म</h3>
+        <h3 id="txtOrderModalTitle">🛒 बीज ऑर्डर फॉर्म</h3>
         <button class="modal-close" onclick="closeSeedOrderModal()">✕</button>
       </div>
 
@@ -664,9 +651,9 @@
     </div>
   </div>
 
-  <!-- भाषा चयन स्क्रीन मोडल (12 भाषाएं) -->
+  <!-- भाषा चयन मोडल (11 भाषाएं, मैथिली नहीं) -->
   <div class="login-modal-overlay" id="languageSelectModal">
-    <div class="login-card" style="max-width: 390px;">
+    <div class="login-card">
       <div style="text-align:center; margin-bottom:14px;">
         <span style="font-size:36px;">🌾</span>
         <h3 style="color:#1b5e20; margin-top:4px; font-size:18px;">CROP & SABZI DOCTOR</h3>
@@ -690,22 +677,45 @@
     </div>
   </div>
 
-  <!-- लॉगिन स्क्रीन मोडल -->
+  <!-- लॉगिन स्क्रीन मोडल: नाम, शहर, जिला, राज्य + मोबाइल/OTP -->
   <div class="login-modal-overlay" id="loginScreenModal">
     <div class="login-card">
-      <div style="text-align:center; margin-bottom:16px;">
-        <span style="font-size:40px;">🌾</span>
-        <h3 style="color:#1b5e20; margin-top:6px; font-size:18px;">CROP & SABZI DOCTOR</h3>
-        <p style="font-size:12px; color:#6b7280; margin-top:4px;" id="txtLoginSub">कृषि सहायता ऐप में आपका स्वागत है</p>
+      <div style="text-align:center; margin-bottom:12px;">
+        <span style="font-size:36px;">🌾</span>
+        <h3 style="color:#1b5e20; margin-top:4px; font-size:18px;">CROP & SABZI DOCTOR</h3>
+        <p style="font-size:12px; color:#6b7280; margin-top:3px;" id="txtLoginSub">कृषि सहायता ऐप में आपका स्वागत है</p>
       </div>
 
-      <div class="form-group" id="phoneInputGroup">
-        <label id="txtPhoneLabel">अपना मोबाइल नंबर दर्ज करें:</label>
-        <div style="display:flex; gap:8px;">
-          <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
-          <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
+      <div id="phoneInputGroup">
+        <div class="form-group">
+          <label id="txtLoginNameLabel">👤 किसान का नाम:</label>
+          <input type="text" id="loginFarmerName" class="form-control" placeholder="अपना नाम लिखें">
         </div>
-        <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="txtOtpBtn">📲 ओटीपी (OTP) भेजें</button>
+
+        <div class="form-group">
+          <label id="txtLoginStateLabel">🏛️ राज्य (State):</label>
+          <select id="loginStateSelect" class="form-control" onchange="onLoginStateChange()"></select>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div class="form-group">
+            <label id="txtLoginDistrictLabel">🗺️ जिला (District):</label>
+            <select id="loginDistrictSelect" class="form-control" onchange="onLoginDistrictChange()"></select>
+          </div>
+          <div class="form-group">
+            <label id="txtLoginCityLabel">🏙️ शहर / कस्बा:</label>
+            <select id="loginCitySelect" class="form-control"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label id="txtPhoneLabel">📞 अपना मोबाइल नंबर दर्ज करें:</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
+            <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
+          </div>
+          <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="txtOtpBtn">📲 ओटीपी (OTP) भेजें</button>
+        </div>
       </div>
 
       <div class="form-group" id="otpInputGroup" style="display:none;">
@@ -714,9 +724,9 @@
         <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;" id="txtOtpSuccess">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
       </div>
 
-      <div style="text-align:center; margin-top:14px; border-top:1px solid #f3f4f6; padding-top:12px;">
-        <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
-          ⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें
+      <div style="text-align:center; margin-top:12px; border-top:1px solid #f3f4f6; padding-top:10px;">
+        <button type="button" onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
+          ⏩ विवरण सेव करें और आगे बढ़ें
         </button>
       </div>
     </div>
@@ -739,10 +749,8 @@
     </div>
   </div>
 
-  <!-- ऑफलाइन सूचना बैनर -->
   <div class="offline-banner" id="offlineBanner">📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है</div>
 
-  <!-- नोटिफिकेशन मोडल -->
   <div class="modal-overlay" id="notificationModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -755,7 +763,6 @@
     </div>
   </div>
 
-  <!-- साइड मेन्यू ड्रॉअर -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
   <div class="drawer-content" id="drawerContent">
     <div class="drawer-header">
@@ -776,7 +783,7 @@
 
     <ul class="drawer-menu-list">
       <li class="drawer-item" onclick="openProfileScreen()"><span>👨‍🌾</span><span id="mProfile">मेरी प्रोफाइल / सेटिंग्स</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); openOnboardingLocationModal(true);"><span>📍</span><span>राज्य / जिला / पिनकोड बदलें</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); openOnboardingLocationModal(true);"><span>📍</span><span id="mChangeLoc">राज्य / जिला / पिनकोड बदलें</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showFavoritesScreen();" style="color:#d97706; font-weight:bold;"><span>⭐</span><span id="mFav">मेरी पसंदीदा किस्में (Bookmarks)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showAllCategoriesScreen();"><span>🌱</span><span id="mCrops">सभी किस्में</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showProtectionCategoriesScreen();"><span>🛡️</span><span id="mProtection">फसल सुरक्षा (रोग निदान)</span></li>
@@ -791,17 +798,15 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.5
+      CROP & SABZI DOCTOR • v11.6
     </div>
   </div>
 
-  <!-- तुरंत समाधान फ्लोटिंग बटन -->
   <button class="fab-solution" onclick="openSolutionModal()">
     <span>⚡</span>
     <span id="fabText">तुरंत समाधान</span>
   </button>
 
-  <!-- तुरंत समाधान मोडल -->
   <div class="modal-overlay" id="solutionModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -839,7 +844,6 @@
     </div>
   </div>
 
-  <!-- फ़ुल-स्क्रीन स्टोरी प्लेयर -->
   <div class="story-fullscreen-modal" id="storyPlayerModal">
     <div class="story-top-bar">
       <div class="story-progress-bg">
@@ -870,10 +874,8 @@
       </span>
     </div>
 
-    <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- AI वॉइस असिस्टेंट कार्ड -->
     <div class="ai-assistant-box" onclick="startVoiceAssistant()">
       <div style="flex: 1; padding-right: 8px;">
         <h4 style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="txtAiTitle">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
@@ -882,7 +884,6 @@
       <div style="background:#16a34a; color:white; min-width:38px; height:38px; border-radius:50%; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🗣️</div>
     </div>
 
-    <!-- लाइव मौसम कार्ड -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 श्रीगंगानगर</h4>
@@ -900,7 +901,6 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 फसल या किस्म लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -909,7 +909,6 @@
       </div>
     </div>
 
-    <!-- त्वरित फसल टैग्स -->
     <div class="quick-crop-scroll">
       <div class="quick-pill" onclick="filterByCrop('टमाटर')">🍅 <span class="tr-crop" data-orig="टमाटर">टमाटर</span></div>
       <div class="quick-pill" onclick="filterByCrop('खीरा')">🥒 <span class="tr-crop" data-orig="खीरा">खीरा</span></div>
@@ -919,7 +918,6 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 <span class="tr-crop" data-orig="भिंडी">भिंडी</span></div>
     </div>
 
-    <!-- 3-3 बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" id="menuCard_gCrops" onclick="showAllCategoriesScreen()">
         <div class="icon" id="menuIcon_gCrops" data-fallback="🌱">🌱</div>
@@ -959,7 +957,6 @@
       </div>
     </div>
 
-    <!-- प्ले स्टोर डायरेक्ट लिंक बैनर -->
     <div class="playstore-banner" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
       <div>
         <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
@@ -968,7 +965,6 @@
       <a href="https://play.google.com/store/apps" target="_blank" style="background:#2563eb; color:white; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:bold; text-decoration:none;" id="txtRateBtn">रेट करें</a>
     </div>
 
-    <!-- 4 वीडियो / रील्स सेक्शन -->
     <div style="margin-bottom: 15px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
         <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700;" id="txtVideoHead">📺 ताज़ा कृषि वीडियो व रील्स</h3>
@@ -977,7 +973,6 @@
       <div id="dynamicVideosContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
     </div>
 
-    <!-- सोशल मीडिया कार्ड -->
     <div class="social-box">
       <p style="font-size:13px; font-weight:bold; color:#374151;" id="txtSocialHead">हमारे साथ सोशल मीडिया पर जुड़ें</p>
       <div class="social-btn-group">
@@ -1147,15 +1142,12 @@
     </div>
   </div>
 
-  <!-- SCREEN: खेती कैसे करें - फसल सूची (A-Z) -->
   <div id="screen-atoz-crops" class="screen">
     <div id="atozCropsContainer"></div>
   </div>
 
-  <!-- SCREEN: फसल की A से Z पूरी जानकारी -->
   <div id="screen-atoz-detail" class="screen"><div id="atozDetailContainer"></div></div>
 
-  <!-- SCREEN: किसान चर्चा -->
   <div id="screen-farmer-discussion" class="screen">
     <div class="variety-card" style="border-left:5px solid #0284c7; padding: 16px; margin-bottom: 14px;">
       <div class="form-group"><input type="text" id="discussionAuthor" class="form-control" placeholder="Name"></div>
@@ -1166,7 +1158,6 @@
     <div id="discussionPostsContainer"></div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <div id="privacyContentBox">
@@ -1180,7 +1171,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: दवाइयाँ श्रेणियां -->
   <div id="screen-chemicals" class="screen">
     <div class="variety-card" style="border-left:5px solid #be185d;">
       <div class="list-item" onclick="filterChemicalsByCategory('कीटनाशक')">
@@ -1202,13 +1192,11 @@
     </div>
   </div>
 
-  <!-- SCREEN: चयनित श्रेणी की दवाइयां सूची -->
   <div id="screen-chemical-list" class="screen">
     <h3 style="font-size:16px; margin-bottom:12px; color:#be185d;" id="chemicalListTitle"></h3>
     <div id="chemicalListContainer"></div>
   </div>
 
-  <!-- SCREEN: अन्य सेवाएं -->
   <div id="screen-other-services" class="screen">
     <div class="list-item" onclick="showWeatherDetailScreen()">
       <div class="list-left"><span class="list-icon">🌦️</span><span class="list-title" id="s1">मौसम</span></div>
@@ -1248,7 +1236,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: बुवाई और कटाई कैलकुलेटर -->
   <div id="screen-sowing-calc" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; padding:16px;">
       <div class="form-group">
@@ -1303,17 +1290,14 @@
     </div>
   </div>
 
-  <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
   <div id="screen-ai-reports" class="screen">
     <div id="aiReportsContainer"></div>
   </div>
 
-  <!-- SCREEN: मेरी पसंदीदा किस्में -->
   <div id="screen-favorites" class="screen">
     <div id="favoritesContainer"></div>
   </div>
 
-  <!-- SCREEN: सरकारी योजनाएं -->
   <div id="screen-gov-schemes" class="screen">
     <div class="variety-card">
       <div class="schedule-step">
@@ -1328,7 +1312,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: मौसम (हवा, नमी और 15 दिन का पूर्वानुमान) -->
   <div id="screen-weather-detail" class="screen">
     <div class="variety-card" id="detailWeatherCard">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -1358,7 +1341,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: मंडी भाव -->
   <div id="screen-mandi-bhav" class="screen">
     <div class="variety-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -1375,12 +1357,10 @@
     </div>
   </div>
 
-  <!-- SCREEN: एक्सपर्ट सुझाव -->
   <div id="screen-expert-advice" class="screen">
     <div id="tipsContainer"></div>
   </div>
 
-  <!-- SCREEN: कीट अलर्ट -->
   <div id="screen-pest-alert" class="screen">
     <div id="alertsContainer"></div>
   </div>
@@ -1388,35 +1368,42 @@
   <!-- SCREEN: प्रोफाइल स्क्रीन -->
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
-      <div class="form-group"><input type="text" id="profNameInput" class="form-control" placeholder="किसान का नाम"></div>
-      <div class="form-group"><input type="tel" id="profPhoneInput" class="form-control" placeholder="मोबाइल नंबर"></div>
-      <div class="form-group"><input type="text" id="profStateInput" class="form-control" placeholder="जिला / शहर / राज्य"></div>
-      <div class="form-group"><input type="text" id="profCropsInput" class="form-control" placeholder="मुख्य फसलें (उदा. टमाटर, मिर्च)"></div>
-      <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾 सहेजें</button>
+      <div class="form-group">
+        <label id="lblProfName">👤 किसान का नाम:</label>
+        <input type="text" id="profNameInput" class="form-control" placeholder="किसान का नाम">
+      </div>
+      <div class="form-group">
+        <label id="lblProfPhone">📞 मोबाइल नंबर:</label>
+        <input type="tel" id="profPhoneInput" class="form-control" maxlength="10" placeholder="मोबाइल नंबर">
+      </div>
+      <div class="form-group">
+        <label id="lblProfState">📍 शहर / जिला / राज्य:</label>
+        <input type="text" id="profStateInput" class="form-control" placeholder="उदा. घड़साना, श्रीगंगानगर, राजस्थान">
+      </div>
+      <div class="form-group">
+        <label id="lblProfCrops">🌱 मुख्य फसलें:</label>
+        <input type="text" id="profCropsInput" class="form-control" placeholder="मुख्य फसलें (उदा. टमाटर, मिर्च)">
+      </div>
+      <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:14px;" onclick="saveFarmerProfile()" id="btnSaveProf">💾 सहेजें</button>
     </div>
   </div>
 
-  <!-- SCREEN: श्रेणी की फसल सूची -->
   <div id="screen-crops" class="screen">
     <div id="cropsContainer"></div>
   </div>
 
-  <!-- SCREEN: किस्में सूची -->
   <div id="screen-seeds" class="screen">
     <div id="varietiesContainer"></div>
   </div>
 
-  <!-- SCREEN: फसल सुरक्षा - फसल सूची -->
   <div id="screen-protection-crops" class="screen">
     <div id="protectionCropsContainer"></div>
   </div>
 
-  <!-- SCREEN: स्प्रे शेड्यूल - फसलें -->
   <div id="screen-schedule-crops" class="screen">
     <div id="scheduleCropsContainer"></div>
   </div>
 
-  <!-- SCREEN: चयनित फसल का स्प्रे शेड्यूल -->
   <div id="screen-crop-schedule" class="screen">
     <div class="variety-card">
       <h3 style="color:#15803d; font-size:17px; margin-bottom:10px;" id="scheduleCropTitle"></h3>
@@ -1425,24 +1412,20 @@
     </div>
   </div>
 
-  <!-- SCREEN: फसल सुरक्षा - फसल के रोग -->
   <div id="screen-crop-diseases" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="cropDiseaseHeading"></h3>
     <div id="cropDiseasesContainer"></div>
   </div>
 
-  <!-- SCREEN: All कंपनी सूची -->
   <div id="screen-companies" class="screen">
     <div id="companiesContainer"></div>
   </div>
 
-  <!-- SCREEN: चयनित कंपनी की फसलें -->
   <div id="screen-company-crops" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="compCropHeading"></h3>
     <div id="companyCropsContainer"></div>
   </div>
 
-  <!-- बॉटम नेविगेशन -->
   <div class="bottom-nav">
     <div class="nav-tab active" onclick="openScreen('screen-home', 'CROP & SABZI DOCTOR')"><span>🏠</span><span id="navHome">होम</span></div>
     <div class="nav-tab" onclick="showAllCategoriesScreen()"><span>🌱</span><span id="navCrops">किस्में</span></div>
@@ -1641,7 +1624,7 @@
     let advisorPhotoDataUrl = "";
     let activeSeedOrderItem = null;
     let selectedSeedPaymentMode = "Cash on Delivery (नकद पेमेंट)";
-    let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
+    let userCurrentCity = localStorage.getItem('farmer_district_name') || localStorage.getItem('farmer_city_name') || localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let userCoords = {
       lat: parseFloat(localStorage.getItem('farmer_lat') || '29.9038'),
       lon: parseFloat(localStorage.getItem('farmer_lon') || '73.8772')
@@ -1705,6 +1688,85 @@
       en: 'en-IN', ml: 'ml-IN', or: 'or-IN', as: 'as-IN'
     };
 
+    const VARIETY_CARD_LABELS = {
+      hi: {
+        rateLabel: '💰 रेट:', askWhatsapp: 'WhatsApp पर पूछें', company: '🏢 कंपनी:', crop: '🌾 फसल:',
+        segment: '🌱 सेगमेंट:', packSize: '📦 पैकेट साइज:', features: '⭐ विशेषताएं:',
+        weight: '⚖️ वजन:', maturity: '⏱️ पकने का समय:', resistance: '🛡️ रोग:',
+        buySeed: '🛒 खरीदे बीज', saved: '⭐ सेव हुआ', save: '☆', remove: '❌ हटाएं'
+      },
+      en: {
+        rateLabel: '💰 Price:', askWhatsapp: 'Ask on WhatsApp', company: '🏢 Company:', crop: '🌾 Crop:',
+        segment: '🌱 Segment:', packSize: '📦 Pack Size:', features: '⭐ Features:',
+        weight: '⚖️ Weight:', maturity: '⏱️ Maturity:', resistance: '🛡️ Disease:',
+        buySeed: '🛒 Buy Seeds', saved: '⭐ Saved', save: '☆', remove: '❌ Remove'
+      },
+      mr: {
+        rateLabel: '💰 दर:', askWhatsapp: 'WhatsApp वर विचारा', company: '🏢 कंपनी:', crop: '🌾 पीक:',
+        segment: '🌱 सेगमेंट:', packSize: '📦 पॅकेट साइज:', features: '⭐ वैशिष्ट्ये:',
+        weight: '⚖️ वजन:', maturity: '⏱️ कालावधी:', resistance: '🛡️ रोग:',
+        buySeed: '🛒 बियाणे खरेदी', saved: '⭐ सेव्ह केले', save: '☆', remove: '❌ काढा'
+      },
+      bn: {
+        rateLabel: '💰 দাম:', askWhatsapp: 'WhatsApp-এ জানুন', company: '🏢 কোম্পানি:', crop: '🌾 ফসল:',
+        segment: '🌱 সেগমেন্ট:', packSize: '📦 প্যাকেট সাইজ:', features: '⭐ বৈশিষ্ট্য:',
+        weight: '⚖️ ওজন:', maturity: '⏱️ সময়কাল:', resistance: '🛡️ রোগ:',
+        buySeed: '🛒 বীজ কিনুন', saved: '⭐ সংরক্ষিত', save: '☆', remove: '❌ মুছুন'
+      },
+      te: {
+        rateLabel: '💰 ధర:', askWhatsapp: 'WhatsApp లో అడగండి', company: '🏢 కంపెనీ:', crop: '🌾 పంట:',
+        segment: '🌱 విభాగం:', packSize: '📦 ప్యాకెట్ సైజు:', features: '⭐ ప్రత్యేకతలు:',
+        weight: '⚖️ బరువు:', maturity: '⏱️ కాలం:', resistance: '🛡️ వ్యాధి:',
+        buySeed: '🛒 విత్తనాలు కొనండి', saved: '⭐ సేవ్ అయింది', save: '☆', remove: '❌ తొలగించండి'
+      },
+      ta: {
+        rateLabel: '💰 விலை:', askWhatsapp: 'WhatsApp-இல் கேட்கவும்', company: '🏢 நிறுவனம்:', crop: '🌾 பயிர்:',
+        segment: '🌱 வகை:', packSize: '📦 பாக்கெட் அளவு:', features: '⭐ சிறப்புகள்:',
+        weight: '⚖️ எடை:', maturity: '⏱️ காலம்:', resistance: '🛡️ நோய்:',
+        buySeed: '🛒 விதை வாங்க', saved: '⭐ சேமிக்கப்பட்டது', save: '☆', remove: '❌ நீக்கு'
+      },
+      gu: {
+        rateLabel: '💰 ભાવ:', askWhatsapp: 'WhatsApp પર પૂછો', company: '🏢 કંપની:', crop: '🌾 પાક:',
+        segment: '🌱 સેગમેન્ટ:', packSize: '📦 પેકેટ સાઈઝ:', features: '⭐ વિશેષતાઓ:',
+        weight: '⚖️ વજન:', maturity: '⏱️ સમય:', resistance: '🛡️ રોગ:',
+        buySeed: '🛒 બિયારણ ખરીદો', saved: '⭐ સેવ થયું', save: '☆', remove: '❌ દૂર કરો'
+      },
+      kn: {
+        rateLabel: '💰 ದರ:', askWhatsapp: 'WhatsApp ನಲ್ಲಿ ಕೇಳಿ', company: '🏢 ಕಂಪನಿ:', crop: '🌾 ಬೆಳೆ:',
+        segment: '🌱 ವಿಭಾಗ:', packSize: '📦 ಪ್ಯಾಕೆಟ್ ಗಾತ್ರ:', features: '⭐ ವೈಶಿಷ್ಟ್ಯಗಳು:',
+        weight: '⚖️ ತೂಕ:', maturity: '⏱️ ಅವಧಿ:', resistance: '🛡️ ರೋಗ:',
+        buySeed: '🛒 ಬೀಜ ಖರೀದಿಸಿ', saved: '⭐ ಉಳಿಸಲಾಗಿದೆ', save: '☆', remove: '❌ ತೆಗೆದುಹಾಕಿ'
+      },
+      pa: {
+        rateLabel: '💰 ਰੇਟ:', askWhatsapp: 'WhatsApp ਤੇ ਪੁੱਛੋ', company: '🏢 ਕੰਪਨੀ:', crop: '🌾 ਫ਼ਸਲ:',
+        segment: '🌱 ਸੈਗਮੈਂਟ:', packSize: '📦 ਪੈਕਟ ਸਾਈਜ਼:', features: '⭐ ਖਾਸੀਅਤਾਂ:',
+        weight: '⚖️ ਭਾਰ:', maturity: '⏱️ ਸਮਾਂ:', resistance: '🛡️ ਬਿਮਾਰੀ:',
+        buySeed: '🛒 ਬੀਜ ਖ਼ਰੀਦੋ', saved: '⭐ ਸੇਵ ਹੋਇਆ', save: '☆', remove: '❌ ਹਟਾਓ'
+      },
+      ml: {
+        rateLabel: '💰 നിരക്ക്:', askWhatsapp: 'WhatsApp-ൽ ചോദിക്കുക', company: '🏢 കമ്പനി:', crop: '🌾 വിള:',
+        segment: '🌱 വിഭാഗം:', packSize: '📦 പാക്കറ്റ് വലിപ്പം:', features: '⭐ സവിശേഷതകൾ:',
+        weight: '⚖️ ഭാരം:', maturity: '⏱️ കാലയളവ്:', resistance: '🛡️ രോഗം:',
+        buySeed: '🛒 വിത്ത് വാങ്ങുക', saved: '⭐ സേവ് ചെയ്തു', save: '☆', remove: '❌ നീക്കം ചെയ്യുക'
+      },
+      or: {
+        rateLabel: '💰 ଦର:', askWhatsapp: 'WhatsApp ରେ ପଚାରନ୍ତୁ', company: '🏢 କମ୍ପାନୀ:', crop: '🌾 ଫସଲ:',
+        segment: '🌱 ବିଭାଗ:', packSize: '📦 ପ୍ୟାକେଟ୍ ସାଇଜ୍:', features: '⭐ ବୈଶିଷ୍ଟ୍ୟ:',
+        weight: '⚖️ ଓଜନ:', maturity: '⏱️ ସମୟ:', resistance: '🛡️ ରୋଗ:',
+        buySeed: '🛒 ବିହନ କିଣନ୍ତୁ', saved: '⭐ ସେଭ୍ ହେଲା', save: '☆', remove: '❌ ହଟାନ୍ତୁ'
+      },
+      as: {
+        rateLabel: '💰 মূল্য:', askWhatsapp: 'WhatsApp-ত সোধক', company: '🏢 কোম্পানী:', crop: '🌾 শস্য:',
+        segment: '🌱 শ্ৰেণী:', packSize: '📦 পেকেট আকাৰ:', features: '⭐ বৈশিষ্ট্য:',
+        weight: '⚖️ ওজন:', maturity: '⏱️ সময়:', resistance: '🛡️ ৰোগ:',
+        buySeed: '🛒 বীজ কিনিব', saved: '⭐ সংৰক্ষিত', save: '☆', remove: '❌ আঁতৰাওক'
+      }
+    };
+
+    function getVarietyCardLabels() {
+      return VARIETY_CARD_LABELS[currentLang] || VARIETY_CARD_LABELS.en;
+    }
+
     function cleanExtraIdTokens(text) {
       if (!text || typeof text !== 'string') return text || '';
       return text
@@ -1743,6 +1805,94 @@
         selectEl.appendChild(opt);
       }
       selectEl.value = value;
+    }
+
+    function populateLoginLocationSelects(savedState = '', savedDistrict = '', savedCity = '') {
+      const stateSel = document.getElementById('loginStateSelect');
+      const distSel = document.getElementById('loginDistrictSelect');
+      const citySel = document.getElementById('loginCitySelect');
+      if (!stateSel || !distSel || !citySel) return;
+
+      const states = Object.keys(INDIA_LOCATION_DATA);
+      stateSel.innerHTML = states.map(st => `<option value="${st}">${st}</option>`).join('');
+      const st = (savedState && INDIA_LOCATION_DATA[savedState]) ? savedState : states[0];
+      ensureOptionInSelect(stateSel, st);
+
+      const distMap = INDIA_LOCATION_DATA[st] || {};
+      const districts = Object.keys(distMap);
+      distSel.innerHTML = districts.map(d => `<option value="${d}">${d}</option>`).join('');
+      const dt = (savedDistrict && distMap[savedDistrict]) ? savedDistrict : (districts[0] || '');
+      if (dt) ensureOptionInSelect(distSel, dt);
+
+      const cityMap = (INDIA_LOCATION_DATA[st] && INDIA_LOCATION_DATA[st][dt]) || {};
+      const cities = Object.keys(cityMap);
+      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
+      const ct = (savedCity && cityMap[savedCity]) ? savedCity : (cities[0] || '');
+      if (ct) ensureOptionInSelect(citySel, ct);
+    }
+
+    function onLoginStateChange() {
+      const st = document.getElementById('loginStateSelect').value;
+      const distSel = document.getElementById('loginDistrictSelect');
+      const citySel = document.getElementById('loginCitySelect');
+      const distMap = INDIA_LOCATION_DATA[st] || {};
+      const districts = Object.keys(distMap);
+      distSel.innerHTML = districts.map(d => `<option value="${d}">${d}</option>`).join('');
+      const firstDist = districts[0] || '';
+      const cities = Object.keys((firstDist && distMap[firstDist]) || {});
+      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function onLoginDistrictChange() {
+      const st = document.getElementById('loginStateSelect').value;
+      const dt = document.getElementById('loginDistrictSelect').value;
+      const citySel = document.getElementById('loginCitySelect');
+      const cities = Object.keys(((INDIA_LOCATION_DATA[st] && INDIA_LOCATION_DATA[st][dt]) || {}));
+      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function openLoginScreenModal() {
+      document.getElementById('phoneInputGroup').style.display = 'block';
+      document.getElementById('otpInputGroup').style.display = 'none';
+      document.getElementById('loginFarmerName').value = localStorage.getItem('farmer_name') || '';
+      document.getElementById('loginPhone').value = localStorage.getItem('farmer_phone') || '';
+
+      const savedState = localStorage.getItem('farmer_state_name') || 'राजस्थान';
+      const savedDistrict = localStorage.getItem('farmer_district_name') || 'श्रीगंगानगर';
+      const savedCity = localStorage.getItem('farmer_city_name') || 'घड़साना';
+      populateLoginLocationSelects(savedState, savedDistrict, savedCity);
+
+      document.getElementById('loginScreenModal').classList.add('active');
+    }
+
+    function persistLoginIdentity(phoneVal = '') {
+      const nameVal = cleanExtraIdTokens(document.getElementById('loginFarmerName').value || '');
+      const stateVal = cleanExtraIdTokens(document.getElementById('loginStateSelect').value || '');
+      const districtVal = cleanExtraIdTokens(document.getElementById('loginDistrictSelect').value || '');
+      const cityVal = cleanExtraIdTokens(document.getElementById('loginCitySelect').value || '');
+      const pinVal = cleanExtraIdTokens(localStorage.getItem('farmer_pincode') || '');
+
+      const fullLoc = [cityVal, districtVal, stateVal].filter(Boolean).join(', ') + (pinVal ? ` - ${pinVal}` : '');
+
+      if (nameVal) localStorage.setItem('farmer_name', nameVal);
+      if (phoneVal) localStorage.setItem('farmer_phone', phoneVal);
+      if (stateVal) localStorage.setItem('farmer_state_name', stateVal);
+      if (districtVal) localStorage.setItem('farmer_district_name', districtVal);
+      if (cityVal) localStorage.setItem('farmer_city_name', cityVal);
+      if (fullLoc) {
+        localStorage.setItem('farmer_state', fullLoc);
+        localStorage.setItem('farmer_address', fullLoc);
+        userCurrentCity = districtVal || cityVal || fullLoc;
+      }
+      localStorage.setItem('farmer_location_completed', 'true');
+      updateProfileUI();
+      fetchLiveWeather();
+      syncFarmerDataToGoogleSheet(
+        nameVal || localStorage.getItem('farmer_name') || 'नया किसान',
+        phoneVal || localStorage.getItem('farmer_phone') || '',
+        userCurrentCity,
+        localStorage.getItem('farmer_crops') || ''
+      );
     }
 
     function populateOnboardStates(selectedState = '') {
@@ -1917,6 +2067,7 @@
     }
 
     function parsePriceAndDiscount(rawPrice, rawDiscount) {
+      const lbl = getVarietyCardLabels();
       const cleanPriceStr = cleanExtraIdTokens(rawPrice || '');
       const numMatch = cleanPriceStr.replace(/,/g, '').match(/(\d+(?:\.\d+)?)/);
       const unitPrice = numMatch ? parseFloat(numMatch[1]) : 0;
@@ -1931,15 +2082,13 @@
         const flatMatch = cleanDiscStr.match(/(?:₹|rs\.?|off|छूट)?\s*(\d+(?:\.\d+)?)/i);
         if (cleanDiscStr.includes('%') && pctMatch) {
           discountPercent = parseFloat(pctMatch[1]);
-          discountLabel = `${discountPercent}% छूट`;
+          discountLabel = `${discountPercent}% OFF`;
         } else if (/छूट|off|₹|rs/i.test(cleanDiscStr) && flatMatch) {
           discountFlat = parseFloat(flatMatch[1]);
-          discountLabel = cleanDiscStr.includes('छूट') || cleanDiscStr.toLowerCase().includes('off')
-            ? cleanDiscStr
-            : `₹${discountFlat} छूट`;
+          discountLabel = cleanDiscStr;
         } else if (flatMatch) {
           discountPercent = parseFloat(flatMatch[1]);
-          discountLabel = `${discountPercent}% छूट`;
+          discountLabel = `${discountPercent}% OFF`;
         } else {
           discountLabel = cleanDiscStr;
         }
@@ -1960,8 +2109,8 @@
         finalUnitPrice,
         hasDiscount: unitPrice > 0 && finalUnitPrice < unitPrice && !!discountLabel,
         discountLabel,
-        displayPriceText: unitPrice > 0 ? `₹${unitPrice}` : (cleanPriceStr || 'WhatsApp पर पूछें'),
-        displayFinalPriceText: unitPrice > 0 ? `₹${finalUnitPrice}` : (cleanPriceStr || 'WhatsApp पर पूछें')
+        displayPriceText: unitPrice > 0 ? `₹${unitPrice}` : (cleanPriceStr || lbl.askWhatsapp),
+        displayFinalPriceText: unitPrice > 0 ? `₹${finalUnitPrice}` : (cleanPriceStr || lbl.askWhatsapp)
       };
     }
 
@@ -2221,22 +2370,25 @@
         favoritesTitle: "पसंदीदा किस्में", atozTitle: "खेती गाइड (A-Z)", discTitle: "किसान चर्चा", privacyTitle: "गोपनीयता नीति",
         reportsTitle: "AI जांच रिपोर्ट", schemesTitle: "सरकारी योजनाएं", expertTitle: "एक्सपर्ट सुझाव", pestTitle: "कीट अलर्ट",
         calcTitle: "बुवाई कैलकुलेटर", drawerHead: "📋 मेन्यू", completeProfileText: "प्रोफाइल पूरी करें >",
-        mProfile: "मेरी प्रोफाइल", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
+        mProfile: "मेरी प्रोफाइल", mChangeLoc: "राज्य / जिला / पिनकोड बदलें", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
         mProtection: "फसल सुरक्षा", mChems: "दवाइयाँ Chemicals", mServices: "Other सेवाएं", mPrivacy: "गोपनीयता नीति",
         mRate: "Play Store रेट करें", mShare: "ऐप शेयर करें", mHelp: "सलाहकार से पूछें", mLogout: "लॉगआउट",
         solHead: "⚡ तुरंत समाधान", camBtn: "कैमरा", galBtn: "गैलरी", diagBtn: "🔍 रोग पहचानें",
         diagRepHead: "🌿 AI रिपोर्ट", wapBtn: "WhatsApp करें", chatYou: "आप", chatDoc: "डॉक्टर",
         chatThinking: "⏳ जवाब तैयार हो रहा है...", chatErr: "त्रुटि", chatNetErrHead: "नेटवर्क", chatNetErrDesc: "कनेक्शन समस्या",
         aiDocTitle: "AI डॉक्टर", loadingText: "🌾 डेटा लोड हो रहा है...",
-        txtLoginSub: "कृषि सहायता ऐप में आपका स्वागत है", txtPhoneLabel: "अपना मोबाइल नंबर दर्ज करें:",
+        txtLoginSub: "कृषि सहायता ऐप में आपका स्वागत है", txtLoginNameLabel: "👤 किसान का नाम:",
+        txtLoginStateLabel: "🏛️ राज्य (State):", txtLoginDistrictLabel: "🗺️ जिला (District):", txtLoginCityLabel: "🏙️ शहर / कस्बा:",
+        txtPhoneLabel: "📞 अपना मोबाइल नंबर दर्ज करें:",
         txtOtpBtn: "📲 ओटीपी (OTP) भेजें", txtOtpVer: "🔐 ओटीपी (OTP) दर्ज हो रहा है...",
-        txtOtpSuccess: "सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!", txtSkipLogin: "⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें",
+        txtOtpSuccess: "सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!", txtSkipLogin: "⏩ विवरण सेव करें और आगे बढ़ें",
         txtNotifHead: "🔔 ताज़ा अपडेट व सूचनाएं", catHeadTitle: "🌱 सभी किस्में श्रेणियां", catSubTitle: "फसल श्रेणी चुनें:",
         catItemVeg: "सब्जियां", catItemFruit: "फल", catItemFlower: "फूल", catItemGrain: "अनाज", catItemOther: "अन्य",
         protCatHead: "🛡️ फसल सुरक्षा", schedCatHead: "🗓️ स्प्रे शेड्यूल", chatHeadTitle: "👨‍⚕️ AI कृषि डॉक्टर",
         chatSubHead: "फसल, खाद या बीमारी के बारे में लिखें या बोलें", chatSendBtn: "➤",
         lblCalcCrop: "🌱 फसल चुनें:", lblCalcDate: "📅 बुवाई की तारीख चुनें:", btnCalcRun: "📊 कैलकुलेट करें",
         lblWind: "💨 हवा की गति", lblHum: "💧 हवा में नमी", lblForecast15: "📅 अगले 15 दिनों का मौसम पूर्वानुमान",
+        lblProfName: "👤 किसान का नाम:", lblProfPhone: "📞 मोबाइल नंबर:", lblProfState: "📍 शहर / जिला / राज्य:", lblProfCrops: "🌱 मुख्य फसलें:",
         btnSaveProf: "💾 सहेजें", btnDocSpray: "💬 WhatsApp पर सलाह लें",
         offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
         voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है",
@@ -2260,22 +2412,25 @@
         favoritesTitle: "Favorites", atozTitle: "Farming Guide (A-Z)", discTitle: "Discussion", privacyTitle: "Privacy Policy",
         reportsTitle: "AI Reports", schemesTitle: "Gov Schemes", expertTitle: "Expert Tips", pestTitle: "Pest Alerts",
         calcTitle: "Sowing Calculator", drawerHead: "📋 Menu", completeProfileText: "Complete profile >",
-        mProfile: "My Profile", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
+        mProfile: "My Profile", mChangeLoc: "Change State / District / PIN", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
         mProtection: "Crop Protection", mChems: "Chemicals", mServices: "Other Services", mPrivacy: "Privacy Policy",
         mRate: "Rate Play Store", mShare: "Share App", mHelp: "Ask Advisor", mLogout: "Logout",
         solHead: "⚡ Instant Solution", camBtn: "Camera", galBtn: "Gallery", diagBtn: "🔍 Diagnose",
         diagRepHead: "🌿 AI Report", wapBtn: "Send on WhatsApp", chatYou: "You", chatDoc: "Doctor",
         chatThinking: "⏳ Generating reply...", chatErr: "Error", chatNetErrHead: "Network", chatNetErrDesc: "Connection issue",
         aiDocTitle: "AI Doctor", loadingText: "🌾 Loading data...",
-        txtLoginSub: "Welcome to the Agri Support App", txtPhoneLabel: "Enter your mobile number:",
+        txtLoginSub: "Welcome to the Agri Support App", txtLoginNameLabel: "👤 Farmer Name:",
+        txtLoginStateLabel: "🏛️ State:", txtLoginDistrictLabel: "🗺️ District:", txtLoginCityLabel: "🏙️ City / Town:",
+        txtPhoneLabel: "📞 Enter your mobile number:",
         txtOtpBtn: "📲 Send OTP", txtOtpVer: "🔐 Verifying OTP...",
-        txtOtpSuccess: "Auto-verified successfully!", txtSkipLogin: "⏩ Skip Login and Continue",
+        txtOtpSuccess: "Auto-verified successfully!", txtSkipLogin: "⏩ Save Details & Continue",
         txtNotifHead: "🔔 Latest Updates & Alerts", catHeadTitle: "🌱 All Variety Categories", catSubTitle: "Select crop category:",
         catItemVeg: "Vegetables", catItemFruit: "Fruits", catItemFlower: "Flowers", catItemGrain: "Grains", catItemOther: "Other",
         protCatHead: "🛡️ Crop Protection", schedCatHead: "🗓️ Spray Schedule", chatHeadTitle: "👨‍⚕️ AI Agri Doctor",
         chatSubHead: "Type or speak about crop, fertilizer or disease", chatSendBtn: "➤",
         lblCalcCrop: "🌱 Select Crop:", lblCalcDate: "📅 Select Sowing Date:", btnCalcRun: "📊 Calculate",
         lblWind: "💨 Wind Speed", lblHum: "💧 Humidity", lblForecast15: "📅 Next 15 Days Weather Forecast",
+        lblProfName: "👤 Farmer Name:", lblProfPhone: "📞 Mobile Number:", lblProfState: "📍 City / District / State:", lblProfCrops: "🌱 Main Crops:",
         btnSaveProf: "💾 Save Profile", btnDocSpray: "💬 Ask on WhatsApp",
         offlineBanner: "📴 Offline Mode: Showing saved language and data",
         voiceNotSupported: "Voice input is not supported on this browser",
@@ -2393,16 +2548,18 @@
       'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ', 'txtPlaySub',
       'txtRateBtn', 'txtVideoHead', 'txtSeeAll', 'txtSocialHead', 'fabText',
       'navHome', 'navCrops', 'navSched', 'navProt', 'navHelp', 'drawerHead',
-      'completeProfileText', 'mProfile', 'mFav', 'mCrops', 'mSchedule',
+      'completeProfileText', 'mProfile', 'mChangeLoc', 'mFav', 'mCrops', 'mSchedule',
       'mProtection', 'mChems', 'mServices', 'mPrivacy', 'mRate', 'mShare',
       'mHelp', 'mLogout', 'solHead', 'camBtn', 'galBtn', 'diagBtn',
       'diagRepHead', 'wapBtn', 'loadingText',
-      'txtLoginSub', 'txtPhoneLabel', 'txtOtpBtn', 'txtOtpVer', 'txtOtpSuccess', 'txtSkipLogin',
+      'txtLoginSub', 'txtLoginNameLabel', 'txtLoginStateLabel', 'txtLoginDistrictLabel', 'txtLoginCityLabel',
+      'txtPhoneLabel', 'txtOtpBtn', 'txtOtpVer', 'txtOtpSuccess', 'txtSkipLogin',
       'txtNotifHead', 'catHeadTitle', 'catSubTitle', 'catItemVeg', 'catItemFruit',
       'catItemFlower', 'catItemGrain', 'catItemOther', 'protCatHead', 'schedCatHead',
       'chatHeadTitle', 'chatSubHead', 'chatSendBtn', 'lblCalcCrop', 'lblCalcDate',
-      'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15', 'btnSaveProf', 'btnDocSpray',
-      'offlineBanner', 'voiceNotSupported',
+      'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15',
+      'lblProfName', 'lblProfPhone', 'lblProfState', 'lblProfCrops',
+      'btnSaveProf', 'btnDocSpray', 'offlineBanner', 'voiceNotSupported',
       'advFormTitle', 'advFormSub', 'lblAdvName', 'lblAdvLocation', 'lblAdvCrop',
       'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa'
     ];
@@ -2488,6 +2645,8 @@
         showCropsForCategory(currentActiveCategory, true);
       } else if (id === 'screen-seeds' && lastVarietiesList.length > 0) {
         renderVarietiesList(lastVarietiesList, lastVarietiesTitle, true);
+      } else if (id === 'screen-favorites') {
+        showFavoritesScreen();
       } else if (id === 'screen-protection-crops' && currentActiveProtectionCat) {
         showProtectionCropsListByCategory(currentActiveProtectionCat, true);
       } else if (id === 'screen-crop-diseases' && currentActiveProtectionCat && currentActiveProtectionCrop) {
@@ -2755,6 +2914,7 @@
       setText('txtDrawerHead', t.drawerHead);
       setText('txtCompleteProfile', t.completeProfileText);
       setText('mProfile', t.mProfile);
+      setText('mChangeLoc', t.mChangeLoc);
       setText('mFav', t.mFav);
       setText('mCrops', t.mCrops);
       setText('mSchedule', t.mSchedule);
@@ -2775,6 +2935,10 @@
       setText('txtLoading', t.loadingText);
 
       setText('txtLoginSub', t.txtLoginSub);
+      setText('txtLoginNameLabel', t.txtLoginNameLabel);
+      setText('txtLoginStateLabel', t.txtLoginStateLabel);
+      setText('txtLoginDistrictLabel', t.txtLoginDistrictLabel);
+      setText('txtLoginCityLabel', t.txtLoginCityLabel);
       setText('txtPhoneLabel', t.txtPhoneLabel);
       setText('txtOtpBtn', t.txtOtpBtn);
       setText('txtOtpVer', t.txtOtpVer);
@@ -2801,6 +2965,11 @@
       setText('lblWind', t.lblWind);
       setText('lblHum', t.lblHum);
       setText('lblForecast15', t.lblForecast15);
+
+      setText('lblProfName', t.lblProfName);
+      setText('lblProfPhone', t.lblProfPhone);
+      setText('lblProfState', t.lblProfState);
+      setText('lblProfCrops', t.lblProfCrops);
       setText('btnSaveProf', t.btnSaveProf);
       setText('btnDocSpray', t.btnDocSpray);
 
@@ -2829,6 +2998,7 @@
       if (currentLang !== 'hi' && navigator.onLine) {
         translateUIBundleToCurrentLang().then((fullTranslated) => {
           writeTranslationsToDOM(fullTranslated);
+          refreshActiveScreenOnTranslation();
         });
       }
     }
@@ -2859,6 +3029,7 @@
 
       applyLanguageUI();
       refreshQuickCropPills();
+      refreshActiveScreenOnTranslation();
       calculateCropSchedule();
 
       if (!navigator.onLine) {
@@ -2869,10 +3040,9 @@
       }
 
       fetchLiveWeather();
-      refreshActiveScreenOnTranslation();
 
       if (!localStorage.getItem('is_logged_in')) {
-        document.getElementById('loginScreenModal').classList.add('active');
+        openLoginScreenModal();
       } else {
         openOnboardingLocationModal(false);
       }
@@ -3129,7 +3299,7 @@
     async function fetchLiveMandiPrices(forceFresh = false) {
       const loadingDiv = document.getElementById('mandiLoading');
       const gpsStatus = document.getElementById('mandiGpsStatus');
-      const mandiCity = localStorage.getItem('farmer_district_name') || userCurrentCity;
+      const mandiCity = localStorage.getItem('farmer_district_name') || localStorage.getItem('farmer_city_name') || userCurrentCity;
       if (gpsStatus) {
         gpsStatus.innerText = `📍 GPS: ${mandiCity}`;
       }
@@ -4246,11 +4416,12 @@
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       const list = sheetRecords.filter(r => favs.includes(r.variety)).map(v => ({ ...v }));
       const container = document.getElementById('favoritesContainer');
+      const lbl = getVarietyCardLabels();
 
       const draw = () => {
         container.innerHTML = '';
         if (list.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
+          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ ${getT().favoritesTitle}</div>`;
         } else {
           list.forEach(v => {
             const pInfo = parsePriceAndDiscount(v.price, v.discount);
@@ -4262,16 +4433,16 @@
                   ${pInfo.hasDiscount ? `<span class="badge-discount">${pInfo.discountLabel}</span>` : ''}
                 </div>
                 <div class="var-title">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)} (${cleanExtraIdTokens(v.crop)})</div>
-                <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
-                <div class="var-info-row">🌾 <b>फसल:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
-                <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
-                <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
-                <div class="var-info-row">💰 <b>रेट:</b> <span>${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
-                <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
-                <div class="var-info-row">⚖️ <b>वजन:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
-                <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
-                <div class="var-info-row">🛡️ <b>रोग:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
-                <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">❌ हटाएं</button>
+                <div class="var-info-row">${lbl.company} <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
+                <div class="var-info-row">${lbl.crop} <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
+                <div class="var-info-row">${lbl.segment} <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
+                <div class="var-info-row">${lbl.packSize} <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
+                <div class="var-info-row">${lbl.rateLabel} <span>${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
+                <div class="var-info-row">${lbl.features} <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
+                <div class="var-info-row">${lbl.weight} <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
+                <div class="var-info-row">${lbl.maturity} <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
+                <div class="var-info-row">${lbl.resistance} <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
+                <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">${lbl.remove}</button>
               </div>`;
           });
         }
@@ -4291,6 +4462,7 @@
       const renderItems = list.map(v => ({ ...v }));
       const container = document.getElementById('varietiesContainer');
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
+      const lbl = getVarietyCardLabels();
 
       const draw = () => {
         container.innerHTML = '';
@@ -4307,18 +4479,18 @@
             photosHtml += '</div>';
           }
           const isSaved = favs.includes(v.variety);
-          const saveBtnText = isSaved ? "⭐ सेव हुआ" : "☆";
+          const saveBtnText = isSaved ? lbl.saved : lbl.save;
           const savedClass = isSaved ? "saved" : "";
           const pInfo = parsePriceAndDiscount(v.price, v.discount);
 
           const priceBoxHtml = `
             <div class="price-highlight-box">
               <div>
-                <span style="font-size:12px; color:#374151;">💰 <b>रेट:</b></span>
+                <span style="font-size:12px;">${lbl.rateLabel}</span>
                 ${pInfo.hasDiscount
                   ? `<s style="color:#6b7280; font-size:12.5px; margin-left:4px;">${pInfo.displayPriceText}</s> <b style="color:#15803d; font-size:15px;">${pInfo.displayFinalPriceText}</b>`
                   : `<b style="color:#15803d; font-size:15px; margin-left:4px;">${pInfo.displayPriceText}</b>`}
-                ${v.packSize ? `<span style="font-size:11.5px; color:#4b5563; margin-left:6px;">(${cleanExtraIdTokens(v.packSize)})</span>` : ''}
+                ${v.packSize ? `<span style="font-size:11.5px; opacity:0.85; margin-left:6px;">(${cleanExtraIdTokens(v.packSize)})</span>` : ''}
               </div>
               ${pInfo.hasDiscount ? `<span class="badge-discount">🏷️ ${pInfo.discountLabel}</span>` : ''}
             </div>
@@ -4336,17 +4508,17 @@
 
               ${priceBoxHtml}
 
-              <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
-              <div class="var-info-row">🌾 <b>फसल:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
-              <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
-              <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
-              <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
-              <div class="var-info-row">⚖️ <b>वजन:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
-              <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
-              <div class="var-info-row">🛡️ <b>रोग:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
+              <div class="var-info-row">${lbl.company} <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
+              <div class="var-info-row">${lbl.crop} <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
+              <div class="var-info-row">${lbl.segment} <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
+              <div class="var-info-row">${lbl.packSize} <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
+              <div class="var-info-row">${lbl.features} <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
+              <div class="var-info-row">${lbl.weight} <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
+              <div class="var-info-row">${lbl.maturity} <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
+              <div class="var-info-row">${lbl.resistance} <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
 
               <div style="display:flex; gap:8px; margin-top:14px;">
-                <button type="button" class="btn-action btn-wa" style="flex:2;" onclick="openSeedOrderModal(${idx})">🛒 खरीदे बीज</button>
+                <button type="button" class="btn-action btn-wa" style="flex:2;" onclick="openSeedOrderModal(${idx})">${lbl.buySeed}</button>
                 <button type="button" class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
               </div>
             </div>`;
@@ -4371,6 +4543,7 @@
     }
 
     function toggleBookmark(varietyName, btnElem) {
+      const lbl = getVarietyCardLabels();
       let favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       let savedNow = false;
       if (favs.includes(varietyName)) {
@@ -4382,7 +4555,7 @@
       }
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
       if (btnElem) {
-        btnElem.innerText = savedNow ? "⭐ सेव हुआ" : "☆";
+        btnElem.innerText = savedNow ? lbl.saved : lbl.save;
         btnElem.classList.toggle('saved', savedNow);
       }
     }
@@ -4410,9 +4583,9 @@
 
             container.innerHTML += `
               <div class="disease-card">
-                <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>रोग:</b> ${cleanName}</div>
-                <div class="disease-symptom">🔍 <b>लक्षण:</b> ${cleanSymptoms}</div>
-                <div class="disease-cure-box">💊 <b>उपचार:</b> ${cleanCure}</div>
+                <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>${cleanName}</b></div>
+                <div class="disease-symptom">${cleanSymptoms}</div>
+                <div class="disease-cure-box">${cleanCure}</div>
                 ${p}
               </div>`;
           });
@@ -4452,7 +4625,7 @@
         } else {
           steps.forEach(s => {
             const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
-            container.innerHTML += `<div class="schedule-step"><b>⏱️ समय: ${cleanExtraIdTokens(s.time)}</b><p>🧪 <b>दवा:</b> ${cleanExtraIdTokens(s.med)}</p><p>🎯 <b>उद्देश्य:</b> ${cleanExtraIdTokens(s.purpose)}</p>${p}</div>`;
+            container.innerHTML += `<div class="schedule-step"><b>⏱️ ${cleanExtraIdTokens(s.time)}</b><p>🧪 ${cleanExtraIdTokens(s.med)}</p><p>🎯 ${cleanExtraIdTokens(s.purpose)}</p>${p}</div>`;
           });
         }
       };
@@ -4559,9 +4732,9 @@
               <div class="chem-title">🧪 ${cleanName} (${cleanExtraIdTokens(c.type)})</div>
               <div class="chem-body-row">
                 <div class="chem-info-side">
-                  <div class="chem-tech">🔬 <b>तकनीक:</b> ${cleanExtraIdTokens(c.tech)}</div>
-                  <div class="chem-use">🌿 <b>उपयोग:</b> ${cleanExtraIdTokens(c.use)}</div>
-                  <div class="chem-dose">💧 <b>खुराक:</b> ${cleanExtraIdTokens(c.dose)}</div>
+                  <div class="chem-tech">🔬 ${cleanExtraIdTokens(c.tech)}</div>
+                  <div class="chem-use">🌿 ${cleanExtraIdTokens(c.use)}</div>
+                  <div class="chem-dose">💧 ${cleanExtraIdTokens(c.dose)}</div>
                 </div>
                 ${p}
               </div>
@@ -4685,7 +4858,7 @@
       updateProfileUI();
       showToast('लॉगआउट हो गया है');
       if (navigator.onLine) {
-        document.getElementById('loginScreenModal').classList.add('active');
+        openLoginScreenModal();
       }
     }
 
@@ -4746,18 +4919,19 @@
       setTimeout(() => {
         const generatedOtp = String(Math.floor(1000 + Math.random() * 9000));
         document.getElementById('loginOtp').value = generatedOtp;
-        localStorage.setItem('farmer_phone', phone);
         localStorage.setItem('is_logged_in', 'true');
-        updateProfileUI();
-        syncFarmerDataToGoogleSheet("नया किसान", phone, userCurrentCity, "");
+        persistLoginIdentity(phone);
         setTimeout(() => {
           document.getElementById('loginScreenModal').classList.remove('active');
           openOnboardingLocationModal(false);
         }, 600);
       }, 900);
     }
+
     function skipLogin() {
+      const phone = document.getElementById('loginPhone').value.trim();
       localStorage.setItem('is_logged_in', 'skipped');
+      persistLoginIdentity(phone);
       document.getElementById('loginScreenModal').classList.remove('active');
       openOnboardingLocationModal(false);
     }
@@ -4856,7 +5030,15 @@
       closeDrawer();
       document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || '';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
-      document.getElementById('profStateInput').value = localStorage.getItem('farmer_address') || localStorage.getItem('farmer_state') || 'Sri Ganganagar';
+      const existingLoc = localStorage.getItem('farmer_address')
+        || localStorage.getItem('farmer_state')
+        || [
+          localStorage.getItem('farmer_city_name'),
+          localStorage.getItem('farmer_district_name'),
+          localStorage.getItem('farmer_state_name')
+        ].filter(Boolean).join(', ')
+        || '';
+      document.getElementById('profStateInput').value = existingLoc;
       document.getElementById('profCropsInput').value = localStorage.getItem('farmer_crops') || '';
       const t = getT();
       openScreen('screen-profile', t.profileTitle);
@@ -4865,21 +5047,29 @@
     function saveFarmerProfile() {
       const name = cleanExtraIdTokens(document.getElementById('profNameInput').value || '');
       const phone = cleanExtraIdTokens(document.getElementById('profPhoneInput').value || '');
-      const state = cleanExtraIdTokens(document.getElementById('profStateInput').value || '');
+      const locInput = cleanExtraIdTokens(document.getElementById('profStateInput').value || '');
       const crops = cleanExtraIdTokens(document.getElementById('profCropsInput').value || '');
 
       localStorage.setItem('farmer_name', name);
       localStorage.setItem('farmer_phone', phone);
-      if (state) {
-        localStorage.setItem('farmer_state', state);
-        localStorage.setItem('farmer_address', state);
-        userCurrentCity = state;
-      }
       localStorage.setItem('farmer_crops', crops);
 
-      syncFarmerDataToGoogleSheet(name, phone, userCurrentCity, crops);
+      if (locInput) {
+        const cleanMain = locInput.split('-')[0].trim();
+        const parts = cleanMain.split(',').map(p => p.trim()).filter(Boolean);
+        if (parts[0]) localStorage.setItem('farmer_city_name', parts[0]);
+        if (parts[1]) localStorage.setItem('farmer_district_name', parts[1]);
+        if (parts[2]) localStorage.setItem('farmer_state_name', parts[2]);
+
+        localStorage.setItem('farmer_state', locInput);
+        localStorage.setItem('farmer_address', locInput);
+        localStorage.setItem('farmer_location_completed', 'true');
+        userCurrentCity = parts[1] || parts[0] || cleanMain;
+      }
+
       updateProfileUI();
       fetchLiveWeather();
+      syncFarmerDataToGoogleSheet(name, phone, userCurrentCity, crops);
       showToast('प्रोफाइल सेव हो गई');
       goBack();
     }
@@ -4918,15 +5108,15 @@
         container.innerHTML = `
           <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
             <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${cleanExtraIdTokens(d.titleText)}</h3>
-            <div class="schedule-step"><b>1. 🟫 मिट्टी</b><p>${cleanExtraIdTokens(d.soil)}</p></div>
-            <div class="schedule-step"><b>2. 🌱 बुवाई</b><p>${cleanExtraIdTokens(d.sowing)}</p></div>
-            <div class="schedule-step"><b>3. 📦 बीज दर</b><p>${cleanExtraIdTokens(d.seed)}</p></div>
-            <div class="schedule-step"><b>4. 🧪 खाद व उर्वरक</b><p>${cleanExtraIdTokens(d.fertilizer)}</p></div>
-            <div class="schedule-step"><b>5. 🌿 खरपतवार प्रबंधन</b><p>${cleanExtraIdTokens(d.weed)}</p></div>
-            <div class="schedule-step"><b>6. 💧 सिंचाई</b><p>${cleanExtraIdTokens(d.irrigation)}</p></div>
-            <div class="schedule-step"><b>7. 🛡️ फसल सुरक्षा</b><p>${cleanExtraIdTokens(d.care)}</p></div>
-            <div class="schedule-step"><b>8. ✂️ तुड़ाई / कटाई</b><p>${cleanExtraIdTokens(d.harvesting)}</p></div>
-            <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 भंडारण व मंडी</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
+            <div class="schedule-step"><b>1. 🟫</b><p>${cleanExtraIdTokens(d.soil)}</p></div>
+            <div class="schedule-step"><b>2. 🌱</b><p>${cleanExtraIdTokens(d.sowing)}</p></div>
+            <div class="schedule-step"><b>3. 📦</b><p>${cleanExtraIdTokens(d.seed)}</p></div>
+            <div class="schedule-step"><b>4. 🧪</b><p>${cleanExtraIdTokens(d.fertilizer)}</p></div>
+            <div class="schedule-step"><b>5. 🌿</b><p>${cleanExtraIdTokens(d.weed)}</p></div>
+            <div class="schedule-step"><b>6. 💧</b><p>${cleanExtraIdTokens(d.irrigation)}</p></div>
+            <div class="schedule-step"><b>7. 🛡️</b><p>${cleanExtraIdTokens(d.care)}</p></div>
+            <div class="schedule-step"><b>8. ✂️</b><p>${cleanExtraIdTokens(d.harvesting)}</p></div>
+            <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
           </div>`;
       };
 
@@ -5060,7 +5250,7 @@
     function updateProfileUI() {
       const name = cleanExtraIdTokens(localStorage.getItem('farmer_name') || '');
       const phone = cleanExtraIdTokens(localStorage.getItem('farmer_phone') || '');
-      const state = cleanExtraIdTokens(localStorage.getItem('farmer_state') || '');
+      const state = cleanExtraIdTokens(localStorage.getItem('farmer_address') || localStorage.getItem('farmer_state') || '');
       const crops = cleanExtraIdTokens(localStorage.getItem('farmer_crops') || '');
       const t = getT();
 
@@ -5134,7 +5324,7 @@
         applyLanguageUI();
         refreshQuickCropPills();
         if (!localStorage.getItem('is_logged_in') && navigator.onLine) {
-          document.getElementById('loginScreenModal').classList.add('active');
+          openLoginScreenModal();
         } else {
           openOnboardingLocationModal(false);
         }
@@ -5153,7 +5343,6 @@
     }
   </script>
 
-  <!-- इमेज प्रीव्यू मोडल -->
   <div class="image-preview-modal" id="imagePreviewModal" onclick="closeImageModal()">
     <button class="image-preview-close" onclick="closeImageModal()">✕</button>
     <img id="fullScreenPreviewImg" class="image-preview-content" src="" alt="Preview">
