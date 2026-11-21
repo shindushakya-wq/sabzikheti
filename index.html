@@ -109,9 +109,15 @@
       border-bottom-color: #b45309;
     }
 
+    /* डार्क मोड: पूरी ऐप के लिए स्पष्ट डार्क थीम */
     body.dark-mode {
-      background-color: #0f172a;
-      color: #f8fafc;
+      background-color: #0b1120;
+      color: #f1f5f9;
+    }
+
+    body.dark-mode .app-header {
+      background: linear-gradient(135deg, #0f172a 0%, #14532d 100%);
+      border-bottom: 1px solid #1e293b;
     }
 
     body.dark-mode .variety-card,
@@ -130,10 +136,31 @@
     body.dark-mode .stories-wrapper,
     body.dark-mode .quick-pill,
     body.dark-mode #aiChatMessagesContainer,
-    body.dark-mode .seed-order-summary {
-      background-color: #1e2937;
+    body.dark-mode .seed-order-summary,
+    body.dark-mode .lang-choice-btn {
+      background-color: #1e293b;
       color: #f8fafc;
       border-color: #334155;
+    }
+
+    body.dark-mode .menu-box h3,
+    body.dark-mode .card-crops h3,
+    body.dark-mode .card-protection h3,
+    body.dark-mode .card-schedule h3,
+    body.dark-mode .card-atoz h3,
+    body.dark-mode .card-discussion h3,
+    body.dark-mode .card-advisor h3,
+    body.dark-mode .card-companies h3,
+    body.dark-mode .card-chemicals h3,
+    body.dark-mode .card-services h3 {
+      color: #f8fafc;
+    }
+
+    body.dark-mode .nav-tab {
+      color: #94a3b8;
+    }
+    body.dark-mode .nav-tab.active {
+      color: #4ade80;
     }
 
     body.dark-mode .pest-alert-card {
@@ -192,7 +219,7 @@
     }
 
     body.dark-mode .playstore-banner {
-      background: linear-gradient(135deg, #172554 0%, #1e2937 100%);
+      background: linear-gradient(135deg, #172554 0%, #1e293b 100%);
       border-color: #1d4ed8;
     }
 
@@ -222,6 +249,11 @@
       color: #f8fafc;
       border-color: #475569;
     }
+    body.dark-mode .form-control::placeholder,
+    body.dark-mode input::placeholder,
+    body.dark-mode textarea::placeholder {
+      color: #94a3b8;
+    }
 
     body.dark-mode .discussion-comment-item {
       background-color: #273548;
@@ -234,6 +266,7 @@
     }
 
     body.dark-mode .drawer-item {
+      color: #f1f5f9;
       border-bottom-color: #334155;
     }
 
@@ -243,9 +276,9 @@
       border-color: #16a34a;
     }
     body.dark-mode #aiUserChatInput {
-      background-color: #1e2937;
+      background-color: #0f172a;
       color: #f8fafc;
-      border-color: #334155;
+      border-color: #475569;
     }
     body.dark-mode #aiUserChatInput::placeholder {
       color: #94a3b8;
@@ -460,7 +493,7 @@
 
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 4px; }
-    .form-control { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-size: 14px; }
+    .form-control { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-size: 14px; background: #ffffff; color: #1f2937; }
 
     .list-item { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .list-left { display: flex; align-items: center; gap: 12px; }
@@ -487,6 +520,8 @@
     .payment-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .payment-mode-btn { padding: 10px 8px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1f2937; font-size: 12.5px; font-weight: 700; text-align: center; }
     .payment-mode-btn.active { background: #dcfce7; border-color: #16a34a; color: #14532d; }
+    body.dark-mode .payment-mode-btn { background: #0f172a; color: #f8fafc; border-color: #475569; }
+    body.dark-mode .payment-mode-btn.active { background: #14532d; border-color: #22c55e; color: #dcfce7; }
 
     .disease-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fecaca; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #dc2626; }
     .disease-title { font-size: 16px; font-weight: bold; color: #991b1b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
@@ -563,42 +598,41 @@
     <p style="font-size:13px; font-weight:bold; color:#166534;" id="txtLoading">🌾 डेटा लोड हो रहा है...</p>
   </div>
 
-  <!-- लोकेशन बदलने का मोडल -->
+  <!-- लोकेशन बदलने का मोडल (खुद लिखें या Live GPS से भरें - कोई लिस्ट नहीं) -->
   <div class="login-modal-overlay" id="onboardingLocationModal">
     <div class="login-card">
       <div style="text-align:center; margin-bottom:12px;">
         <span style="font-size:34px;">📍</span>
-        <h3 style="color:#1b5e20; margin-top:4px; font-size:17px;">अपना क्षेत्र चुनें</h3>
-        <p style="font-size:11.5px; color:#6b7280; margin-top:3px;">राज्य, जिला, शहर और पिनकोड चुनें या GPS लगाएं</p>
+        <h3 style="color:#1b5e20; margin-top:4px; font-size:17px;">अपना क्षेत्र लिखें या GPS से भरें</h3>
+        <p style="font-size:11.5px; opacity:0.8; margin-top:3px;">शहर, जिला, राज्य खुद लिखें या Live GPS दबाएं</p>
       </div>
 
-      <button type="button" class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd; margin-bottom:12px; padding:9px;" onclick="autoFillLocationFromGps()">
-        📡 GPS से अपने आप पता लगाएं
+      <button type="button" class="btn-action" style="background:#2563eb; color:white; margin-bottom:12px; padding:9px;" onclick="autoFillLocationFromGps()">
+        📡 Live GPS से शहर, जिला, राज्य भरें
       </button>
 
       <div class="form-group">
-        <label>राज्य (State):</label>
-        <select id="onboardStateSelect" class="form-control" onchange="onOnboardStateChange()"></select>
+        <label>🏙️ शहर / कस्बा (City):</label>
+        <input type="text" id="onboardCityInput" class="form-control" placeholder="शहर या कस्बा लिखें">
       </div>
 
       <div class="form-group">
-        <label>जिला (District):</label>
-        <select id="onboardDistrictSelect" class="form-control" onchange="onOnboardDistrictChange()"></select>
+        <label>🗺️ जिला (District):</label>
+        <input type="text" id="onboardDistrictInput" class="form-control" placeholder="जिला लिखें">
       </div>
 
       <div class="form-group">
-        <label>शहर / कस्बा (City / Town):</label>
-        <select id="onboardCitySelect" class="form-control" onchange="onOnboardCityChange()"></select>
+        <label>🏛️ राज्य (State):</label>
+        <input type="text" id="onboardStateInput" class="form-control" placeholder="राज्य लिखें">
       </div>
 
       <div class="form-group">
-        <label>पिनकोड (Pin Code):</label>
-        <select id="onboardPinSelect" class="form-control" style="margin-bottom:6px;" onchange="onOnboardPinSelectChange()"></select>
-        <input type="text" id="onboardPinInput" class="form-control" maxlength="6" placeholder="6 अंकों का पिनकोड लिखें या चुनें">
+        <label>📮 पिनकोड (Pin Code):</label>
+        <input type="text" id="onboardPinInput" class="form-control" maxlength="6" placeholder="6 अंकों का पिनकोड लिखें">
       </div>
 
       <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:8px;" onclick="saveOnboardingLocation()">
-        ✅ स्थान सेव करें और आगे बढ़ें
+        ✅ स्थान सेव करें
       </button>
     </div>
   </div>
@@ -657,61 +691,65 @@
       <div style="text-align:center; margin-bottom:14px;">
         <span style="font-size:36px;">🌾</span>
         <h3 style="color:#1b5e20; margin-top:4px; font-size:18px;">CROP & SABZI DOCTOR</h3>
-        <p style="font-size:12px; color:#6b7280; margin-top:4px;">कृपया अपनी भाषा चुनें / Please select your language</p>
+        <p style="font-size:12px; opacity:0.8; margin-top:4px;">कृपया अपनी भाषा चुनें / Please select your language</p>
       </div>
 
       <div class="lang-grid-12">
-        <button class="lang-choice-btn" style="background:#ecfdf5; border-color:#86efac; color:#166534;" onclick="setAppLanguage('hi')">हिंदी</button>
-        <button class="lang-choice-btn" style="background:#eff6ff; border-color:#93c5fd; color:#1d4ed8;" onclick="setAppLanguage('mr')">मराठी</button>
-        <button class="lang-choice-btn" style="background:#fff7ed; border-color:#fdba74; color:#c2410c;" onclick="setAppLanguage('bn')">বাংলা</button>
-        <button class="lang-choice-btn" style="background:#fefce8; border-color:#fde047; color:#854d0e;" onclick="setAppLanguage('te')">తెలుగు</button>
-        <button class="lang-choice-btn" style="background:#fdf2f8; border-color:#f9a8d4; color:#be185d;" onclick="setAppLanguage('ta')">தமிழ்</button>
-        <button class="lang-choice-btn" style="background:#f3e8ff; border-color:#d8b4fe; color:#6b21a8;" onclick="setAppLanguage('gu')">ગુજરાતી</button>
-        <button class="lang-choice-btn" style="background:#ecfdf5; border-color:#6ee7b7; color:#047857;" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
-        <button class="lang-choice-btn" style="background:#fefce8; border-color:#facc15; color:#92400e;" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
-        <button class="lang-choice-btn" style="background:#eff6ff; border-color:#60a5fa; color:#1e40af;" onclick="setAppLanguage('en')">English</button>
-        <button class="lang-choice-btn" style="background:#fdf2f8; border-color:#f472b6; color:#9d174d;" onclick="setAppLanguage('ml')">മലയാളം</button>
-        <button class="lang-choice-btn" style="background:#fff7ed; border-color:#fb923c; color:#9a3412;" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
-        <button class="lang-choice-btn" style="background:#f3e8ff; border-color:#c084fc; color:#581c87;" onclick="setAppLanguage('as')">অসমীয়া</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('hi')">हिंदी</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('mr')">मराठी</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('bn')">বাংলা</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('te')">తెలుగు</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('ta')">தமிழ்</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('en')">English</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('ml')">മലയാളം</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
+        <button class="lang-choice-btn" onclick="setAppLanguage('as')">অসমীয়া</button>
       </div>
     </div>
   </div>
 
-  <!-- लॉगिन स्क्रीन मोडल: नाम, शहर, जिला, राज्य + मोबाइल/OTP -->
+  <!-- लॉगिन स्क्रीन मोडल: नाम, शहर, जिला, राज्य खुद लिखें या Live GPS से भरें -->
   <div class="login-modal-overlay" id="loginScreenModal">
     <div class="login-card">
       <div style="text-align:center; margin-bottom:12px;">
         <span style="font-size:36px;">🌾</span>
         <h3 style="color:#1b5e20; margin-top:4px; font-size:18px;">CROP & SABZI DOCTOR</h3>
-        <p style="font-size:12px; color:#6b7280; margin-top:3px;" id="txtLoginSub">कृषि सहायता ऐप में आपका स्वागत है</p>
+        <p style="font-size:12px; opacity:0.8; margin-top:3px;" id="txtLoginSub">कृषि सहायता ऐप में आपका स्वागत है</p>
       </div>
 
       <div id="phoneInputGroup">
+        <button type="button" class="btn-action" style="background:#2563eb; color:white; margin-bottom:12px; padding:9px;" onclick="autoFillLoginLocationFromGps()">
+          📡 Live GPS से शहर, जिला, राज्य भरें
+        </button>
+
         <div class="form-group">
           <label id="txtLoginNameLabel">👤 किसान का नाम:</label>
           <input type="text" id="loginFarmerName" class="form-control" placeholder="अपना नाम लिखें">
         </div>
 
         <div class="form-group">
-          <label id="txtLoginStateLabel">🏛️ राज्य (State):</label>
-          <select id="loginStateSelect" class="form-control" onchange="onLoginStateChange()"></select>
+          <label id="txtLoginCityLabel">🏙️ शहर / कस्बा:</label>
+          <input type="text" id="loginCityInput" class="form-control" placeholder="शहर या कस्बा लिखें">
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
           <div class="form-group">
             <label id="txtLoginDistrictLabel">🗺️ जिला (District):</label>
-            <select id="loginDistrictSelect" class="form-control" onchange="onLoginDistrictChange()"></select>
+            <input type="text" id="loginDistrictInput" class="form-control" placeholder="जिला लिखें">
           </div>
           <div class="form-group">
-            <label id="txtLoginCityLabel">🏙️ शहर / कस्बा:</label>
-            <select id="loginCitySelect" class="form-control"></select>
+            <label id="txtLoginStateLabel">🏛️ राज्य (State):</label>
+            <input type="text" id="loginStateInput" class="form-control" placeholder="राज्य लिखें">
           </div>
         </div>
 
         <div class="form-group">
           <label id="txtPhoneLabel">📞 अपना मोबाइल नंबर दर्ज करें:</label>
           <div style="display:flex; gap:8px;">
-            <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
+            <input type="text" value="+91" readonly style="width:55px; text-align:center;" class="form-control">
             <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
           </div>
           <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="txtOtpBtn">📲 ओटीपी (OTP) भेजें</button>
@@ -720,12 +758,12 @@
 
       <div class="form-group" id="otpInputGroup" style="display:none;">
         <label style="color:#16a34a; font-weight:bold;" id="txtOtpVer">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
-        <input type="text" id="loginOtp" class="form-control" style="text-align:center; font-size:18px; letter-spacing:4px; font-weight:bold; background:#f0fdf4;" readonly>
-        <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;" id="txtOtpSuccess">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
+        <input type="text" id="loginOtp" class="form-control" style="text-align:center; font-size:18px; letter-spacing:4px; font-weight:bold;" readonly>
+        <p style="font-size:11px; color:#16a344; text-align:center; margin-top:6px;" id="txtOtpSuccess">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
       </div>
 
-      <div style="text-align:center; margin-top:12px; border-top:1px solid #f3f4f6; padding-top:10px;">
-        <button type="button" onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
+      <div style="text-align:center; margin-top:12px; border-top:1px solid #33415533; padding-top:10px;">
+        <button type="button" onclick="skipLogin()" style="background:none; border:none; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
           ⏩ विवरण सेव करें और आगे बढ़ें
         </button>
       </div>
@@ -758,7 +796,7 @@
         <button class="modal-close" onclick="closeNotificationModal()">✕</button>
       </div>
       <div id="notificationListContent">
-        <div class="schedule-step" style="text-align:center; color:#6b7280;">⏳</div>
+        <div class="schedule-step" style="text-align:center;">⏳</div>
       </div>
     </div>
   </div>
@@ -783,7 +821,7 @@
 
     <ul class="drawer-menu-list">
       <li class="drawer-item" onclick="openProfileScreen()"><span>👨‍🌾</span><span id="mProfile">मेरी प्रोफाइल / सेटिंग्स</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); openOnboardingLocationModal(true);"><span>📍</span><span id="mChangeLoc">राज्य / जिला / पिनकोड बदलें</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); openOnboardingLocationModal(true);"><span>📍</span><span id="mChangeLoc">शहर / जिला / राज्य बदलें (GPS)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showFavoritesScreen();" style="color:#d97706; font-weight:bold;"><span>⭐</span><span id="mFav">मेरी पसंदीदा किस्में (Bookmarks)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showAllCategoriesScreen();"><span>🌱</span><span id="mCrops">सभी किस्में</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showProtectionCategoriesScreen();"><span>🛡️</span><span id="mProtection">फसल सुरक्षा (रोग निदान)</span></li>
@@ -797,8 +835,8 @@
       <li class="drawer-item" style="color:#dc2626; border-top:1px solid #fee2e2; margin-top:10px;" onclick="appLogout()"><span>🚪</span><span id="mLogout">लॉगआउट (Logout)</span></li>
     </ul>
 
-    <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v12.0
+    <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; opacity:0.7; border-top:1px solid #33415533;">
+      CROP & SABZI DOCTOR • v12.1
     </div>
   </div>
 
@@ -836,7 +874,7 @@
 
       <div class="doc-result-card" id="docResultCard">
         <h4 style="color:#b91c1c; font-size:15px; margin-bottom:8px;" id="txtDiagRepHead">🌿 AI रोग निदान रिपोर्ट व सावधानियां</h4>
-        <div style="font-size:13.5px; color:#374151; line-height:1.6; margin-bottom:10px;" id="smartSymptoms"></div>
+        <div style="font-size:13.5px; line-height:1.6; margin-bottom:10px;" id="smartSymptoms"></div>
         <a id="btnDocWhatsapp" href="#" target="_blank" class="btn-action btn-wa">
           💬 <span id="txtWapBtn">यह रिपोर्ट डॉक्टर को WhatsApp करें</span>
         </a>
@@ -866,10 +904,10 @@
   <div id="screen-home" class="screen active">
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-      <div style="font-size:13px; font-weight:bold; color:#1b5e20;" id="welcomeMsg">
+      <div style="font-size:13px; font-weight:bold; color:#16a34a;" id="welcomeMsg">
         राम-राम, किसान भाई!
       </div>
-      <span style="font-size:11px; color:#166534; font-weight:bold; cursor:pointer;" onclick="openProfileScreen()" id="txtChangeProf">
+      <span style="font-size:11px; color:#16a34a; font-weight:bold; cursor:pointer;" onclick="openProfileScreen()" id="txtChangeProf">
         ✏️ प्रोफाइल बदलें
       </span>
     </div>
@@ -878,8 +916,8 @@
 
     <div class="ai-assistant-box" onclick="startVoiceAssistant()">
       <div style="flex: 1; padding-right: 8px;">
-        <h4 style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="txtAiTitle">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
-        <p style="font-size:11.5px; color:#4b5563; margin-top:2px;" id="aiAssistantSubText">टैप करें और फसल या बीमारी का नाम बोलें...</p>
+        <h4 style="color:#16a34a; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="txtAiTitle">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
+        <p style="font-size:11.5px; opacity:0.85; margin-top:2px;" id="aiAssistantSubText">टैप करें और फसल या बीमारी का नाम बोलें...</p>
       </div>
       <div style="background:#16a34a; color:white; min-width:38px; height:38px; border-radius:50%; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🗣️</div>
     </div>
@@ -957,24 +995,24 @@
       </div>
     </div>
 
-    <div class="playstore-banner" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
+    <div class="playstore-banner" style="border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between; border:1px solid #93c5fd;">
       <div>
-        <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
-        <p style="font-size:12px; color:#334155; margin-top:2px;" id="txtPlaySub">हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।</p>
+        <h4 style="font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
+        <p style="font-size:12px; margin-top:2px;" id="txtPlaySub">हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।</p>
       </div>
       <a href="https://play.google.com/store/apps" target="_blank" style="background:#2563eb; color:white; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:bold; text-decoration:none;" id="txtRateBtn">रेट करें</a>
     </div>
 
     <div style="margin-bottom: 15px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700;" id="txtVideoHead">📺 ताज़ा कृषि वीडियो व रील्स</h3>
-        <span style="font-size: 11px; color: #166534; font-weight: bold; cursor: pointer;" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')" id="txtSeeAll">सभी देखें &gt;</span>
+        <h3 style="font-size: 14px; font-weight: 700;" id="txtVideoHead">📺 ताज़ा कृषि वीडियो व रील्स</h3>
+        <span style="font-size: 11px; font-weight: bold; cursor: pointer;" onclick="window.open('https://www.youtube.com/@NMGKISAN', '_blank')" id="txtSeeAll">सभी देखें &gt;</span>
       </div>
       <div id="dynamicVideosContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
     </div>
 
     <div class="social-box">
-      <p style="font-size:13px; font-weight:bold; color:#374151;" id="txtSocialHead">हमारे साथ सोशल मीडिया पर जुड़ें</p>
+      <p style="font-size:13px; font-weight:bold;" id="txtSocialHead">हमारे साथ सोशल मीडिया पर जुड़ें</p>
       <div class="social-btn-group">
         <a href="https://www.youtube.com/@NMGKISAN" target="_blank" class="social-link link-yt"><span>▶️</span> YouTube</a>
         <a href="https://www.facebook.com/share/19joE3v9ib/" target="_blank" class="social-link link-fb"><span>🌐</span> Facebook</a>
@@ -985,8 +1023,8 @@
   <!-- SCREEN: सलाहकार फॉर्म स्क्रीन -->
   <div id="screen-advisor-form" class="screen">
     <div class="variety-card" style="border-left:5px solid #7e22ce; padding:16px;">
-      <h3 style="color:#6b21a8; font-size:17px; margin-bottom:6px;" id="advFormTitle">🎧 कृषि सलाहकार से सलाह लें</h3>
-      <p style="font-size:12.5px; color:#4b5563; margin-bottom:14px;" id="advFormSub">नीचे अपनी फसल व रोग की जानकारी भरें और सीधे WhatsApp पर भेजें:</p>
+      <h3 style="font-size:17px; margin-bottom:6px;" id="advFormTitle">🎧 कृषि सलाहकार से सलाह लें</h3>
+      <p style="font-size:12.5px; opacity:0.85; margin-bottom:14px;" id="advFormSub">नीचे अपनी फसल व रोग की जानकारी भरें और सीधे WhatsApp पर भेजें:</p>
 
       <div class="form-group">
         <label id="lblAdvName">👤 किसान का नाम:</label>
@@ -994,8 +1032,8 @@
       </div>
 
       <div class="form-group">
-        <label id="lblAdvLocation">📍 कहाँ से हैं (गांव / जिला / राज्य):</label>
-        <input type="text" id="advLocation" class="form-control" placeholder="उदा. घड़साना, श्रीगंगानगर (राजस्थान)">
+        <label id="lblAdvLocation">📍 कहाँ से हैं (शहर / जिला / राज्य):</label>
+        <input type="text" id="advLocation" class="form-control" placeholder="उदा. घड़साना, श्रीगंगानगर, राजस्थान">
       </div>
 
       <div class="form-group">
@@ -1023,7 +1061,7 @@
         <input type="file" id="advCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleAdvisorPhoto(this)">
         <input type="file" id="advGalleryInput" accept="image/*" style="display:none;" onchange="handleAdvisorPhoto(this)">
         <img id="advPreviewImg" class="preview-img" alt="फसल फोटो">
-        <p id="advPhotoNote" style="display:none; font-size:11.5px; color:#b45309; background:#fffbeb; padding:6px 10px; border-radius:8px; border:1px solid #fde68a; margin-top:4px;">
+        <p id="advPhotoNote" style="display:none; font-size:11.5px; padding:6px 10px; border-radius:8px; border:1px solid #fde68a; margin-top:4px;">
           💡 WhatsApp खुलने के बाद कृपया वहां 📎 (अटैच) बटन दबाकर यह फोटो भी भेज दें।
         </p>
       </div>
@@ -1037,8 +1075,8 @@
   <!-- SCREEN: सभी किस्में - श्रेणियां -->
   <div id="screen-all-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:4px;" id="catHeadTitle">🌱 सभी किस्में श्रेणियां</h3>
-      <p style="font-size:12.5px; color:#4b5563;" id="catSubTitle">फसल श्रेणी चुनें:</p>
+      <h3 style="font-size:16px; margin-bottom:4px;" id="catHeadTitle">🌱 सभी किस्में श्रेणियां</h3>
+      <p style="font-size:12.5px; opacity:0.85;" id="catSubTitle">फसल श्रेणी चुनें:</p>
     </div>
     <div id="categoriesContainer">
       <div class="list-item" onclick="showCropsForCategory('सब्जियां')">
@@ -1067,7 +1105,7 @@
   <!-- SCREEN: फसल सुरक्षा - श्रेणियां -->
   <div id="screen-protection-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b91c1c; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#b91c1c; font-size:16px; margin-bottom:4px;" id="protCatHead">🛡️ फसल सुरक्षा</h3>
+      <h3 style="font-size:16px; margin-bottom:4px;" id="protCatHead">🛡️ फसल सुरक्षा</h3>
     </div>
     <div id="protectionCategoriesContainer">
       <div class="list-item" onclick="showProtectionCropsListByCategory('सब्जियां')">
@@ -1096,7 +1134,7 @@
   <!-- SCREEN: स्प्रे शेड्यूल - श्रेणियां -->
   <div id="screen-schedule-categories" class="screen">
     <div class="variety-card" style="border-left:5px solid #b45309; padding: 14px; margin-bottom: 12px;">
-      <h3 style="color:#b45309; font-size:16px; margin-bottom:4px;" id="schedCatHead">🗓️ स्प्रे शेड्यूल</h3>
+      <h3 style="font-size:16px; margin-bottom:4px;" id="schedCatHead">🗓️ स्प्रे शेड्यूल</h3>
     </div>
     <div id="scheduleCategoriesContainer">
       <div class="list-item" onclick="showScheduleCropsListByCategory('सब्जियां')">
@@ -1125,12 +1163,12 @@
   <!-- SCREEN: AI डॉक्टर चैट -->
   <div id="screen-ai-doctor-chat" class="screen">
     <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px; margin-bottom:12px;">
-      <h3 style="color:#1b5e20; font-size:17px; margin-bottom:6px;" id="chatHeadTitle">👨‍⚕️ AI कृषि डॉक्टर</h3>
-      <p style="font-size:12px; color:#4b5563;" id="chatSubHead">फसल, खाद या बीमारी के बारे में लिखें या बोलें</p>
+      <h3 style="font-size:17px; margin-bottom:6px;" id="chatHeadTitle">👨‍⚕️ AI कृषि डॉक्टर</h3>
+      <p style="font-size:12px; opacity:0.85;" id="chatSubHead">फसल, खाद या बीमारी के बारे में लिखें या बोलें</p>
     </div>
 
-    <div id="aiChatMessagesContainer" style="background:white; border:1px solid #e5e7eb; border-radius:12px; padding:12px; height:320px; overflow-y:auto; margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
-      <div style="background:#f0fdf4; padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px; color:#166534;" id="chatWelcomeMsg">
+    <div id="aiChatMessagesContainer" style="border:1px solid #33415533; border-radius:12px; padding:12px; height:320px; overflow-y:auto; margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
+      <div style="padding:10px 12px; border-radius:10px; border-left:4px solid #16a34a; font-size:13.5px;" id="chatWelcomeMsg">
         <b>👨‍⚕️ AI डॉक्टर:</b> नमस्ते किसान भाई! अपनी फसल या समस्या के बारे में पूछें।
       </div>
     </div>
@@ -1161,10 +1199,10 @@
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <div id="privacyContentBox">
-        <div class="schedule-step" style="background:#fef2f2; border-color:#fca5a5; margin-bottom:14px;">
+        <div class="schedule-step" style="margin-bottom:14px;">
           <div id="privacyDisclaimerText">...</div>
         </div>
-        <div class="schedule-step" style="background:#f0fdf4; border-color:#bbf7d0;">
+        <div class="schedule-step">
           <div id="privacyPolicyText">...</div>
         </div>
       </div>
@@ -1193,7 +1231,7 @@
   </div>
 
   <div id="screen-chemical-list" class="screen">
-    <h3 style="font-size:16px; margin-bottom:12px; color:#be185d;" id="chemicalListTitle"></h3>
+    <h3 style="font-size:16px; margin-bottom:12px;" id="chemicalListTitle"></h3>
     <div id="chemicalListContainer"></div>
   </div>
 
@@ -1207,7 +1245,7 @@
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showSowingCalculatorScreen()">
-      <div class="list-left"><span class="list-icon">🧮</span><span class="list-title" style="color:#d97706; font-weight:bold;" id="s3">बुवाई कैलकुलेटर</span></div>
+      <div class="list-left"><span class="list-icon">🧮</span><span class="list-title" style="font-weight:bold;" id="s3">बुवाई कैलकुलेटर</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showExpertAdviceScreen()">
@@ -1215,19 +1253,19 @@
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showPestAlertScreen()">
-      <div class="list-left"><span class="list-icon">🚨</span><span class="list-title" style="color:#b91c1c; font-weight:bold;" id="s5">कीट अलर्ट</span></div>
+      <div class="list-left"><span class="list-icon">🚨</span><span class="list-title" style="font-weight:bold;" id="s5">कीट अलर्ट</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showGovSchemesScreen()">
-      <div class="list-left"><span class="list-icon">🏛️</span><span class="list-title" style="color:#1b5e20; font-weight:bold;" id="s6">सरकारी योजनाएं</span></div>
+      <div class="list-left"><span class="list-icon">🏛️</span><span class="list-title" style="font-weight:bold;" id="s6">सरकारी योजनाएं</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="showAiReportsScreen()">
-      <div class="list-left"><span class="list-icon">🌿</span><span class="list-title" style="color:#166534; font-weight:bold;" id="s7">AI जांच रिपोर्ट</span></div>
+      <div class="list-left"><span class="list-icon">🌿</span><span class="list-title" style="font-weight:bold;" id="s7">AI जांच रिपोर्ट</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="window.open('https://play.google.com/store/apps', '_blank')">
-      <div class="list-left"><span class="list-icon">⭐</span><span class="list-title" style="color:#2563eb; font-weight:bold;" id="s8">Google Play Store</span></div>
+      <div class="list-left"><span class="list-icon">⭐</span><span class="list-title" style="font-weight:bold;" id="s8">Google Play Store</span></div>
       <span class="arrow">&gt;</span>
     </div>
     <div class="list-item" onclick="shareAppWithFriends()">
@@ -1239,7 +1277,7 @@
   <div id="screen-sowing-calc" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; padding:16px;">
       <div class="form-group">
-        <label style="font-size:12.5px; color:#4b5563; margin-bottom:4px; display:block;" id="lblCalcCrop">🌱 फसल चुनें:</label>
+        <label style="font-size:12.5px; margin-bottom:4px; display:block;" id="lblCalcCrop">🌱 फसल चुनें:</label>
         <select id="calcCropSelect" class="form-control" onchange="calculateCropSchedule()">
           <option value="टमाटर">🍅 टमाटर</option>
           <option value="खीरा">🥒 खीरा</option>
@@ -1279,14 +1317,14 @@
         </select>
       </div>
       <div class="form-group">
-        <label style="font-size:12.5px; color:#4b5563; margin-bottom:4px; display:block;" id="lblCalcDate">📅 बुवाई की तारीख चुनें:</label>
+        <label style="font-size:12.5px; margin-bottom:4px; display:block;" id="lblCalcDate">📅 बुवाई की तारीख चुनें:</label>
         <input type="date" id="calcDateInput" class="form-control" onchange="calculateCropSchedule()">
       </div>
       <button class="btn-action btn-wa" style="background:#d97706; margin-top:12px;" onclick="calculateCropSchedule()" id="btnCalcRun">📊 कैलकुलेट करें</button>
     </div>
 
-    <div class="doc-result-card" id="calcResultBox" style="display:block; background:#fffbeb; border:1.5px solid #fde68a;">
-      <p style="font-size:13.5px; color:#374151; line-height:1.7;" id="calcResultText"></p>
+    <div class="doc-result-card" id="calcResultBox" style="display:block; border:1.5px solid #fde68a;">
+      <p style="font-size:13.5px; line-height:1.7;" id="calcResultText"></p>
     </div>
   </div>
 
@@ -1315,28 +1353,28 @@
   <div id="screen-weather-detail" class="screen">
     <div class="variety-card" id="detailWeatherCard">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 style="color:#1b5e20; font-size:17px;" id="detailCity">📍 श्रीगंगानगर</h3>
-        <span style="font-size:12px; color:#166534; font-weight:bold;" id="detailDate">--:-- --</span>
+        <h3 style="font-size:17px;" id="detailCity">📍 श्रीगंगानगर</h3>
+        <span style="font-size:12px; font-weight:bold;" id="detailDate">--:-- --</span>
       </div>
       <div style="text-align:center; padding:12px 0;">
         <span style="font-size:45px;" id="detailWeatherIcon">☀️</span>
-        <div style="font-size:32px; font-weight:bold; color:#1b5e20;" id="detailTemp">26°C</div>
-        <p style="font-size:14px; color:#4b5563; font-weight:600; margin-top:4px;" id="detailDesc">साफ़ आसमान</p>
+        <div style="font-size:32px; font-weight:bold;" id="detailTemp">26°C</div>
+        <p style="font-size:14px; font-weight:600; margin-top:4px;" id="detailDesc">साफ़ आसमान</p>
       </div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-        <div class="weather-detail-stat" style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
-          <p style="font-size:12px; font-weight:600; color:#166534;" id="lblWind">💨 हवा की गति</p>
-          <b style="font-size:15px; color:#15803d;" id="detailWind">6 km/h</b>
+        <div class="weather-detail-stat" style="padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
+          <p style="font-size:12px; font-weight:600;" id="lblWind">💨 हवा की गति</p>
+          <b style="font-size:15px;" id="detailWind">6 km/h</b>
         </div>
-        <div class="weather-detail-stat" style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
-          <p style="font-size:12px; font-weight:600; color:#166534;" id="lblHum">💧 हवा में नमी</p>
-          <b style="font-size:15px; color:#15803d;" id="detailHumidity">45%</b>
+        <div class="weather-detail-stat" style="padding:10px; border-radius:8px; border:1px solid #bbf7d0;">
+          <p style="font-size:12px; font-weight:600;" id="lblHum">💧 हवा में नमी</p>
+          <b style="font-size:15px;" id="detailHumidity">45%</b>
         </div>
       </div>
 
-      <h4 style="color:#1b5e20; font-size:14px; font-weight:700; margin-top:16px; margin-bottom:6px;" id="lblForecast15">📅 अगले 15 दिनों का मौसम पूर्वानुमान</h4>
+      <h4 style="font-size:14px; font-weight:700; margin-top:16px; margin-bottom:6px;" id="lblForecast15">📅 अगले 15 दिनों का मौसम पूर्वानुमान</h4>
       <div id="forecast15Container" class="forecast-15-list">
-        <div style="text-align:center; padding:12px; font-size:13px; color:#6b7280;">⏳ मौसम पूर्वानुमान लोड हो रहा है...</div>
+        <div style="text-align:center; padding:12px; font-size:13px;">⏳ मौसम पूर्वानुमान लोड हो रहा है...</div>
       </div>
     </div>
   </div>
@@ -1344,10 +1382,10 @@
   <div id="screen-mandi-bhav" class="screen">
     <div class="variety-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:12.5px; font-weight:700; color:#1b5e20;" id="mandiGpsStatus">📍 GPS लोकेशन जांच रहे हैं...</span>
+        <span style="font-size:12.5px; font-weight:700;" id="mandiGpsStatus">📍 GPS लोकेशन जांच रहे हैं...</span>
         <button onclick="refreshMandiWithGps()" style="background:#16a34a; color:white; border:none; padding:5px 10px; border-radius:8px; font-size:11.5px; font-weight:bold;">🔄 GPS</button>
       </div>
-      <div id="mandiLoading" style="text-align:center; padding:20px; color:#6b7280;">⏳</div>
+      <div id="mandiLoading" style="text-align:center; padding:20px;">⏳</div>
       <div style="overflow-x:auto;">
         <table class="mandi-table" id="mandiTableElement" style="display:none;">
           <thead><tr><th id="th1">📍 क्षेत्र</th><th id="th2">🏪 मंडी</th><th id="th3">🌾 फसल</th><th id="th4">₹ Min</th><th id="th5">₹ Max</th></tr></thead>
@@ -1365,9 +1403,13 @@
     <div id="alertsContainer"></div>
   </div>
 
-  <!-- SCREEN: प्रोफाइल स्क्रीन -->
+  <!-- SCREEN: प्रोफाइल स्क्रीन (खुद लिखें, एडिट करें, सेव करें + Live GPS) -->
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
+      <button type="button" class="btn-action" style="background:#2563eb; color:white; margin-bottom:12px; padding:9px;" onclick="autoFillProfileLocationFromGps()">
+        📡 Live GPS से शहर, जिला, राज्य भरें
+      </button>
+
       <div class="form-group">
         <label id="lblProfName">👤 किसान का नाम:</label>
         <input type="text" id="profNameInput" class="form-control" placeholder="किसान का नाम">
@@ -1377,8 +1419,18 @@
         <input type="tel" id="profPhoneInput" class="form-control" maxlength="10" placeholder="मोबाइल नंबर">
       </div>
       <div class="form-group">
-        <label id="lblProfState">📍 शहर / जिला / राज्य:</label>
-        <input type="text" id="profStateInput" class="form-control" placeholder="उदा. घड़साना, श्रीगंगानगर, राजस्थान">
+        <label id="lblProfCity">🏙️ शहर / कस्बा:</label>
+        <input type="text" id="profCityInput" class="form-control" placeholder="शहर या कस्बा लिखें">
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div class="form-group">
+          <label id="lblProfDistrict">🗺️ जिला (District):</label>
+          <input type="text" id="profDistrictInput" class="form-control" placeholder="जिला लिखें">
+        </div>
+        <div class="form-group">
+          <label id="lblProfState">🏛️ राज्य (State):</label>
+          <input type="text" id="profStateInput" class="form-control" placeholder="राज्य लिखें">
+        </div>
       </div>
       <div class="form-group">
         <label id="lblProfCrops">🌱 मुख्य फसलें:</label>
@@ -1413,7 +1465,7 @@
   </div>
 
   <div id="screen-crop-diseases" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="cropDiseaseHeading"></h3>
+    <h3 style="font-size:15px; margin-bottom:12px;" id="cropDiseaseHeading"></h3>
     <div id="cropDiseasesContainer"></div>
   </div>
 
@@ -1422,7 +1474,7 @@
   </div>
 
   <div id="screen-company-crops" class="screen">
-    <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="compCropHeading"></h3>
+    <h3 style="font-size:15px; margin-bottom:12px;" id="compCropHeading"></h3>
     <div id="companyCropsContainer"></div>
   </div>
 
@@ -1440,165 +1492,6 @@
     const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v1';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
-
-    const INDIA_LOCATION_DATA = {
-      "राजस्थान": {
-        "श्रीगंगानगर": {
-          "घड़साना": ["335711"],
-          "श्रीगंगानगर": ["335001"],
-          "सूरतगढ़": ["335804"],
-          "अनूपगढ़": ["335701"],
-          "रायसिंहनगर": ["335051"],
-          "पदमपुर": ["335041"],
-          "सादुलशहर": ["335062"]
-        },
-        "हनुमानगढ़": {
-          "हनुमानगढ़": ["335513"],
-          "नोहर": ["335523"],
-          "भादरा": ["335501"],
-          "रावतसर": ["335524"],
-          "पीलीबंगा": ["335803"]
-        },
-        "बीकानेर": {
-          "बीकानेर": ["334001"],
-          "लूणकरणसर": ["334603"],
-          "खाजूवाला": ["334022"],
-          "नोखा": ["334803"]
-        },
-        "जयपुर": {
-          "जयपुर": ["302001"],
-          "चौमूं": ["303702"],
-          "शाहपुरा": ["303103"],
-          "कोटपूतली": ["303108"]
-        },
-        "जोधपुर": {
-          "जोधपुर": ["342001"],
-          "फलोदी": ["342301"],
-          "ओसियां": ["342303"]
-        },
-        "अलवर": {
-          "अलवर": ["301001"],
-          "भिवाड़ी": ["301019"],
-          "खैरथल": ["301404"]
-        },
-        "सीकर": {
-          "सीकर": ["332001"],
-          "फतेहपुर": ["332301"],
-          "लक्ष्मणगढ़": ["332311"]
-        }
-      },
-      "हरियाणा": {
-        "सिरसा": {
-          "सिरसा": ["125055"],
-          "ऐलनाबाद": ["125102"],
-          "डबवाली": ["125104"],
-          "रानिया": ["125076"]
-        },
-        "फतेहाबाद": {
-          "फतेहाबाद": ["125050"],
-          "टोहाना": ["125120"],
-          "रतिया": ["125051"]
-        },
-        "हिसार": {
-          "हिसार": ["125001"],
-          "हांसी": ["125033"],
-          "बरवाला": ["125121"]
-        },
-        "करनाल": {
-          "करनाल": ["132001"],
-          "घरौंडा": ["132114"]
-        }
-      },
-      "पंजाब": {
-        "फाजिल्का": {
-          "फाजिल्का": ["152123"],
-          "अबोहर": ["152116"],
-          "जलालाबाद": ["152024"]
-        },
-        "बठिंडा": {
-          "बठिंडा": ["151001"],
-          "रामपुरा फूल": ["151103"]
-        },
-        "लुधियाना": {
-          "लुधियाना": ["141001"],
-          "खन्ना": ["141401"]
-        },
-        "अमृतसर": {
-          "अमृतसर": ["143001"],
-          "अजनाला": ["143102"]
-        }
-      },
-      "उत्तर प्रदेश": {
-        "आगरा": {
-          "आगरा": ["282001"],
-          "फतेहाबाद": ["283111"]
-        },
-        "लखनऊ": {
-          "लखनऊ": ["226001"],
-          "मोहनलालगंज": ["226301"]
-        },
-        "वाराणसी": {
-          "वाराणसी": ["221001"],
-          "रामनगर": ["221008"]
-        },
-        "मेरठ": {
-          "मेरठ": ["250001"],
-          "मवाना": ["250401"]
-        }
-      },
-      "मध्य प्रदेश": {
-        "इंदौर": {
-          "इंदौर": ["452001"],
-          "महू": ["453441"]
-        },
-        "भोपाल": {
-          "भोपाल": ["462001"],
-          "बैरसिया": ["463106"]
-        },
-        "उज्जैन": {
-          "उज्जैन": ["456001"],
-          "नागदा": ["456335"]
-        }
-      },
-      "महाराष्ट्र": {
-        "पुणे": {
-          "पुणे": ["411001"],
-          "बारामती": ["413102"]
-        },
-        "नाशिक": {
-          "नाशिक": ["422001"],
-          "ओझर": ["422206"]
-        },
-        "नागपुर": {
-          "नागपुर": ["440001"],
-          "काटोल": ["441302"]
-        }
-      },
-      "गुजरात": {
-        "अहमदाबाद": {
-          "अहमदाबाद": ["380001"],
-          "साणंद": ["382110"]
-        },
-        "सूरत": {
-          "सूरत": ["395003"],
-          "बारडोली": ["394601"]
-        },
-        "राजकोट": {
-          "राजकोट": ["360001"],
-          "गोंडल": ["360311"]
-        }
-      },
-      "बिहार": {
-        "पटना": {
-          "पटना": ["800001"],
-          "दानापुर": ["801503"]
-        },
-        "गया": {
-          "गया": ["823001"],
-          "बोधगया": ["824231"]
-        }
-      }
-    };
 
     const navHistory = [{ id: 'screen-home', title: 'CROP & SABZI DOCTOR' }];
     let sheetRecords = [];
@@ -1630,7 +1523,6 @@
       lon: parseFloat(localStorage.getItem('farmer_lon') || '73.8772')
     };
     let currentLang = localStorage.getItem('app_lang') || 'hi';
-    let isTranslatingBackground = false;
     let isLoadingSheets = false;
     let storyTimerId = null;
 
@@ -1688,6 +1580,57 @@
       en: 'en-IN', ml: 'ml-IN', or: 'or-IN', as: 'as-IN'
     };
 
+    const OFFLINE_LANG_PACKS = {
+      hi: {
+        headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, किसान भाई!", txtChangeProf: "✏️ प्रोफाइल बदलें",
+        txtAiTitle: "🎙️ AI कृषि डॉक्टर से बोलकर बात करें", aiSubText: "टैप करें और फसल या बीमारी का नाम बोलें...",
+        txtSprayAdvice: "स्प्रे हेतु सुबह या शाम का समय चुनें", searchPlaceholder: "🔍 फसल या किस्म लिखें...",
+        gCrops: "सभी किस्में", gProt: "फसल सुरक्षा", gSched: "स्प्रे शेड्यूल", gAtoz: "खेती कैसे करें (A-Z)",
+        gDisc: "किसान चर्चा", gAdv: "सलाहकार", gComp: "All कंपनी बीज", gChem: "दवाइयाँ Chemicals", gServ: "Other सेवाएं",
+        txtPlaySub: "हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।", txtRateBtn: "रेट करें",
+        txtVideoHead: "📺 ताज़ा कृषि वीडियो व रील्स", txtSeeAll: "सभी देखें >", txtSocialHead: "हमारे साथ सोशल मीडिया पर जुड़ें",
+        fabText: "तुरंत समाधान", navHome: "होम", navCrops: "किस्में", navSched: "शेड्यूल", navProt: "सुरक्षा", navHelp: "सलाहकार",
+        cropsTitle: "सभी किस्में", protTitle: "फसल सुरक्षा", schedTitle: "स्प्रे शेड्यूल", compTitle: "सीड कंपनी",
+        chemTitle: "दवाइयाँ Chemicals", mandiTitle: "मंडी भाव", weatherTitle: "मौसम", profileTitle: "किसान प्रोफाइल",
+        favoritesTitle: "पसंदीदा किस्में", atozTitle: "खेती गाइड (A-Z)", discTitle: "किसान चर्चा", privacyTitle: "गोपनीयता नीति",
+        reportsTitle: "AI जांच रिपोर्ट", schemesTitle: "सरकारी योजनाएं", expertTitle: "एक्सपर्ट सुझाव", pestTitle: "कीट अलर्ट",
+        calcTitle: "बुवाई कैलकुलेटर", drawerHead: "📋 मेन्यू", completeProfileText: "प्रोफाइल पूरी करें >",
+        mProfile: "मेरी प्रोफाइल", mChangeLoc: "शहर / जिला / राज्य बदलें (GPS)", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
+        mProtection: "फसल सुरक्षा", mChems: "दवाइयाँ Chemicals", mServices: "Other सेवाएं", mPrivacy: "गोपनीयता नीति",
+        mRate: "Play Store रेट करें", mShare: "ऐप शेयर करें", mHelp: "सलाहकार से पूछें", mLogout: "लॉगआउट",
+        solHead: "⚡ तुरंत समाधान", camBtn: "कैमरा", galBtn: "गैलरी", diagBtn: "🔍 रोग पहचानें",
+        diagRepHead: "🌿 AI रिपोर्ट", wapBtn: "WhatsApp करें", chatYou: "आप", chatDoc: "डॉक्टर",
+        chatThinking: "⏳ जवाब तैयार हो रहा है...", chatErr: "त्रुटि", chatNetErrHead: "नेटवर्क", chatNetErrDesc: "कनेक्शन समस्या",
+        aiDocTitle: "AI डॉक्टर", loadingText: "🌾 डेटा लोड हो रहा है...",
+        offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
+        voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है"
+      },
+      en: {
+        headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!", txtChangeProf: "✏️ Edit Profile",
+        txtAiTitle: "🎙️ Talk to AI Agri Doctor", aiSubText: "Tap and speak crop or disease name...",
+        txtSprayAdvice: "Choose morning or evening for spraying", searchPlaceholder: "🔍 Search crop or variety...",
+        gCrops: "All Varieties", gProt: "Crop Protection", gSched: "Spray Schedule", gAtoz: "Farming Guide (A-Z)",
+        gDisc: "Farmer Discussion", gAdv: "Advisor", gComp: "All Company Seeds", gChem: "Chemicals & Medicines", gServ: "Other Services",
+        txtPlaySub: "Rate us on Play Store and share app.", txtRateBtn: "Rate Us",
+        txtVideoHead: "📺 Latest Agri Videos & Reels", txtSeeAll: "See All >", txtSocialHead: "Connect with us on Social Media",
+        fabText: "Instant Solution", navHome: "Home", navCrops: "Varieties", navSched: "Schedule", navProt: "Protection", navHelp: "Advisor",
+        cropsTitle: "All Varieties", protTitle: "Crop Protection", schedTitle: "Spray Schedule", compTitle: "Seed Companies",
+        chemTitle: "Chemicals", mandiTitle: "Mandi Prices", weatherTitle: "Weather", profileTitle: "Farmer Profile",
+        favoritesTitle: "Favorites", atozTitle: "Farming Guide (A-Z)", discTitle: "Discussion", privacyTitle: "Privacy Policy",
+        reportsTitle: "AI Reports", schemesTitle: "Gov Schemes", expertTitle: "Expert Tips", pestTitle: "Pest Alerts",
+        calcTitle: "Sowing Calculator", drawerHead: "📋 Menu", completeProfileText: "Complete profile >",
+        mProfile: "My Profile", mChangeLoc: "Change City / District / State (GPS)", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
+        mProtection: "Crop Protection", mChems: "Chemicals", mServices: "Other Services", mPrivacy: "Privacy Policy",
+        mRate: "Rate Play Store", mShare: "Share App", mHelp: "Ask Advisor", mLogout: "Logout",
+        solHead: "⚡ Instant Solution", camBtn: "Camera", galBtn: "Gallery", diagBtn: "🔍 Diagnose",
+        diagRepHead: "🌿 AI Report", wapBtn: "Send on WhatsApp", chatYou: "You", chatDoc: "Doctor",
+        chatThinking: "⏳ Generating reply...", chatErr: "Error", chatNetErrHead: "Network", chatNetErrDesc: "Connection issue",
+        aiDocTitle: "AI Doctor", loadingText: "🌾 Loading data...",
+        offlineBanner: "📴 Offline Mode: Showing saved language and data",
+        voiceNotSupported: "Voice input is not supported on this browser"
+      }
+    };
+
     function cleanExtraIdTokens(text) {
       if (!text || typeof text !== 'string') return text || '';
       return text
@@ -1718,97 +1661,97 @@
       }
     }
 
-    function ensureOptionInSelect(selectEl, value) {
-      if (!selectEl || !value) return;
-      const exists = Array.from(selectEl.options).some(o => o.value === value);
-      if (!exists) {
-        const opt = document.createElement('option');
-        opt.value = value;
-        opt.textContent = value;
-        selectEl.appendChild(opt);
+    async function fetchGpsCityDistrictState(onSuccess, onFail) {
+      if (!navigator.geolocation) {
+        if (onFail) onFail('इस डिवाइस में GPS उपलब्ध नहीं है');
+        return;
       }
-      selectEl.value = value;
+      showToast('Live GPS से लोकेशन खोजी जा रही है...');
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        userCoords = { lat, lon };
+        localStorage.setItem('farmer_lat', String(lat));
+        localStorage.setItem('farmer_lon', String(lon));
+
+        try {
+          const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=hi`);
+          const data = await res.json();
+          const city = (data.city || data.locality || '').trim();
+          const district = (data.localityInfo && Array.isArray(data.localityInfo.administrative))
+            ? ((data.localityInfo.administrative.find(a => a.adminLevel === 5) || data.localityInfo.administrative.find(a => a.adminLevel === 4) || {}).name || data.city || '').trim()
+            : (data.city || '').trim();
+          const state = (data.principalSubdivision || '').trim();
+          const pin = (data.postcode || '').trim();
+
+          if (onSuccess) onSuccess({ city, district, state, pin });
+          showToast('Live GPS से लोकेशन भर दी गई है');
+        } catch (err) {
+          if (onFail) onFail('GPS से लोकेशन लाने में समस्या आई');
+        }
+      }, () => {
+        if (onFail) onFail('लोकेशन अनुमति नहीं मिली');
+      }, { enableHighAccuracy: true, timeout: 9000 });
     }
 
-    function populateLoginLocationSelects(savedState = '', savedDistrict = '', savedCity = '') {
-      const stateSel = document.getElementById('loginStateSelect');
-      const distSel = document.getElementById('loginDistrictSelect');
-      const citySel = document.getElementById('loginCitySelect');
-      if (!stateSel || !distSel || !citySel) return;
-
-      const states = Object.keys(INDIA_LOCATION_DATA);
-      stateSel.innerHTML = states.map(st => `<option value="${st}">${st}</option>`).join('');
-      const st = (savedState && INDIA_LOCATION_DATA[savedState]) ? savedState : states[0];
-      ensureOptionInSelect(stateSel, st);
-
-      const distMap = INDIA_LOCATION_DATA[st] || {};
-      const districts = Object.keys(distMap);
-      distSel.innerHTML = districts.map(d => `<option value="${d}">${d}</option>`).join('');
-      const dt = (savedDistrict && distMap[savedDistrict]) ? savedDistrict : (districts[0] || '');
-      if (dt) ensureOptionInSelect(distSel, dt);
-
-      const cityMap = (INDIA_LOCATION_DATA[st] && INDIA_LOCATION_DATA[st][dt]) || {};
-      const cities = Object.keys(cityMap);
-      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
-      const ct = (savedCity && cityMap[savedCity]) ? savedCity : (cities[0] || '');
-      if (ct) ensureOptionInSelect(citySel, ct);
+    function autoFillLoginLocationFromGps() {
+      fetchGpsCityDistrictState(({ city, district, state }) => {
+        if (city) document.getElementById('loginCityInput').value = city;
+        if (district) document.getElementById('loginDistrictInput').value = district;
+        if (state) document.getElementById('loginStateInput').value = state;
+      }, (errMsg) => showToast(errMsg));
     }
 
-    function onLoginStateChange() {
-      const st = document.getElementById('loginStateSelect').value;
-      const distSel = document.getElementById('loginDistrictSelect');
-      const citySel = document.getElementById('loginCitySelect');
-      const distMap = INDIA_LOCATION_DATA[st] || {};
-      const districts = Object.keys(distMap);
-      distSel.innerHTML = districts.map(d => `<option value="${d}">${d}</option>`).join('');
-      const firstDist = districts[0] || '';
-      const cities = Object.keys((firstDist && distMap[firstDist]) || {});
-      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
-      translateWholeAppDOM();
+    function autoFillLocationFromGps() {
+      fetchGpsCityDistrictState(({ city, district, state, pin }) => {
+        if (city) document.getElementById('onboardCityInput').value = city;
+        if (district) document.getElementById('onboardDistrictInput').value = district;
+        if (state) document.getElementById('onboardStateInput').value = state;
+        if (pin) document.getElementById('onboardPinInput').value = pin;
+      }, (errMsg) => showToast(errMsg));
     }
 
-    function onLoginDistrictChange() {
-      const st = document.getElementById('loginStateSelect').value;
-      const dt = document.getElementById('loginDistrictSelect').value;
-      const citySel = document.getElementById('loginCitySelect');
-      const cities = Object.keys(((INDIA_LOCATION_DATA[st] && INDIA_LOCATION_DATA[st][dt]) || {}));
-      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
-      translateWholeAppDOM();
+    function autoFillProfileLocationFromGps() {
+      fetchGpsCityDistrictState(({ city, district, state }) => {
+        if (city) document.getElementById('profCityInput').value = city;
+        if (district) document.getElementById('profDistrictInput').value = district;
+        if (state) document.getElementById('profStateInput').value = state;
+      }, (errMsg) => showToast(errMsg));
     }
 
     function openLoginScreenModal() {
       document.getElementById('phoneInputGroup').style.display = 'block';
       document.getElementById('otpInputGroup').style.display = 'none';
       document.getElementById('loginFarmerName').value = localStorage.getItem('farmer_name') || '';
+      document.getElementById('loginCityInput').value = localStorage.getItem('farmer_city_name') || '';
+      document.getElementById('loginDistrictInput').value = localStorage.getItem('farmer_district_name') || '';
+      document.getElementById('loginStateInput').value = localStorage.getItem('farmer_state_name') || '';
       document.getElementById('loginPhone').value = localStorage.getItem('farmer_phone') || '';
 
-      const savedState = localStorage.getItem('farmer_state_name') || 'राजस्थान';
-      const savedDistrict = localStorage.getItem('farmer_district_name') || 'श्रीगंगानगर';
-      const savedCity = localStorage.getItem('farmer_city_name') || 'घड़साना';
-      populateLoginLocationSelects(savedState, savedDistrict, savedCity);
-
-      document.getElementById('loginScreenModal').classList.add('active');
-      translateWholeAppDOM();
+      const modal = document.getElementById('loginScreenModal');
+      modal.classList.add('active');
+      translateWholeAppDOM(modal);
     }
 
     function persistLoginIdentity(phoneVal = '') {
       const nameVal = cleanExtraIdTokens(document.getElementById('loginFarmerName').value || '');
-      const stateVal = cleanExtraIdTokens(document.getElementById('loginStateSelect').value || '');
-      const districtVal = cleanExtraIdTokens(document.getElementById('loginDistrictSelect').value || '');
-      const cityVal = cleanExtraIdTokens(document.getElementById('loginCitySelect').value || '');
+      const cityVal = cleanExtraIdTokens(document.getElementById('loginCityInput').value || '');
+      const districtVal = cleanExtraIdTokens(document.getElementById('loginDistrictInput').value || '');
+      const stateVal = cleanExtraIdTokens(document.getElementById('loginStateInput').value || '');
       const pinVal = cleanExtraIdTokens(localStorage.getItem('farmer_pincode') || '');
 
       const fullLoc = [cityVal, districtVal, stateVal].filter(Boolean).join(', ') + (pinVal ? ` - ${pinVal}` : '');
 
       if (nameVal) localStorage.setItem('farmer_name', nameVal);
       if (phoneVal) localStorage.setItem('farmer_phone', phoneVal);
-      if (stateVal) localStorage.setItem('farmer_state_name', stateVal);
-      if (districtVal) localStorage.setItem('farmer_district_name', districtVal);
-      if (cityVal) localStorage.setItem('farmer_city_name', cityVal);
+      localStorage.setItem('farmer_city_name', cityVal);
+      localStorage.setItem('farmer_district_name', districtVal);
+      localStorage.setItem('farmer_state_name', stateVal);
+
       if (fullLoc) {
         localStorage.setItem('farmer_state', fullLoc);
         localStorage.setItem('farmer_address', fullLoc);
-        userCurrentCity = districtVal || cityVal || fullLoc;
+        userCurrentCity = districtVal || cityVal || stateVal || fullLoc;
       }
       localStorage.setItem('farmer_location_completed', 'true');
       updateProfileUI();
@@ -1821,176 +1764,39 @@
       );
     }
 
-    function populateOnboardStates(selectedState = '') {
-      const stateSel = document.getElementById('onboardStateSelect');
-      if (!stateSel) return;
-      const states = Object.keys(INDIA_LOCATION_DATA);
-      stateSel.innerHTML = states.map(st => `<option value="${st}">${st}</option>`).join('');
-      const initialState = (selectedState && INDIA_LOCATION_DATA[selectedState]) ? selectedState : states[0];
-      ensureOptionInSelect(stateSel, initialState);
-      populateOnboardDistricts(initialState, '');
-    }
-
-    function populateOnboardDistricts(stateName, selectedDistrict = '') {
-      const distSel = document.getElementById('onboardDistrictSelect');
-      if (!distSel) return;
-      const distMap = INDIA_LOCATION_DATA[stateName] || {};
-      const districts = Object.keys(distMap);
-      distSel.innerHTML = districts.map(d => `<option value="${d}">${d}</option>`).join('');
-      const initialDist = (selectedDistrict && distMap[selectedDistrict]) ? selectedDistrict : (districts[0] || '');
-      if (initialDist) {
-        ensureOptionInSelect(distSel, initialDist);
-        populateOnboardCities(stateName, initialDist, '');
-      }
-    }
-
-    function populateOnboardCities(stateName, districtName, selectedCity = '') {
-      const citySel = document.getElementById('onboardCitySelect');
-      if (!citySel) return;
-      const cityMap = (INDIA_LOCATION_DATA[stateName] && INDIA_LOCATION_DATA[stateName][districtName]) || {};
-      const cities = Object.keys(cityMap);
-      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
-      const initialCity = (selectedCity && cityMap[selectedCity]) ? selectedCity : (cities[0] || '');
-      if (initialCity) {
-        ensureOptionInSelect(citySel, initialCity);
-        populateOnboardPins(stateName, districtName, initialCity, '');
-      }
-    }
-
-    function populateOnboardPins(stateName, districtName, cityName, selectedPin = '') {
-      const pinSel = document.getElementById('onboardPinSelect');
-      const pinInput = document.getElementById('onboardPinInput');
-      if (!pinSel || !pinInput) return;
-      const pins = ((INDIA_LOCATION_DATA[stateName] && INDIA_LOCATION_DATA[stateName][districtName] && INDIA_LOCATION_DATA[stateName][districtName][cityName]) || []);
-      pinSel.innerHTML = pins.map(p => `<option value="${p}">${p}</option>`).join('');
-      const chosenPin = selectedPin || pins[0] || '';
-      if (chosenPin) {
-        ensureOptionInSelect(pinSel, chosenPin);
-        pinInput.value = chosenPin;
-      } else {
-        pinInput.value = '';
-      }
-    }
-
-    function onOnboardStateChange() {
-      const st = document.getElementById('onboardStateSelect').value;
-      populateOnboardDistricts(st, '');
-      translateWholeAppDOM();
-    }
-
-    function onOnboardDistrictChange() {
-      const st = document.getElementById('onboardStateSelect').value;
-      const dist = document.getElementById('onboardDistrictSelect').value;
-      populateOnboardCities(st, dist, '');
-      translateWholeAppDOM();
-    }
-
-    function onOnboardCityChange() {
-      const st = document.getElementById('onboardStateSelect').value;
-      const dist = document.getElementById('onboardDistrictSelect').value;
-      const city = document.getElementById('onboardCitySelect').value;
-      populateOnboardPins(st, dist, city, '');
-      translateWholeAppDOM();
-    }
-
-    function onOnboardPinSelectChange() {
-      const pinSel = document.getElementById('onboardPinSelect');
-      const pinInput = document.getElementById('onboardPinInput');
-      if (pinSel && pinInput) {
-        pinInput.value = pinSel.value;
-      }
-    }
-
     function openOnboardingLocationModal(forceOpen = false) {
       if (!forceOpen && localStorage.getItem('farmer_location_completed') === 'true') return;
-      const savedState = localStorage.getItem('farmer_state_name') || 'राजस्थान';
-      const savedDistrict = localStorage.getItem('farmer_district_name') || 'श्रीगंगानगर';
-      const savedCity = localStorage.getItem('farmer_city_name') || 'घड़साना';
-      const savedPin = localStorage.getItem('farmer_pincode') || '335711';
+      document.getElementById('onboardCityInput').value = localStorage.getItem('farmer_city_name') || '';
+      document.getElementById('onboardDistrictInput').value = localStorage.getItem('farmer_district_name') || '';
+      document.getElementById('onboardStateInput').value = localStorage.getItem('farmer_state_name') || '';
+      document.getElementById('onboardPinInput').value = localStorage.getItem('farmer_pincode') || '';
 
-      populateOnboardStates(savedState);
-      populateOnboardDistricts(savedState, savedDistrict);
-      populateOnboardCities(savedState, savedDistrict, savedCity);
-      populateOnboardPins(savedState, savedDistrict, savedCity, savedPin);
-
-      document.getElementById('onboardingLocationModal').classList.add('active');
-      translateWholeAppDOM();
-    }
-
-    function autoFillLocationFromGps() {
-      if (!navigator.geolocation) {
-        showToast('इस डिवाइस में GPS उपलब्ध नहीं है');
-        return;
-      }
-      showToast('GPS से लोकेशन खोजी जा रही है...');
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        userCoords = { lat, lon };
-        localStorage.setItem('farmer_lat', String(lat));
-        localStorage.setItem('farmer_lon', String(lon));
-
-        try {
-          const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=hi`);
-          const data = await res.json();
-          const stateRaw = (data.principalSubdivision || '').trim();
-          const distRaw = (data.localityInfo && data.localityInfo.administrative)
-            ? (data.localityInfo.administrative.find(a => a.adminLevel === 5)?.name || data.city || '')
-            : (data.city || '');
-          const cityRaw = (data.city || data.locality || '').trim();
-          const pinRaw = (data.postcode || '').trim();
-
-          const matchedState = Object.keys(INDIA_LOCATION_DATA).find(s =>
-            stateRaw.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(stateRaw.toLowerCase())
-          ) || stateRaw || 'राजस्थान';
-
-          const stateSel = document.getElementById('onboardStateSelect');
-          ensureOptionInSelect(stateSel, matchedState);
-          populateOnboardDistricts(matchedState, distRaw);
-
-          const distSel = document.getElementById('onboardDistrictSelect');
-          if (distRaw) ensureOptionInSelect(distSel, distRaw);
-          populateOnboardCities(matchedState, distSel.value, cityRaw);
-
-          const citySel = document.getElementById('onboardCitySelect');
-          if (cityRaw) ensureOptionInSelect(citySel, cityRaw);
-
-          if (pinRaw) {
-            const pinSel = document.getElementById('onboardPinSelect');
-            ensureOptionInSelect(pinSel, pinRaw);
-            document.getElementById('onboardPinInput').value = pinRaw;
-          }
-          translateWholeAppDOM();
-          showToast('GPS लोकेशन भर दी गई है');
-        } catch (err) {
-          showToast('GPS से लोकेशन लाने में समस्या आई, लिस्ट से चुनें');
-        }
-      }, () => {
-        showToast('लोकेशन अनुमति नहीं मिली, लिस्ट से चुनें');
-      }, { enableHighAccuracy: true, timeout: 8000 });
+      const modal = document.getElementById('onboardingLocationModal');
+      modal.classList.add('active');
+      translateWholeAppDOM(modal);
     }
 
     function saveOnboardingLocation() {
-      const stateVal = (document.getElementById('onboardStateSelect').value || '').trim();
-      const districtVal = (document.getElementById('onboardDistrictSelect').value || '').trim();
-      const cityVal = (document.getElementById('onboardCitySelect').value || '').trim();
-      const pinVal = (document.getElementById('onboardPinInput').value || '').trim();
+      const cityVal = cleanExtraIdTokens(document.getElementById('onboardCityInput').value || '');
+      const districtVal = cleanExtraIdTokens(document.getElementById('onboardDistrictInput').value || '');
+      const stateVal = cleanExtraIdTokens(document.getElementById('onboardStateInput').value || '');
+      const pinVal = cleanExtraIdTokens(document.getElementById('onboardPinInput').value || '');
 
-      if (!stateVal || !districtVal || !cityVal) {
-        showToast('कृपया राज्य, जिला और शहर चुनें');
+      if (!cityVal && !districtVal && !stateVal) {
+        showToast('कृपया शहर, जिला या राज्य लिखें या GPS भरें');
         return;
       }
 
-      const fullAddress = `${cityVal}, ${districtVal}, ${stateVal}${pinVal ? ' - ' + pinVal : ''}`;
-      localStorage.setItem('farmer_state_name', stateVal);
-      localStorage.setItem('farmer_district_name', districtVal);
+      const fullAddress = [cityVal, districtVal, stateVal].filter(Boolean).join(', ') + (pinVal ? ` - ${pinVal}` : '');
       localStorage.setItem('farmer_city_name', cityVal);
+      localStorage.setItem('farmer_district_name', districtVal);
+      localStorage.setItem('farmer_state_name', stateVal);
       localStorage.setItem('farmer_pincode', pinVal);
       localStorage.setItem('farmer_state', fullAddress);
       localStorage.setItem('farmer_address', fullAddress);
       localStorage.setItem('farmer_location_completed', 'true');
 
-      userCurrentCity = districtVal || cityVal;
+      userCurrentCity = districtVal || cityVal || stateVal || fullAddress;
       document.getElementById('onboardingLocationModal').classList.remove('active');
       updateProfileUI();
       fetchLiveWeather();
@@ -2058,8 +1864,9 @@
       document.getElementById('orderFarmerAddress').value = localStorage.getItem('farmer_address') || localStorage.getItem('farmer_state') || '';
 
       updateSeedOrderSummary();
-      document.getElementById('seedOrderModal').classList.add('active');
-      translateWholeAppDOM();
+      const modal = document.getElementById('seedOrderModal');
+      modal.classList.add('active');
+      translateWholeAppDOM(modal);
     }
 
     function closeSeedOrderModal() {
@@ -2091,7 +1898,7 @@
         <div><b>🏢 कंपनी:</b> ${cleanExtraIdTokens(v.company || '-')}</div>
         <div><b>${getCropEmoji(v.crop)} किस्म:</b> ${cleanExtraIdTokens(v.variety || '-')} (${cleanExtraIdTokens(v.crop || '-')})</div>
         <div><b>📦 पैकेट साइज:</b> ${cleanExtraIdTokens(v.packSize || 'मानक पैकेट')}</div>
-        <div><b>💰 रेट:</b> ${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b> <span class="badge-discount">${pInfo.discountLabel}</span>` : `<b>${pInfo.displayPriceText}</b>`}</div>
+        <div><b>💰 रेट:</b> ${pInfo.hasDiscount ? `<s style="opacity:0.7;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b> <span class="badge-discount">${pInfo.discountLabel}</span>` : `<b>${pInfo.displayPriceText}</b>`}</div>
         <div style="margin-top:4px; padding-top:4px; border-top:1px dashed #86efac;">${totalHtml}</div>
       `;
       translateWholeAppDOM(box);
@@ -2286,57 +2093,6 @@
         }
       });
     }
-
-    const OFFLINE_LANG_PACKS = {
-      hi: {
-        headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "राम-राम, किसान भाई!", txtChangeProf: "✏️ प्रोफाइल बदलें",
-        txtAiTitle: "🎙️ AI कृषि डॉक्टर से बोलकर बात करें", aiSubText: "टैप करें और फसल या बीमारी का नाम बोलें...",
-        txtSprayAdvice: "स्प्रे हेतु सुबह या शाम का समय चुनें", searchPlaceholder: "🔍 फसल या किस्म लिखें...",
-        gCrops: "सभी किस्में", gProt: "फसल सुरक्षा", gSched: "स्प्रे शेड्यूल", gAtoz: "खेती कैसे करें (A-Z)",
-        gDisc: "किसान चर्चा", gAdv: "सलाहकार", gComp: "All कंपनी बीज", gChem: "दवाइयाँ Chemicals", gServ: "Other सेवाएं",
-        txtPlaySub: "हमें प्ले स्टोर पर रेट करें और ऐप शेयर करें।", txtRateBtn: "रेट करें",
-        txtVideoHead: "📺 ताज़ा कृषि वीडियो व रील्स", txtSeeAll: "सभी देखें >", txtSocialHead: "हमारे साथ सोशल मीडिया पर जुड़ें",
-        fabText: "तुरंत समाधान", navHome: "होम", navCrops: "किस्में", navSched: "शेड्यूल", navProt: "सुरक्षा", navHelp: "सलाहकार",
-        cropsTitle: "सभी किस्में", protTitle: "फसल सुरक्षा", schedTitle: "स्प्रे शेड्यूल", compTitle: "सीड कंपनी",
-        chemTitle: "दवाइयाँ Chemicals", mandiTitle: "मंडी भाव", weatherTitle: "मौसम", profileTitle: "किसान प्रोफाइल",
-        favoritesTitle: "पसंदीदा किस्में", atozTitle: "खेती गाइड (A-Z)", discTitle: "किसान चर्चा", privacyTitle: "गोपनीयता नीति",
-        reportsTitle: "AI जांच रिपोर्ट", schemesTitle: "सरकारी योजनाएं", expertTitle: "एक्सपर्ट सुझाव", pestTitle: "कीट अलर्ट",
-        calcTitle: "बुवाई कैलकुलेटर", drawerHead: "📋 मेन्यू", completeProfileText: "प्रोफाइल पूरी करें >",
-        mProfile: "मेरी प्रोफाइल", mChangeLoc: "राज्य / जिला / पिनकोड बदलें", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
-        mProtection: "फसल सुरक्षा", mChems: "दवाइयाँ Chemicals", mServices: "Other सेवाएं", mPrivacy: "गोपनीयता नीति",
-        mRate: "Play Store रेट करें", mShare: "ऐप शेयर करें", mHelp: "सलाहकार से पूछें", mLogout: "लॉगआउट",
-        solHead: "⚡ तुरंत समाधान", camBtn: "कैमरा", galBtn: "गैलरी", diagBtn: "🔍 रोग पहचानें",
-        diagRepHead: "🌿 AI रिपोर्ट", wapBtn: "WhatsApp करें", chatYou: "आप", chatDoc: "डॉक्टर",
-        chatThinking: "⏳ जवाब तैयार हो रहा है...", chatErr: "त्रुटि", chatNetErrHead: "नेटवर्क", chatNetErrDesc: "कनेक्शन समस्या",
-        aiDocTitle: "AI डॉक्टर", loadingText: "🌾 डेटा लोड हो रहा है...",
-        offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
-        voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है"
-      },
-      en: {
-        headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!", txtChangeProf: "✏️ Edit Profile",
-        txtAiTitle: "🎙️ Talk to AI Agri Doctor", aiSubText: "Tap and speak crop or disease name...",
-        txtSprayAdvice: "Choose morning or evening for spraying", searchPlaceholder: "🔍 Search crop or variety...",
-        gCrops: "All Varieties", gProt: "Crop Protection", gSched: "Spray Schedule", gAtoz: "Farming Guide (A-Z)",
-        gDisc: "Farmer Discussion", gAdv: "Advisor", gComp: "All Company Seeds", gChem: "Chemicals & Medicines", gServ: "Other Services",
-        txtPlaySub: "Rate us on Play Store and share app.", txtRateBtn: "Rate Us",
-        txtVideoHead: "📺 Latest Agri Videos & Reels", txtSeeAll: "See All >", txtSocialHead: "Connect with us on Social Media",
-        fabText: "Instant Solution", navHome: "Home", navCrops: "Varieties", navSched: "Schedule", navProt: "Protection", navHelp: "Advisor",
-        cropsTitle: "All Varieties", protTitle: "Crop Protection", schedTitle: "Spray Schedule", compTitle: "Seed Companies",
-        chemTitle: "Chemicals", mandiTitle: "Mandi Prices", weatherTitle: "Weather", profileTitle: "Farmer Profile",
-        favoritesTitle: "Favorites", atozTitle: "Farming Guide (A-Z)", discTitle: "Discussion", privacyTitle: "Privacy Policy",
-        reportsTitle: "AI Reports", schemesTitle: "Gov Schemes", expertTitle: "Expert Tips", pestTitle: "Pest Alerts",
-        calcTitle: "Sowing Calculator", drawerHead: "📋 Menu", completeProfileText: "Complete profile >",
-        mProfile: "My Profile", mChangeLoc: "Change State / District / PIN", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
-        mProtection: "Crop Protection", mChems: "Chemicals", mServices: "Other Services", mPrivacy: "Privacy Policy",
-        mRate: "Rate Play Store", mShare: "Share App", mHelp: "Ask Advisor", mLogout: "Logout",
-        solHead: "⚡ Instant Solution", camBtn: "Camera", galBtn: "Gallery", diagBtn: "🔍 Diagnose",
-        diagRepHead: "🌿 AI Report", wapBtn: "Send on WhatsApp", chatYou: "You", chatDoc: "Doctor",
-        chatThinking: "⏳ Generating reply...", chatErr: "Error", chatNetErrHead: "Network", chatNetErrDesc: "Connection issue",
-        aiDocTitle: "AI Doctor", loadingText: "🌾 Loading data...",
-        offlineBanner: "📴 Offline Mode: Showing saved language and data",
-        voiceNotSupported: "Voice input is not supported on this browser"
-      }
-    };
 
     function updateOfflineBanner() {
       syncBannerOffset();
@@ -3728,7 +3484,7 @@
       const container = document.getElementById('forecast15Container');
       if (!container) return;
       if (!navigator.onLine) {
-        container.innerHTML = `<div style="text-align:center; padding:10px; font-size:12.5px; color:#6b7280;">📴 ऑफ़लाइन मोड: मौसम पूर्वानुमान के लिए इंटरनेट आवश्यक है।</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:10px; font-size:12.5px;">📴 ऑफ़लाइन मोड: मौसम पूर्वानुमान के लिए इंटरनेट आवश्यक है।</div>`;
         translateWholeAppDOM(container);
         return;
       }
@@ -3761,16 +3517,16 @@
             const wind = Math.round(data.daily.wind_speed_10m_max[idx] || 0);
             return `
               <div class="forecast-day-row">
-                <div style="min-width:95px;"><b>${label}</b><div style="font-size:11px; color:#6b7280;">${info.icon} ${info.desc}</div></div>
-                <div style="font-size:11.5px; color:#374151;">💨 ${wind} km/h<br>🌧️ ${rain} mm</div>
-                <div style="text-align:right; font-weight:bold; color:#1b5e20;">${tMax}° / ${tMin}°</div>
+                <div style="min-width:95px;"><b>${label}</b><div style="font-size:11px; opacity:0.8;">${info.icon} ${info.desc}</div></div>
+                <div style="font-size:11.5px;">💨 ${wind} km/h<br>🌧️ ${rain} mm</div>
+                <div style="text-align:right; font-weight:bold;">${tMax}° / ${tMin}°</div>
               </div>
             `;
           }).join('');
           translateWholeAppDOM(container);
         }
       } catch (err) {
-        container.innerHTML = `<div style="text-align:center; padding:10px; font-size:12.5px; color:#6b7280;">15 दिन का डेटा उपलब्ध नहीं हो सका।</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:10px; font-size:12.5px;">15 दिन का डेटा उपलब्ध नहीं हो सका।</div>`;
         translateWholeAppDOM(container);
       }
     }
@@ -3868,7 +3624,7 @@
         return;
       }
       if (!locationVal) {
-        showToast('कृपया अपना गांव / जिला लिखें');
+        showToast('कृपया अपना शहर / जिला / राज्य लिखें');
         document.getElementById('advLocation').focus();
         return;
       }
@@ -3910,7 +3666,7 @@
 
       container.innerHTML = '';
       if (cropList.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
       } else {
         cropList.forEach(origCrop => {
           const displayHtml = resolveCropThumbHtml(origCrop);
@@ -3954,7 +3710,7 @@
 
       container.innerHTML = '';
       if (cropList.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
       } else {
         cropList.forEach(origCrop => {
           const displayHtml = resolveCropThumbHtml(origCrop);
@@ -3983,7 +3739,7 @@
 
       container.innerHTML = '';
       if (cropList.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
       } else {
         cropList.forEach(origCrop => {
           const displayHtml = resolveCropThumbHtml(origCrop);
@@ -4005,7 +3761,7 @@
 
       container.innerHTML = '';
       if (list.length === 0) {
-        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
+        container.innerHTML = `<div class="variety-card" style="text-align:center; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
       } else {
         list.forEach(v => {
           const pInfo = parsePriceAndDiscount(v.price, v.discount);
@@ -4021,7 +3777,7 @@
               <div class="var-info-row">🌾 <b>फसल:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
               <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
               <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
-              <div class="var-info-row">💰 <b>रेट:</b> <span>${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
+              <div class="var-info-row">💰 <b>रेट:</b> <span>${pInfo.hasDiscount ? `<s style="opacity:0.7;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
               <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
               <div class="var-info-row">⚖️ <b>वजन:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
               <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
@@ -4062,7 +3818,7 @@
               <div>
                 <span style="font-size:12px;">💰 <b>रेट:</b></span>
                 ${pInfo.hasDiscount
-                  ? `<s style="color:#6b7280; font-size:12.5px; margin-left:4px;">${pInfo.displayPriceText}</s> <b style="color:#15803d; font-size:15px;">${pInfo.displayFinalPriceText}</b>`
+                  ? `<s style="opacity:0.7; font-size:12.5px; margin-left:4px;">${pInfo.displayPriceText}</s> <b style="color:#15803d; font-size:15px;">${pInfo.displayFinalPriceText}</b>`
                   : `<b style="color:#15803d; font-size:15px; margin-left:4px;">${pInfo.displayPriceText}</b>`}
                 ${v.packSize ? `<span style="font-size:11.5px; opacity:0.85; margin-left:6px;">(${cleanExtraIdTokens(v.packSize)})</span>` : ''}
               </div>
@@ -4289,8 +4045,8 @@
     function showExpertAdviceScreen(isRefresh = false) {
       const container = document.getElementById('tipsContainer');
       container.innerHTML = tipsRecords.length > 0
-        ? tipsRecords.map(item => `<div class="schedule-step"><b>💡 ${cleanExtraIdTokens(item.title)}</b><p>${cleanExtraIdTokens(item.desc)}</p>${item.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${cleanExtraIdTokens(item.date)}</span>` : ''}</div>`).join('')
-        : `<div class="schedule-step" style="text-align:center; color:#6b7280;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
+        ? tipsRecords.map(item => `<div class="schedule-step"><b>💡 ${cleanExtraIdTokens(item.title)}</b><p>${cleanExtraIdTokens(item.desc)}</p>${item.date ? `<span style="font-size:11px; opacity:0.75;">📅 ${cleanExtraIdTokens(item.date)}</span>` : ''}</div>`).join('')
+        : `<div class="schedule-step" style="text-align:center;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
 
       const t = getT();
       if (!isRefresh) {
@@ -4304,7 +4060,7 @@
       const container = document.getElementById('alertsContainer');
       container.innerHTML = alertsRecords.length > 0
         ? alertsRecords.map(a => `<div class="pest-alert-card"><b>⚠️ ${cleanExtraIdTokens(a.title)}</b><p style="margin-top:4px; font-size:13.5px;">${cleanExtraIdTokens(a.desc)}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${cleanExtraIdTokens(a.date)}</span>` : ''}</div>`).join('')
-        : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
+        : `<div class="variety-card" style="padding:14px; text-align:center;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
 
       const t = getT();
       if (!isRefresh) {
@@ -4317,8 +4073,8 @@
     function showAiReportsScreen(isRefresh = false) {
       const container = document.getElementById('aiReportsContainer');
       container.innerHTML = aiReportsRecords.length > 0
-        ? aiReportsRecords.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${cleanExtraIdTokens(rep.title)}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${cleanExtraIdTokens(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; color:#6b7280; display:block; margin-top:6px;">🕒 ${cleanExtraIdTokens(rep.date)}</span>` : ''}</div>`).join('')
-        : `<div class="variety-card" style="text-align:center; color:#6b7280;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
+        ? aiReportsRecords.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${cleanExtraIdTokens(rep.title)}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${cleanExtraIdTokens(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; opacity:0.75; display:block; margin-top:6px;">🕒 ${cleanExtraIdTokens(rep.date)}</span>` : ''}</div>`).join('')
+        : `<div class="variety-card" style="text-align:center;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
 
       const t = getT();
       if (!isRefresh) {
@@ -4524,15 +4280,9 @@
       closeDrawer();
       document.getElementById('profNameInput').value = localStorage.getItem('farmer_name') || '';
       document.getElementById('profPhoneInput').value = localStorage.getItem('farmer_phone') || '';
-      const existingLoc = localStorage.getItem('farmer_address')
-        || localStorage.getItem('farmer_state')
-        || [
-          localStorage.getItem('farmer_city_name'),
-          localStorage.getItem('farmer_district_name'),
-          localStorage.getItem('farmer_state_name')
-        ].filter(Boolean).join(', ')
-        || '';
-      document.getElementById('profStateInput').value = existingLoc;
+      document.getElementById('profCityInput').value = localStorage.getItem('farmer_city_name') || '';
+      document.getElementById('profDistrictInput').value = localStorage.getItem('farmer_district_name') || '';
+      document.getElementById('profStateInput').value = localStorage.getItem('farmer_state_name') || '';
       document.getElementById('profCropsInput').value = localStorage.getItem('farmer_crops') || '';
       const t = getT();
       openScreen('screen-profile', t.profileTitle);
@@ -4541,24 +4291,24 @@
     function saveFarmerProfile() {
       const name = cleanExtraIdTokens(document.getElementById('profNameInput').value || '');
       const phone = cleanExtraIdTokens(document.getElementById('profPhoneInput').value || '');
-      const locInput = cleanExtraIdTokens(document.getElementById('profStateInput').value || '');
+      const city = cleanExtraIdTokens(document.getElementById('profCityInput').value || '');
+      const district = cleanExtraIdTokens(document.getElementById('profDistrictInput').value || '');
+      const state = cleanExtraIdTokens(document.getElementById('profStateInput').value || '');
       const crops = cleanExtraIdTokens(document.getElementById('profCropsInput').value || '');
 
       localStorage.setItem('farmer_name', name);
       localStorage.setItem('farmer_phone', phone);
+      localStorage.setItem('farmer_city_name', city);
+      localStorage.setItem('farmer_district_name', district);
+      localStorage.setItem('farmer_state_name', state);
       localStorage.setItem('farmer_crops', crops);
 
-      if (locInput) {
-        const cleanMain = locInput.split('-')[0].trim();
-        const parts = cleanMain.split(',').map(p => p.trim()).filter(Boolean);
-        if (parts[0]) localStorage.setItem('farmer_city_name', parts[0]);
-        if (parts[1]) localStorage.setItem('farmer_district_name', parts[1]);
-        if (parts[2]) localStorage.setItem('farmer_state_name', parts[2]);
-
-        localStorage.setItem('farmer_state', locInput);
-        localStorage.setItem('farmer_address', locInput);
+      const fullLoc = [city, district, state].filter(Boolean).join(', ');
+      if (fullLoc) {
+        localStorage.setItem('farmer_state', fullLoc);
+        localStorage.setItem('farmer_address', fullLoc);
         localStorage.setItem('farmer_location_completed', 'true');
-        userCurrentCity = parts[1] || parts[0] || cleanMain;
+        userCurrentCity = district || city || state || fullLoc;
       }
 
       updateProfileUI();
@@ -4595,7 +4345,7 @@
 
       container.innerHTML = `
         <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
-          <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${cleanExtraIdTokens(crop)}</h3>
+          <h3 style="font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${cleanExtraIdTokens(crop)}</h3>
           <div class="schedule-step"><b>1. 🟫 मिट्टी</b><p>${cleanExtraIdTokens(d.soil)}</p></div>
           <div class="schedule-step"><b>2. 🌱 बुवाई</b><p>${cleanExtraIdTokens(d.sowing)}</p></div>
           <div class="schedule-step"><b>3. 📦 बीज दर</b><p>${cleanExtraIdTokens(d.seed)}</p></div>
@@ -4604,7 +4354,7 @@
           <div class="schedule-step"><b>6. 💧 सिंचाई</b><p>${cleanExtraIdTokens(d.irrigation)}</p></div>
           <div class="schedule-step"><b>7. 🛡️ फसल सुरक्षा</b><p>${cleanExtraIdTokens(d.care)}</p></div>
           <div class="schedule-step"><b>8. ✂️ तुड़ाई / कटाई</b><p>${cleanExtraIdTokens(d.harvesting)}</p></div>
-          <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 भंडारण व मंडी</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
+          <div class="schedule-step"><b style="color:#d97706;">9. 💰 भंडारण व मंडी</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
         </div>`;
 
       if (!isRefresh) {
@@ -4688,11 +4438,11 @@
       }
       container.innerHTML = '';
       posts.forEach(p => {
-        const imgHtml = p.image ? `<div style="margin-top:8px; text-align:center;"><img src="${p.image}" style="max-height:200px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #e5e7eb; cursor:pointer;" onclick="openImageModal('${p.image}')"></div>` : '';
-        let commentsHtml = '<div style="margin-top:10px; border-top:1px dashed #cbd5e1; padding-top:8px;">';
+        const imgHtml = p.image ? `<div style="margin-top:8px; text-align:center;"><img src="${p.image}" style="max-height:200px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #33415533; cursor:pointer;" onclick="openImageModal('${p.image}')"></div>` : '';
+        let commentsHtml = '<div style="margin-top:10px; border-top:1px dashed #33415555; padding-top:8px;">';
         if (p.comments && p.comments.length > 0) {
           p.comments.forEach(cm => {
-            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cleanExtraIdTokens(cm.author)}:</b> ${cleanExtraIdTokens(cm.text)}</div>`;
+            commentsHtml += `<div class="discussion-comment-item" style="padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b>💬 ${cleanExtraIdTokens(cm.author)}:</b> ${cleanExtraIdTokens(cm.text)}</div>`;
           });
         }
         commentsHtml += `
@@ -4704,8 +4454,8 @@
 
         container.innerHTML += `
           <div class="variety-card" style="border-left:4px solid #0284c7;">
-            <b style="color:#0369a1; font-size:14px;">👤 ${cleanExtraIdTokens(p.author)}</b>
-            <p style="margin:6px 0; color:#1f2937; font-size:14px;">${cleanExtraIdTokens(p.text)}</p>
+            <b style="font-size:14px;">👤 ${cleanExtraIdTokens(p.author)}</b>
+            <p style="margin:6px 0; font-size:14px;">${cleanExtraIdTokens(p.text)}</p>
             ${imgHtml}
             ${commentsHtml}
           </div>`;
