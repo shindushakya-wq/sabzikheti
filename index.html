@@ -132,7 +132,8 @@
     body.dark-mode .disease-card,
     body.dark-mode .stories-wrapper,
     body.dark-mode .quick-pill,
-    body.dark-mode #aiChatMessagesContainer {
+    body.dark-mode #aiChatMessagesContainer,
+    body.dark-mode .seed-order-summary {
       background-color: #1e2937;
       color: #f8fafc;
       border-color: #334155;
@@ -451,7 +452,7 @@
 
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.active { display: flex; }
-    .modal-box { background: white; border-radius: 16px; padding: 20px; max-width: 400px; width: 100%; max-height: 85vh; overflow-y: auto; }
+    .modal-box { background: white; border-radius: 16px; padding: 20px; max-width: 410px; width: 100%; max-height: 88vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .modal-header h3 { font-size: 16px; color: #1b5e20; }
     .modal-close { font-size: 20px; cursor: pointer; border: none; background: none; }
@@ -485,10 +486,17 @@
     .var-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
     .badge-variety { background: #e8f5e9; color: #1b5e20; font-size: 12px; padding: 4px 10px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; border: 1.5px solid #bbf7d0; }
     .badge-company { background: #eff6ff; color: #1d4ed8; font-size: 12px; padding: 4px 10px; border-radius: 8px; font-weight: 700; display: inline-block; border: 1px solid #bfdbfe; }
+    .badge-discount { background: #fef2f2; color: #dc2626; font-size: 12px; padding: 4px 10px; border-radius: 8px; font-weight: 800; display: inline-block; border: 1px solid #fca5a5; }
+    .price-highlight-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 8px 12px; margin: 10px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
 
     .var-title { font-size: 18px; font-weight: 800; color: #111827; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 8px; }
     .var-info-row { font-size: 13.5px; color: #374151; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.5; }
     .var-info-row b { color: #1f2937; }
+
+    .seed-order-summary { background: #f0fdf4; border: 1px solid #86efac; border-radius: 12px; padding: 12px; margin-bottom: 14px; font-size: 13px; line-height: 1.55; }
+    .payment-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .payment-mode-btn { padding: 10px 8px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1f2937; font-size: 12.5px; font-weight: 700; text-align: center; }
+    .payment-mode-btn.active { background: #dcfce7; border-color: #16a34a; color: #14532d; }
 
     .disease-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fecaca; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #dc2626; }
     .disease-title { font-size: 16px; font-weight: bold; color: #991b1b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
@@ -566,6 +574,54 @@
   <div class="loader-overlay" id="appLoader">
     <div class="spinner"></div>
     <p style="font-size:13px; font-weight:bold; color:#166534;" id="txtLoading">🌾 डेटा लोड हो रहा है...</p>
+  </div>
+
+  <!-- बीज ऑर्डर फॉर्म मोडल -->
+  <div class="modal-overlay" id="seedOrderModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🛒 बीज ऑर्डर फॉर्म</h3>
+        <button class="modal-close" onclick="closeSeedOrderModal()">✕</button>
+      </div>
+
+      <div class="seed-order-summary" id="seedOrderSummaryBox"></div>
+
+      <div class="form-group">
+        <label>💳 भुगतान का तरीका चुनें:</label>
+        <div class="payment-mode-grid">
+          <button type="button" class="payment-mode-btn active" id="payModeCod" onclick="selectSeedPaymentMode('Cash on Delivery (नकद पेमेंट)')">
+            💵 Cash on Delivery (नकद)
+          </button>
+          <button type="button" class="payment-mode-btn" id="payModeOnline" onclick="selectSeedPaymentMode('ऑनलाइन पेमेंट (UPI / GPay / PhonePe)')">
+            📲 ऑनलाइन पेमेंट
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>📦 पैकेट की संख्या:</label>
+        <input type="number" id="orderQtyInput" class="form-control" min="1" value="1" oninput="updateSeedOrderSummary()">
+      </div>
+
+      <div class="form-group">
+        <label>👤 किसान का नाम:</label>
+        <input type="text" id="orderFarmerName" class="form-control" placeholder="अपना नाम लिखें">
+      </div>
+
+      <div class="form-group">
+        <label>📞 मोबाइल नंबर:</label>
+        <input type="tel" id="orderFarmerPhone" class="form-control" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर">
+      </div>
+
+      <div class="form-group">
+        <label>📍 पूरा पता (गांव / डाकघर / तहसील / जिला / पिन कोड):</label>
+        <textarea id="orderFarmerAddress" class="form-control" rows="2" placeholder="पूरा डिलीवरी पता लिखें..."></textarea>
+      </div>
+
+      <button type="button" class="btn-action btn-wa" style="background:#15803d;" onclick="confirmSeedOrderOnWhatsApp()">
+        📲 WhatsApp पर ऑर्डर भेजें
+      </button>
+    </div>
   </div>
 
   <!-- भाषा चयन स्क्रीन मोडल (12 भाषाएं) -->
@@ -694,7 +750,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.2
+      CROP & SABZI DOCTOR • v11.3
     </div>
   </div>
 
@@ -1383,6 +1439,8 @@
     let base64ImageRaw = "";
     let imageMimeType = "image/jpeg";
     let advisorPhotoDataUrl = "";
+    let activeSeedOrderItem = null;
+    let selectedSeedPaymentMode = "Cash on Delivery (नकद पेमेंट)";
     let userCurrentCity = localStorage.getItem('farmer_state') || 'Sri Ganganagar';
     let userCoords = {
       lat: parseFloat(localStorage.getItem('farmer_lat') || '29.9038'),
@@ -1465,6 +1523,159 @@
       if (header && banner) {
         banner.style.top = `${header.offsetHeight}px`;
       }
+    }
+
+    function parsePriceAndDiscount(rawPrice, rawDiscount) {
+      const cleanPriceStr = (rawPrice || '').trim();
+      const numMatch = cleanPriceStr.replace(/,/g, '').match(/(\d+(?:\.\d+)?)/);
+      const unitPrice = numMatch ? parseFloat(numMatch[1]) : 0;
+
+      const cleanDiscStr = (rawDiscount || '').trim();
+      let discountLabel = '';
+      let discountPercent = 0;
+      let discountFlat = 0;
+
+      if (cleanDiscStr) {
+        const pctMatch = cleanDiscStr.match(/(\d+(?:\.\d+)?)\s*%/);
+        const flatMatch = cleanDiscStr.match(/(?:₹|rs\.?|off|छूट)?\s*(\d+(?:\.\d+)?)/i);
+        if (cleanDiscStr.includes('%') && pctMatch) {
+          discountPercent = parseFloat(pctMatch[1]);
+          discountLabel = `${discountPercent}% छूट`;
+        } else if (/छूट|off|₹|rs/i.test(cleanDiscStr) && flatMatch) {
+          discountFlat = parseFloat(flatMatch[1]);
+          discountLabel = cleanDiscStr.includes('छूट') || cleanDiscStr.toLowerCase().includes('off')
+            ? cleanDiscStr
+            : `₹${discountFlat} छूट`;
+        } else if (flatMatch) {
+          discountPercent = parseFloat(flatMatch[1]);
+          discountLabel = `${discountPercent}% छूट`;
+        } else {
+          discountLabel = cleanDiscStr;
+        }
+      }
+
+      let finalUnitPrice = unitPrice;
+      if (unitPrice > 0) {
+        if (discountPercent > 0) {
+          finalUnitPrice = Math.max(0, Math.round(unitPrice - (unitPrice * discountPercent) / 100));
+        } else if (discountFlat > 0) {
+          finalUnitPrice = Math.max(0, Math.round(unitPrice - discountFlat));
+        }
+      }
+
+      return {
+        rawPrice: cleanPriceStr,
+        unitPrice,
+        finalUnitPrice,
+        hasDiscount: unitPrice > 0 && finalUnitPrice < unitPrice && !!discountLabel,
+        discountLabel,
+        displayPriceText: unitPrice > 0 ? `₹${unitPrice}` : (cleanPriceStr || 'WhatsApp पर पूछें'),
+        displayFinalPriceText: unitPrice > 0 ? `₹${finalUnitPrice}` : (cleanPriceStr || 'WhatsApp पर पूछें')
+      };
+    }
+
+    function openSeedOrderModal(idx) {
+      const v = lastVarietiesList[idx];
+      if (!v) return;
+      activeSeedOrderItem = v;
+      selectedSeedPaymentMode = "Cash on Delivery (नकद पेमेंट)";
+      document.getElementById('payModeCod').classList.add('active');
+      document.getElementById('payModeOnline').classList.remove('active');
+
+      document.getElementById('orderQtyInput').value = '1';
+      document.getElementById('orderFarmerName').value = localStorage.getItem('farmer_name') || '';
+      document.getElementById('orderFarmerPhone').value = localStorage.getItem('farmer_phone') || '';
+      document.getElementById('orderFarmerAddress').value = localStorage.getItem('farmer_address') || localStorage.getItem('farmer_state') || '';
+
+      updateSeedOrderSummary();
+      document.getElementById('seedOrderModal').classList.add('active');
+    }
+
+    function closeSeedOrderModal() {
+      document.getElementById('seedOrderModal').classList.remove('active');
+      activeSeedOrderItem = null;
+    }
+
+    function selectSeedPaymentMode(mode) {
+      selectedSeedPaymentMode = mode;
+      document.getElementById('payModeCod').classList.toggle('active', mode.includes('Cash on Delivery'));
+      document.getElementById('payModeOnline').classList.toggle('active', mode.includes('ऑनलाइन'));
+    }
+
+    function updateSeedOrderSummary() {
+      const box = document.getElementById('seedOrderSummaryBox');
+      if (!box || !activeSeedOrderItem) return;
+      const v = activeSeedOrderItem;
+      const qty = Math.max(1, parseInt(document.getElementById('orderQtyInput').value || '1', 10));
+      const pInfo = parsePriceAndDiscount(v.price, v.discount);
+
+      let totalHtml = '<b>कुल राशि:</b> WhatsApp पर कन्फर्म करें';
+      if (pInfo.unitPrice > 0) {
+        const totalAmt = pInfo.finalUnitPrice * qty;
+        totalHtml = `<b>कुल राशि (${qty} पैकेट):</b> <span style="color:#15803d; font-size:15px;">₹${totalAmt}</span>`
+          + (pInfo.hasDiscount ? ` <span style="font-size:11.5px; color:#dc2626;">(${pInfo.discountLabel} लागू)</span>` : '');
+      }
+
+      box.innerHTML = `
+        <div><b>🏢 कंपनी:</b> ${v.company || '-'}</div>
+        <div><b>${getCropEmoji(v.crop)} किस्म:</b> ${v.variety || '-'} (${v.crop || '-'})</div>
+        <div><b>📦 पैकेट साइज:</b> ${v.packSize || 'मानक पैकेट'}</div>
+        <div><b>💰 रेट:</b> ${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b> <span class="badge-discount">${pInfo.discountLabel}</span>` : `<b>${pInfo.displayPriceText}</b>`}</div>
+        <div style="margin-top:4px; padding-top:4px; border-top:1px dashed #86efac;">${totalHtml}</div>
+      `;
+    }
+
+    function confirmSeedOrderOnWhatsApp() {
+      if (!activeSeedOrderItem) return;
+      const v = activeSeedOrderItem;
+      const qty = Math.max(1, parseInt(document.getElementById('orderQtyInput').value || '1', 10));
+      const farmerName = (document.getElementById('orderFarmerName').value || '').trim();
+      const farmerPhone = (document.getElementById('orderFarmerPhone').value || '').trim();
+      const farmerAddress = (document.getElementById('orderFarmerAddress').value || '').trim();
+
+      if (!farmerName) {
+        showToast('कृपया अपना नाम लिखें');
+        document.getElementById('orderFarmerName').focus();
+        return;
+      }
+      if (!/^\d{10}$/.test(farmerPhone)) {
+        showToast('कृपया 10 अंकों का मोबाइल नंबर लिखें');
+        document.getElementById('orderFarmerPhone').focus();
+        return;
+      }
+      if (!farmerAddress) {
+        showToast('कृपया पूरा डिलीवरी पता लिखें');
+        document.getElementById('orderFarmerAddress').focus();
+        return;
+      }
+
+      localStorage.setItem('farmer_name', farmerName);
+      localStorage.setItem('farmer_phone', farmerPhone);
+      localStorage.setItem('farmer_address', farmerAddress);
+      updateProfileUI();
+
+      const pInfo = parsePriceAndDiscount(v.price, v.discount);
+      const totalLine = pInfo.unitPrice > 0
+        ? `💵 *कुल राशि:* ₹${pInfo.finalUnitPrice * qty}`
+        : `💵 *रेट:* WhatsApp पर पूछें`;
+
+      const lines = [
+        '🛒 *CROP & SABZI DOCTOR - बीज ऑर्डर*',
+        `🏢 *कंपनी:* ${v.company || '-'}`,
+        `🌱 *फसल व किस्म:* ${v.crop || '-'} - ${v.variety || '-'}`,
+        `📦 *पैकेट साइज:* ${v.packSize || 'मानक पैकेट'}`,
+        `🔢 *संख्या:* ${qty} पैकेट`,
+        `💰 *दर:* ${pInfo.displayFinalPriceText}${pInfo.hasDiscount ? ` (${pInfo.discountLabel}, मूल ${pInfo.displayPriceText})` : ''}`,
+        totalLine,
+        `💳 *पेमेंट मोड:* ${selectedSeedPaymentMode}`,
+        `👤 *किसान का नाम:* ${farmerName}`,
+        `📞 *मोबाइल:* ${farmerPhone}`,
+        `📍 *पूरा पता:* ${farmerAddress}`
+      ];
+
+      const waUrl = `https://wa.me/916378475002?text=${encodeURIComponent(lines.join('\n'))}`;
+      closeSeedOrderModal();
+      window.open(waUrl, '_blank');
     }
 
     function normalizeMenuKey(rawKey) {
@@ -2822,6 +3033,10 @@
           });
         }
 
+        const rawPrice = cols[10] || '';
+        const rawPackSize = cols[11] || '';
+        const rawDiscount = cols[12] || '';
+
         return {
           category: cat.trim(),
           rawCategory: cat.trim(),
@@ -2834,7 +3049,10 @@
           weight: cols[5] || '',
           maturity: cols[6] || '',
           resistance: cols[7] || '',
-          photos: photoList
+          photos: photoList,
+          price: rawPrice,
+          packSize: rawPackSize,
+          discount: rawDiscount
         };
       }).filter(r => {
         const cLower = (r.crop || '').toLowerCase();
@@ -3080,7 +3298,7 @@
         isLoadingSheets = false;
 
         if (currentLang !== 'hi') {
-          runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance']);
+          runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize']);
           runBackgroundTranslation(allSchedRowsGlobal, ['crop', 'time', 'med', 'purpose'], () => rebuildScheduleMap(allSchedRowsGlobal));
           runBackgroundTranslation(allProtRowsGlobal, ['crop', 'name', 'symptoms', 'cure'], () => rebuildProtectionMap(allProtRowsGlobal));
           runBackgroundTranslation(chemicalsRecords, ['name', 'type', 'tech', 'use', 'dose']);
@@ -3594,16 +3812,20 @@
           container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
         } else {
           list.forEach(v => {
+            const pInfo = parsePriceAndDiscount(v.price, v.discount);
             container.innerHTML += `
               <div class="variety-card">
                 <div class="var-header-row">
                   <span class="badge-variety">${getCropEmoji(v.crop)} ${v.variety}</span>
                   <span class="badge-company">${v.company}</span>
+                  ${pInfo.hasDiscount ? `<span class="badge-discount">${pInfo.discountLabel}</span>` : ''}
                 </div>
                 <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
                 <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${v.company || '-'}</span></div>
                 <div class="var-info-row">🌾 <b>फसल:</b> <span>${v.crop || '-'}</span></div>
                 <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${v.segment || '-'}</span></div>
+                <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${v.packSize || '-'}</span></div>
+                <div class="var-info-row">💰 <b>रेट:</b> <span>${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
                 <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${v.features || '-'}</span></div>
                 <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight || '-'}</span></div>
                 <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${v.maturity || '-'}</span></div>
@@ -3618,7 +3840,7 @@
       const t = getT();
       openScreen('screen-favorites', t.favoritesTitle);
       if (currentLang !== 'hi') {
-        runBackgroundTranslation(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance'], draw);
+        runBackgroundTranslation(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], draw);
       }
     }
 
@@ -3636,7 +3858,7 @@
           return;
         }
 
-        renderItems.forEach(v => {
+        renderItems.forEach((v, idx) => {
           let photosHtml = '';
           if (v.photos && v.photos.length > 0) {
             photosHtml += '<div class="var-photo-grid">';
@@ -3646,6 +3868,20 @@
           const isSaved = favs.includes(v.variety);
           const saveBtnText = isSaved ? "⭐ सेव हुआ" : "☆";
           const savedClass = isSaved ? "saved" : "";
+          const pInfo = parsePriceAndDiscount(v.price, v.discount);
+
+          const priceBoxHtml = `
+            <div class="price-highlight-box">
+              <div>
+                <span style="font-size:12px; color:#374151;">💰 <b>रेट:</b></span>
+                ${pInfo.hasDiscount
+                  ? `<s style="color:#6b7280; font-size:12.5px; margin-left:4px;">${pInfo.displayPriceText}</s> <b style="color:#15803d; font-size:15px;">${pInfo.displayFinalPriceText}</b>`
+                  : `<b style="color:#15803d; font-size:15px; margin-left:4px;">${pInfo.displayPriceText}</b>`}
+                ${v.packSize ? `<span style="font-size:11.5px; color:#4b5563; margin-left:6px;">(${v.packSize})</span>` : ''}
+              </div>
+              ${pInfo.hasDiscount ? `<span class="badge-discount">🏷️ ${pInfo.discountLabel}</span>` : ''}
+            </div>
+          `;
 
           container.innerHTML += `
             <div class="variety-card">
@@ -3653,20 +3889,24 @@
               <div class="var-header-row">
                 <span class="badge-variety">${getCropEmoji(v.crop)} ${v.variety}</span>
                 <span class="badge-company">${v.company}</span>
+                ${pInfo.hasDiscount ? `<span class="badge-discount">${pInfo.discountLabel}</span>` : ''}
               </div>
               <div class="var-title">${getCropEmoji(v.crop)} ${v.variety} (${v.crop})</div>
+
+              ${priceBoxHtml}
 
               <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${v.company || '-'}</span></div>
               <div class="var-info-row">🌾 <b>फसल:</b> <span>${v.crop || '-'}</span></div>
               <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${v.segment || '-'}</span></div>
+              <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${v.packSize || '-'}</span></div>
               <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${v.features || '-'}</span></div>
               <div class="var-info-row">⚖️ <b>वजन:</b> <span>${v.weight || '-'}</span></div>
               <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${v.maturity || '-'}</span></div>
               <div class="var-info-row">🛡️ <b>रोग:</b> <span>${v.resistance || '-'}</span></div>
 
               <div style="display:flex; gap:8px; margin-top:14px;">
-                <a href="https://wa.me/916378475002?text=${encodeURIComponent(v.company + ' - ' + v.variety)}" target="_blank" class="btn-action btn-wa" style="flex:2;">🛒 खरीदे बीज</a>
-                <button class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
+                <button type="button" class="btn-action btn-wa" style="flex:2;" onclick="openSeedOrderModal(${idx})">🛒 खरीदे बीज</button>
+                <button type="button" class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
               </div>
             </div>`;
         });
@@ -3684,7 +3924,7 @@
             if (curTop && curTop.id === 'screen-seeds') curTop.title = tr;
           }
         });
-        runBackgroundTranslation(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance'], draw);
+        runBackgroundTranslation(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], draw);
       }
     }
 
