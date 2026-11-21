@@ -798,7 +798,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.7
+      CROP & SABZI DOCTOR • v12.0
     </div>
   </div>
 
@@ -1688,85 +1688,6 @@
       en: 'en-IN', ml: 'ml-IN', or: 'or-IN', as: 'as-IN'
     };
 
-    const VARIETY_CARD_LABELS = {
-      hi: {
-        rateLabel: '💰 रेट:', askWhatsapp: 'WhatsApp पर पूछें', company: '🏢 कंपनी:', crop: '🌾 फसल:',
-        segment: '🌱 सेगमेंट:', packSize: '📦 पैकेट साइज:', features: '⭐ विशेषताएं:',
-        weight: '⚖️ वजन:', maturity: '⏱️ पकने का समय:', resistance: '🛡️ रोग:',
-        buySeed: '🛒 खरीदे बीज', saved: '⭐ सेव हुआ', save: '☆', remove: '❌ हटाएं'
-      },
-      en: {
-        rateLabel: '💰 Price:', askWhatsapp: 'Ask on WhatsApp', company: '🏢 Company:', crop: '🌾 Crop:',
-        segment: '🌱 Segment:', packSize: '📦 Pack Size:', features: '⭐ Features:',
-        weight: '⚖️ Weight:', maturity: '⏱️ Maturity:', resistance: '🛡️ Disease:',
-        buySeed: '🛒 Buy Seeds', saved: '⭐ Saved', save: '☆', remove: '❌ Remove'
-      },
-      mr: {
-        rateLabel: '💰 दर:', askWhatsapp: 'WhatsApp वर विचारा', company: '🏢 कंपनी:', crop: '🌾 पीक:',
-        segment: '🌱 सेगमेंट:', packSize: '📦 पॅकेट साइज:', features: '⭐ वैशिष्ट्ये:',
-        weight: '⚖️ वजन:', maturity: '⏱️ कालावधी:', resistance: '🛡️ रोग:',
-        buySeed: '🛒 बियाणे खरेदी', saved: '⭐ सेव्ह केले', save: '☆', remove: '❌ काढा'
-      },
-      bn: {
-        rateLabel: '💰 দাম:', askWhatsapp: 'WhatsApp-এ জানুন', company: '🏢 কোম্পানি:', crop: '🌾 ফসল:',
-        segment: '🌱 সেগমেন্ট:', packSize: '📦 প্যাকেট সাইজ:', features: '⭐ বৈশিষ্ট্য:',
-        weight: '⚖️ ওজন:', maturity: '⏱️ সময়কাল:', resistance: '🛡️ রোগ:',
-        buySeed: '🛒 বীজ কিনুন', saved: '⭐ সংরক্ষিত', save: '☆', remove: '❌ মুছুন'
-      },
-      te: {
-        rateLabel: '💰 ధర:', askWhatsapp: 'WhatsApp లో అడగండి', company: '🏢 కంపెనీ:', crop: '🌾 పంట:',
-        segment: '🌱 విభాగం:', packSize: '📦 ప్యాకెట్ సైజు:', features: '⭐ ప్రత్యేకతలు:',
-        weight: '⚖️ బరువు:', maturity: '⏱️ కాలం:', resistance: '🛡️ వ్యాధి:',
-        buySeed: '🛒 విత్తనాలు కొనండి', saved: '⭐ సేవ్ అయింది', save: '☆', remove: '❌ తొలగించండి'
-      },
-      ta: {
-        rateLabel: '💰 விலை:', askWhatsapp: 'WhatsApp-இல் கேட்கவும்', company: '🏢 நிறுவனம்:', crop: '🌾 பயிர்:',
-        segment: '🌱 வகை:', packSize: '📦 பாக்கெட் அளவு:', features: '⭐ சிறப்புகள்:',
-        weight: '⚖️ எடை:', maturity: '⏱️ காலம்:', resistance: '🛡️ நோய்:',
-        buySeed: '🛒 விதை வாங்க', saved: '⭐ சேமிக்கப்பட்டது', save: '☆', remove: '❌ நீக்கு'
-      },
-      gu: {
-        rateLabel: '💰 ભાવ:', askWhatsapp: 'WhatsApp પર પૂછો', company: '🏢 કંપની:', crop: '🌾 પાક:',
-        segment: '🌱 સેગમેન્ટ:', packSize: '📦 પેકેટ સાઈઝ:', features: '⭐ વિશેષતાઓ:',
-        weight: '⚖️ વજન:', maturity: '⏱️ સમય:', resistance: '🛡️ રોગ:',
-        buySeed: '🛒 બિયારણ ખરીદો', saved: '⭐ સેવ થયું', save: '☆', remove: '❌ દૂર કરો'
-      },
-      kn: {
-        rateLabel: '💰 ದರ:', askWhatsapp: 'WhatsApp ನಲ್ಲಿ ಕೇಳಿ', company: '🏢 ಕಂಪನಿ:', crop: '🌾 ಬೆಳೆ:',
-        segment: '🌱 ವಿಭಾಗ:', packSize: '📦 ಪ್ಯಾಕೆಟ್ ಗಾತ್ರ:', features: '⭐ ವೈಶಿಷ್ಟ್ಯಗಳು:',
-        weight: '⚖️ ತೂಕ:', maturity: '⏱️ ಅವಧಿ:', resistance: '🛡️ ರೋಗ:',
-        buySeed: '🛒 ಬೀಜ ಖರೀದಿಸಿ', saved: '⭐ ಉಳಿಸಲಾಗಿದೆ', save: '☆', remove: '❌ ತೆಗೆದುಹಾಕಿ'
-      },
-      pa: {
-        rateLabel: '💰 ਰੇਟ:', askWhatsapp: 'WhatsApp ਤੇ ਪੁੱਛੋ', company: '🏢 ਕੰਪਨੀ:', crop: '🌾 ਫ਼ਸਲ:',
-        segment: '🌱 ਸੈਗਮੈਂਟ:', packSize: '📦 ਪੈਕਟ ਸਾਈਜ਼:', features: '⭐ ਖਾਸੀਅਤਾਂ:',
-        weight: '⚖️ ਭਾਰ:', maturity: '⏱️ ਸਮਾਂ:', resistance: '🛡️ ਬਿਮਾਰੀ:',
-        buySeed: '🛒 ਬੀਜ ਖ਼ਰੀਦੋ', saved: '⭐ ਸੇਵ ਹੋਇਆ', save: '☆', remove: '❌ ਹਟਾਓ'
-      },
-      ml: {
-        rateLabel: '💰 നിരക്ക്:', askWhatsapp: 'WhatsApp-ൽ ചോദിക്കുക', company: '🏢 കമ്പനി:', crop: '🌾 വിള:',
-        segment: '🌱 വിഭാഗം:', packSize: '📦 പാക്കറ്റ് വലിപ്പം:', features: '⭐ സവിശേഷതകൾ:',
-        weight: '⚖️ ഭാരം:', maturity: '⏱️ കാലയളവ്:', resistance: '🛡️ രോഗം:',
-        buySeed: '🛒 വിത്ത് വാങ്ങുക', saved: '⭐ സേവ് ചെയ്തു', save: '☆', remove: '❌ നീക്കം ചെയ്യുക'
-      },
-      or: {
-        rateLabel: '💰 ଦର:', askWhatsapp: 'WhatsApp ରେ ପଚାରନ୍ତୁ', company: '🏢 କମ୍ପାନୀ:', crop: '🌾 ଫସଲ:',
-        segment: '🌱 ବିଭାଗ:', packSize: '📦 ପ୍ୟାକେଟ୍ ସାଇଜ୍:', features: '⭐ ବୈଶିଷ୍ଟ୍ୟ:',
-        weight: '⚖️ ଓଜନ:', maturity: '⏱️ ସମୟ:', resistance: '🛡️ ରୋଗ:',
-        buySeed: '🛒 ବିହନ କିଣନ୍ତୁ', saved: '⭐ ସେଭ୍ ହେଲା', save: '☆', remove: '❌ ହଟାନ୍ତୁ'
-      },
-      as: {
-        rateLabel: '💰 মূল্য:', askWhatsapp: 'WhatsApp-ত সোধক', company: '🏢 কোম্পানী:', crop: '🌾 শস্য:',
-        segment: '🌱 শ্ৰেণী:', packSize: '📦 পেকেট আকাৰ:', features: '⭐ বৈশিষ্ট্য:',
-        weight: '⚖️ ওজন:', maturity: '⏱️ সময়:', resistance: '🛡️ ৰোগ:',
-        buySeed: '🛒 বীজ কিনিব', saved: '⭐ সংৰক্ষিত', save: '☆', remove: '❌ আঁতৰাওক'
-      }
-    };
-
-    function getVarietyCardLabels() {
-      return VARIETY_CARD_LABELS[currentLang] || VARIETY_CARD_LABELS.en;
-    }
-
     function cleanExtraIdTokens(text) {
       if (!text || typeof text !== 'string') return text || '';
       return text
@@ -1776,10 +1697,12 @@
     }
 
     let toastTimeoutId = null;
-    function showToast(msg) {
+    async function showToast(msg) {
       const el = document.getElementById('appToast');
       if (!el || !msg) return;
-      el.innerText = cleanExtraIdTokens(msg);
+      const clean = cleanExtraIdTokens(msg);
+      const translated = currentLang === 'hi' ? clean : (getCachedTranslation(clean, currentLang) || await translateSheetText(clean, currentLang));
+      el.innerText = translated;
       el.classList.add('show');
       clearTimeout(toastTimeoutId);
       toastTimeoutId = setTimeout(() => {
@@ -1841,6 +1764,7 @@
       const firstDist = districts[0] || '';
       const cities = Object.keys((firstDist && distMap[firstDist]) || {});
       citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
+      translateWholeAppDOM();
     }
 
     function onLoginDistrictChange() {
@@ -1849,6 +1773,7 @@
       const citySel = document.getElementById('loginCitySelect');
       const cities = Object.keys(((INDIA_LOCATION_DATA[st] && INDIA_LOCATION_DATA[st][dt]) || {}));
       citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
+      translateWholeAppDOM();
     }
 
     function openLoginScreenModal() {
@@ -1863,6 +1788,7 @@
       populateLoginLocationSelects(savedState, savedDistrict, savedCity);
 
       document.getElementById('loginScreenModal').classList.add('active');
+      translateWholeAppDOM();
     }
 
     function persistLoginIdentity(phoneVal = '') {
@@ -1949,12 +1875,14 @@
     function onOnboardStateChange() {
       const st = document.getElementById('onboardStateSelect').value;
       populateOnboardDistricts(st, '');
+      translateWholeAppDOM();
     }
 
     function onOnboardDistrictChange() {
       const st = document.getElementById('onboardStateSelect').value;
       const dist = document.getElementById('onboardDistrictSelect').value;
       populateOnboardCities(st, dist, '');
+      translateWholeAppDOM();
     }
 
     function onOnboardCityChange() {
@@ -1962,6 +1890,7 @@
       const dist = document.getElementById('onboardDistrictSelect').value;
       const city = document.getElementById('onboardCitySelect').value;
       populateOnboardPins(st, dist, city, '');
+      translateWholeAppDOM();
     }
 
     function onOnboardPinSelectChange() {
@@ -1985,6 +1914,7 @@
       populateOnboardPins(savedState, savedDistrict, savedCity, savedPin);
 
       document.getElementById('onboardingLocationModal').classList.add('active');
+      translateWholeAppDOM();
     }
 
     function autoFillLocationFromGps() {
@@ -2030,6 +1960,7 @@
             ensureOptionInSelect(pinSel, pinRaw);
             document.getElementById('onboardPinInput').value = pinRaw;
           }
+          translateWholeAppDOM();
           showToast('GPS लोकेशन भर दी गई है');
         } catch (err) {
           showToast('GPS से लोकेशन लाने में समस्या आई, लिस्ट से चुनें');
@@ -2067,7 +1998,6 @@
     }
 
     function parsePriceAndDiscount(rawPrice, rawDiscount) {
-      const lbl = getVarietyCardLabels();
       const cleanPriceStr = cleanExtraIdTokens(rawPrice || '');
       const numMatch = cleanPriceStr.replace(/,/g, '').match(/(\d+(?:\.\d+)?)/);
       const unitPrice = numMatch ? parseFloat(numMatch[1]) : 0;
@@ -2109,8 +2039,8 @@
         finalUnitPrice,
         hasDiscount: unitPrice > 0 && finalUnitPrice < unitPrice && !!discountLabel,
         discountLabel,
-        displayPriceText: unitPrice > 0 ? `₹${unitPrice}` : (cleanPriceStr || lbl.askWhatsapp),
-        displayFinalPriceText: unitPrice > 0 ? `₹${finalUnitPrice}` : (cleanPriceStr || lbl.askWhatsapp)
+        displayPriceText: unitPrice > 0 ? `₹${unitPrice}` : (cleanPriceStr || 'WhatsApp पर पूछें'),
+        displayFinalPriceText: unitPrice > 0 ? `₹${finalUnitPrice}` : (cleanPriceStr || 'WhatsApp पर पूछें')
       };
     }
 
@@ -2129,6 +2059,7 @@
 
       updateSeedOrderSummary();
       document.getElementById('seedOrderModal').classList.add('active');
+      translateWholeAppDOM();
     }
 
     function closeSeedOrderModal() {
@@ -2163,6 +2094,7 @@
         <div><b>💰 रेट:</b> ${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b> <span class="badge-discount">${pInfo.discountLabel}</span>` : `<b>${pInfo.displayPriceText}</b>`}</div>
         <div style="margin-top:4px; padding-top:4px; border-top:1px dashed #86efac;">${totalHtml}</div>
       `;
+      translateWholeAppDOM(box);
     }
 
     function confirmSeedOrderOnWhatsApp() {
@@ -2377,26 +2309,8 @@
         diagRepHead: "🌿 AI रिपोर्ट", wapBtn: "WhatsApp करें", chatYou: "आप", chatDoc: "डॉक्टर",
         chatThinking: "⏳ जवाब तैयार हो रहा है...", chatErr: "त्रुटि", chatNetErrHead: "नेटवर्क", chatNetErrDesc: "कनेक्शन समस्या",
         aiDocTitle: "AI डॉक्टर", loadingText: "🌾 डेटा लोड हो रहा है...",
-        txtLoginSub: "कृषि सहायता ऐप में आपका स्वागत है", txtLoginNameLabel: "👤 किसान का नाम:",
-        txtLoginStateLabel: "🏛️ राज्य (State):", txtLoginDistrictLabel: "🗺️ जिला (District):", txtLoginCityLabel: "🏙️ शहर / कस्बा:",
-        txtPhoneLabel: "📞 अपना मोबाइल नंबर दर्ज करें:",
-        txtOtpBtn: "📲 ओटीपी (OTP) भेजें", txtOtpVer: "🔐 ओटीपी (OTP) दर्ज हो रहा है...",
-        txtOtpSuccess: "सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!", txtSkipLogin: "⏩ विवरण सेव करें और आगे बढ़ें",
-        txtNotifHead: "🔔 ताज़ा अपडेट व सूचनाएं", catHeadTitle: "🌱 सभी किस्में श्रेणियां", catSubTitle: "फसल श्रेणी चुनें:",
-        catItemVeg: "सब्जियां", catItemFruit: "फल", catItemFlower: "फूल", catItemGrain: "अनाज", catItemOther: "अन्य",
-        protCatHead: "🛡️ फसल सुरक्षा", schedCatHead: "🗓️ स्प्रे शेड्यूल", chatHeadTitle: "👨‍⚕️ AI कृषि डॉक्टर",
-        chatSubHead: "फसल, खाद या बीमारी के बारे में लिखें या बोलें", chatSendBtn: "➤",
-        lblCalcCrop: "🌱 फसल चुनें:", lblCalcDate: "📅 बुवाई की तारीख चुनें:", btnCalcRun: "📊 कैलकुलेट करें",
-        lblWind: "💨 हवा की गति", lblHum: "💧 हवा में नमी", lblForecast15: "📅 अगले 15 दिनों का मौसम पूर्वानुमान",
-        lblProfName: "👤 किसान का नाम:", lblProfPhone: "📞 मोबाइल नंबर:", lblProfState: "📍 शहर / जिला / राज्य:", lblProfCrops: "🌱 मुख्य फसलें:",
-        btnSaveProf: "💾 सहेजें", btnDocSpray: "💬 WhatsApp पर सलाह लें",
         offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
-        voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है",
-        advFormTitle: "🎧 कृषि सलाहकार से सलाह लें", advFormSub: "नीचे अपनी फसल व रोग की जानकारी भरें और सीधे WhatsApp पर भेजें:",
-        lblAdvName: "👤 किसान का नाम:", lblAdvLocation: "📍 कहाँ से हैं (गांव / जिला / राज्य):",
-        lblAdvCrop: "🌱 कौनसी फसल है:", lblAdvDisease: "🦠 कौनसा रोग / क्या समस्या है:",
-        lblAdvPhoto: "📸 रोगी फसल की फोटो (वैकल्पिक):", txtAdvCam: "कैमरा से फोटो", txtAdvGal: "गैलरी से चुनें",
-        btnAdvSubmitWa: "✅ WhatsApp पर सलाहकार को भेजें"
+        voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है"
       },
       en: {
         headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!", txtChangeProf: "✏️ Edit Profile",
@@ -2419,150 +2333,10 @@
         diagRepHead: "🌿 AI Report", wapBtn: "Send on WhatsApp", chatYou: "You", chatDoc: "Doctor",
         chatThinking: "⏳ Generating reply...", chatErr: "Error", chatNetErrHead: "Network", chatNetErrDesc: "Connection issue",
         aiDocTitle: "AI Doctor", loadingText: "🌾 Loading data...",
-        txtLoginSub: "Welcome to the Agri Support App", txtLoginNameLabel: "👤 Farmer Name:",
-        txtLoginStateLabel: "🏛️ State:", txtLoginDistrictLabel: "🗺️ District:", txtLoginCityLabel: "🏙️ City / Town:",
-        txtPhoneLabel: "📞 Enter your mobile number:",
-        txtOtpBtn: "📲 Send OTP", txtOtpVer: "🔐 Verifying OTP...",
-        txtOtpSuccess: "Auto-verified successfully!", txtSkipLogin: "⏩ Save Details & Continue",
-        txtNotifHead: "🔔 Latest Updates & Alerts", catHeadTitle: "🌱 All Variety Categories", catSubTitle: "Select crop category:",
-        catItemVeg: "Vegetables", catItemFruit: "Fruits", catItemFlower: "Flowers", catItemGrain: "Grains", catItemOther: "Other",
-        protCatHead: "🛡️ Crop Protection", schedCatHead: "🗓️ Spray Schedule", chatHeadTitle: "👨‍⚕️ AI Agri Doctor",
-        chatSubHead: "Type or speak about crop, fertilizer or disease", chatSendBtn: "➤",
-        lblCalcCrop: "🌱 Select Crop:", lblCalcDate: "📅 Select Sowing Date:", btnCalcRun: "📊 Calculate",
-        lblWind: "💨 Wind Speed", lblHum: "💧 Humidity", lblForecast15: "📅 Next 15 Days Weather Forecast",
-        lblProfName: "👤 Farmer Name:", lblProfPhone: "📞 Mobile Number:", lblProfState: "📍 City / District / State:", lblProfCrops: "🌱 Main Crops:",
-        btnSaveProf: "💾 Save Profile", btnDocSpray: "💬 Ask on WhatsApp",
         offlineBanner: "📴 Offline Mode: Showing saved language and data",
-        voiceNotSupported: "Voice input is not supported on this browser",
-        advFormTitle: "🎧 Ask Agri Advisor", advFormSub: "Fill in your crop and disease details below to send directly on WhatsApp:",
-        lblAdvName: "👤 Farmer Name:", lblAdvLocation: "📍 Where are you from (Village / District / State):",
-        lblAdvCrop: "🌱 Which Crop:", lblAdvDisease: "🦠 Which Disease / Problem:",
-        lblAdvPhoto: "📸 Crop Photo (Optional):", txtAdvCam: "Camera Photo", txtAdvGal: "Choose Gallery",
-        btnAdvSubmitWa: "✅ Send to Advisor on WhatsApp"
-      },
-      mr: {
-        welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
-        txtAiTitle: "🎙️ AI कृषी डॉक्टरशी बोला", aiSubText: "टॅप करा आणि पिकाचे वा रोगाचे नाव बोला...",
-        txtSprayAdvice: "फवारणीसाठी सकाळ किंवा संध्याकाळ निवडा", searchPlaceholder: "🔍 पीक किंवा वाण शोधा...",
-        gCrops: "सर्व जाती", gProt: "पीक सुरक्षा", gSched: "फवारणी वेळापत्रक", gAtoz: "शेती मार्गदर्शक (A-Z)",
-        gDisc: "शेतकरी चर्चा", gAdv: "सल्लागार", gComp: "All कंपनी बियाणे", gChem: "औषधे Chemicals", gServ: "Other सेवा",
-        fabText: "तातडीने उपाय", navHome: "होम", navCrops: "जाती", navSched: "वेळापत्रक", navProt: "सुरक्षा", navHelp: "सल्लागार",
-        drawerHead: "📋 मेनू", mProfile: "प्रोफाइल", mFav: "आवडत्या जाती", mLogout: "लॉगआउट",
-        offlineBanner: "📴 ऑफलाइन मोड: जतन केलेली भाषा व डेटा सुरू आहे"
-      },
-      bn: {
-        welcomeMsg: "নমস্কার, কৃষক ভাই!", txtChangeProf: "✏️ প্রোফাইল বদলান",
-        txtAiTitle: "🎙️ AI কৃষি ডাক্তারের সাথে কথা বলুন", aiSubText: "ট্যাপ করুন এবং ফসল বা রোগের নাম বলুন...",
-        txtSprayAdvice: "স্প্রের জন্য সকাল বা সন্ধ্যা বেছে নিন", searchPlaceholder: "🔍 ফসল বা জাত খুঁজুন...",
-        gCrops: "সব জাত", gProt: "ফসল সুরক্ষা", gSched: "স্প্রে সময়সূচী", gAtoz: "চাষের গাইড (A-Z)",
-        gDisc: "কৃষক আলোচনা", gAdv: "পরামর্শদাতা", gComp: "All কোম্পানি বীজ", gChem: "ওষুধ Chemicals", gServ: "Other পরিষেবা",
-        fabText: "তাত্ক্ষণিক সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুরক্ষা", navHelp: "পরামর্শদাতা",
-        drawerHead: "📋 মেনু", mProfile: "আমার প্রোফাইল", mFav: "পছন্দের জাত", mLogout: "লগআউট",
-        offlineBanner: "📴 অফলাইন মোড: সংরক্ষিত ভাষা ও ডেটা চলছে"
-      },
-      te: {
-        welcomeMsg: "నమస్కారం, రైతు సోదరా!", txtChangeProf: "✏️ ప్రొఫైల్ మార్చండి",
-        txtAiTitle: "🎙️ AI వ్యవసాయ డాక్టర్‌తో మాట్లాడండి", aiSubText: "నొక్కి పంట లేదా వ్యాధి పేరు చెప్పండి...",
-        txtSprayAdvice: "పిచికారీకి ఉదయం లేదా సాయంత్రం ఎంచుకోండి", searchPlaceholder: "🔍 పంట లేదా రకం వెతకండి...",
-        gCrops: "అన్ని రకాలు", gProt: "పంట రక్షణ", gSched: "స్ప్రే షెడ్యూల్", gAtoz: "సాగు గైడ్ (A-Z)",
-        gDisc: "రైతు చర్చ", gAdv: "సలహాదారు", gComp: "All కంపెనీ విత్తనాలు", gChem: "మందులు Chemicals", gServ: "Other సేవలు",
-        fabText: "తక్షణ పరిష్కారం", navHome: "హోమ్", navCrops: "రకాలు", navSched: "షెడ్యూల్", navProt: "రక్షణ", navHelp: "సలహాదారు",
-        drawerHead: "📋 మెనూ", mProfile: "నా ప్రొఫైల్", mFav: "ఇష్టమైన రకాలు", mLogout: "లాగ్అవుట్",
-        offlineBanner: "📴 ఆఫ్‌లైన్ మోడ్: సేవ్ చేసిన భాష మరియు డేటా నడుస్తోంది"
-      },
-      ta: {
-        welcomeMsg: "வணக்கம், விவசாய சகோதரா!", txtChangeProf: "✏️ சுயவிவரத்தை மாற்றவும்",
-        txtAiTitle: "🎙️ AI வேளாண் மருத்துவரிடம் பேசுங்கள்", aiSubText: "தட்டி பயிர் அல்லது நோய் பெயரைச் சொல்லுங்கள்...",
-        txtSprayAdvice: "தெளிப்பதற்கு காலை அல்லது மாலை நேரத்தைத் தேர்ந்தெடுக்கவும்", searchPlaceholder: "🔍 பயிர் அல்லது ரகத்தைத் தேடுங்கள்...",
-        gCrops: "அனைத்து ரகங்கள்", gProt: "பயிர் பாதுகாப்பு", gSched: "தெளிப்பு அட்டவணை", gAtoz: "சாகுபடி வழிகாட்டி (A-Z)",
-        gDisc: "விவசாயிகள் கலந்துரையாடல்", gAdv: "ஆலோசகர்", gComp: "All கம்பெனி விதைகள்", gChem: "மருந்துகள் Chemicals", gServ: "Other சேவைகள்",
-        fabText: "உடனடி தீர்வு", navHome: "முகப்பு", navCrops: "ரகங்கள்", navSched: "அட்டவணை", navProt: "பாதுகாப்பு", navHelp: "ஆலோசகர்",
-        drawerHead: "📋 மெனு", mProfile: "என் சுயவிவரம்", mFav: "விருப்பமான ரகங்கள்", mLogout: "வெளியேறு",
-        offlineBanner: "📴 ஆஃப்லைன் பயன்முறை: சேமிக்கப்பட்ட மொழி மற்றும் தரவு இயங்குகிறது"
-      },
-      gu: {
-        welcomeMsg: "રામ-રામ, ખેડૂત ભાઈ!", txtChangeProf: "✏️ પ્રોફાઇલ બદલો",
-        txtAiTitle: "🎙️ AI કૃષિ ડૉક્ટર સાથે વાત કરો", aiSubText: "ટેપ કરો અને પાક અથવા રોગનું નામ બોલો...",
-        txtSprayAdvice: "છંટકાવ માટે સવાર અથવા સાંજનો સમય પસંદ કરો", searchPlaceholder: "🔍 પાક અથવા જાત શોધો...",
-        gCrops: "બધી જાતો", gProt: "પાક રક્ષણ", gSched: "સ્પ્રે શેડ્યૂલ", gAtoz: "ખેતી માર્ગદર્શિકા (A-Z)",
-        gDisc: "ખેડૂત ચર્ચા", gAdv: "સલાહકાર", gComp: "All કંપની બિયારણ", gChem: "દવાઓ Chemicals", gServ: "Other સેવાઓ",
-        fabText: "ત્વરિત ઉકેલ", navHome: "હોમ", navCrops: "જાતો", navSched: "શેડ્યૂલ", navProt: "રક્ષણ", navHelp: "સલાહકાર",
-        drawerHead: "📋 મેનુ", mProfile: "મારી પ્રોફાઇલ", mFav: "મનપસંદ જાતો", mLogout: "લૉગઆઉટ",
-        offlineBanner: "📴 ઑફલાઇન મોડ: સાચવેલી ભાષા અને ડેટા ચાલી રહ્યો છે"
-      },
-      kn: {
-        welcomeMsg: "ನಮಸ್ಕಾರ, ರೈತ ಬಂಧು!", txtChangeProf: "✏️ ಪ್ರೊಫೈಲ್ ಬದಲಾಯಿಸಿ",
-        txtAiTitle: "🎙️ AI ಕೃಷಿ ವೈದ್ಯರೊಂದಿಗೆ ಮಾತನಾಡಿ", aiSubText: "ತಟ್ಟಿ ಬೆಳೆ ಅಥವಾ ರೋಗದ ಹೆಸರನ್ನು ಹೇಳಿ...",
-        txtSprayAdvice: "ಸಿಂಪರಣೆಗೆ ಬೆಳಿಗ್ಗೆ ಅಥವಾ ಸಂಜೆ ಸಮಯ ಆರಿಸಿ", searchPlaceholder: "🔍 ಬೆಳೆ ಅಥವಾ ತಳಿ ಹುಡುಕಿ...",
-        gCrops: "ಎಲ್ಲಾ ತಳಿಗಳು", gProt: "ಬೆಳೆ ರಕ್ಷಣೆ", gSched: "ಸ್ಪ್ರೇ ವೇಳಾಪಟ್ಟಿ", gAtoz: "ಕೃಷಿ ಮಾರ್ಗದರ್ಶಿ (A-Z)",
-        gDisc: "ರೈತ ಚರ್ಚೆ", gAdv: "ಸಲಹೆಗಾರ", gComp: "All ಕಂಪನಿ ಬೀಜಗಳು", gChem: "ಔಷಧಗಳು Chemicals", gServ: "Other ಸೇವೆಗಳು",
-        fabText: "ತ್ವರಿತ ಪರಿಹಾರ", navHome: "ಮುಖಪುಟ", navCrops: "ತಳಿಗಳು", navSched: "ವೇಳಾಪಟ್ಟಿ", navProt: "ರಕ್ಷಣೆ", navHelp: "ಸಲಹೆಗಾರ",
-        drawerHead: "📋 ಮೆನು", mProfile: "ನನ್ನ ಪ್ರೊಫೈಲ್", mFav: "ಮೆಚ್ಚಿನ ತಳಿಗಳು", mLogout: "ಲಾಗ್ ಔಟ್",
-        offlineBanner: "📴 ಆಫ್‌ಲೈನ್ ಮೋಡ್: ಉಳಿಸಿದ ಭಾಷೆ ಮತ್ತು ಡೇಟಾ ಚಾಲನೆಯಲ್ಲಿದೆ"
-      },
-      pa: {
-        welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!", txtChangeProf: "✏️ ਪ੍ਰੋਫਾਈਲ ਬਦਲੋ",
-        txtAiTitle: "🎙️ AI ਖੇਤੀ ਡਾਕਟਰ ਨਾਲ ਗੱਲ ਕਰੋ", aiSubText: "ਟੈਪ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਜਾਂ ਬਿਮਾਰੀ ਦਾ ਨਾਮ ਬੋਲੋ...",
-        txtSprayAdvice: "ਸਪਰੇਅ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ", searchPlaceholder: "🔍 ਫ਼ਸਲ ਜਾਂ ਕਿਸਮ ਲੱਭੋ...",
-        gCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ", gProt: "ਫ਼ਸਲ ਸੁਰੱਖਿਆ", gSched: "ਸਪਰੇਅ ਸ਼ਡਿਊਲ", gAtoz: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
-        gDisc: "ਕਿਸਾਨ ਚਰਚਾ", gAdv: "ਸਲਾਹਕਾਰ", gComp: "All ਕੰਪਨੀ ਬੀਜ", gChem: "ਦਵਾਈਆਂ Chemicals", gServ: "Other ਸੇਵਾਵਾਂ",
-        fabText: "ਤੁਰੰਤ ਹੱਲ", navHome: "ਹੋਮ", navCrops: "ਕਿਸਮਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਸਲਾਹਕਾਰ",
-        drawerHead: "📋 ਮੇਨੂ", mProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ", mFav: "ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ", mLogout: "ਲੌਗਆਊਟ",
-        offlineBanner: "📴 ਔਫਲਾਈਨ ਮੋਡ: ਸੇਵ ਕੀਤੀ ਭਾਸ਼ਾ ਅਤੇ ਡਾਟਾ ਚੱਲ ਰਿਹਾ ਹੈ"
-      },
-      ml: {
-        welcomeMsg: "നമസ്കാരം, കർഷക സഹോദരാ!", txtChangeProf: "✏️ പ്രൊഫൈൽ മാറ്റുക",
-        txtAiTitle: "🎙️ AI കാർഷിക ഡോക്ടറോട് സംസാരിക്കുക", aiSubText: "ടാപ്പ് ചെയ്ത് വിളയുടെയോ രോഗത്തിന്റെയോ പേര് പറയുക...",
-        txtSprayAdvice: "തളിക്കുന്നതിന് രാവിലെയോ വൈകുന്നേരമോ തിരഞ്ഞെടുക്കുക", searchPlaceholder: "🔍 വിള അല്ലെങ്കിൽ ഇനം തിരയുക...",
-        gCrops: "എല്ലാ ഇനങ്ങളും", gProt: "വിള സംരക്ഷണം", gSched: "സ്പ്രേ ഷെഡ്യൂൾ", gAtoz: "കൃഷി ഗൈഡ് (A-Z)",
-        gDisc: "കർഷക ചർച്ച", gAdv: "ഉപദേശകൻ", gComp: "All കമ്പനി വിത്തുകൾ", gChem: "മരുന്നുകൾ Chemicals", gServ: "Other സേവനങ്ങൾ",
-        fabText: "ഉടനടി പരിഹാരം", navHome: "ഹോം", navCrops: "ഇനങ്ങൾ", navSched: "ഷെഡ്യൂൾ", navProt: "സംരക്ഷണം", navHelp: "ഉപദേശകൻ",
-        drawerHead: "📋 മെനു", mProfile: "എന്റെ പ്രൊഫൈൽ", mFav: "ഇഷ്ടപ്പെട്ട ഇനങ്ങൾ", mLogout: "ലോഗ്ഔട്ട്",
-        offlineBanner: "📴 ഓഫ്‌ലൈൻ മോഡ്: സേവ് ചെയ്ത ഭാഷയും ഡാറ്റയും പ്രവർത്തിക്കുന്നു"
-      },
-      or: {
-        welcomeMsg: "ନମସ୍କାର, ଚାଷୀ ଭାଇ!", txtChangeProf: "✏️ ପ୍ରୋଫାଇଲ୍ ବଦଳାନ୍ତୁ",
-        txtAiTitle: "🎙️ AI କୃଷି ଡାକ୍ତରଙ୍କ ସହ କଥା ହୁଅନ୍ତୁ", aiSubText: "ଟ୍ୟାପ୍ କରନ୍ତୁ ଏବଂ ଫସଲ ବା ରୋଗର ନାମ କୁହନ୍ତୁ...",
-        txtSprayAdvice: "ସ୍ପ୍ରେ ପାଇଁ ସକାଳ ବା ସନ୍ଧ୍ୟା ସମୟ ବାଛନ୍ତୁ", searchPlaceholder: "🔍 ଫସଲ ବା କିସମ ଖୋଜନ୍ତୁ...",
-        gCrops: "ସବୁ କିସମ", gProt: "ଫସଲ ସୁରକ୍ଷା", gSched: "ସ୍ପ୍ରେ ସିଡ୍ୟୁଲ୍", gAtoz: "ଚାଷ ଗାଇଡ୍ (A-Z)",
-        gDisc: "ଚାଷୀ ଆଲୋଚନା", gAdv: "ପରାମର୍ଶଦାତା", gComp: "All କମ୍ପାନୀ ବିହନ", gChem: "ଔଷଧ Chemicals", gServ: "Other ସେବା",
-        fabText: "ତୁରନ୍ତ ସମାଧାନ", navHome: "ହୋମ୍", navCrops: "କିସମ", navSched: "ସିଡ୍ୟୁଲ୍", navProt: "ସୁରକ୍ଷା", navHelp: "ପରାମର୍ଶଦାତା",
-        drawerHead: "📋 ମେନୁ", mProfile: "ମୋ ପ୍ରୋଫାଇଲ୍", mFav: "ପସନ୍ଦର କିସମ", mLogout: "ଲଗଆଉଟ୍",
-        offlineBanner: "📴 ଅଫଲାଇନ୍ ମୋଡ୍: ସେଭ୍ ହୋଇଥିବା ଭାଷା ଓ ଡାଟା ଚାଲୁଛି"
-      },
-      as: {
-        welcomeMsg: "নমস্কাৰ, কৃষক বন্ধু!", txtChangeProf: "✏️ প্ৰফাইল সলনি কৰক",
-        txtAiTitle: "🎙️ AI কৃষি ডাক্তৰৰ সৈতে কথা পাতক", aiSubText: "টেপ কৰক আৰু শস্য বা ৰোগৰ নাম কওক...",
-        txtSprayAdvice: "স্প্ৰেৰ বাবে পুৱা বা গধূলিৰ সময় বাছনি কৰক", searchPlaceholder: "🔍 শস্য বা জাত বিচাৰক...",
-        gCrops: "সকলো জাত", gProt: "শস্য সুৰক্ষা", gSched: "স্প্ৰে সময়সূচী", gAtoz: "খেতিৰ গাইড (A-Z)",
-        gDisc: "কৃষক আলোচনা", gAdv: "পৰামৰ্শদাতা", gComp: "All কোম্পানী বীজ", gChem: "দৰব Chemicals", gServ: "Other সেৱা",
-        fabText: "তৎক্ষণাত সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুৰক্ষা", navHelp: "পৰামৰ্শদাতা",
-        drawerHead: "📋 মেনু", mProfile: "মোৰ প্ৰফাইল", mFav: "পছন্দৰ জাত", mLogout: "লগআউট",
-        offlineBanner: "📴 অফলাইন মোড: সংৰক্ষিত ভাষা আৰু ডাটা চলি আছে"
+        voiceNotSupported: "Voice input is not supported on this browser"
       }
     };
-
-    const TRANSLATABLE_UI_KEYS = [
-      'headerTitle', 'welcomeMsg', 'txtChangeProf', 'txtAiTitle', 'aiSubText',
-      'txtSprayAdvice', 'searchPlaceholder', 'gCrops', 'gProt', 'gSched',
-      'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ', 'txtPlaySub',
-      'txtRateBtn', 'txtVideoHead', 'txtSeeAll', 'txtSocialHead', 'fabText',
-      'navHome', 'navCrops', 'navSched', 'navProt', 'navHelp', 'drawerHead',
-      'completeProfileText', 'mProfile', 'mChangeLoc', 'mFav', 'mCrops', 'mSchedule',
-      'mProtection', 'mChems', 'mServices', 'mPrivacy', 'mRate', 'mShare',
-      'mHelp', 'mLogout', 'solHead', 'camBtn', 'galBtn', 'diagBtn',
-      'diagRepHead', 'wapBtn', 'loadingText',
-      'txtLoginSub', 'txtLoginNameLabel', 'txtLoginStateLabel', 'txtLoginDistrictLabel', 'txtLoginCityLabel',
-      'txtPhoneLabel', 'txtOtpBtn', 'txtOtpVer', 'txtOtpSuccess', 'txtSkipLogin',
-      'txtNotifHead', 'catHeadTitle', 'catSubTitle', 'catItemVeg', 'catItemFruit',
-      'catItemFlower', 'catItemGrain', 'catItemOther', 'protCatHead', 'schedCatHead',
-      'chatHeadTitle', 'chatSubHead', 'chatSendBtn', 'lblCalcCrop', 'lblCalcDate',
-      'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15',
-      'lblProfName', 'lblProfPhone', 'lblProfState', 'lblProfCrops',
-      'btnSaveProf', 'btnDocSpray', 'offlineBanner', 'voiceNotSupported',
-      'advFormTitle', 'advFormSub', 'lblAdvName', 'lblAdvLocation', 'lblAdvCrop',
-      'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa'
-    ];
 
     function updateOfflineBanner() {
       syncBannerOffset();
@@ -2571,6 +2345,7 @@
       const t = getT();
       banner.innerText = cleanExtraIdTokens(t.offlineBanner || OFFLINE_LANG_PACKS.hi.offlineBanner);
       banner.classList.toggle('show', !navigator.onLine);
+      if (currentLang !== 'hi') translateWholeAppDOM(banner);
     }
 
     function saveOfflineSheetsSnapshot() {
@@ -2636,44 +2411,6 @@
       localStorage.setItem('dark_mode', String(isDark));
     }
 
-    function refreshActiveScreenOnTranslation() {
-      const activeScreen = document.querySelector('.screen.active');
-      if (!activeScreen) return;
-      const id = activeScreen.id;
-
-      if (id === 'screen-crops' && currentActiveCategory) {
-        showCropsForCategory(currentActiveCategory, true);
-      } else if (id === 'screen-seeds' && lastVarietiesList.length > 0) {
-        renderVarietiesList(lastVarietiesList, lastVarietiesTitle, true);
-      } else if (id === 'screen-favorites') {
-        showFavoritesScreen();
-      } else if (id === 'screen-protection-crops' && currentActiveProtectionCat) {
-        showProtectionCropsListByCategory(currentActiveProtectionCat, true);
-      } else if (id === 'screen-crop-diseases' && currentActiveProtectionCat && currentActiveProtectionCrop) {
-        showCropDiseasesList(currentActiveProtectionCat, currentActiveProtectionCrop, true);
-      } else if (id === 'screen-schedule-crops' && currentActiveScheduleCat) {
-        showScheduleCropsListByCategory(currentActiveScheduleCat, true);
-      } else if (id === 'screen-crop-schedule' && currentActiveScheduleCat && currentActiveScheduleCrop) {
-        openCropScheduleDetail(currentActiveScheduleCat, currentActiveScheduleCrop, true);
-      } else if (id === 'screen-chemical-list' && currentActiveChemicalCat) {
-        filterChemicalsByCategory(currentActiveChemicalCat, true);
-      } else if (id === 'screen-atoz-crops') {
-        showAtoZCropsScreen(true);
-      } else if (id === 'screen-atoz-detail' && currentActiveAtoZCrop) {
-        openAtoZDetail(currentActiveAtoZCrop, true);
-      } else if (id === 'screen-companies') {
-        showCompaniesList(true);
-      } else if (id === 'screen-pest-alert') {
-        showPestAlertScreen(true);
-      } else if (id === 'screen-expert-advice') {
-        showExpertAdviceScreen(true);
-      } else if (id === 'screen-ai-reports') {
-        showAiReportsScreen(true);
-      } else if (id === 'screen-mandi-bhav' && cachedMandiData && cachedMandiData.length > 0) {
-        renderMandiTable(cachedMandiData);
-      }
-    }
-
     const pendingTranslations = {};
     function getCachedTranslation(text, targetLang) {
       if (!text || targetLang === 'hi') return cleanExtraIdTokens(text || '');
@@ -2718,14 +2455,13 @@
       if (cached) return cached;
 
       if (!navigator.onLine) return clean;
-
       if (pendingTranslations[cacheKey]) return await pendingTranslations[cacheKey];
 
       pendingTranslations[cacheKey] = (async () => {
         try {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), 3500);
-          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(clean)}`;
+          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(clean)}`;
           const res = await fetch(url, { signal: controller.signal });
           clearTimeout(timer);
           if (res.ok) {
@@ -2764,259 +2500,182 @@
       return await pendingTranslations[cacheKey];
     }
 
-    function applyCachedStringsToObjectList(items, fields) {
-      if (!Array.isArray(items)) return;
-      items.forEach(item => {
-        fields.forEach(f => {
-          const val = item[f];
-          if (val && typeof val === 'string') {
-            if (currentLang === 'hi') {
-              item[f] = cleanExtraIdTokens(val);
-            } else {
-              const cached = getCachedTranslation(val, currentLang);
-              item[f] = cached || cleanExtraIdTokens(val);
-            }
-          }
-        });
-      });
+    function hasTranslatableLetters(str) {
+      if (!str || typeof str !== 'string') return false;
+      const trimmed = str.trim();
+      if (trimmed.length < 2) return false;
+      if (/^[\d\s.,:%₹\-+/()<>•|&!?*=]+$/.test(trimmed)) return false;
+      return /[\u0900-\u0D7F\u0980-\u09FF\u0A00-\u0A7F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7FA-Za-z]/.test(trimmed);
     }
 
-    function runBackgroundTranslation(items, fields, onUpdate) {
-      if (!Array.isArray(items)) return;
-      applyCachedStringsToObjectList(items, fields);
-      if (onUpdate) onUpdate();
-
-      if (currentLang === 'hi' || !navigator.onLine) return;
-
-      const uniqueStrings = new Set();
-      items.forEach(item => {
-        fields.forEach(f => {
-          const val = item[f];
-          if (val && typeof val === 'string') {
-            const clean = cleanExtraIdTokens(val);
-            if (clean && !getCachedTranslation(clean, currentLang)) {
-              uniqueStrings.add(clean);
-            }
+    let isDomApplyingTranslation = false;
+    async function translateWholeAppDOM(rootEl = document.body) {
+      if (!rootEl) return;
+      isDomApplyingTranslation = true;
+      try {
+        const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            const parent = node.parentElement;
+            if (!parent) return NodeFilter.FILTER_REJECT;
+            const tag = parent.tagName;
+            if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return NodeFilter.FILTER_REJECT;
+            if (parent.closest('#languageSelectModal')) return NodeFilter.FILTER_REJECT;
+            const val = node.nodeValue || '';
+            if (!hasTranslatableLetters(val)) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
           }
         });
-      });
 
-      if (uniqueStrings.size === 0) return;
-
-      const listToTranslate = Array.from(uniqueStrings);
-      isTranslatingBackground = true;
-      const concurrency = 8;
-      let idx = 0;
-
-      async function worker() {
-        while (idx < listToTranslate.length) {
-          const curIdx = idx++;
-          await translateSheetText(listToTranslate[curIdx], currentLang);
-          applyCachedStringsToObjectList(items, fields);
-          if (onUpdate) onUpdate();
+        const textNodes = [];
+        let cur;
+        while ((cur = walker.nextNode())) {
+          textNodes.push(cur);
         }
+
+        const uniqueMap = new Map();
+
+        textNodes.forEach(node => {
+          if (node._origText === undefined) {
+            node._origText = node.nodeValue;
+          }
+          const orig = node._origText;
+          if (currentLang === 'hi') {
+            if (node.nodeValue !== orig) node.nodeValue = orig;
+            return;
+          }
+          const leading = (orig.match(/^\s*/) || [''])[0];
+          const trailing = (orig.match(/\s*$/) || [''])[0];
+          const core = orig.trim();
+          if (core === 'CROP & SABZI DOCTOR' || core === 'Google Play Store' || core === 'YouTube' || core === 'Facebook') return;
+
+          const cached = getCachedTranslation(core, currentLang);
+          if (cached) {
+            const nextVal = leading + cached + trailing;
+            if (node.nodeValue !== nextVal) node.nodeValue = nextVal;
+          } else if (navigator.onLine) {
+            if (!uniqueMap.has(core)) uniqueMap.set(core, []);
+            uniqueMap.get(core).push({ type: 'text', node, leading, trailing });
+          }
+        });
+
+        const inputEls = rootEl.querySelectorAll('input[placeholder], textarea[placeholder]');
+        inputEls.forEach(el => {
+          if (el.closest('#languageSelectModal')) return;
+          if (el.dataset.origPlaceholder === undefined) {
+            el.dataset.origPlaceholder = el.getAttribute('placeholder') || '';
+          }
+          const origPh = el.dataset.origPlaceholder;
+          if (!hasTranslatableLetters(origPh)) return;
+          if (currentLang === 'hi') {
+            if (el.getAttribute('placeholder') !== origPh) el.setAttribute('placeholder', origPh);
+            return;
+          }
+          const cached = getCachedTranslation(origPh.trim(), currentLang);
+          if (cached) {
+            if (el.getAttribute('placeholder') !== cached) el.setAttribute('placeholder', cached);
+          } else if (navigator.onLine) {
+            const key = origPh.trim();
+            if (!uniqueMap.has(key)) uniqueMap.set(key, []);
+            uniqueMap.get(key).push({ type: 'placeholder', el });
+          }
+        });
+
+        if (currentLang !== 'hi' && uniqueMap.size > 0 && navigator.onLine) {
+          const entries = Array.from(uniqueMap.entries());
+          let idx = 0;
+          const concurrency = 10;
+
+          async function worker() {
+            while (idx < entries.length) {
+              const [coreStr, targets] = entries[idx++];
+              const tr = await translateSheetText(coreStr, currentLang);
+              if (tr) {
+                isDomApplyingTranslation = true;
+                targets.forEach(t => {
+                  if (t.type === 'text' && t.node && t.node.isConnected) {
+                    const nextVal = t.leading + tr + t.trailing;
+                    if (t.node.nodeValue !== nextVal) t.node.nodeValue = nextVal;
+                  } else if (t.type === 'placeholder' && t.el && t.el.isConnected) {
+                    if (t.el.getAttribute('placeholder') !== tr) t.el.setAttribute('placeholder', tr);
+                  }
+                });
+                isDomApplyingTranslation = false;
+              }
+            }
+          }
+
+          await Promise.all(Array.from({ length: Math.min(concurrency, entries.length) }, worker));
+        }
+      } finally {
+        isDomApplyingTranslation = false;
       }
+    }
 
-      Promise.all(Array.from({ length: Math.min(concurrency, listToTranslate.length) }, worker)).then(() => {
-        applyCachedStringsToObjectList(items, fields);
-        isTranslatingBackground = false;
-        if (onUpdate) onUpdate();
+    let mutationDebounceTimer = null;
+    const domTranslationObserver = new MutationObserver(() => {
+      if (isDomApplyingTranslation || currentLang === 'hi') return;
+      clearTimeout(mutationDebounceTimer);
+      mutationDebounceTimer = setTimeout(() => {
+        translateWholeAppDOM(document.body);
+      }, 120);
+    });
+
+    function startDomTranslationObserver() {
+      domTranslationObserver.observe(document.body, {
+        childList: true,
+        subtree: true
       });
     }
 
-    async function translateUIBundleToCurrentLang() {
-      if (currentLang === 'hi') return getT();
-      const merged = { ...getT() };
-      const entriesToTranslate = [];
-
-      TRANSLATABLE_UI_KEYS.forEach((key) => {
-        const val = merged[key];
-        if (!val || typeof val !== 'string') return;
-        if (OFFLINE_LANG_PACKS[currentLang] && OFFLINE_LANG_PACKS[currentLang][key]) return;
-        const cached = getCachedTranslation(val, currentLang);
-        if (cached) {
-          merged[key] = cached;
-        } else if (navigator.onLine) {
-          entriesToTranslate.push({ key, val });
-        }
-      });
-
-      await Promise.all(
-        entriesToTranslate.map(async ({ key, val }) => {
-          merged[key] = await translateSheetText(val, currentLang);
-        })
-      );
-
-      return merged;
-    }
-
-    function translateStaticCategoryLabels() {
-      CATEGORY_LIST_KEYS.forEach(catKey => {
-        const labels = [
-          document.getElementById(`protCatLabel_${catKey}`),
-          document.getElementById(`schedCatLabel_${catKey}`)
-        ].filter(Boolean);
-
-        if (currentLang === 'hi') {
-          labels.forEach(el => { el.innerText = catKey; });
-          return;
-        }
-        const cached = getCachedTranslation(catKey, currentLang);
-        if (cached) {
-          labels.forEach(el => { el.innerText = cached; });
-        }
-        if (navigator.onLine) {
-          translateSheetText(catKey, currentLang).then(tr => {
-            labels.forEach(el => { el.innerText = tr; });
-          });
-        }
-      });
-    }
-
-    function writeTranslationsToDOM(t) {
-      if (!t) return;
-      const setText = (id, val) => {
-        const el = document.getElementById(id);
-        if (el && val) el.innerText = cleanExtraIdTokens(val);
-      };
-
+    function refreshActiveScreenOnTranslation() {
       const activeScreen = document.querySelector('.screen.active');
-      if (!activeScreen || activeScreen.id === 'screen-home') {
-        setText('headerTitle', t.headerTitle);
+      if (!activeScreen) return;
+      const id = activeScreen.id;
+
+      if (id === 'screen-crops' && currentActiveCategory) {
+        showCropsForCategory(currentActiveCategory, true);
+      } else if (id === 'screen-seeds' && lastVarietiesList.length > 0) {
+        renderVarietiesList(lastVarietiesList, lastVarietiesTitle, true);
+      } else if (id === 'screen-favorites') {
+        showFavoritesScreen();
+      } else if (id === 'screen-protection-crops' && currentActiveProtectionCat) {
+        showProtectionCropsListByCategory(currentActiveProtectionCat, true);
+      } else if (id === 'screen-crop-diseases' && currentActiveProtectionCat && currentActiveProtectionCrop) {
+        showCropDiseasesList(currentActiveProtectionCat, currentActiveProtectionCrop, true);
+      } else if (id === 'screen-schedule-crops' && currentActiveScheduleCat) {
+        showScheduleCropsListByCategory(currentActiveScheduleCat, true);
+      } else if (id === 'screen-crop-schedule' && currentActiveScheduleCat && currentActiveScheduleCrop) {
+        openCropScheduleDetail(currentActiveScheduleCat, currentActiveScheduleCrop, true);
+      } else if (id === 'screen-chemical-list' && currentActiveChemicalCat) {
+        filterChemicalsByCategory(currentActiveChemicalCat, true);
+      } else if (id === 'screen-atoz-crops') {
+        showAtoZCropsScreen(true);
+      } else if (id === 'screen-atoz-detail' && currentActiveAtoZCrop) {
+        openAtoZDetail(currentActiveAtoZCrop, true);
+      } else if (id === 'screen-companies') {
+        showCompaniesList(true);
+      } else if (id === 'screen-pest-alert') {
+        showPestAlertScreen(true);
+      } else if (id === 'screen-expert-advice') {
+        showExpertAdviceScreen(true);
+      } else if (id === 'screen-ai-reports') {
+        showAiReportsScreen(true);
+      } else if (id === 'screen-mandi-bhav' && cachedMandiData && cachedMandiData.length > 0) {
+        renderMandiTable(cachedMandiData);
       }
-      setText('txtChangeProf', t.txtChangeProf);
-      setText('txtAiTitle', t.txtAiTitle);
-      setText('aiAssistantSubText', t.aiSubText);
-      setText('txtSprayAdvice', t.txtSprayAdvice);
-      setText('gCrops', t.gCrops);
-      setText('gProt', t.gProt);
-      setText('gSched', t.gSched);
-      setText('gAtoz', t.gAtoz);
-      setText('gDisc', t.gDisc);
-      setText('gAdv', t.gAdv);
-      setText('gComp', t.gComp);
-      setText('gChem', t.gChem);
-      setText('gServ', t.gServ);
-      setText('txtPlaySub', t.txtPlaySub);
-      setText('txtRateBtn', t.txtRateBtn);
-      setText('txtVideoHead', t.txtVideoHead);
-      setText('txtSeeAll', t.txtSeeAll);
-      setText('txtSocialHead', t.txtSocialHead);
-      setText('fabText', t.fabText);
-      setText('navHome', t.navHome);
-      setText('navCrops', t.navCrops);
-      setText('navSched', t.navSched);
-      setText('navProt', t.navProt);
-      setText('navHelp', t.navHelp);
-
-      setText('txtDrawerHead', t.drawerHead);
-      setText('txtCompleteProfile', t.completeProfileText);
-      setText('mProfile', t.mProfile);
-      setText('mChangeLoc', t.mChangeLoc);
-      setText('mFav', t.mFav);
-      setText('mCrops', t.mCrops);
-      setText('mSchedule', t.mSchedule);
-      setText('mProtection', t.mProtection);
-      setText('mChems', t.mChems);
-      setText('mServices', t.mServices);
-      setText('mPrivacy', t.mPrivacy);
-      setText('mRate', t.mRate);
-      setText('mShare', t.mShare);
-      setText('mHelp', t.mHelp);
-      setText('mLogout', t.mLogout);
-      setText('txtSolHead', t.solHead);
-      setText('txtCam', t.camBtn);
-      setText('txtGal', t.galBtn);
-      setText('btnDiagnose', t.diagBtn);
-      setText('txtDiagRepHead', t.diagRepHead);
-      setText('txtWapBtn', t.wapBtn);
-      setText('txtLoading', t.loadingText);
-
-      setText('txtLoginSub', t.txtLoginSub);
-      setText('txtLoginNameLabel', t.txtLoginNameLabel);
-      setText('txtLoginStateLabel', t.txtLoginStateLabel);
-      setText('txtLoginDistrictLabel', t.txtLoginDistrictLabel);
-      setText('txtLoginCityLabel', t.txtLoginCityLabel);
-      setText('txtPhoneLabel', t.txtPhoneLabel);
-      setText('txtOtpBtn', t.txtOtpBtn);
-      setText('txtOtpVer', t.txtOtpVer);
-      setText('txtOtpSuccess', t.txtOtpSuccess);
-      setText('txtSkipLogin', t.txtSkipLogin);
-      setText('txtNotifHead', t.txtNotifHead);
-
-      setText('catHeadTitle', t.catHeadTitle);
-      setText('catSubTitle', t.catSubTitle);
-      setText('catItemVeg', t.catItemVeg);
-      setText('catItemFruit', t.catItemFruit);
-      setText('catItemFlower', t.catItemFlower);
-      setText('catItemGrain', t.catItemGrain);
-      setText('catItemOther', t.catItemOther);
-      setText('protCatHead', t.protCatHead);
-      setText('schedCatHead', t.schedCatHead);
-
-      setText('chatHeadTitle', t.chatHeadTitle);
-      setText('chatSubHead', t.chatSubHead);
-      setText('chatSendBtn', t.chatSendBtn);
-      setText('lblCalcCrop', t.lblCalcCrop);
-      setText('lblCalcDate', t.lblCalcDate);
-      setText('btnCalcRun', t.btnCalcRun);
-      setText('lblWind', t.lblWind);
-      setText('lblHum', t.lblHum);
-      setText('lblForecast15', t.lblForecast15);
-
-      setText('lblProfName', t.lblProfName);
-      setText('lblProfPhone', t.lblProfPhone);
-      setText('lblProfState', t.lblProfState);
-      setText('lblProfCrops', t.lblProfCrops);
-      setText('btnSaveProf', t.btnSaveProf);
-      setText('btnDocSpray', t.btnDocSpray);
-
-      setText('advFormTitle', t.advFormTitle);
-      setText('advFormSub', t.advFormSub);
-      setText('lblAdvName', t.lblAdvName);
-      setText('lblAdvLocation', t.lblAdvLocation);
-      setText('lblAdvCrop', t.lblAdvCrop);
-      setText('lblAdvDisease', t.lblAdvDisease);
-      setText('lblAdvPhoto', t.lblAdvPhoto);
-      setText('txtAdvCam', t.txtAdvCam);
-      setText('txtAdvGal', t.txtAdvGal);
-      setText('btnAdvSubmitWa', t.btnAdvSubmitWa);
-
-      translateStaticCategoryLabels();
-
-      const searchInput = document.getElementById('homeSearch');
-      if (searchInput && t.searchPlaceholder) searchInput.placeholder = cleanExtraIdTokens(t.searchPlaceholder);
-      updateOfflineBanner();
-      updateProfileUI();
+      translateWholeAppDOM(document.body);
     }
 
     function applyLanguageUI() {
-      const immediate = getT();
-      writeTranslationsToDOM(immediate);
-      if (currentLang !== 'hi' && navigator.onLine) {
-        translateUIBundleToCurrentLang().then((fullTranslated) => {
-          writeTranslationsToDOM(fullTranslated);
-          refreshActiveScreenOnTranslation();
-        });
+      const t = getT();
+      const searchInput = document.getElementById('homeSearch');
+      if (searchInput) {
+        searchInput.dataset.origPlaceholder = OFFLINE_LANG_PACKS.hi.searchPlaceholder;
+        searchInput.placeholder = t.searchPlaceholder || OFFLINE_LANG_PACKS.hi.searchPlaceholder;
       }
-    }
-
-    function refreshQuickCropPills() {
-      const spans = document.querySelectorAll('.quick-pill .tr-crop');
-      spans.forEach(sp => {
-        const orig = cleanExtraIdTokens(sp.getAttribute('data-orig') || sp.textContent);
-        if (currentLang === 'hi') {
-          sp.textContent = orig;
-          return;
-        }
-        const cached = getCachedTranslation(orig, currentLang);
-        if (cached) sp.textContent = cached;
-        if (navigator.onLine) {
-          translateSheetText(orig, currentLang).then(tr => {
-            sp.textContent = cleanExtraIdTokens(tr);
-          });
-        }
-      });
+      updateOfflineBanner();
+      updateProfileUI();
+      translateWholeAppDOM(document.body);
     }
 
     function setAppLanguage(langCode) {
@@ -3026,7 +2685,6 @@
       document.getElementById('languageSelectModal').classList.remove('active');
 
       applyLanguageUI();
-      refreshQuickCropPills();
       refreshActiveScreenOnTranslation();
       calculateCropSchedule();
 
@@ -3310,11 +2968,13 @@
       if (!navigator.onLine) {
         loadingDiv.style.display = 'block';
         loadingDiv.innerHTML = '📴 ऑफ़लाइन मोड: मंडी डेटा के लिए इंटरनेट आवश्यक है।';
+        translateWholeAppDOM(loadingDiv);
         return;
       }
 
       loadingDiv.style.display = 'block';
       loadingDiv.innerHTML = '⏳ मंडी भाव लोड हो रहे हैं...';
+      translateWholeAppDOM(loadingDiv);
 
       try {
         const userDistrict = (mandiCity || 'Sri Ganganagar').split(',')[0].trim();
@@ -3349,9 +3009,11 @@
           renderMandiTable(cachedMandiData);
         } else {
           loadingDiv.innerHTML = "मंडी डेटा उपलब्ध नहीं है।";
+          translateWholeAppDOM(loadingDiv);
         }
       } catch (err) {
         loadingDiv.innerHTML = "मंडी भाव लोड करने में समस्या आई।";
+        translateWholeAppDOM(loadingDiv);
       }
     }
 
@@ -3369,34 +3031,25 @@
       const tableElem = document.getElementById('mandiTableElement');
       const tbody = document.getElementById('mandiTableBody');
 
-      const slice = records.slice(0, 20).map(r => ({
-        state: cleanExtraIdTokens(r.state || '-'),
-        district: cleanExtraIdTokens(r.district || ''),
-        market: cleanExtraIdTokens(r.market || '-'),
-        commodity: cleanExtraIdTokens(r.commodity || '-'),
-        min_price: r.min_price || '-',
-        max_price: r.max_price || '-'
-      }));
-
-      const draw = () => {
-        tbody.innerHTML = '';
-        slice.forEach(r => {
-          const emoji = getCropEmoji(r.commodity);
-          tbody.innerHTML += `
-            <tr>
-              <td>${r.state} (${r.district})</td>
-              <td><b>${r.market}</b></td>
-              <td>${emoji} <b>${r.commodity}</b></td>
-              <td>₹${r.min_price}</td>
-              <td><span style="color:#16a34a; font-weight:bold;">₹${r.max_price}</span></td>
-            </tr>`;
-        });
-        loadingDiv.style.display = 'none';
-        tableElem.style.display = 'table';
-      };
-
-      draw();
-      runBackgroundTranslation(slice, ['state', 'district', 'market', 'commodity'], draw);
+      tbody.innerHTML = '';
+      records.slice(0, 20).forEach(r => {
+        const st = cleanExtraIdTokens(r.state || '-');
+        const dt = cleanExtraIdTokens(r.district || '');
+        const mk = cleanExtraIdTokens(r.market || '-');
+        const cm = cleanExtraIdTokens(r.commodity || '-');
+        const emoji = getCropEmoji(cm);
+        tbody.innerHTML += `
+          <tr>
+            <td>${st} (${dt})</td>
+            <td><b>${mk}</b></td>
+            <td>${emoji} <b>${cm}</b></td>
+            <td>₹${r.min_price || '-'}</td>
+            <td><span style="color:#16a34a; font-weight:bold;">₹${r.max_price || '-'}</span></td>
+          </tr>`;
+      });
+      loadingDiv.style.display = 'none';
+      tableElem.style.display = 'table';
+      translateWholeAppDOM(tableElem);
     }
 
     function getStandardCropName(raw) {
@@ -3709,6 +3362,7 @@
     function renderPrivacyUI() {
       if (privacyData.disclaimer) document.getElementById('privacyDisclaimerText').innerHTML = cleanExtraIdTokens(privacyData.disclaimer);
       if (privacyData.policy) document.getElementById('privacyPolicyText').innerHTML = cleanExtraIdTokens(privacyData.policy);
+      translateWholeAppDOM(document.getElementById('privacyContentBox'));
     }
 
     function renderNotificationsUI() {
@@ -3719,6 +3373,7 @@
           <b>🌾 ${cleanExtraIdTokens(n.title)}</b>
           <p style="margin-top:4px;">${cleanExtraIdTokens(n.desc)}</p>
         </div>`).join('');
+      translateWholeAppDOM(notifContainer);
     }
 
     async function loadAllSheetsData(forceRefresh = false) {
@@ -3902,28 +3557,6 @@
 
         hideLoader();
         isLoadingSheets = false;
-
-        if (currentLang !== 'hi') {
-          runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize']);
-          runBackgroundTranslation(allSchedRowsGlobal, ['crop', 'time', 'med', 'purpose'], () => rebuildScheduleMap(allSchedRowsGlobal));
-          runBackgroundTranslation(allProtRowsGlobal, ['crop', 'name', 'symptoms', 'cure'], () => rebuildProtectionMap(allProtRowsGlobal));
-          runBackgroundTranslation(chemicalsRecords, ['name', 'type', 'tech', 'use', 'dose']);
-          runBackgroundTranslation(alertsRecords, ['title', 'desc']);
-          runBackgroundTranslation(tipsRecords, ['title', 'desc']);
-          runBackgroundTranslation(aiReportsRecords, ['title', 'desc']);
-          runBackgroundTranslation(dailyStories, ['title', 'desc'], renderStoriesBar);
-          runBackgroundTranslation(videoRecords, ['title'], renderDynamicVideos);
-          runBackgroundTranslation(notificationsList, ['title', 'desc'], renderNotificationsUI);
-          const atozArr = Object.keys(atozGuideRecords).map(k => ({ key: k, ...atozGuideRecords[k] }));
-          runBackgroundTranslation(atozArr, ['key', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest'], () => {
-            const nextMap = {};
-            atozArr.forEach(item => {
-              const { key, ...rest } = item;
-              nextMap[key] = rest;
-            });
-            atozGuideRecords = nextMap;
-          });
-        }
       } catch (e) {
         loadOfflineSheetsSnapshot();
         refreshActiveScreenOnTranslation();
@@ -3946,6 +3579,7 @@
         container.innerHTML += `<div class="story-item" onclick="openStoryPlayer(${idx})"><div class="story-ring">${t}</div><span class="story-name">${cleanExtraIdTokens(st.title)}</span></div>`;
       });
       window.activeStories = list;
+      translateWholeAppDOM(container);
     }
 
     function renderDynamicVideos() {
@@ -3959,6 +3593,7 @@
       vids.forEach(v => {
         container.innerHTML += `<div class="video-card-item" onclick="window.open('${v.videoUrl}', '_blank')"><div class="video-thumb-box"><img src="${v.thumbnail}" onerror="this.src='https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=400'"><div class="video-play-icon">▶</div></div><div class="video-card-title">${cleanExtraIdTokens(v.title)}</div></div>`;
       });
+      translateWholeAppDOM(container);
     }
 
     function openStoryPlayer(idx) {
@@ -4003,6 +3638,7 @@
       }
 
       modal.classList.add('active');
+      translateWholeAppDOM(modal);
     }
 
     function closeStoryPlayer() {
@@ -4050,6 +3686,7 @@
       if (!navigator.onLine) {
         document.getElementById('weatherPlace').innerText = `📍 ${userCurrentCity}`;
         document.getElementById('detailCity').innerText = `📍 ${userCurrentCity}`;
+        translateWholeAppDOM(weatherCard);
         return;
       }
 
@@ -4076,16 +3713,8 @@
           document.getElementById('detailWind').innerText = `${Math.round(data.wind.speed * 3.6)} km/h`;
           document.getElementById('detailHumidity').innerText = `${data.main.humidity}%`;
 
-          if (currentLang !== 'hi') {
-            translateSheetText(data.name, currentLang).then(c => {
-              document.getElementById('weatherPlace').innerText = `📍 ${c}`;
-              document.getElementById('detailCity').innerText = `📍 ${c}`;
-            });
-            translateSheetText(data.weather[0].description, currentLang).then(d => {
-              document.getElementById('weatherDesc').innerText = d;
-              document.getElementById('detailDesc').innerText = d;
-            });
-          }
+          translateWholeAppDOM(weatherCard);
+          if (detailWeatherCard) translateWholeAppDOM(detailWeatherCard);
         }
       } catch (e) {
         document.getElementById('weatherPlace').innerText = `📍 ${userCurrentCity}`;
@@ -4100,6 +3729,7 @@
       if (!container) return;
       if (!navigator.onLine) {
         container.innerHTML = `<div style="text-align:center; padding:10px; font-size:12.5px; color:#6b7280;">📴 ऑफ़लाइन मोड: मौसम पूर्वानुमान के लिए इंटरनेट आवश्यक है।</div>`;
+        translateWholeAppDOM(container);
         return;
       }
       try {
@@ -4118,7 +3748,7 @@
 
         if (data && data.daily && Array.isArray(data.daily.time)) {
           const loc = speechLangMap[currentLang] || 'hi-IN';
-          const days = data.daily.time.map((dateStr, idx) => {
+          container.innerHTML = data.daily.time.map((dateStr, idx) => {
             const dObj = new Date(dateStr + 'T12:00:00');
             const label = idx === 0
               ? 'आज'
@@ -4129,26 +3759,19 @@
             const tMin = Math.round(data.daily.temperature_2m_min[idx]);
             const rain = data.daily.precipitation_sum[idx] || 0;
             const wind = Math.round(data.daily.wind_speed_10m_max[idx] || 0);
-            return { label, icon: info.icon, desc: info.desc, tMax, tMin, rain, wind };
-          });
-
-          const drawDays = () => {
-            container.innerHTML = days.map(day => `
+            return `
               <div class="forecast-day-row">
-                <div style="min-width:95px;"><b>${day.label}</b><div style="font-size:11px; color:#6b7280;">${day.icon} ${day.desc}</div></div>
-                <div style="font-size:11.5px; color:#374151;">💨 ${day.wind} km/h<br>🌧️ ${day.rain} mm</div>
-                <div style="text-align:right; font-weight:bold; color:#1b5e20;">${day.tMax}° / ${day.tMin}°</div>
+                <div style="min-width:95px;"><b>${label}</b><div style="font-size:11px; color:#6b7280;">${info.icon} ${info.desc}</div></div>
+                <div style="font-size:11.5px; color:#374151;">💨 ${wind} km/h<br>🌧️ ${rain} mm</div>
+                <div style="text-align:right; font-weight:bold; color:#1b5e20;">${tMax}° / ${tMin}°</div>
               </div>
-            `).join('');
-          };
-
-          drawDays();
-          if (currentLang !== 'hi') {
-            runBackgroundTranslation(days, ['label', 'desc'], drawDays);
-          }
+            `;
+          }).join('');
+          translateWholeAppDOM(container);
         }
       } catch (err) {
         container.innerHTML = `<div style="text-align:center; padding:10px; font-size:12.5px; color:#6b7280;">15 दिन का डेटा उपलब्ध नहीं हो सका।</div>`;
+        translateWholeAppDOM(container);
       }
     }
 
@@ -4168,6 +3791,7 @@
       }
       window.scrollTo(0, 0);
       syncBannerOffset();
+      translateWholeAppDOM(document.body);
     }
 
     function goBack() {
@@ -4183,6 +3807,7 @@
       document.getElementById('headerBack').style.display = prev.id !== 'screen-home' ? 'inline-block' : 'none';
       window.scrollTo(0, 0);
       syncBannerOffset();
+      translateWholeAppDOM(document.body);
     }
 
     function openAdvisorFormScreen() {
@@ -4219,6 +3844,7 @@
             prev.src = advisorPhotoDataUrl;
             prev.style.display = 'block';
             document.getElementById('advPhotoNote').style.display = 'block';
+            translateWholeAppDOM(document.getElementById('screen-advisor-form'));
           };
         };
         reader.readAsDataURL(file);
@@ -4279,35 +3905,23 @@
           cropsSet.add(r.crop);
         }
       });
-      const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
+      const cropList = Array.from(cropsSet).sort();
       const container = document.getElementById('cropsContainer');
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (cropRows.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-        } else {
-          cropRows.forEach(item => {
-            const displayHtml = resolveCropThumbHtml(item.origCrop);
-            container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${item.origCrop.replace(/'/g, "\\'")}', '${categoryName.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-          });
-        }
-      };
+      container.innerHTML = '';
+      if (cropList.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+      } else {
+        cropList.forEach(origCrop => {
+          const displayHtml = resolveCropThumbHtml(origCrop);
+          container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${origCrop.replace(/'/g, "\\'")}', '${categoryName.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(origCrop)}</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      }
 
-      draw();
       if (!isRefresh) {
         openScreen('screen-crops', categoryName);
-      }
-      if (currentLang !== 'hi') {
-        translateSheetText(categoryName, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-crops') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
@@ -4323,13 +3937,12 @@
         const cLow = (r.crop || '').toLowerCase();
         return cLow === baseLow || cLow === targetTr || cLow.includes(baseLow) || cLow.includes(targetTr);
       });
-      renderVarietiesList(list, targetTr === baseLow ? cropName : (getCachedTranslation(cropName, currentLang) || cropName));
+      renderVarietiesList(list, cropName);
     }
 
     function showProtectionCategoriesScreen() {
       const t = getT();
       renderCategoryListIcons();
-      translateStaticCategoryLabels();
       openScreen('screen-protection-categories', t.gProt);
     }
 
@@ -4337,41 +3950,28 @@
       currentActiveProtectionCat = categoryName;
       const container = document.getElementById('protectionCropsContainer');
       const catData = protectionRecords[categoryName] || {};
-      const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
+      const cropList = Object.keys(catData).sort();
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (cropRows.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-        } else {
-          cropRows.forEach(item => {
-            const displayHtml = resolveCropThumbHtml(item.origCrop);
-            container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-          });
-        }
-      };
+      container.innerHTML = '';
+      if (cropList.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+      } else {
+        cropList.forEach(origCrop => {
+          const displayHtml = resolveCropThumbHtml(origCrop);
+          container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName.replace(/'/g, "\\'")}', '${origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(origCrop)}</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      }
 
-      draw();
       if (!isRefresh) {
         openScreen('screen-protection-crops', categoryName);
-      }
-      if (currentLang !== 'hi') {
-        translateSheetText(categoryName, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-protection-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-protection-crops') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
     function showScheduleCategoriesScreen() {
       const t = getT();
       renderCategoryListIcons();
-      translateStaticCategoryLabels();
       openScreen('screen-schedule-categories', t.gSched);
     }
 
@@ -4379,97 +3979,73 @@
       currentActiveScheduleCat = categoryName;
       const container = document.getElementById('scheduleCropsContainer');
       const catData = scheduleRecords[categoryName] || {};
-      const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
+      const cropList = Object.keys(catData).sort();
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (cropRows.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-        } else {
-          cropRows.forEach(item => {
-            const displayHtml = resolveCropThumbHtml(item.origCrop);
-            container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-          });
-        }
-      };
+      container.innerHTML = '';
+      if (cropList.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+      } else {
+        cropList.forEach(origCrop => {
+          const displayHtml = resolveCropThumbHtml(origCrop);
+          container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName.replace(/'/g, "\\'")}', '${origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(origCrop)}</span></div><span class="arrow">&gt;</span></div>`;
+        });
+      }
 
-      draw();
       if (!isRefresh) {
         openScreen('screen-schedule-crops', categoryName);
-      }
-      if (currentLang !== 'hi') {
-        translateSheetText(categoryName, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-schedule-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-schedule-crops') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
     function showFavoritesScreen() {
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
-      const list = sheetRecords.filter(r => favs.includes(r.variety)).map(v => ({ ...v }));
+      const list = sheetRecords.filter(r => favs.includes(r.variety));
       const container = document.getElementById('favoritesContainer');
-      const lbl = getVarietyCardLabels();
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (list.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ ${getT().favoritesTitle}</div>`;
-        } else {
-          list.forEach(v => {
-            const pInfo = parsePriceAndDiscount(v.price, v.discount);
-            container.innerHTML += `
-              <div class="variety-card">
-                <div class="var-header-row">
-                  <span class="badge-variety">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)}</span>
-                  <span class="badge-company">${cleanExtraIdTokens(v.company)}</span>
-                  ${pInfo.hasDiscount ? `<span class="badge-discount">${pInfo.discountLabel}</span>` : ''}
-                </div>
-                <div class="var-title">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)} (${cleanExtraIdTokens(v.crop)})</div>
-                <div class="var-info-row">${lbl.company} <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
-                <div class="var-info-row">${lbl.crop} <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
-                <div class="var-info-row">${lbl.segment} <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
-                <div class="var-info-row">${lbl.packSize} <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
-                <div class="var-info-row">${lbl.rateLabel} <span>${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
-                <div class="var-info-row">${lbl.features} <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
-                <div class="var-info-row">${lbl.weight} <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
-                <div class="var-info-row">${lbl.maturity} <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
-                <div class="var-info-row">${lbl.resistance} <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
-                <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">${lbl.remove}</button>
-              </div>`;
-          });
-        }
-      };
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
+      } else {
+        list.forEach(v => {
+          const pInfo = parsePriceAndDiscount(v.price, v.discount);
+          container.innerHTML += `
+            <div class="variety-card">
+              <div class="var-header-row">
+                <span class="badge-variety">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)}</span>
+                <span class="badge-company">${cleanExtraIdTokens(v.company)}</span>
+                ${pInfo.hasDiscount ? `<span class="badge-discount">${pInfo.discountLabel}</span>` : ''}
+              </div>
+              <div class="var-title">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)} (${cleanExtraIdTokens(v.crop)})</div>
+              <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
+              <div class="var-info-row">🌾 <b>फसल:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
+              <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
+              <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
+              <div class="var-info-row">💰 <b>रेट:</b> <span>${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
+              <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
+              <div class="var-info-row">⚖️ <b>वजन:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
+              <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
+              <div class="var-info-row">🛡️ <b>रोग:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
+              <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">❌ हटाएं</button>
+            </div>`;
+        });
+      }
 
-      draw();
       const t = getT();
       openScreen('screen-favorites', t.favoritesTitle);
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], draw);
-      }
     }
 
     function renderVarietiesList(list, title, isRefresh = false) {
       lastVarietiesList = list;
       lastVarietiesTitle = title;
-      const renderItems = list.map(v => ({ ...v }));
       const container = document.getElementById('varietiesContainer');
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
-      const lbl = getVarietyCardLabels();
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (renderItems.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-          return;
-        }
-
-        renderItems.forEach((v, idx) => {
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      } else {
+        list.forEach((v, idx) => {
           let photosHtml = '';
           if (v.photos && v.photos.length > 0) {
             photosHtml += '<div class="var-photo-grid">';
@@ -4477,14 +4053,14 @@
             photosHtml += '</div>';
           }
           const isSaved = favs.includes(v.variety);
-          const saveBtnText = isSaved ? lbl.saved : lbl.save;
+          const saveBtnText = isSaved ? "⭐ सेव हुआ" : "☆";
           const savedClass = isSaved ? "saved" : "";
           const pInfo = parsePriceAndDiscount(v.price, v.discount);
 
           const priceBoxHtml = `
             <div class="price-highlight-box">
               <div>
-                <span style="font-size:12px;">${lbl.rateLabel}</span>
+                <span style="font-size:12px;">💰 <b>रेट:</b></span>
                 ${pInfo.hasDiscount
                   ? `<s style="color:#6b7280; font-size:12.5px; margin-left:4px;">${pInfo.displayPriceText}</s> <b style="color:#15803d; font-size:15px;">${pInfo.displayFinalPriceText}</b>`
                   : `<b style="color:#15803d; font-size:15px; margin-left:4px;">${pInfo.displayPriceText}</b>`}
@@ -4506,42 +4082,31 @@
 
               ${priceBoxHtml}
 
-              <div class="var-info-row">${lbl.company} <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
-              <div class="var-info-row">${lbl.crop} <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
-              <div class="var-info-row">${lbl.segment} <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
-              <div class="var-info-row">${lbl.packSize} <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
-              <div class="var-info-row">${lbl.features} <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
-              <div class="var-info-row">${lbl.weight} <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
-              <div class="var-info-row">${lbl.maturity} <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
-              <div class="var-info-row">${lbl.resistance} <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
+              <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
+              <div class="var-info-row">🌾 <b>फसल:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
+              <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
+              <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
+              <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
+              <div class="var-info-row">⚖️ <b>वजन:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
+              <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
+              <div class="var-info-row">🛡️ <b>रोग:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
 
               <div style="display:flex; gap:8px; margin-top:14px;">
-                <button type="button" class="btn-action btn-wa" style="flex:2;" onclick="openSeedOrderModal(${idx})">${lbl.buySeed}</button>
+                <button type="button" class="btn-action btn-wa" style="flex:2;" onclick="openSeedOrderModal(${idx})">🛒 खरीदे बीज</button>
                 <button type="button" class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
               </div>
             </div>`;
         });
-      };
+      }
 
-      draw();
       if (!isRefresh) {
         openScreen('screen-seeds', title);
-      }
-      if (currentLang !== 'hi') {
-        translateSheetText(title, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-seeds').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-seeds') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
     function toggleBookmark(varietyName, btnElem) {
-      const lbl = getVarietyCardLabels();
       let favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       let savedNow = false;
       if (favs.includes(varietyName)) {
@@ -4553,8 +4118,9 @@
       }
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
       if (btnElem) {
-        btnElem.innerText = savedNow ? lbl.saved : lbl.save;
+        btnElem.innerText = savedNow ? "⭐ सेव हुआ" : "☆";
         btnElem.classList.toggle('saved', savedNow);
+        translateWholeAppDOM(btnElem);
       }
     }
 
@@ -4563,49 +4129,36 @@
       currentActiveProtectionCrop = crop;
       const headingEl = document.getElementById('cropDiseaseHeading');
       const container = document.getElementById('cropDiseasesContainer');
-      const items = ((protectionRecords[categoryName] && protectionRecords[categoryName][crop]) ? protectionRecords[categoryName][crop] : []).map(d => ({ ...d }));
-
-      const draw = () => {
-        container.innerHTML = '';
-        if (items.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-        } else {
-          items.forEach(d => {
-            const cleanName = cleanExtraIdTokens(d.name);
-            const cleanSymptoms = cleanExtraIdTokens(d.symptoms);
-            const cleanCure = cleanExtraIdTokens(d.cure);
-            const p = (d.photo && d.photo.trim().startsWith('http'))
-              ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${cleanName}">`
-              : '';
-            const iconEmoji = getCropEmoji(crop);
-
-            container.innerHTML += `
-              <div class="disease-card">
-                <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>${cleanName}</b></div>
-                <div class="disease-symptom">${cleanSymptoms}</div>
-                <div class="disease-cure-box">${cleanCure}</div>
-                ${p}
-              </div>`;
-          });
-        }
-      };
+      const items = ((protectionRecords[categoryName] && protectionRecords[categoryName][crop]) ? protectionRecords[categoryName][crop] : []);
 
       headingEl.innerText = cleanExtraIdTokens(crop);
-      draw();
+      container.innerHTML = '';
+      if (items.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      } else {
+        items.forEach(d => {
+          const cleanName = cleanExtraIdTokens(d.name);
+          const cleanSymptoms = cleanExtraIdTokens(d.symptoms);
+          const cleanCure = cleanExtraIdTokens(d.cure);
+          const p = (d.photo && d.photo.trim().startsWith('http'))
+            ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${cleanName}">`
+            : '';
+          const iconEmoji = getCropEmoji(crop);
+
+          container.innerHTML += `
+            <div class="disease-card">
+              <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>रोग:</b> ${cleanName}</div>
+              <div class="disease-symptom">🔍 <b>लक्षण:</b> ${cleanSymptoms}</div>
+              <div class="disease-cure-box">💊 <b>उपचार:</b> ${cleanCure}</div>
+              ${p}
+            </div>`;
+        });
+      }
+
       if (!isRefresh) {
         openScreen('screen-crop-diseases', crop);
-      }
-      if (currentLang !== 'hi') {
-        translateSheetText(crop, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          headingEl.innerText = cleanTr;
-          if (document.getElementById('screen-crop-diseases').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-crop-diseases') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(items, ['name', 'symptoms', 'cure'], draw);
+      } else {
+        translateWholeAppDOM(document.getElementById('screen-crop-diseases'));
       }
     }
 
@@ -4614,57 +4167,40 @@
       currentActiveScheduleCrop = crop;
       const titleEl = document.getElementById('scheduleCropTitle');
       const container = document.getElementById('scheduleStepsContainer');
-      const steps = ((scheduleRecords[categoryName] && scheduleRecords[categoryName][crop]) ? scheduleRecords[categoryName][crop] : []).map(s => ({ ...s }));
-
-      const draw = () => {
-        container.innerHTML = '';
-        if (steps.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-        } else {
-          steps.forEach(s => {
-            const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
-            container.innerHTML += `<div class="schedule-step"><b>⏱️ ${cleanExtraIdTokens(s.time)}</b><p>🧪 ${cleanExtraIdTokens(s.med)}</p><p>🎯 ${cleanExtraIdTokens(s.purpose)}</p>${p}</div>`;
-          });
-        }
-      };
+      const steps = ((scheduleRecords[categoryName] && scheduleRecords[categoryName][crop]) ? scheduleRecords[categoryName][crop] : []);
 
       titleEl.innerText = cleanExtraIdTokens(crop);
-      draw();
+      container.innerHTML = '';
+      if (steps.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      } else {
+        steps.forEach(s => {
+          const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
+          container.innerHTML += `<div class="schedule-step"><b>⏱️ समय: ${cleanExtraIdTokens(s.time)}</b><p>🧪 <b>दवा:</b> ${cleanExtraIdTokens(s.med)}</p><p>🎯 <b>उद्देश्य:</b> ${cleanExtraIdTokens(s.purpose)}</p>${p}</div>`;
+        });
+      }
+
       if (!isRefresh) {
         openScreen('screen-crop-schedule', crop);
-      }
-      if (currentLang !== 'hi') {
-        translateSheetText(crop, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          titleEl.innerText = cleanTr;
-          if (document.getElementById('screen-crop-schedule').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-crop-schedule') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(steps, ['time', 'med', 'purpose'], draw);
+      } else {
+        translateWholeAppDOM(document.getElementById('screen-crop-schedule'));
       }
     }
 
     function showCompaniesList(isRefresh = false) {
-      const compRows = [...new Set(sheetRecords.map(r => r.company))].sort().map(c => ({ origComp: c, displayComp: cleanExtraIdTokens(c) }));
+      const compList = [...new Set(sheetRecords.map(r => r.company))].sort();
       const container = document.getElementById('companiesContainer');
 
-      const draw = () => {
-        container.innerHTML = '';
-        compRows.forEach(item => {
-          container.innerHTML += `<div class="list-item" onclick="selectCompany('${item.origComp.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${cleanExtraIdTokens(item.displayComp)}</span></div><span class="arrow">&gt;</span></div>`;
-        });
-      };
+      container.innerHTML = '';
+      compList.forEach(origComp => {
+        container.innerHTML += `<div class="list-item" onclick="selectCompany('${origComp.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${cleanExtraIdTokens(origComp)}</span></div><span class="arrow">&gt;</span></div>`;
+      });
 
-      draw();
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-companies', t.compTitle);
-      }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(compRows, ['displayComp'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
@@ -4675,31 +4211,18 @@
           cropsSet.add(r.crop);
         }
       });
-      const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
+      const cropList = Array.from(cropsSet).sort();
       const container = document.getElementById('companyCropsContainer');
       const headingEl = document.getElementById('compCropHeading');
       headingEl.innerText = cleanExtraIdTokens(comp);
 
-      const draw = () => {
-        container.innerHTML = '';
-        cropRows.forEach(item => {
-          const displayHtml = resolveCropThumbHtml(item.origCrop);
-          container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-        });
-      };
+      container.innerHTML = '';
+      cropList.forEach(origCrop => {
+        const displayHtml = resolveCropThumbHtml(origCrop);
+        container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp.replace(/'/g, "\\'")}', '${origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(origCrop)}</span></div><span class="arrow">&gt;</span></div>`;
+      });
 
-      draw();
       openScreen('screen-company-crops', comp);
-      if (currentLang !== 'hi') {
-        translateSheetText(comp, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          headingEl.innerText = cleanTr;
-          if (document.getElementById('screen-company-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-          }
-        });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
-      }
     }
 
     function filterByCompanyAndCrop(comp, crop) {
@@ -4715,47 +4238,34 @@
       currentActiveChemicalCat = cat;
       const container = document.getElementById('chemicalListContainer');
       const titleEl = document.getElementById('chemicalListTitle');
-      const list = chemicalsRecords.filter(c => (c.type || '').toLowerCase().includes(cat.toLowerCase())).map(c => ({ ...c }));
-
-      const draw = () => {
-        container.innerHTML = '';
-        if (list.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-        }
-        list.forEach(c => {
-          const cleanName = cleanExtraIdTokens(c.name);
-          const p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${cleanName}"></div>` : '';
-          container.innerHTML += `
-            <div class="chem-card">
-              <div class="chem-title">🧪 ${cleanName} (${cleanExtraIdTokens(c.type)})</div>
-              <div class="chem-body-row">
-                <div class="chem-info-side">
-                  <div class="chem-tech">🔬 ${cleanExtraIdTokens(c.tech)}</div>
-                  <div class="chem-use">🌿 ${cleanExtraIdTokens(c.use)}</div>
-                  <div class="chem-dose">💧 ${cleanExtraIdTokens(c.dose)}</div>
-                </div>
-                ${p}
-              </div>
-            </div>`;
-        });
-      };
+      const list = chemicalsRecords.filter(c => (c.type || '').toLowerCase().includes(cat.toLowerCase()));
 
       titleEl.innerText = cleanExtraIdTokens(cat);
-      draw();
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      }
+      list.forEach(c => {
+        const cleanName = cleanExtraIdTokens(c.name);
+        const p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${cleanName}"></div>` : '';
+        container.innerHTML += `
+          <div class="chem-card">
+            <div class="chem-title">🧪 ${cleanName} (${cleanExtraIdTokens(c.type)})</div>
+            <div class="chem-body-row">
+              <div class="chem-info-side">
+                <div class="chem-tech">🔬 <b>तकनीक:</b> ${cleanExtraIdTokens(c.tech)}</div>
+                <div class="chem-use">🌿 <b>उपयोग:</b> ${cleanExtraIdTokens(c.use)}</div>
+                <div class="chem-dose">💧 <b>खुराक:</b> ${cleanExtraIdTokens(c.dose)}</div>
+              </div>
+              ${p}
+            </div>
+          </div>`;
+      });
+
       if (!isRefresh) {
         openScreen('screen-chemical-list', cat);
-      }
-      if (currentLang !== 'hi') {
-        translateSheetText(cat, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          titleEl.innerText = cleanTr;
-          if (document.getElementById('screen-chemical-list').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-chemical-list') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(list, ['name', 'type', 'tech', 'use', 'dose'], draw);
+      } else {
+        translateWholeAppDOM(document.getElementById('screen-chemical-list'));
       }
     }
 
@@ -4778,61 +4288,43 @@
 
     function showExpertAdviceScreen(isRefresh = false) {
       const container = document.getElementById('tipsContainer');
-      const items = tipsRecords.map(item => ({ ...item }));
+      container.innerHTML = tipsRecords.length > 0
+        ? tipsRecords.map(item => `<div class="schedule-step"><b>💡 ${cleanExtraIdTokens(item.title)}</b><p>${cleanExtraIdTokens(item.desc)}</p>${item.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${cleanExtraIdTokens(item.date)}</span>` : ''}</div>`).join('')
+        : `<div class="schedule-step" style="text-align:center; color:#6b7280;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
 
-      const draw = () => {
-        container.innerHTML = items.length > 0
-          ? items.map(item => `<div class="schedule-step"><b>💡 ${cleanExtraIdTokens(item.title)}</b><p>${cleanExtraIdTokens(item.desc)}</p>${item.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${cleanExtraIdTokens(item.date)}</span>` : ''}</div>`).join('')
-          : `<div class="schedule-step" style="text-align:center; color:#6b7280;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
-      };
-
-      draw();
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-expert-advice', t.expertTitle);
-      }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(items, ['title', 'desc'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
     function showPestAlertScreen(isRefresh = false) {
       const container = document.getElementById('alertsContainer');
-      const items = alertsRecords.map(a => ({ ...a }));
+      container.innerHTML = alertsRecords.length > 0
+        ? alertsRecords.map(a => `<div class="pest-alert-card"><b>⚠️ ${cleanExtraIdTokens(a.title)}</b><p style="margin-top:4px; font-size:13.5px;">${cleanExtraIdTokens(a.desc)}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${cleanExtraIdTokens(a.date)}</span>` : ''}</div>`).join('')
+        : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
 
-      const draw = () => {
-        container.innerHTML = items.length > 0
-          ? items.map(a => `<div class="pest-alert-card"><b>⚠️ ${cleanExtraIdTokens(a.title)}</b><p style="margin-top:4px; font-size:13.5px;">${cleanExtraIdTokens(a.desc)}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${cleanExtraIdTokens(a.date)}</span>` : ''}</div>`).join('')
-          : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
-      };
-
-      draw();
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-pest-alert', t.pestTitle);
-      }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(items, ['title', 'desc'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
     function showAiReportsScreen(isRefresh = false) {
       const container = document.getElementById('aiReportsContainer');
-      const items = aiReportsRecords.map(rep => ({ ...rep }));
+      container.innerHTML = aiReportsRecords.length > 0
+        ? aiReportsRecords.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${cleanExtraIdTokens(rep.title)}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${cleanExtraIdTokens(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; color:#6b7280; display:block; margin-top:6px;">🕒 ${cleanExtraIdTokens(rep.date)}</span>` : ''}</div>`).join('')
+        : `<div class="variety-card" style="text-align:center; color:#6b7280;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
 
-      const draw = () => {
-        container.innerHTML = items.length > 0
-          ? items.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${cleanExtraIdTokens(rep.title)}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${cleanExtraIdTokens(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; color:#6b7280; display:block; margin-top:6px;">🕒 ${cleanExtraIdTokens(rep.date)}</span>` : ''}</div>`).join('')
-          : `<div class="variety-card" style="text-align:center; color:#6b7280;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
-      };
-
-      draw();
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-ai-reports', t.reportsTitle);
-      }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(items, ['title', 'desc'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
@@ -4945,7 +4437,11 @@
       } catch (err) {}
     }
 
-    function openSolutionModal() { document.getElementById('solutionModal').classList.add('active'); }
+    function openSolutionModal() {
+      const m = document.getElementById('solutionModal');
+      m.classList.add('active');
+      translateWholeAppDOM(m);
+    }
     function closeSolutionModal() {
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       document.getElementById('solutionModal').classList.remove('active');
@@ -5073,65 +4569,48 @@
     }
 
     function showAtoZCropsScreen(isRefresh = false) {
-      const cropRows = Object.keys(atozGuideRecords)
+      const cropList = Object.keys(atozGuideRecords)
         .filter(c => c && c.toLowerCase() !== 'crop')
-        .sort()
-        .map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c), rawCrop: atozGuideRecords[c].rawCrop || c }));
+        .sort();
       const container = document.getElementById('atozCropsContainer');
 
-      const draw = () => {
-        container.innerHTML = '';
-        cropRows.forEach(item => {
-          container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${getCropEmoji(item.rawCrop)}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-        });
-      };
+      container.innerHTML = '';
+      cropList.forEach(origCrop => {
+        const rawC = atozGuideRecords[origCrop].rawCrop || origCrop;
+        container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${getCropEmoji(rawC)}</span><span class="list-title">${cleanExtraIdTokens(origCrop)}</span></div><span class="arrow">&gt;</span></div>`;
+      });
 
-      draw();
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-atoz-crops', t.atozTitle);
-      }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
     function openAtoZDetail(crop, isRefresh = false) {
       currentActiveAtoZCrop = crop;
-      const baseData = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
-      const d = { ...baseData, titleText: cleanExtraIdTokens(crop) };
+      const d = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
       const container = document.getElementById('atozDetailContainer');
 
-      const draw = () => {
-        container.innerHTML = `
-          <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
-            <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${cleanExtraIdTokens(d.titleText)}</h3>
-            <div class="schedule-step"><b>1. 🟫</b><p>${cleanExtraIdTokens(d.soil)}</p></div>
-            <div class="schedule-step"><b>2. 🌱</b><p>${cleanExtraIdTokens(d.sowing)}</p></div>
-            <div class="schedule-step"><b>3. 📦</b><p>${cleanExtraIdTokens(d.seed)}</p></div>
-            <div class="schedule-step"><b>4. 🧪</b><p>${cleanExtraIdTokens(d.fertilizer)}</p></div>
-            <div class="schedule-step"><b>5. 🌿</b><p>${cleanExtraIdTokens(d.weed)}</p></div>
-            <div class="schedule-step"><b>6. 💧</b><p>${cleanExtraIdTokens(d.irrigation)}</p></div>
-            <div class="schedule-step"><b>7. 🛡️</b><p>${cleanExtraIdTokens(d.care)}</p></div>
-            <div class="schedule-step"><b>8. ✂️</b><p>${cleanExtraIdTokens(d.harvesting)}</p></div>
-            <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
-          </div>`;
-      };
+      container.innerHTML = `
+        <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
+          <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${cleanExtraIdTokens(crop)}</h3>
+          <div class="schedule-step"><b>1. 🟫 मिट्टी</b><p>${cleanExtraIdTokens(d.soil)}</p></div>
+          <div class="schedule-step"><b>2. 🌱 बुवाई</b><p>${cleanExtraIdTokens(d.sowing)}</p></div>
+          <div class="schedule-step"><b>3. 📦 बीज दर</b><p>${cleanExtraIdTokens(d.seed)}</p></div>
+          <div class="schedule-step"><b>4. 🧪 खाद व उर्वरक</b><p>${cleanExtraIdTokens(d.fertilizer)}</p></div>
+          <div class="schedule-step"><b>5. 🌿 खरपतवार प्रबंधन</b><p>${cleanExtraIdTokens(d.weed)}</p></div>
+          <div class="schedule-step"><b>6. 💧 सिंचाई</b><p>${cleanExtraIdTokens(d.irrigation)}</p></div>
+          <div class="schedule-step"><b>7. 🛡️ फसल सुरक्षा</b><p>${cleanExtraIdTokens(d.care)}</p></div>
+          <div class="schedule-step"><b>8. ✂️ तुड़ाई / कटाई</b><p>${cleanExtraIdTokens(d.harvesting)}</p></div>
+          <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 भंडारण व मंडी</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
+        </div>`;
 
-      draw();
       if (!isRefresh) {
         openScreen('screen-atoz-detail', crop);
-      }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation([d], ['titleText', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest'], () => {
-          draw();
-          if (document.getElementById('screen-atoz-detail').classList.contains('active')) {
-            const cleanTitle = cleanExtraIdTokens(d.titleText);
-            document.getElementById('headerTitle').innerText = cleanTitle;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-atoz-detail') curTop.title = cleanTitle;
-          }
-        });
+      } else {
+        translateWholeAppDOM(container);
       }
     }
 
@@ -5231,6 +4710,7 @@
             ${commentsHtml}
           </div>`;
       });
+      translateWholeAppDOM(container);
     }
 
     function openImageModal(url) {
@@ -5241,8 +4721,10 @@
 
     function openNotificationModal() {
       renderNotificationsUI();
-      document.getElementById('notificationModal').classList.add('active');
+      const m = document.getElementById('notificationModal');
+      m.classList.add('active');
       document.getElementById('notifBadge').style.display = 'none';
+      translateWholeAppDOM(m);
     }
 
     function updateProfileUI() {
@@ -5253,10 +4735,16 @@
       const t = getT();
 
       const welcomeEl = document.getElementById('welcomeMsg');
-      if (welcomeEl) welcomeEl.innerText = name ? `🌾 ${name}` : t.welcomeMsg;
+      if (welcomeEl) {
+        welcomeEl._origText = name ? `🌾 ${name}` : t.welcomeMsg;
+        welcomeEl.innerText = welcomeEl._origText;
+      }
 
       const drawerNameEl = document.getElementById('drawerUserName');
-      if (drawerNameEl) drawerNameEl.innerText = name ? `👤 ${name}` : `👤 ${t.profileTitle}`;
+      if (drawerNameEl) {
+        drawerNameEl._origText = name ? `👤 ${name}` : `👤 ${t.profileTitle}`;
+        drawerNameEl.innerText = drawerNameEl._origText;
+      }
 
       let pct = 20;
       if (name) pct += 20;
@@ -5268,9 +4756,15 @@
       const badge = document.getElementById('profilePercentBadge');
       if (bar) bar.style.width = `${pct}%`;
       if (badge) badge.innerText = `${pct}%`;
+      if (currentLang !== 'hi') translateWholeAppDOM(document.body);
     }
 
-    function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerContent').classList.add('active'); }
+    function openDrawer() {
+      document.getElementById('drawerOverlay').classList.add('active');
+      const dc = document.getElementById('drawerContent');
+      dc.classList.add('active');
+      translateWholeAppDOM(dc);
+    }
     function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerContent').classList.remove('active'); }
     function closeNotificationModal() { document.getElementById('notificationModal').classList.remove('active'); }
 
@@ -5304,6 +4798,7 @@
       const dateInput = document.getElementById('calcDateInput');
       if (dateInput) dateInput.value = todayStr;
 
+      startDomTranslationObserver();
       loadOfflineSheetsSnapshot();
       renderGridButtonPhotos();
       renderCategoryListIcons();
@@ -5320,7 +4815,6 @@
         currentLang = savedLang;
         document.documentElement.lang = currentLang;
         applyLanguageUI();
-        refreshQuickCropPills();
         if (!localStorage.getItem('is_logged_in') && navigator.onLine) {
           openLoginScreenModal();
         } else {
