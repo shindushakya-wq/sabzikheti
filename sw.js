@@ -1,6 +1,6 @@
-const STATIC_CACHE = 'crop-sabzi-doctor-static-v2';
-const SHEET_CACHE = 'crop-sabzi-doctor-sheets-v2';
-const MEDIA_CACHE = 'crop-sabzi-doctor-media-v2';
+const STATIC_CACHE = 'crop-sabzi-doctor-static-v3';
+const SHEET_CACHE = 'crop-sabzi-doctor-sheets-v3';
+const MEDIA_CACHE = 'crop-sabzi-doctor-media-v3';
 const ACTIVE_CACHES = [STATIC_CACHE, SHEET_CACHE, MEDIA_CACHE];
 
 const CORE_ASSETS = [
@@ -22,9 +22,8 @@ self.addEventListener('activate', (event) => {
       Promise.all(
         keys.filter((key) => !ACTIVE_CACHES.includes(key)).map((key) => caches.delete(key))
       )
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
@@ -71,7 +70,7 @@ self.addEventListener('fetch', (event) => {
   // 3. ऐप की अपनी फ़ाइलें: नेटवर्क मिले तो अपडेट, वरना कैश
   if (reqUrl.origin === self.location.origin) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'no-store' })
         .then((networkRes) => {
           if (networkRes && networkRes.ok) {
             const clone = networkRes.clone();
