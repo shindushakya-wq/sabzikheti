@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="google" content="notranslate">
   <title>CROP & SABZI DOCTOR | कृषि सहायक ऐप</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1b5e20">
@@ -745,7 +746,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.5
+      CROP & SABZI DOCTOR • v11.6
     </div>
   </div>
 
@@ -2218,6 +2219,7 @@
         applyCachedStringsToObjectList(items, fields);
         isTranslatingBackground = false;
         if (onUpdate) onUpdate();
+        refreshActiveScreenOnTranslation();
       });
     }
 
@@ -2405,15 +2407,16 @@
       });
     }
 
-    function setAppLanguage(langCode) {
+    async function setAppLanguage(langCode) {
       currentLang = langCode;
       localStorage.setItem('app_lang', langCode);
       document.documentElement.lang = langCode;
       document.getElementById('languageSelectModal').classList.remove('active');
 
-      applyLanguageUI();
+      writeTranslationsToDOM(getT());
       refreshQuickCropPills();
       calculateCropSchedule();
+      refreshActiveScreenOnTranslation();
 
       if (!navigator.onLine) {
         loadOfflineSheetsSnapshot();
@@ -2421,13 +2424,19 @@
         return;
       }
 
-      fetchLiveWeather();
-      refreshActiveScreenOnTranslation();
+      const fullTranslated = await translateUIBundleToCurrentLang();
+      if (currentLang === langCode) {
+        writeTranslationsToDOM(fullTranslated);
+        refreshQuickCropPills();
+        refreshActiveScreenOnTranslation();
+      }
 
+      fetchLiveWeather();
       if (!localStorage.getItem('is_logged_in')) {
         openLoginModalWithGps();
       }
-      loadAllSheetsData(true);
+      await loadAllSheetsData(true);
+      refreshActiveScreenOnTranslation();
     }
 
     function toggleAppLanguage() {
@@ -3630,6 +3639,7 @@
         }
       });
       const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: c }));
+      applyCachedStringsToObjectList(cropRows, ['displayCrop']);
       const container = document.getElementById('cropsContainer');
 
       const draw = () => {
@@ -3687,6 +3697,7 @@
       const container = document.getElementById('protectionCropsContainer');
       const catData = protectionRecords[categoryName] || {};
       const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: c }));
+      applyCachedStringsToObjectList(cropRows, ['displayCrop']);
 
       const draw = () => {
         container.innerHTML = '';
@@ -3728,6 +3739,7 @@
       const container = document.getElementById('scheduleCropsContainer');
       const catData = scheduleRecords[categoryName] || {};
       const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: c }));
+      applyCachedStringsToObjectList(cropRows, ['displayCrop']);
 
       const draw = () => {
         container.innerHTML = '';
@@ -3760,6 +3772,7 @@
     function showFavoritesScreen() {
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       const list = sheetRecords.filter(r => favs.includes(r.variety)).map(v => ({ ...v }));
+      applyCachedStringsToObjectList(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize']);
       const container = document.getElementById('favoritesContainer');
 
       const draw = () => {
@@ -3804,6 +3817,7 @@
       lastVarietiesList = list;
       lastVarietiesTitle = title;
       const renderItems = list.map(v => ({ ...v }));
+      applyCachedStringsToObjectList(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize']);
       const container = document.getElementById('varietiesContainer');
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
 
@@ -3907,6 +3921,7 @@
       const headingEl = document.getElementById('cropDiseaseHeading');
       const container = document.getElementById('cropDiseasesContainer');
       const items = ((protectionRecords[categoryName] && protectionRecords[categoryName][crop]) ? protectionRecords[categoryName][crop] : []).map(d => ({ ...d }));
+      applyCachedStringsToObjectList(items, ['name', 'symptoms', 'cure']);
 
       const draw = () => {
         container.innerHTML = '';
@@ -3930,7 +3945,7 @@
         }
       };
 
-      headingEl.innerText = crop;
+      headingEl.innerText = getCachedTranslation(crop, currentLang) || crop;
       draw();
       if (!isRefresh) {
         openScreen('screen-crop-diseases', crop);
@@ -3954,6 +3969,7 @@
       const titleEl = document.getElementById('scheduleCropTitle');
       const container = document.getElementById('scheduleStepsContainer');
       const steps = ((scheduleRecords[categoryName] && scheduleRecords[categoryName][crop]) ? scheduleRecords[categoryName][crop] : []).map(s => ({ ...s }));
+      applyCachedStringsToObjectList(steps, ['time', 'med', 'purpose']);
 
       const draw = () => {
         container.innerHTML = '';
@@ -3967,7 +3983,7 @@
         }
       };
 
-      titleEl.innerText = crop;
+      titleEl.innerText = getCachedTranslation(crop, currentLang) || crop;
       draw();
       if (!isRefresh) {
         openScreen('screen-crop-schedule', crop);
@@ -3987,6 +4003,7 @@
 
     function showCompaniesList(isRefresh = false) {
       const compRows = [...new Set(sheetRecords.map(r => r.company))].sort().map(c => ({ origComp: c, displayComp: c }));
+      applyCachedStringsToObjectList(compRows, ['displayComp']);
       const container = document.getElementById('companiesContainer');
 
       const draw = () => {
@@ -4014,9 +4031,10 @@
         }
       });
       const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: c }));
+      applyCachedStringsToObjectList(cropRows, ['displayCrop']);
       const container = document.getElementById('companyCropsContainer');
       const headingEl = document.getElementById('compCropHeading');
-      headingEl.innerText = comp;
+      headingEl.innerText = getCachedTranslation(comp, currentLang) || comp;
 
       const draw = () => {
         container.innerHTML = '';
@@ -4053,6 +4071,7 @@
       const container = document.getElementById('chemicalListContainer');
       const titleEl = document.getElementById('chemicalListTitle');
       const list = chemicalsRecords.filter(c => (c.type || '').toLowerCase().includes(cat.toLowerCase())).map(c => ({ ...c }));
+      applyCachedStringsToObjectList(list, ['name', 'type', 'tech', 'use', 'dose']);
 
       const draw = () => {
         container.innerHTML = '';
@@ -4076,7 +4095,7 @@
         });
       };
 
-      titleEl.innerText = cat;
+      titleEl.innerText = getCachedTranslation(cat, currentLang) || cat;
       draw();
       if (!isRefresh) {
         openScreen('screen-chemical-list', cat);
@@ -4114,6 +4133,7 @@
     function showExpertAdviceScreen(isRefresh = false) {
       const container = document.getElementById('tipsContainer');
       const items = tipsRecords.map(item => ({ ...item }));
+      applyCachedStringsToObjectList(items, ['title', 'desc']);
 
       const draw = () => {
         container.innerHTML = items.length > 0
@@ -4134,6 +4154,7 @@
     function showPestAlertScreen(isRefresh = false) {
       const container = document.getElementById('alertsContainer');
       const items = alertsRecords.map(a => ({ ...a }));
+      applyCachedStringsToObjectList(items, ['title', 'desc']);
 
       const draw = () => {
         container.innerHTML = items.length > 0
@@ -4154,6 +4175,7 @@
     function showAiReportsScreen(isRefresh = false) {
       const container = document.getElementById('aiReportsContainer');
       const items = aiReportsRecords.map(rep => ({ ...rep }));
+      applyCachedStringsToObjectList(items, ['title', 'desc']);
 
       const draw = () => {
         container.innerHTML = items.length > 0
@@ -4510,6 +4532,7 @@
         .filter(c => c && c.toLowerCase() !== 'crop')
         .sort()
         .map(c => ({ origCrop: c, displayCrop: c, rawCrop: atozGuideRecords[c].rawCrop || c }));
+      applyCachedStringsToObjectList(cropRows, ['displayCrop']);
       const container = document.getElementById('atozCropsContainer');
 
       const draw = () => {
@@ -4533,6 +4556,7 @@
       currentActiveAtoZCrop = crop;
       const baseData = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
       const d = { ...baseData, rawCrop: baseData.rawCrop || crop, titleText: crop };
+      applyCachedStringsToObjectList([d], ['titleText', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest']);
       const container = document.getElementById('atozDetailContainer');
 
       const draw = () => {
