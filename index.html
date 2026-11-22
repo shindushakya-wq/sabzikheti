@@ -576,41 +576,40 @@
     <p style="font-size:13px; font-weight:bold; color:#166534;" id="txtLoading">🌾 डेटा लोड हो रहा है...</p>
   </div>
 
-  <!-- पहली बार लोकेशन चुनने का मोडल (राज्य, जिला, शहर, पिनकोड + GPS) -->
+  <!-- लॉगिन के बाद लोकेशन मोडल (बिना लिस्ट के, GPS से ऑटो-फ़िल व सीधे एडिट करने योग्य) -->
   <div class="login-modal-overlay" id="onboardingLocationModal">
     <div class="login-card" style="max-width: 390px;">
       <div style="text-align:center; margin-bottom:12px;">
         <span style="font-size:34px;">📍</span>
-        <h3 style="color:#1b5e20; margin-top:4px; font-size:17px;">अपना क्षेत्र चुनें</h3>
-        <p style="font-size:11.5px; color:#6b7280; margin-top:3px;">लिस्ट से चुनें या GPS से अपने आप भरें</p>
+        <h3 style="color:#1b5e20; margin-top:4px; font-size:17px;" id="txtLocHead">अपना स्थान भरें या एडिट करें</h3>
+        <p style="font-size:11.5px; color:#6b7280; margin-top:3px;" id="txtLocSub">GPS से अपने आप भर जाएगा, आप चाहें तो किसी भी बॉक्स को एडिट कर सकते हैं</p>
       </div>
 
-      <button type="button" class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd; margin-bottom:12px; padding:9px;" onclick="autoFillLocationFromGps()">
+      <button type="button" class="btn-action" id="btnAutoGpsLoc" style="background:#eff6ff; color:#1d4ed8; border:1.5px solid #93c5fd; margin-bottom:12px; padding:9px;" onclick="autoFillLocationFromGps(true)">
         📡 GPS से अपने आप पता लगाएं
       </button>
 
       <div class="form-group">
-        <label>राज्य (State):</label>
-        <select id="onboardStateSelect" class="form-control" onchange="onOnboardStateChange()"></select>
+        <label id="lblLocState">राज्य (State):</label>
+        <input type="text" id="onboardStateInput" class="form-control" placeholder="राज्य लिखें या GPS से भरें">
       </div>
 
       <div class="form-group">
-        <label>जिला (District):</label>
-        <select id="onboardDistrictSelect" class="form-control" onchange="onOnboardDistrictChange()"></select>
+        <label id="lblLocDistrict">जिला (District):</label>
+        <input type="text" id="onboardDistrictInput" class="form-control" placeholder="जिला लिखें या GPS से भरें">
       </div>
 
       <div class="form-group">
-        <label>शहर / कस्बा (City / Town):</label>
-        <select id="onboardCitySelect" class="form-control" onchange="onOnboardCityChange()"></select>
+        <label id="lblLocCity">शहर / गांव (City / Town):</label>
+        <input type="text" id="onboardCityInput" class="form-control" placeholder="शहर या गांव लिखें या GPS से भरें">
       </div>
 
       <div class="form-group">
-        <label>पिनकोड (Pin Code):</label>
-        <select id="onboardPinSelect" class="form-control" style="margin-bottom:6px;" onchange="onOnboardPinSelectChange()"></select>
-        <input type="text" id="onboardPinInput" class="form-control" maxlength="6" placeholder="6 अंकों का पिनकोड लिखें या चुनें">
+        <label id="lblLocPin">पिनकोड (Pin Code):</label>
+        <input type="text" id="onboardPinInput" class="form-control" maxlength="6" placeholder="6 अंकों का पिनकोड लिखें या GPS से भरें">
       </div>
 
-      <button type="button" class="btn-action btn-wa" style="background:#1b5e20; margin-top:8px;" onclick="saveOnboardingLocation()">
+      <button type="button" class="btn-action btn-wa" id="btnSaveLocModal" style="background:#1b5e20; margin-top:8px;" onclick="saveOnboardingLocation()">
         ✅ स्थान सेव करें और आगे बढ़ें
       </button>
     </div>
@@ -776,7 +775,7 @@
 
     <ul class="drawer-menu-list">
       <li class="drawer-item" onclick="openProfileScreen()"><span>👨‍🌾</span><span id="mProfile">मेरी प्रोफाइल / सेटिंग्स</span></li>
-      <li class="drawer-item" onclick="closeDrawer(); openOnboardingLocationModal(true);"><span>📍</span><span>राज्य / जिला / पिनकोड बदलें</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); openOnboardingLocationModal(true);"><span>📍</span><span id="mChangeLoc">स्थान / पिनकोड बदलें</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showFavoritesScreen();" style="color:#d97706; font-weight:bold;"><span>⭐</span><span id="mFav">मेरी पसंदीदा किस्में (Bookmarks)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showAllCategoriesScreen();"><span>🌱</span><span id="mCrops">सभी किस्में</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showProtectionCategoriesScreen();"><span>🛡️</span><span id="mProtection">फसल सुरक्षा (रोग निदान)</span></li>
@@ -791,7 +790,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.5
+      CROP & SABZI DOCTOR • v11.7
     </div>
   </div>
 
@@ -1458,165 +1457,6 @@
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
-    const INDIA_LOCATION_DATA = {
-      "राजस्थान": {
-        "श्रीगंगानगर": {
-          "घड़साना": ["335711"],
-          "श्रीगंगानगर": ["335001"],
-          "सूरतगढ़": ["335804"],
-          "अनूपगढ़": ["335701"],
-          "रायसिंहनगर": ["335051"],
-          "पदमपुर": ["335041"],
-          "सादुलशहर": ["335062"]
-        },
-        "हनुमानगढ़": {
-          "हनुमानगढ़": ["335513"],
-          "नोहर": ["335523"],
-          "भादरा": ["335501"],
-          "रावतसर": ["335524"],
-          "पीलीबंगा": ["335803"]
-        },
-        "बीकानेर": {
-          "बीकानेर": ["334001"],
-          "लूणकरणसर": ["334603"],
-          "खाजूवाला": ["334022"],
-          "नोखा": ["334803"]
-        },
-        "जयपुर": {
-          "जयपुर": ["302001"],
-          "चौमूं": ["303702"],
-          "शाहपुरा": ["303103"],
-          "कोटपूतली": ["303108"]
-        },
-        "जोधपुर": {
-          "जोधपुर": ["342001"],
-          "फलोदी": ["342301"],
-          "ओसियां": ["342303"]
-        },
-        "अलवर": {
-          "अलवर": ["301001"],
-          "भिवाड़ी": ["301019"],
-          "खैरथल": ["301404"]
-        },
-        "सीकर": {
-          "सीकर": ["332001"],
-          "फतेहपुर": ["332301"],
-          "लक्ष्मणगढ़": ["332311"]
-        }
-      },
-      "हरियाणा": {
-        "सिरसा": {
-          "सिरसा": ["125055"],
-          "ऐलनाबाद": ["125102"],
-          "डबवाली": ["125104"],
-          "रानिया": ["125076"]
-        },
-        "फतेहाबाद": {
-          "फतेहाबाद": ["125050"],
-          "टोहाना": ["125120"],
-          "रतिया": ["125051"]
-        },
-        "हिसार": {
-          "हिसार": ["125001"],
-          "हांसी": ["125033"],
-          "बरवाला": ["125121"]
-        },
-        "करनाल": {
-          "करनाल": ["132001"],
-          "घरौंडा": ["132114"]
-        }
-      },
-      "पंजाब": {
-        "फाजिल्का": {
-          "फाजिल्का": ["152123"],
-          "अबोहर": ["152116"],
-          "जलालाबाद": ["152024"]
-        },
-        "बठिंडा": {
-          "बठिंडा": ["151001"],
-          "रामपुरा फूल": ["151103"]
-        },
-        "लुधियाना": {
-          "लुधियाना": ["141001"],
-          "खन्ना": ["141401"]
-        },
-        "अमृतसर": {
-          "अमृतसर": ["143001"],
-          "अजनाला": ["143102"]
-        }
-      },
-      "उत्तर प्रदेश": {
-        "आगरा": {
-          "आगरा": ["282001"],
-          "फतेहाबाद": ["283111"]
-        },
-        "लखनऊ": {
-          "लखनऊ": ["226001"],
-          "मोहनलालगंज": ["226301"]
-        },
-        "वाराणसी": {
-          "वाराणसी": ["221001"],
-          "रामनगर": ["221008"]
-        },
-        "मेरठ": {
-          "मेरठ": ["250001"],
-          "मवाना": ["250401"]
-        }
-      },
-      "मध्य प्रदेश": {
-        "इंदौर": {
-          "इंदौर": ["452001"],
-          "महू": ["453441"]
-        },
-        "भोपाल": {
-          "भोपाल": ["462001"],
-          "बैरसिया": ["463106"]
-        },
-        "उज्जैन": {
-          "उज्जैन": ["456001"],
-          "नागदा": ["456335"]
-        }
-      },
-      "महाराष्ट्र": {
-        "पुणे": {
-          "पुणे": ["411001"],
-          "बारामती": ["413102"]
-        },
-        "नाशिक": {
-          "नाशिक": ["422001"],
-          "ओझर": ["422206"]
-        },
-        "नागपुर": {
-          "नागपुर": ["440001"],
-          "काटोल": ["441302"]
-        }
-      },
-      "गुजरात": {
-        "अहमदाबाद": {
-          "अहमदाबाद": ["380001"],
-          "साणंद": ["382110"]
-        },
-        "सूरत": {
-          "सूरत": ["395003"],
-          "बारडोली": ["394601"]
-        },
-        "राजकोट": {
-          "राजकोट": ["360001"],
-          "गोंडल": ["360311"]
-        }
-      },
-      "बिहार": {
-        "पटना": {
-          "पटना": ["800001"],
-          "दानापुर": ["801503"]
-        },
-        "गया": {
-          "गया": ["823001"],
-          "बोधगया": ["824231"]
-        }
-      }
-    };
-
     const navHistory = [{ id: 'screen-home', title: 'CROP & SABZI DOCTOR' }];
     let sheetRecords = [];
     let cropPhotoSheetMap = {};
@@ -1733,116 +1573,31 @@
       }
     }
 
-    function ensureOptionInSelect(selectEl, value) {
-      if (!selectEl || !value) return;
-      const exists = Array.from(selectEl.options).some(o => o.value === value);
-      if (!exists) {
-        const opt = document.createElement('option');
-        opt.value = value;
-        opt.textContent = value;
-        selectEl.appendChild(opt);
-      }
-      selectEl.value = value;
-    }
-
-    function populateOnboardStates(selectedState = '') {
-      const stateSel = document.getElementById('onboardStateSelect');
-      if (!stateSel) return;
-      const states = Object.keys(INDIA_LOCATION_DATA);
-      stateSel.innerHTML = states.map(st => `<option value="${st}">${st}</option>`).join('');
-      const initialState = (selectedState && INDIA_LOCATION_DATA[selectedState]) ? selectedState : states[0];
-      ensureOptionInSelect(stateSel, initialState);
-      populateOnboardDistricts(initialState, '');
-    }
-
-    function populateOnboardDistricts(stateName, selectedDistrict = '') {
-      const distSel = document.getElementById('onboardDistrictSelect');
-      if (!distSel) return;
-      const distMap = INDIA_LOCATION_DATA[stateName] || {};
-      const districts = Object.keys(distMap);
-      distSel.innerHTML = districts.map(d => `<option value="${d}">${d}</option>`).join('');
-      const initialDist = (selectedDistrict && distMap[selectedDistrict]) ? selectedDistrict : (districts[0] || '');
-      if (initialDist) {
-        ensureOptionInSelect(distSel, initialDist);
-        populateOnboardCities(stateName, initialDist, '');
-      }
-    }
-
-    function populateOnboardCities(stateName, districtName, selectedCity = '') {
-      const citySel = document.getElementById('onboardCitySelect');
-      if (!citySel) return;
-      const cityMap = (INDIA_LOCATION_DATA[stateName] && INDIA_LOCATION_DATA[stateName][districtName]) || {};
-      const cities = Object.keys(cityMap);
-      citySel.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join('');
-      const initialCity = (selectedCity && cityMap[selectedCity]) ? selectedCity : (cities[0] || '');
-      if (initialCity) {
-        ensureOptionInSelect(citySel, initialCity);
-        populateOnboardPins(stateName, districtName, initialCity, '');
-      }
-    }
-
-    function populateOnboardPins(stateName, districtName, cityName, selectedPin = '') {
-      const pinSel = document.getElementById('onboardPinSelect');
-      const pinInput = document.getElementById('onboardPinInput');
-      if (!pinSel || !pinInput) return;
-      const pins = ((INDIA_LOCATION_DATA[stateName] && INDIA_LOCATION_DATA[stateName][districtName] && INDIA_LOCATION_DATA[stateName][districtName][cityName]) || []);
-      pinSel.innerHTML = pins.map(p => `<option value="${p}">${p}</option>`).join('');
-      const chosenPin = selectedPin || pins[0] || '';
-      if (chosenPin) {
-        ensureOptionInSelect(pinSel, chosenPin);
-        pinInput.value = chosenPin;
-      } else {
-        pinInput.value = '';
-      }
-    }
-
-    function onOnboardStateChange() {
-      const st = document.getElementById('onboardStateSelect').value;
-      populateOnboardDistricts(st, '');
-    }
-
-    function onOnboardDistrictChange() {
-      const st = document.getElementById('onboardStateSelect').value;
-      const dist = document.getElementById('onboardDistrictSelect').value;
-      populateOnboardCities(st, dist, '');
-    }
-
-    function onOnboardCityChange() {
-      const st = document.getElementById('onboardStateSelect').value;
-      const dist = document.getElementById('onboardDistrictSelect').value;
-      const city = document.getElementById('onboardCitySelect').value;
-      populateOnboardPins(st, dist, city, '');
-    }
-
-    function onOnboardPinSelectChange() {
-      const pinSel = document.getElementById('onboardPinSelect');
-      const pinInput = document.getElementById('onboardPinInput');
-      if (pinSel && pinInput) {
-        pinInput.value = pinSel.value;
-      }
-    }
-
     function openOnboardingLocationModal(forceOpen = false) {
       if (!forceOpen && localStorage.getItem('farmer_location_completed') === 'true') return;
-      const savedState = localStorage.getItem('farmer_state_name') || 'राजस्थान';
-      const savedDistrict = localStorage.getItem('farmer_district_name') || 'श्रीगंगानगर';
-      const savedCity = localStorage.getItem('farmer_city_name') || 'घड़साना';
-      const savedPin = localStorage.getItem('farmer_pincode') || '335711';
+      const savedState = localStorage.getItem('farmer_state_name') || '';
+      const savedDistrict = localStorage.getItem('farmer_district_name') || '';
+      const savedCity = localStorage.getItem('farmer_city_name') || '';
+      const savedPin = localStorage.getItem('farmer_pincode') || '';
 
-      populateOnboardStates(savedState);
-      populateOnboardDistricts(savedState, savedDistrict);
-      populateOnboardCities(savedState, savedDistrict, savedCity);
-      populateOnboardPins(savedState, savedDistrict, savedCity, savedPin);
+      document.getElementById('onboardStateInput').value = savedState;
+      document.getElementById('onboardDistrictInput').value = savedDistrict;
+      document.getElementById('onboardCityInput').value = savedCity;
+      document.getElementById('onboardPinInput').value = savedPin;
 
       document.getElementById('onboardingLocationModal').classList.add('active');
+
+      if (!savedState && !savedDistrict && !savedCity && navigator.onLine) {
+        autoFillLocationFromGps(false);
+      }
     }
 
-    function autoFillLocationFromGps() {
+    function autoFillLocationFromGps(showFeedback = true) {
       if (!navigator.geolocation) {
-        showToast('इस डिवाइस में GPS उपलब्ध नहीं है');
+        if (showFeedback) showToast('इस डिवाइस में GPS उपलब्ध नहीं है, कृपया स्वयं लिखें');
         return;
       }
-      showToast('GPS से लोकेशन खोजी जा रही है...');
+      if (showFeedback) showToast('GPS से लोकेशन खोजी जा रही है...');
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
@@ -1851,7 +1606,8 @@
         localStorage.setItem('farmer_lon', String(lon));
 
         try {
-          const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=hi`);
+          const geoLang = currentLang || 'hi';
+          const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${encodeURIComponent(geoLang)}`);
           const data = await res.json();
           const stateRaw = (data.principalSubdivision || '').trim();
           const distRaw = (data.localityInfo && data.localityInfo.administrative)
@@ -1860,47 +1616,45 @@
           const cityRaw = (data.city || data.locality || '').trim();
           const pinRaw = (data.postcode || '').trim();
 
-          const matchedState = Object.keys(INDIA_LOCATION_DATA).find(s =>
-            stateRaw.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(stateRaw.toLowerCase())
-          ) || stateRaw || 'राजस्थान';
+          const stateEl = document.getElementById('onboardStateInput');
+          const distEl = document.getElementById('onboardDistrictInput');
+          const cityEl = document.getElementById('onboardCityInput');
+          const pinEl = document.getElementById('onboardPinInput');
 
-          const stateSel = document.getElementById('onboardStateSelect');
-          ensureOptionInSelect(stateSel, matchedState);
-          populateOnboardDistricts(matchedState, distRaw);
+          if (stateEl && stateRaw && !stateEl.value.trim()) stateEl.value = stateRaw;
+          if (distEl && distRaw && !distEl.value.trim()) distEl.value = distRaw;
+          if (cityEl && cityRaw && !cityEl.value.trim()) cityEl.value = cityRaw;
+          if (pinEl && pinRaw && !pinEl.value.trim()) pinEl.value = pinRaw;
 
-          const distSel = document.getElementById('onboardDistrictSelect');
-          if (distRaw) ensureOptionInSelect(distSel, distRaw);
-          populateOnboardCities(matchedState, distSel.value, cityRaw);
-
-          const citySel = document.getElementById('onboardCitySelect');
-          if (cityRaw) ensureOptionInSelect(citySel, cityRaw);
-
-          if (pinRaw) {
-            const pinSel = document.getElementById('onboardPinSelect');
-            ensureOptionInSelect(pinSel, pinRaw);
-            document.getElementById('onboardPinInput').value = pinRaw;
+          if (showFeedback) {
+            if (stateRaw) stateEl.value = stateRaw;
+            if (distRaw) distEl.value = distRaw;
+            if (cityRaw) cityEl.value = cityRaw;
+            if (pinRaw) pinEl.value = pinRaw;
+            showToast('GPS से पता भर दिया गया है, आप एडिट कर सकते हैं');
           }
-          showToast('GPS लोकेशन भर दी गई है');
         } catch (err) {
-          showToast('GPS से लोकेशन लाने में समस्या आई, लिस्ट से चुनें');
+          if (showFeedback) showToast('GPS से पता नहीं मिल पाया, कृपया स्वयं लिखें');
         }
       }, () => {
-        showToast('लोकेशन अनुमति नहीं मिली, लिस्ट से चुनें');
+        if (showFeedback) showToast('लोकेशन अनुमति नहीं मिली, कृपया स्वयं लिखें');
       }, { enableHighAccuracy: true, timeout: 8000 });
     }
 
     function saveOnboardingLocation() {
-      const stateVal = (document.getElementById('onboardStateSelect').value || '').trim();
-      const districtVal = (document.getElementById('onboardDistrictSelect').value || '').trim();
-      const cityVal = (document.getElementById('onboardCitySelect').value || '').trim();
-      const pinVal = (document.getElementById('onboardPinInput').value || '').trim();
+      const stateVal = cleanExtraIdTokens(document.getElementById('onboardStateInput').value || '');
+      const districtVal = cleanExtraIdTokens(document.getElementById('onboardDistrictInput').value || '');
+      const cityVal = cleanExtraIdTokens(document.getElementById('onboardCityInput').value || '');
+      const pinVal = cleanExtraIdTokens(document.getElementById('onboardPinInput').value || '');
 
-      if (!stateVal || !districtVal || !cityVal) {
-        showToast('कृपया राज्य, जिला और शहर चुनें');
+      if (!stateVal && !districtVal && !cityVal) {
+        showToast('कृपया कम से कम राज्य, जिला या शहर लिखें');
+        document.getElementById('onboardCityInput').focus();
         return;
       }
 
-      const fullAddress = `${cityVal}, ${districtVal}, ${stateVal}${pinVal ? ' - ' + pinVal : ''}`;
+      const parts = [cityVal, districtVal, stateVal].filter(Boolean);
+      const fullAddress = `${parts.join(', ')}${pinVal ? ' - ' + pinVal : ''}`;
       localStorage.setItem('farmer_state_name', stateVal);
       localStorage.setItem('farmer_district_name', districtVal);
       localStorage.setItem('farmer_city_name', cityVal);
@@ -1909,10 +1663,14 @@
       localStorage.setItem('farmer_address', fullAddress);
       localStorage.setItem('farmer_location_completed', 'true');
 
-      userCurrentCity = districtVal || cityVal;
+      userCurrentCity = districtVal || cityVal || stateVal;
+      cachedMandiData = null;
       document.getElementById('onboardingLocationModal').classList.remove('active');
       updateProfileUI();
       fetchLiveWeather();
+      if (document.getElementById('screen-mandi-bhav').classList.contains('active')) {
+        fetchLiveMandiPrices(true);
+      }
       showToast('स्थान सेव हो गया है');
     }
 
@@ -2221,7 +1979,7 @@
         favoritesTitle: "पसंदीदा किस्में", atozTitle: "खेती गाइड (A-Z)", discTitle: "किसान चर्चा", privacyTitle: "गोपनीयता नीति",
         reportsTitle: "AI जांच रिपोर्ट", schemesTitle: "सरकारी योजनाएं", expertTitle: "एक्सपर्ट सुझाव", pestTitle: "कीट अलर्ट",
         calcTitle: "बुवाई कैलकुलेटर", drawerHead: "📋 मेन्यू", completeProfileText: "प्रोफाइल पूरी करें >",
-        mProfile: "मेरी प्रोफाइल", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
+        mProfile: "मेरी प्रोफाइल", mChangeLoc: "स्थान / पिनकोड बदलें", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
         mProtection: "फसल सुरक्षा", mChems: "दवाइयाँ Chemicals", mServices: "Other सेवाएं", mPrivacy: "गोपनीयता नीति",
         mRate: "Play Store रेट करें", mShare: "ऐप शेयर करें", mHelp: "सलाहकार से पूछें", mLogout: "लॉगआउट",
         solHead: "⚡ तुरंत समाधान", camBtn: "कैमरा", galBtn: "गैलरी", diagBtn: "🔍 रोग पहचानें",
@@ -2244,7 +2002,13 @@
         lblAdvName: "👤 किसान का नाम:", lblAdvLocation: "📍 कहाँ से हैं (गांव / जिला / राज्य):",
         lblAdvCrop: "🌱 कौनसी फसल है:", lblAdvDisease: "🦠 कौनसा रोग / क्या समस्या है:",
         lblAdvPhoto: "📸 रोगी फसल की फोटो (वैकल्पिक):", txtAdvCam: "कैमरा से फोटो", txtAdvGal: "गैलरी से चुनें",
-        btnAdvSubmitWa: "✅ WhatsApp पर सलाहकार को भेजें"
+        btnAdvSubmitWa: "✅ WhatsApp पर सलाहकार को भेजें",
+        txtLocHead: "अपना स्थान भरें या एडिट करें",
+        txtLocSub: "GPS से अपने आप भर जाएगा, आप चाहें तो किसी भी बॉक्स को एडिट कर सकते हैं",
+        btnAutoGpsLoc: "📡 GPS से अपने आप पता लगाएं",
+        lblLocState: "राज्य (State):", lblLocDistrict: "जिला (District):",
+        lblLocCity: "शहर / गांव (City / Town):", lblLocPin: "पिनकोड (Pin Code):",
+        btnSaveLocModal: "✅ स्थान सेव करें और आगे बढ़ें"
       },
       en: {
         headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!", txtChangeProf: "✏️ Edit Profile",
@@ -2260,7 +2024,7 @@
         favoritesTitle: "Favorites", atozTitle: "Farming Guide (A-Z)", discTitle: "Discussion", privacyTitle: "Privacy Policy",
         reportsTitle: "AI Reports", schemesTitle: "Gov Schemes", expertTitle: "Expert Tips", pestTitle: "Pest Alerts",
         calcTitle: "Sowing Calculator", drawerHead: "📋 Menu", completeProfileText: "Complete profile >",
-        mProfile: "My Profile", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
+        mProfile: "My Profile", mChangeLoc: "Change Location / Pin", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
         mProtection: "Crop Protection", mChems: "Chemicals", mServices: "Other Services", mPrivacy: "Privacy Policy",
         mRate: "Rate Play Store", mShare: "Share App", mHelp: "Ask Advisor", mLogout: "Logout",
         solHead: "⚡ Instant Solution", camBtn: "Camera", galBtn: "Gallery", diagBtn: "🔍 Diagnose",
@@ -2283,7 +2047,13 @@
         lblAdvName: "👤 Farmer Name:", lblAdvLocation: "📍 Where are you from (Village / District / State):",
         lblAdvCrop: "🌱 Which Crop:", lblAdvDisease: "🦠 Which Disease / Problem:",
         lblAdvPhoto: "📸 Crop Photo (Optional):", txtAdvCam: "Camera Photo", txtAdvGal: "Choose Gallery",
-        btnAdvSubmitWa: "✅ Send to Advisor on WhatsApp"
+        btnAdvSubmitWa: "✅ Send to Advisor on WhatsApp",
+        txtLocHead: "Fill or Edit Your Location",
+        txtLocSub: "Auto-fills via GPS; you can type or edit any field freely",
+        btnAutoGpsLoc: "📡 Auto-Detect via GPS",
+        lblLocState: "State:", lblLocDistrict: "District:",
+        lblLocCity: "City / Village:", lblLocPin: "Pin Code:",
+        btnSaveLocModal: "✅ Save Location & Continue"
       },
       mr: {
         welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
@@ -2393,7 +2163,7 @@
       'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ', 'txtPlaySub',
       'txtRateBtn', 'txtVideoHead', 'txtSeeAll', 'txtSocialHead', 'fabText',
       'navHome', 'navCrops', 'navSched', 'navProt', 'navHelp', 'drawerHead',
-      'completeProfileText', 'mProfile', 'mFav', 'mCrops', 'mSchedule',
+      'completeProfileText', 'mProfile', 'mChangeLoc', 'mFav', 'mCrops', 'mSchedule',
       'mProtection', 'mChems', 'mServices', 'mPrivacy', 'mRate', 'mShare',
       'mHelp', 'mLogout', 'solHead', 'camBtn', 'galBtn', 'diagBtn',
       'diagRepHead', 'wapBtn', 'loadingText',
@@ -2404,7 +2174,9 @@
       'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15', 'btnSaveProf', 'btnDocSpray',
       'offlineBanner', 'voiceNotSupported',
       'advFormTitle', 'advFormSub', 'lblAdvName', 'lblAdvLocation', 'lblAdvCrop',
-      'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa'
+      'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa',
+      'txtLocHead', 'txtLocSub', 'btnAutoGpsLoc', 'lblLocState', 'lblLocDistrict',
+      'lblLocCity', 'lblLocPin', 'btnSaveLocModal'
     ];
 
     function updateOfflineBanner() {
@@ -2510,6 +2282,8 @@
         showExpertAdviceScreen(true);
       } else if (id === 'screen-ai-reports') {
         showAiReportsScreen(true);
+      } else if (id === 'screen-privacy') {
+        renderPrivacyUI();
       } else if (id === 'screen-mandi-bhav' && cachedMandiData && cachedMandiData.length > 0) {
         renderMandiTable(cachedMandiData);
       }
@@ -2667,6 +2441,52 @@
       });
     }
 
+    async function translateAllLoadedSheetsToCurrentLang() {
+      if (currentLang === 'hi' || !navigator.onLine) return;
+      const onRefresh = () => refreshActiveScreenOnTranslation();
+
+      runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], onRefresh);
+      runBackgroundTranslation(allSchedRowsGlobal, ['crop', 'time', 'med', 'purpose'], () => {
+        rebuildScheduleMap(allSchedRowsGlobal);
+        onRefresh();
+      });
+      runBackgroundTranslation(allProtRowsGlobal, ['crop', 'name', 'symptoms', 'cure'], () => {
+        rebuildProtectionMap(allProtRowsGlobal);
+        onRefresh();
+      });
+      runBackgroundTranslation(chemicalsRecords, ['name', 'type', 'tech', 'use', 'dose'], onRefresh);
+      runBackgroundTranslation(alertsRecords, ['title', 'desc'], onRefresh);
+      runBackgroundTranslation(tipsRecords, ['title', 'desc'], onRefresh);
+      runBackgroundTranslation(aiReportsRecords, ['title', 'desc'], onRefresh);
+      runBackgroundTranslation(dailyStories, ['title', 'desc'], renderStoriesBar);
+      runBackgroundTranslation(videoRecords, ['title'], renderDynamicVideos);
+      runBackgroundTranslation(notificationsList, ['title', 'desc'], renderNotificationsUI);
+
+      const atozArr = Object.keys(atozGuideRecords).map(k => ({ key: k, ...atozGuideRecords[k] }));
+      if (atozArr.length > 0) {
+        runBackgroundTranslation(atozArr, ['key', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest'], () => {
+          const nextMap = {};
+          atozArr.forEach(item => {
+            const { key, ...rest } = item;
+            nextMap[key] = rest;
+          });
+          atozGuideRecords = nextMap;
+          onRefresh();
+        });
+      }
+
+      if (privacyData.disclaimer || privacyData.policy) {
+        const [dTr, pTr] = await Promise.all([
+          privacyData.disclaimer ? translateSheetText(privacyData.disclaimer, currentLang) : Promise.resolve(''),
+          privacyData.policy ? translateSheetText(privacyData.policy, currentLang) : Promise.resolve('')
+        ]);
+        const dEl = document.getElementById('privacyDisclaimerText');
+        const pEl = document.getElementById('privacyPolicyText');
+        if (dEl && dTr) dEl.innerHTML = cleanExtraIdTokens(dTr);
+        if (pEl && pTr) pEl.innerHTML = cleanExtraIdTokens(pTr);
+      }
+    }
+
     async function translateUIBundleToCurrentLang() {
       if (currentLang === 'hi') return getT();
       const merged = { ...getT() };
@@ -2755,6 +2575,7 @@
       setText('txtDrawerHead', t.drawerHead);
       setText('txtCompleteProfile', t.completeProfileText);
       setText('mProfile', t.mProfile);
+      setText('mChangeLoc', t.mChangeLoc);
       setText('mFav', t.mFav);
       setText('mCrops', t.mCrops);
       setText('mSchedule', t.mSchedule);
@@ -2815,6 +2636,15 @@
       setText('txtAdvGal', t.txtAdvGal);
       setText('btnAdvSubmitWa', t.btnAdvSubmitWa);
 
+      setText('txtLocHead', t.txtLocHead);
+      setText('txtLocSub', t.txtLocSub);
+      setText('btnAutoGpsLoc', t.btnAutoGpsLoc);
+      setText('lblLocState', t.lblLocState);
+      setText('lblLocDistrict', t.lblLocDistrict);
+      setText('lblLocCity', t.lblLocCity);
+      setText('lblLocPin', t.lblLocPin);
+      setText('btnSaveLocModal', t.btnSaveLocModal);
+
       translateStaticCategoryLabels();
 
       const searchInput = document.getElementById('homeSearch');
@@ -2869,6 +2699,7 @@
       }
 
       fetchLiveWeather();
+      translateAllLoadedSheetsToCurrentLang();
       refreshActiveScreenOnTranslation();
 
       if (!localStorage.getItem('is_logged_in')) {
@@ -3129,7 +2960,7 @@
     async function fetchLiveMandiPrices(forceFresh = false) {
       const loadingDiv = document.getElementById('mandiLoading');
       const gpsStatus = document.getElementById('mandiGpsStatus');
-      const mandiCity = localStorage.getItem('farmer_district_name') || userCurrentCity;
+      const mandiCity = localStorage.getItem('farmer_district_name') || localStorage.getItem('farmer_city_name') || userCurrentCity;
       if (gpsStatus) {
         gpsStatus.innerText = `📍 GPS: ${mandiCity}`;
       }
@@ -3541,6 +3372,20 @@
     function renderPrivacyUI() {
       if (privacyData.disclaimer) document.getElementById('privacyDisclaimerText').innerHTML = cleanExtraIdTokens(privacyData.disclaimer);
       if (privacyData.policy) document.getElementById('privacyPolicyText').innerHTML = cleanExtraIdTokens(privacyData.policy);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        if (privacyData.disclaimer) {
+          translateSheetText(privacyData.disclaimer, currentLang).then(tr => {
+            const el = document.getElementById('privacyDisclaimerText');
+            if (el && tr) el.innerHTML = cleanExtraIdTokens(tr);
+          });
+        }
+        if (privacyData.policy) {
+          translateSheetText(privacyData.policy, currentLang).then(tr => {
+            const el = document.getElementById('privacyPolicyText');
+            if (el && tr) el.innerHTML = cleanExtraIdTokens(tr);
+          });
+        }
+      }
     }
 
     function renderNotificationsUI() {
@@ -3736,25 +3581,7 @@
         isLoadingSheets = false;
 
         if (currentLang !== 'hi') {
-          runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize']);
-          runBackgroundTranslation(allSchedRowsGlobal, ['crop', 'time', 'med', 'purpose'], () => rebuildScheduleMap(allSchedRowsGlobal));
-          runBackgroundTranslation(allProtRowsGlobal, ['crop', 'name', 'symptoms', 'cure'], () => rebuildProtectionMap(allProtRowsGlobal));
-          runBackgroundTranslation(chemicalsRecords, ['name', 'type', 'tech', 'use', 'dose']);
-          runBackgroundTranslation(alertsRecords, ['title', 'desc']);
-          runBackgroundTranslation(tipsRecords, ['title', 'desc']);
-          runBackgroundTranslation(aiReportsRecords, ['title', 'desc']);
-          runBackgroundTranslation(dailyStories, ['title', 'desc'], renderStoriesBar);
-          runBackgroundTranslation(videoRecords, ['title'], renderDynamicVideos);
-          runBackgroundTranslation(notificationsList, ['title', 'desc'], renderNotificationsUI);
-          const atozArr = Object.keys(atozGuideRecords).map(k => ({ key: k, ...atozGuideRecords[k] }));
-          runBackgroundTranslation(atozArr, ['key', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest'], () => {
-            const nextMap = {};
-            atozArr.forEach(item => {
-              const { key, ...rest } = item;
-              nextMap[key] = rest;
-            });
-            atozGuideRecords = nextMap;
-          });
+          translateAllLoadedSheetsToCurrentLang();
         }
       } catch (e) {
         loadOfflineSheetsSnapshot();
