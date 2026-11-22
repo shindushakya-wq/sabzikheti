@@ -1,7 +1,8 @@
-const STATIC_CACHE = 'crop-sabzi-doctor-static-v3';
-const SHEET_CACHE = 'crop-sabzi-doctor-sheets-v3';
-const MEDIA_CACHE = 'crop-sabzi-doctor-media-v3';
-const ACTIVE_CACHES = [STATIC_CACHE, SHEET_CACHE, MEDIA_CACHE];
+const STATIC_CACHE = 'crop-sabzi-doctor-static-v4';
+const SHEET_CACHE = 'crop-sabzi-doctor-sheets-v4';
+const MEDIA_CACHE = 'crop-sabzi-doctor-media-v4';
+const TRANSLATE_CACHE = 'crop-sabzi-doctor-translate-v4';
+const ACTIVE_CACHES = [STATIC_CACHE, SHEET_CACHE, MEDIA_CACHE, TRANSLATE_CACHE];
 
 const CORE_ASSETS = [
   './',
@@ -47,7 +48,28 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 2. इमेजेज: पहले कैश, फिर नेटवर्क
+  // 2. Apps Script ट्रांसलेशन API: पहले कैश, फिर नेटवर्क
+  if (reqUrl.hostname.includes('script.google.com') && reqUrl.searchParams.get('action') === 'translate') {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(event.request)
+          .then((networkRes) => {
+            if (networkRes && networkRes.ok) {
+              const clone = networkRes.clone();
+              caches.open(TRANSLATE_CACHE).then((cache) => cache.put(event.request, clone));
+            }
+            return networkRes;
+          })
+          .catch(() => new Response(JSON.stringify({ ok: false }), {
+            headers: { 'Content-Type': 'application/json' }
+          }));
+      })
+    );
+    return;
+  }
+
+  // 3. इमेजेज: पहले कैश, फिर नेटवर्क
   if (event.request.destination === 'image') {
     event.respondWith(
       caches.match(event.request).then((cached) => {
@@ -67,7 +89,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 3. ऐप की अपनी फ़ाइलें: नेटवर्क मिले तो अपडेट, वरना कैश
+  // 4. ऐप की अपनी फ़ाइलें: नेटवर्क मिले तो अपडेट, वरना कैश
   if (reqUrl.origin === self.location.origin) {
     event.respondWith(
       fetch(event.request, { cache: 'no-store' })
