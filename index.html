@@ -790,7 +790,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.7
+      CROP & SABZI DOCTOR • v11.8
     </div>
   </div>
 
@@ -2008,7 +2008,12 @@
         btnAutoGpsLoc: "📡 GPS से अपने आप पता लगाएं",
         lblLocState: "राज्य (State):", lblLocDistrict: "जिला (District):",
         lblLocCity: "शहर / गांव (City / Town):", lblLocPin: "पिनकोड (Pin Code):",
-        btnSaveLocModal: "✅ स्थान सेव करें और आगे बढ़ें"
+        btnSaveLocModal: "✅ स्थान सेव करें और आगे बढ़ें",
+        lblRate: "रेट", lblAskWhatsApp: "WhatsApp पर पूछें", lblCompany: "कंपनी", lblCrop: "फसल",
+        lblSegment: "सेगमेंट", lblPackSize: "पैकेट साइज", lblFeatures: "विशेषताएं", lblWeight: "वजन",
+        lblMaturity: "पकने का समय", lblDisease: "रोग", lblBuySeed: "खरीदे बीज", lblSaved: "सेव हुआ",
+        lblRemove: "हटाएं", lblNoFav: "कोई पसंदीदा किस्म सेव नहीं है", lblSymptoms: "लक्षण", lblCure: "उपचार",
+        lblTime: "समय", lblMed: "दवा", lblPurpose: "उद्देश्य", lblTech: "तकनीक", lblUse: "उपयोग", lblDose: "खुराक"
       },
       en: {
         headerTitle: "CROP & SABZI DOCTOR", welcomeMsg: "Ram-Ram, Farmer Brother!", txtChangeProf: "✏️ Edit Profile",
@@ -2053,7 +2058,12 @@
         btnAutoGpsLoc: "📡 Auto-Detect via GPS",
         lblLocState: "State:", lblLocDistrict: "District:",
         lblLocCity: "City / Village:", lblLocPin: "Pin Code:",
-        btnSaveLocModal: "✅ Save Location & Continue"
+        btnSaveLocModal: "✅ Save Location & Continue",
+        lblRate: "Rate", lblAskWhatsApp: "Ask on WhatsApp", lblCompany: "Company", lblCrop: "Crop",
+        lblSegment: "Segment", lblPackSize: "Pack Size", lblFeatures: "Features", lblWeight: "Weight",
+        lblMaturity: "Maturity", lblDisease: "Disease", lblBuySeed: "Buy Seeds", lblSaved: "Saved",
+        lblRemove: "Remove", lblNoFav: "No favorite varieties saved", lblSymptoms: "Symptoms", lblCure: "Cure",
+        lblTime: "Time", lblMed: "Medicine", lblPurpose: "Purpose", lblTech: "Technical", lblUse: "Usage", lblDose: "Dosage"
       },
       mr: {
         welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
@@ -2176,8 +2186,14 @@
       'advFormTitle', 'advFormSub', 'lblAdvName', 'lblAdvLocation', 'lblAdvCrop',
       'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa',
       'txtLocHead', 'txtLocSub', 'btnAutoGpsLoc', 'lblLocState', 'lblLocDistrict',
-      'lblLocCity', 'lblLocPin', 'btnSaveLocModal'
+      'lblLocCity', 'lblLocPin', 'btnSaveLocModal',
+      'lblRate', 'lblAskWhatsApp', 'lblCompany', 'lblCrop', 'lblSegment', 'lblPackSize',
+      'lblFeatures', 'lblWeight', 'lblMaturity', 'lblDisease', 'lblBuySeed', 'lblSaved',
+      'lblRemove', 'lblNoFav', 'lblSymptoms', 'lblCure', 'lblTime', 'lblMed',
+      'lblPurpose', 'lblTech', 'lblUse', 'lblDose'
     ];
+
+    let activeTranslatedBundle = { ...OFFLINE_LANG_PACKS.hi };
 
     function updateOfflineBanner() {
       syncBannerOffset();
@@ -2242,7 +2258,8 @@
     function getT() {
       const base = OFFLINE_LANG_PACKS.hi;
       const custom = OFFLINE_LANG_PACKS[currentLang] || {};
-      return { ...base, ...custom };
+      const dyn = (activeTranslatedBundle && activeTranslatedBundle._lang === currentLang) ? activeTranslatedBundle : {};
+      return { ...base, ...custom, ...dyn };
     }
 
     function toggleDarkMode() {
@@ -2340,7 +2357,7 @@
         try {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), 3500);
-          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(clean)}`;
+          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(clean)}`;
           const res = await fetch(url, { signal: controller.signal });
           clearTimeout(timer);
           if (res.ok) {
@@ -2377,6 +2394,56 @@
       })();
 
       return await pendingTranslations[cacheKey];
+    }
+
+    async function translateObjectListNow(items, fields, targetLang = currentLang) {
+      if (!Array.isArray(items) || items.length === 0) return items;
+      if (!targetLang || targetLang === 'hi') {
+        items.forEach(item => {
+          fields.forEach(f => {
+            if (typeof item[f] === 'string') item[f] = cleanExtraIdTokens(item[f]);
+          });
+        });
+        return items;
+      }
+
+      const uniqueStrings = new Set();
+      items.forEach(item => {
+        fields.forEach(f => {
+          const val = item[f];
+          if (val && typeof val === 'string') {
+            const clean = cleanExtraIdTokens(val);
+            if (clean) uniqueStrings.add(clean);
+          }
+        });
+      });
+
+      const strList = Array.from(uniqueStrings);
+      const trMap = {};
+      const concurrency = 8;
+      let idx = 0;
+
+      async function worker() {
+        while (idx < strList.length) {
+          const curIdx = idx++;
+          const origStr = strList[curIdx];
+          trMap[origStr] = await translateSheetText(origStr, targetLang);
+        }
+      }
+
+      await Promise.all(Array.from({ length: Math.min(concurrency, strList.length) }, worker));
+
+      items.forEach(item => {
+        fields.forEach(f => {
+          const val = item[f];
+          if (val && typeof val === 'string') {
+            const clean = cleanExtraIdTokens(val);
+            item[f] = trMap[clean] || clean;
+          }
+        });
+      });
+
+      return items;
     }
 
     function applyCachedStringsToObjectList(items, fields) {
@@ -2445,7 +2512,7 @@
       if (currentLang === 'hi' || !navigator.onLine) return;
       const onRefresh = () => refreshActiveScreenOnTranslation();
 
-      runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], onRefresh);
+      runBackgroundTranslation(sheetRecords, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize', 'price', 'discount'], onRefresh);
       runBackgroundTranslation(allSchedRowsGlobal, ['crop', 'time', 'med', 'purpose'], () => {
         rebuildScheduleMap(allSchedRowsGlobal);
         onRefresh();
@@ -2488,14 +2555,16 @@
     }
 
     async function translateUIBundleToCurrentLang() {
-      if (currentLang === 'hi') return getT();
-      const merged = { ...getT() };
+      if (currentLang === 'hi') {
+        activeTranslatedBundle = { ...OFFLINE_LANG_PACKS.hi, _lang: 'hi' };
+        return activeTranslatedBundle;
+      }
+      const merged = { ...OFFLINE_LANG_PACKS.hi, ...(OFFLINE_LANG_PACKS[currentLang] || {}), _lang: currentLang };
       const entriesToTranslate = [];
 
       TRANSLATABLE_UI_KEYS.forEach((key) => {
         const val = merged[key];
         if (!val || typeof val !== 'string') return;
-        if (OFFLINE_LANG_PACKS[currentLang] && OFFLINE_LANG_PACKS[currentLang][key]) return;
         const cached = getCachedTranslation(val, currentLang);
         if (cached) {
           merged[key] = cached;
@@ -2510,6 +2579,7 @@
         })
       );
 
+      activeTranslatedBundle = merged;
       return merged;
     }
 
@@ -2659,6 +2729,7 @@
       if (currentLang !== 'hi' && navigator.onLine) {
         translateUIBundleToCurrentLang().then((fullTranslated) => {
           writeTranslationsToDOM(fullTranslated);
+          refreshActiveScreenOnTranslation();
         });
       }
     }
@@ -2681,12 +2752,14 @@
       });
     }
 
-    function setAppLanguage(langCode) {
+    async function setAppLanguage(langCode) {
       currentLang = langCode;
       localStorage.setItem('app_lang', langCode);
       document.documentElement.lang = langCode;
       document.getElementById('languageSelectModal').classList.remove('active');
 
+      showLoader();
+      await translateUIBundleToCurrentLang();
       applyLanguageUI();
       refreshQuickCropPills();
       calculateCropSchedule();
@@ -2694,13 +2767,15 @@
       if (!navigator.onLine) {
         loadOfflineSheetsSnapshot();
         refreshActiveScreenOnTranslation();
+        hideLoader();
         openOnboardingLocationModal(false);
         return;
       }
 
       fetchLiveWeather();
-      translateAllLoadedSheetsToCurrentLang();
+      await translateAllLoadedSheetsToCurrentLang();
       refreshActiveScreenOnTranslation();
+      hideLoader();
 
       if (!localStorage.getItem('is_logged_in')) {
         document.getElementById('loginScreenModal').classList.add('active');
@@ -3108,15 +3183,15 @@
     function getCropEmoji(cropName) {
       if (!cropName) return '🌱';
       const c = cropName.trim().toLowerCase();
-      if (c.includes('टमाटर') || c.includes('tomato')) return '🍅';
+      if (c.includes('टमाटर') || c.includes('tomato') || c.includes('tamatar')) return '🍅';
       if (c.includes('शिमला') || c.includes('capsicum')) return '🫑';
-      if (c.includes('मिर्च') || c.includes('chilli') || c.includes('chili')) return '🌶️';
-      if (c.includes('खीरा') || c.includes('cucumber')) return '🥒';
-      if (c.includes('तरबूज') || c.includes('watermelon')) return '🍉';
+      if (c.includes('मिर्च') || c.includes('chilli') || c.includes('chili') || c.includes('mirch')) return '🌶️';
+      if (c.includes('खीरा') || c.includes('cucumber') || c.includes('kheera')) return '🥒';
+      if (c.includes('तरबूज') || c.includes('watermelon') || c.includes('tarbooj')) return '🍉';
       if (c.includes('फूलगोभी') || c.includes('cauliflower')) return '🥦';
       if (c.includes('पत्तागोभी') || c.includes('cabbage')) return '🥬';
       if (c.includes('कद्दू') || c.includes('pumpkin')) return '🎃';
-      if (c.includes('करेला') || c.includes('bitter')) return '🥒';
+      if (c.includes('करेला') || c.includes('bitter') || c.includes('karela')) return '🥒';
       if (c.includes('लौकी') || c.includes('bottle')) return '🥒';
       if (c.includes('गाजर') || c.includes('carrot')) return '🥕';
       if (c.includes('आलू') || c.includes('potato')) return '🥔';
@@ -3929,7 +4004,7 @@
       openScreen('screen-all-categories', t.gCrops);
     }
 
-    function showCropsForCategory(categoryName, isRefresh = false) {
+    async function showCropsForCategory(categoryName, isRefresh = false) {
       currentActiveCategory = categoryName;
       const filteredRecords = sheetRecords.filter(r => r.rawCategory.toLowerCase().includes(categoryName.toLowerCase()));
       const cropsSet = new Set();
@@ -3941,32 +4016,32 @@
       const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
       const container = document.getElementById('cropsContainer');
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (cropRows.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-        } else {
-          cropRows.forEach(item => {
-            const displayHtml = resolveCropThumbHtml(item.origCrop);
-            container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${item.origCrop.replace(/'/g, "\\'")}', '${categoryName.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-          });
-        }
-      };
-
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-crops', categoryName);
+      let headerTitleText = cleanExtraIdTokens(categoryName);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(categoryName, currentLang));
+        await translateObjectListNow(cropRows, ['displayCrop'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(categoryName, currentLang) || categoryName);
+        applyCachedStringsToObjectList(cropRows, ['displayCrop']);
       }
-      if (currentLang !== 'hi') {
-        translateSheetText(categoryName, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-crops') curTop.title = cleanTr;
-          }
+
+      container.innerHTML = '';
+      if (cropRows.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+      } else {
+        cropRows.forEach(item => {
+          const displayHtml = resolveCropThumbHtml(item.origCrop);
+          container.innerHTML += `<div class="list-item" onclick="filterByCropAndCategory('${item.origCrop.replace(/'/g, "\\'")}', '${categoryName.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
         });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      }
+
+      if (!isRefresh) {
+        openScreen('screen-crops', headerTitleText);
+      } else if (document.getElementById('screen-crops').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-crops') curTop.title = headerTitleText;
       }
     }
 
@@ -3992,38 +4067,38 @@
       openScreen('screen-protection-categories', t.gProt);
     }
 
-    function showProtectionCropsListByCategory(categoryName, isRefresh = false) {
+    async function showProtectionCropsListByCategory(categoryName, isRefresh = false) {
       currentActiveProtectionCat = categoryName;
       const container = document.getElementById('protectionCropsContainer');
       const catData = protectionRecords[categoryName] || {};
       const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (cropRows.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-        } else {
-          cropRows.forEach(item => {
-            const displayHtml = resolveCropThumbHtml(item.origCrop);
-            container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-          });
-        }
-      };
-
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-protection-crops', categoryName);
+      let headerTitleText = cleanExtraIdTokens(categoryName);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(categoryName, currentLang));
+        await translateObjectListNow(cropRows, ['displayCrop'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(categoryName, currentLang) || categoryName);
+        applyCachedStringsToObjectList(cropRows, ['displayCrop']);
       }
-      if (currentLang !== 'hi') {
-        translateSheetText(categoryName, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-protection-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-protection-crops') curTop.title = cleanTr;
-          }
+
+      container.innerHTML = '';
+      if (cropRows.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+      } else {
+        cropRows.forEach(item => {
+          const displayHtml = resolveCropThumbHtml(item.origCrop);
+          container.innerHTML += `<div class="list-item" onclick="showCropDiseasesList('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
         });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      }
+
+      if (!isRefresh) {
+        openScreen('screen-protection-crops', headerTitleText);
+      } else if (document.getElementById('screen-protection-crops').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-protection-crops') curTop.title = headerTitleText;
       }
     }
 
@@ -4034,98 +4109,110 @@
       openScreen('screen-schedule-categories', t.gSched);
     }
 
-    function showScheduleCropsListByCategory(categoryName, isRefresh = false) {
+    async function showScheduleCropsListByCategory(categoryName, isRefresh = false) {
       currentActiveScheduleCat = categoryName;
       const container = document.getElementById('scheduleCropsContainer');
       const catData = scheduleRecords[categoryName] || {};
       const cropRows = Object.keys(catData).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (cropRows.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
-        } else {
-          cropRows.forEach(item => {
-            const displayHtml = resolveCropThumbHtml(item.origCrop);
-            container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-          });
-        }
-      };
-
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-schedule-crops', categoryName);
+      let headerTitleText = cleanExtraIdTokens(categoryName);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(categoryName, currentLang));
+        await translateObjectListNow(cropRows, ['displayCrop'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(categoryName, currentLang) || categoryName);
+        applyCachedStringsToObjectList(cropRows, ['displayCrop']);
       }
-      if (currentLang !== 'hi') {
-        translateSheetText(categoryName, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-schedule-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-schedule-crops') curTop.title = cleanTr;
-          }
+
+      container.innerHTML = '';
+      if (cropRows.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">-</div>`;
+      } else {
+        cropRows.forEach(item => {
+          const displayHtml = resolveCropThumbHtml(item.origCrop);
+          container.innerHTML += `<div class="list-item" onclick="openCropScheduleDetail('${categoryName.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
         });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      }
+
+      if (!isRefresh) {
+        openScreen('screen-schedule-crops', headerTitleText);
+      } else if (document.getElementById('screen-schedule-crops').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-schedule-crops') curTop.title = headerTitleText;
       }
     }
 
-    function showFavoritesScreen() {
+    async function showFavoritesScreen() {
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       const list = sheetRecords.filter(r => favs.includes(r.variety)).map(v => ({ ...v }));
       const container = document.getElementById('favoritesContainer');
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (list.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ कोई पसंदीदा किस्म सेव नहीं है</div>`;
-        } else {
-          list.forEach(v => {
-            const pInfo = parsePriceAndDiscount(v.price, v.discount);
-            container.innerHTML += `
-              <div class="variety-card">
-                <div class="var-header-row">
-                  <span class="badge-variety">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)}</span>
-                  <span class="badge-company">${cleanExtraIdTokens(v.company)}</span>
-                  ${pInfo.hasDiscount ? `<span class="badge-discount">${pInfo.discountLabel}</span>` : ''}
-                </div>
-                <div class="var-title">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)} (${cleanExtraIdTokens(v.crop)})</div>
-                <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
-                <div class="var-info-row">🌾 <b>फसल:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
-                <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
-                <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
-                <div class="var-info-row">💰 <b>रेट:</b> <span>${pInfo.hasDiscount ? `<s style="color:#6b7280;">${pInfo.displayPriceText}</s> <b>${pInfo.displayFinalPriceText}</b>` : `<b>${pInfo.displayPriceText}</b>`}</span></div>
-                <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
-                <div class="var-info-row">⚖️ <b>वजन:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
-                <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
-                <div class="var-info-row">🛡️ <b>रोग:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
-                <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">❌ हटाएं</button>
-              </div>`;
-          });
-        }
-      };
-
-      draw();
-      const t = getT();
-      openScreen('screen-favorites', t.favoritesTitle);
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], draw);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        await translateObjectListNow(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize', 'price', 'discount'], currentLang);
+      } else if (currentLang !== 'hi') {
+        applyCachedStringsToObjectList(list, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize', 'price', 'discount']);
       }
+
+      const t = getT();
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280; padding:20px;">⭐ ${cleanExtraIdTokens(t.lblNoFav)}</div>`;
+      } else {
+        list.forEach(v => {
+          const pInfo = parsePriceAndDiscount(v.price, v.discount);
+          const rateVal = pInfo.unitPrice > 0
+            ? (pInfo.hasDiscount ? `<s style="color:#6b7280;">₹${pInfo.unitPrice}</s> <b>₹${pInfo.finalUnitPrice}</b>` : `<b>₹${pInfo.unitPrice}</b>`)
+            : `<b>${cleanExtraIdTokens(v.price || t.lblAskWhatsApp)}</b>`;
+          container.innerHTML += `
+            <div class="variety-card">
+              <div class="var-header-row">
+                <span class="badge-variety">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)}</span>
+                <span class="badge-company">${cleanExtraIdTokens(v.company)}</span>
+                ${pInfo.hasDiscount ? `<span class="badge-discount">${cleanExtraIdTokens(pInfo.discountLabel)}</span>` : ''}
+              </div>
+              <div class="var-title">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)} (${cleanExtraIdTokens(v.crop)})</div>
+              <div class="var-info-row">🏢 <b>${cleanExtraIdTokens(t.lblCompany)}:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
+              <div class="var-info-row">🌾 <b>${cleanExtraIdTokens(t.lblCrop)}:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
+              <div class="var-info-row">🌱 <b>${cleanExtraIdTokens(t.lblSegment)}:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
+              <div class="var-info-row">📦 <b>${cleanExtraIdTokens(t.lblPackSize)}:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
+              <div class="var-info-row">💰 <b>${cleanExtraIdTokens(t.lblRate)}:</b> <span>${rateVal}</span></div>
+              <div class="var-info-row">⭐ <b>${cleanExtraIdTokens(t.lblFeatures)}:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
+              <div class="var-info-row">⚖️ <b>${cleanExtraIdTokens(t.lblWeight)}:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
+              <div class="var-info-row">⏱️ <b>${cleanExtraIdTokens(t.lblMaturity)}:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
+              <div class="var-info-row">🛡️ <b>${cleanExtraIdTokens(t.lblDisease)}:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
+              <button class="btn-action" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; margin-top:10px;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this); showFavoritesScreen();">❌ ${cleanExtraIdTokens(t.lblRemove)}</button>
+            </div>`;
+        });
+      }
+
+      openScreen('screen-favorites', t.favoritesTitle);
     }
 
-    function renderVarietiesList(list, title, isRefresh = false) {
+    async function renderVarietiesList(list, title, isRefresh = false) {
       lastVarietiesList = list;
       lastVarietiesTitle = title;
       const renderItems = list.map(v => ({ ...v }));
       const container = document.getElementById('varietiesContainer');
       const favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (renderItems.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-          return;
-        }
+      let headerTitleText = cleanExtraIdTokens(title);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(title, currentLang));
+        await translateObjectListNow(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize', 'price', 'discount'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(title, currentLang) || title);
+        applyCachedStringsToObjectList(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize', 'price', 'discount']);
+      }
 
+      const t = getT();
+      container.innerHTML = '';
+      if (renderItems.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      } else {
         renderItems.forEach((v, idx) => {
           let photosHtml = '';
           if (v.photos && v.photos.length > 0) {
@@ -4133,21 +4220,25 @@
             v.photos.forEach(img => { photosHtml += `<img src="${img}" class="var-photo" onclick="openImageModal('${img}')">`; });
             photosHtml += '</div>';
           }
-          const isSaved = favs.includes(v.variety);
-          const saveBtnText = isSaved ? "⭐ सेव हुआ" : "☆";
+          const origVarName = (list[idx] && list[idx].variety) ? list[idx].variety : v.variety;
+          const isSaved = favs.includes(origVarName) || favs.includes(v.variety);
+          const saveBtnText = isSaved ? `⭐ ${cleanExtraIdTokens(t.lblSaved)}` : "☆";
           const savedClass = isSaved ? "saved" : "";
           const pInfo = parsePriceAndDiscount(v.price, v.discount);
+          const rateDisplay = pInfo.unitPrice > 0
+            ? (pInfo.hasDiscount
+                ? `<s style="color:#6b7280; font-size:12.5px; margin-left:4px;">₹${pInfo.unitPrice}</s> <b style="color:#15803d; font-size:15px;">₹${pInfo.finalUnitPrice}</b>`
+                : `<b style="color:#15803d; font-size:15px; margin-left:4px;">₹${pInfo.unitPrice}</b>`)
+            : `<b style="color:#15803d; font-size:14px; margin-left:4px;">${cleanExtraIdTokens(v.price || t.lblAskWhatsApp)}</b>`;
 
           const priceBoxHtml = `
             <div class="price-highlight-box">
               <div>
-                <span style="font-size:12px; color:#374151;">💰 <b>रेट:</b></span>
-                ${pInfo.hasDiscount
-                  ? `<s style="color:#6b7280; font-size:12.5px; margin-left:4px;">${pInfo.displayPriceText}</s> <b style="color:#15803d; font-size:15px;">${pInfo.displayFinalPriceText}</b>`
-                  : `<b style="color:#15803d; font-size:15px; margin-left:4px;">${pInfo.displayPriceText}</b>`}
+                <span style="font-size:12px; color:#374151;">💰 <b>${cleanExtraIdTokens(t.lblRate)}:</b></span>
+                ${rateDisplay}
                 ${v.packSize ? `<span style="font-size:11.5px; color:#4b5563; margin-left:6px;">(${cleanExtraIdTokens(v.packSize)})</span>` : ''}
               </div>
-              ${pInfo.hasDiscount ? `<span class="badge-discount">🏷️ ${pInfo.discountLabel}</span>` : ''}
+              ${pInfo.hasDiscount ? `<span class="badge-discount">🏷️ ${cleanExtraIdTokens(pInfo.discountLabel)}</span>` : ''}
             </div>
           `;
 
@@ -4157,47 +4248,40 @@
               <div class="var-header-row">
                 <span class="badge-variety">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)}</span>
                 <span class="badge-company">${cleanExtraIdTokens(v.company)}</span>
-                ${pInfo.hasDiscount ? `<span class="badge-discount">${pInfo.discountLabel}</span>` : ''}
+                ${pInfo.hasDiscount ? `<span class="badge-discount">${cleanExtraIdTokens(pInfo.discountLabel)}</span>` : ''}
               </div>
               <div class="var-title">${getCropEmoji(v.crop)} ${cleanExtraIdTokens(v.variety)} (${cleanExtraIdTokens(v.crop)})</div>
 
               ${priceBoxHtml}
 
-              <div class="var-info-row">🏢 <b>कंपनी:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
-              <div class="var-info-row">🌾 <b>फसल:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
-              <div class="var-info-row">🌱 <b>सेगमेंट:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
-              <div class="var-info-row">📦 <b>पैकेट साइज:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
-              <div class="var-info-row">⭐ <b>विशेषताएं:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
-              <div class="var-info-row">⚖️ <b>वजन:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
-              <div class="var-info-row">⏱️ <b>पकने का समय:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
-              <div class="var-info-row">🛡️ <b>रोग:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
+              <div class="var-info-row">🏢 <b>${cleanExtraIdTokens(t.lblCompany)}:</b> <span>${cleanExtraIdTokens(v.company || '-')}</span></div>
+              <div class="var-info-row">🌾 <b>${cleanExtraIdTokens(t.lblCrop)}:</b> <span>${cleanExtraIdTokens(v.crop || '-')}</span></div>
+              <div class="var-info-row">🌱 <b>${cleanExtraIdTokens(t.lblSegment)}:</b> <span>${cleanExtraIdTokens(v.segment || '-')}</span></div>
+              <div class="var-info-row">📦 <b>${cleanExtraIdTokens(t.lblPackSize)}:</b> <span>${cleanExtraIdTokens(v.packSize || '-')}</span></div>
+              <div class="var-info-row">⭐ <b>${cleanExtraIdTokens(t.lblFeatures)}:</b> <span>${cleanExtraIdTokens(v.features || '-')}</span></div>
+              <div class="var-info-row">⚖️ <b>${cleanExtraIdTokens(t.lblWeight)}:</b> <span>${cleanExtraIdTokens(v.weight || '-')}</span></div>
+              <div class="var-info-row">⏱️ <b>${cleanExtraIdTokens(t.lblMaturity)}:</b> <span>${cleanExtraIdTokens(v.maturity || '-')}</span></div>
+              <div class="var-info-row">🛡️ <b>${cleanExtraIdTokens(t.lblDisease)}:</b> <span>${cleanExtraIdTokens(v.resistance || '-')}</span></div>
 
               <div style="display:flex; gap:8px; margin-top:14px;">
-                <button type="button" class="btn-action btn-wa" style="flex:2;" onclick="openSeedOrderModal(${idx})">🛒 खरीदे बीज</button>
-                <button type="button" class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${v.variety.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
+                <button type="button" class="btn-action btn-wa" style="flex:2;" onclick="openSeedOrderModal(${idx})">🛒 ${cleanExtraIdTokens(t.lblBuySeed)}</button>
+                <button type="button" class="btn-action bookmark-btn ${savedClass}" style="flex:1;" onclick="toggleBookmark('${origVarName.replace(/'/g, "\\'")}', this)">${saveBtnText}</button>
               </div>
             </div>`;
         });
-      };
-
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-seeds', title);
       }
-      if (currentLang !== 'hi') {
-        translateSheetText(title, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          if (document.getElementById('screen-seeds').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-seeds') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(renderItems, ['company', 'crop', 'variety', 'segment', 'features', 'weight', 'maturity', 'resistance', 'packSize'], draw);
+
+      if (!isRefresh) {
+        openScreen('screen-seeds', headerTitleText);
+      } else if (document.getElementById('screen-seeds').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-seeds') curTop.title = headerTitleText;
       }
     }
 
     function toggleBookmark(varietyName, btnElem) {
+      const t = getT();
       let favs = JSON.parse(localStorage.getItem('farmer_favorites') || '[]');
       let savedNow = false;
       if (favs.includes(varietyName)) {
@@ -4209,122 +4293,123 @@
       }
       localStorage.setItem('farmer_favorites', JSON.stringify(favs));
       if (btnElem) {
-        btnElem.innerText = savedNow ? "⭐ सेव हुआ" : "☆";
+        btnElem.innerText = savedNow ? `⭐ ${cleanExtraIdTokens(t.lblSaved)}` : "☆";
         btnElem.classList.toggle('saved', savedNow);
       }
     }
 
-    function showCropDiseasesList(categoryName, crop, isRefresh = false) {
+    async function showCropDiseasesList(categoryName, crop, isRefresh = false) {
       currentActiveProtectionCat = categoryName;
       currentActiveProtectionCrop = crop;
       const headingEl = document.getElementById('cropDiseaseHeading');
       const container = document.getElementById('cropDiseasesContainer');
       const items = ((protectionRecords[categoryName] && protectionRecords[categoryName][crop]) ? protectionRecords[categoryName][crop] : []).map(d => ({ ...d }));
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (items.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-        } else {
-          items.forEach(d => {
-            const cleanName = cleanExtraIdTokens(d.name);
-            const cleanSymptoms = cleanExtraIdTokens(d.symptoms);
-            const cleanCure = cleanExtraIdTokens(d.cure);
-            const p = (d.photo && d.photo.trim().startsWith('http'))
-              ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${cleanName}">`
-              : '';
-            const iconEmoji = getCropEmoji(crop);
-
-            container.innerHTML += `
-              <div class="disease-card">
-                <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>रोग:</b> ${cleanName}</div>
-                <div class="disease-symptom">🔍 <b>लक्षण:</b> ${cleanSymptoms}</div>
-                <div class="disease-cure-box">💊 <b>उपचार:</b> ${cleanCure}</div>
-                ${p}
-              </div>`;
-          });
-        }
-      };
-
-      headingEl.innerText = cleanExtraIdTokens(crop);
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-crop-diseases', crop);
+      let headerTitleText = cleanExtraIdTokens(crop);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(crop, currentLang));
+        await translateObjectListNow(items, ['name', 'symptoms', 'cure'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(crop, currentLang) || crop);
+        applyCachedStringsToObjectList(items, ['name', 'symptoms', 'cure']);
       }
-      if (currentLang !== 'hi') {
-        translateSheetText(crop, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          headingEl.innerText = cleanTr;
-          if (document.getElementById('screen-crop-diseases').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-crop-diseases') curTop.title = cleanTr;
-          }
+
+      const t = getT();
+      headingEl.innerText = headerTitleText;
+      container.innerHTML = '';
+      if (items.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      } else {
+        items.forEach(d => {
+          const cleanName = cleanExtraIdTokens(d.name);
+          const cleanSymptoms = cleanExtraIdTokens(d.symptoms);
+          const cleanCure = cleanExtraIdTokens(d.cure);
+          const p = (d.photo && d.photo.trim().startsWith('http'))
+            ? `<img src="${d.photo.trim()}" class="disease-photo" onclick="openImageModal('${d.photo.trim()}')" alt="${cleanName}">`
+            : '';
+          const iconEmoji = getCropEmoji(crop);
+
+          container.innerHTML += `
+            <div class="disease-card">
+              <div class="disease-title"><span style="margin-right:6px;">${iconEmoji}</span><b>${cleanExtraIdTokens(t.lblDisease)}:</b> ${cleanName}</div>
+              <div class="disease-symptom">🔍 <b>${cleanExtraIdTokens(t.lblSymptoms)}:</b> ${cleanSymptoms}</div>
+              <div class="disease-cure-box">💊 <b>${cleanExtraIdTokens(t.lblCure)}:</b> ${cleanCure}</div>
+              ${p}
+            </div>`;
         });
-        runBackgroundTranslation(items, ['name', 'symptoms', 'cure'], draw);
+      }
+
+      if (!isRefresh) {
+        openScreen('screen-crop-diseases', headerTitleText);
+      } else if (document.getElementById('screen-crop-diseases').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-crop-diseases') curTop.title = headerTitleText;
       }
     }
 
-    function openCropScheduleDetail(categoryName, crop, isRefresh = false) {
+    async function openCropScheduleDetail(categoryName, crop, isRefresh = false) {
       currentActiveScheduleCat = categoryName;
       currentActiveScheduleCrop = crop;
       const titleEl = document.getElementById('scheduleCropTitle');
       const container = document.getElementById('scheduleStepsContainer');
       const steps = ((scheduleRecords[categoryName] && scheduleRecords[categoryName][crop]) ? scheduleRecords[categoryName][crop] : []).map(s => ({ ...s }));
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (steps.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-        } else {
-          steps.forEach(s => {
-            const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
-            container.innerHTML += `<div class="schedule-step"><b>⏱️ समय: ${cleanExtraIdTokens(s.time)}</b><p>🧪 <b>दवा:</b> ${cleanExtraIdTokens(s.med)}</p><p>🎯 <b>उद्देश्य:</b> ${cleanExtraIdTokens(s.purpose)}</p>${p}</div>`;
-          });
-        }
-      };
-
-      titleEl.innerText = cleanExtraIdTokens(crop);
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-crop-schedule', crop);
+      let headerTitleText = cleanExtraIdTokens(crop);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(crop, currentLang));
+        await translateObjectListNow(steps, ['time', 'med', 'purpose'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(crop, currentLang) || crop);
+        applyCachedStringsToObjectList(steps, ['time', 'med', 'purpose']);
       }
-      if (currentLang !== 'hi') {
-        translateSheetText(crop, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          titleEl.innerText = cleanTr;
-          if (document.getElementById('screen-crop-schedule').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-crop-schedule') curTop.title = cleanTr;
-          }
+
+      const t = getT();
+      titleEl.innerText = headerTitleText;
+      container.innerHTML = '';
+      if (steps.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      } else {
+        steps.forEach(s => {
+          const p = (s.photo && s.photo.trim().startsWith('http')) ? `<img src="${s.photo.trim()}" style="max-height:140px; width:100%; object-fit:contain; border-radius:8px; margin-top:6px;" onclick="openImageModal('${s.photo.trim()}')">` : '';
+          container.innerHTML += `<div class="schedule-step"><b>⏱️ ${cleanExtraIdTokens(t.lblTime)}: ${cleanExtraIdTokens(s.time)}</b><p>🧪 <b>${cleanExtraIdTokens(t.lblMed)}:</b> ${cleanExtraIdTokens(s.med)}</p><p>🎯 <b>${cleanExtraIdTokens(t.lblPurpose)}:</b> ${cleanExtraIdTokens(s.purpose)}</p>${p}</div>`;
         });
-        runBackgroundTranslation(steps, ['time', 'med', 'purpose'], draw);
+      }
+
+      if (!isRefresh) {
+        openScreen('screen-crop-schedule', headerTitleText);
+      } else if (document.getElementById('screen-crop-schedule').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-crop-schedule') curTop.title = headerTitleText;
       }
     }
 
-    function showCompaniesList(isRefresh = false) {
+    async function showCompaniesList(isRefresh = false) {
       const compRows = [...new Set(sheetRecords.map(r => r.company))].sort().map(c => ({ origComp: c, displayComp: cleanExtraIdTokens(c) }));
       const container = document.getElementById('companiesContainer');
 
-      const draw = () => {
-        container.innerHTML = '';
-        compRows.forEach(item => {
-          container.innerHTML += `<div class="list-item" onclick="selectCompany('${item.origComp.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${cleanExtraIdTokens(item.displayComp)}</span></div><span class="arrow">&gt;</span></div>`;
-        });
-      };
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        await translateObjectListNow(compRows, ['displayComp'], currentLang);
+      } else if (currentLang !== 'hi') {
+        applyCachedStringsToObjectList(compRows, ['displayComp']);
+      }
 
-      draw();
+      container.innerHTML = '';
+      compRows.forEach(item => {
+        container.innerHTML += `<div class="list-item" onclick="selectCompany('${item.origComp.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">🏢</span><span class="list-title">${cleanExtraIdTokens(item.displayComp)}</span></div><span class="arrow">&gt;</span></div>`;
+      });
+
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-companies', t.compTitle);
       }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(compRows, ['displayComp'], draw);
-      }
     }
 
-    function selectCompany(comp) {
+    async function selectCompany(comp) {
       const cropsSet = new Set();
       sheetRecords.filter(r => r.company === comp).forEach(r => {
         if (r.crop && r.crop.toLowerCase() !== 'crop') {
@@ -4334,28 +4419,25 @@
       const cropRows = Array.from(cropsSet).sort().map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c) }));
       const container = document.getElementById('companyCropsContainer');
       const headingEl = document.getElementById('compCropHeading');
-      headingEl.innerText = cleanExtraIdTokens(comp);
 
-      const draw = () => {
-        container.innerHTML = '';
-        cropRows.forEach(item => {
-          const displayHtml = resolveCropThumbHtml(item.origCrop);
-          container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-        });
-      };
-
-      draw();
-      openScreen('screen-company-crops', comp);
-      if (currentLang !== 'hi') {
-        translateSheetText(comp, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          headingEl.innerText = cleanTr;
-          if (document.getElementById('screen-company-crops').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-          }
-        });
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
+      let headerTitleText = cleanExtraIdTokens(comp);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(comp, currentLang));
+        await translateObjectListNow(cropRows, ['displayCrop'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(comp, currentLang) || comp);
+        applyCachedStringsToObjectList(cropRows, ['displayCrop']);
       }
+
+      headingEl.innerText = headerTitleText;
+      container.innerHTML = '';
+      cropRows.forEach(item => {
+        const displayHtml = resolveCropThumbHtml(item.origCrop);
+        container.innerHTML += `<div class="list-item" onclick="filterByCompanyAndCrop('${comp.replace(/'/g, "\\'")}', '${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${displayHtml}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
+      });
+
+      openScreen('screen-company-crops', headerTitleText);
     }
 
     function filterByCompanyAndCrop(comp, crop) {
@@ -4367,51 +4449,51 @@
       openScreen('screen-chemicals', t.chemTitle);
     }
 
-    function filterChemicalsByCategory(cat, isRefresh = false) {
+    async function filterChemicalsByCategory(cat, isRefresh = false) {
       currentActiveChemicalCat = cat;
       const container = document.getElementById('chemicalListContainer');
       const titleEl = document.getElementById('chemicalListTitle');
       const list = chemicalsRecords.filter(c => (c.type || '').toLowerCase().includes(cat.toLowerCase())).map(c => ({ ...c }));
 
-      const draw = () => {
-        container.innerHTML = '';
-        if (list.length === 0) {
-          container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
-        }
-        list.forEach(c => {
-          const cleanName = cleanExtraIdTokens(c.name);
-          const p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${cleanName}"></div>` : '';
-          container.innerHTML += `
-            <div class="chem-card">
-              <div class="chem-title">🧪 ${cleanName} (${cleanExtraIdTokens(c.type)})</div>
-              <div class="chem-body-row">
-                <div class="chem-info-side">
-                  <div class="chem-tech">🔬 <b>तकनीक:</b> ${cleanExtraIdTokens(c.tech)}</div>
-                  <div class="chem-use">🌿 <b>उपयोग:</b> ${cleanExtraIdTokens(c.use)}</div>
-                  <div class="chem-dose">💧 <b>खुराक:</b> ${cleanExtraIdTokens(c.dose)}</div>
-                </div>
-                ${p}
-              </div>
-            </div>`;
-        });
-      };
-
-      titleEl.innerText = cleanExtraIdTokens(cat);
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-chemical-list', cat);
+      let headerTitleText = cleanExtraIdTokens(cat);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        headerTitleText = cleanExtraIdTokens(await translateSheetText(cat, currentLang));
+        await translateObjectListNow(list, ['name', 'type', 'tech', 'use', 'dose'], currentLang);
+      } else if (currentLang !== 'hi') {
+        headerTitleText = cleanExtraIdTokens(getCachedTranslation(cat, currentLang) || cat);
+        applyCachedStringsToObjectList(list, ['name', 'type', 'tech', 'use', 'dose']);
       }
-      if (currentLang !== 'hi') {
-        translateSheetText(cat, currentLang).then(tr => {
-          const cleanTr = cleanExtraIdTokens(tr);
-          titleEl.innerText = cleanTr;
-          if (document.getElementById('screen-chemical-list').classList.contains('active')) {
-            document.getElementById('headerTitle').innerText = cleanTr;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-chemical-list') curTop.title = cleanTr;
-          }
-        });
-        runBackgroundTranslation(list, ['name', 'type', 'tech', 'use', 'dose'], draw);
+
+      const t = getT();
+      titleEl.innerText = headerTitleText;
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
+      }
+      list.forEach(c => {
+        const cleanName = cleanExtraIdTokens(c.name);
+        const p = (c.photo && c.photo.trim().startsWith('http')) ? `<div class="chem-img-side"><img src="${c.photo.trim()}" onclick="openImageModal('${c.photo.trim()}')" alt="${cleanName}"></div>` : '';
+        container.innerHTML += `
+          <div class="chem-card">
+            <div class="chem-title">🧪 ${cleanName} (${cleanExtraIdTokens(c.type)})</div>
+            <div class="chem-body-row">
+              <div class="chem-info-side">
+                <div class="chem-tech">🔬 <b>${cleanExtraIdTokens(t.lblTech)}:</b> ${cleanExtraIdTokens(c.tech)}</div>
+                <div class="chem-use">🌿 <b>${cleanExtraIdTokens(t.lblUse)}:</b> ${cleanExtraIdTokens(c.use)}</div>
+                <div class="chem-dose">💧 <b>${cleanExtraIdTokens(t.lblDose)}:</b> ${cleanExtraIdTokens(c.dose)}</div>
+              </div>
+              ${p}
+            </div>
+          </div>`;
+      });
+
+      if (!isRefresh) {
+        openScreen('screen-chemical-list', headerTitleText);
+      } else if (document.getElementById('screen-chemical-list').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-chemical-list') curTop.title = headerTitleText;
       }
     }
 
@@ -4432,63 +4514,66 @@
       fetchLiveMandiPrices();
     }
 
-    function showExpertAdviceScreen(isRefresh = false) {
+    async function showExpertAdviceScreen(isRefresh = false) {
       const container = document.getElementById('tipsContainer');
       const items = tipsRecords.map(item => ({ ...item }));
 
-      const draw = () => {
-        container.innerHTML = items.length > 0
-          ? items.map(item => `<div class="schedule-step"><b>💡 ${cleanExtraIdTokens(item.title)}</b><p>${cleanExtraIdTokens(item.desc)}</p>${item.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${cleanExtraIdTokens(item.date)}</span>` : ''}</div>`).join('')
-          : `<div class="schedule-step" style="text-align:center; color:#6b7280;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
-      };
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        await translateObjectListNow(items, ['title', 'desc'], currentLang);
+      } else if (currentLang !== 'hi') {
+        applyCachedStringsToObjectList(items, ['title', 'desc']);
+      }
 
-      draw();
+      container.innerHTML = items.length > 0
+        ? items.map(item => `<div class="schedule-step"><b>💡 ${cleanExtraIdTokens(item.title)}</b><p>${cleanExtraIdTokens(item.desc)}</p>${item.date ? `<span style="font-size:11px; color:#6b7280;">📅 ${cleanExtraIdTokens(item.date)}</span>` : ''}</div>`).join('')
+        : `<div class="schedule-step" style="text-align:center; color:#6b7280;">गूगल शीट (ExpertTips) में अभी सुझाव उपलब्ध नहीं हैं।</div>`;
+
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-expert-advice', t.expertTitle);
       }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(items, ['title', 'desc'], draw);
-      }
     }
 
-    function showPestAlertScreen(isRefresh = false) {
+    async function showPestAlertScreen(isRefresh = false) {
       const container = document.getElementById('alertsContainer');
       const items = alertsRecords.map(a => ({ ...a }));
 
-      const draw = () => {
-        container.innerHTML = items.length > 0
-          ? items.map(a => `<div class="pest-alert-card"><b>⚠️ ${cleanExtraIdTokens(a.title)}</b><p style="margin-top:4px; font-size:13.5px;">${cleanExtraIdTokens(a.desc)}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${cleanExtraIdTokens(a.date)}</span>` : ''}</div>`).join('')
-          : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
-      };
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        await translateObjectListNow(items, ['title', 'desc'], currentLang);
+      } else if (currentLang !== 'hi') {
+        applyCachedStringsToObjectList(items, ['title', 'desc']);
+      }
 
-      draw();
+      container.innerHTML = items.length > 0
+        ? items.map(a => `<div class="pest-alert-card"><b>⚠️ ${cleanExtraIdTokens(a.title)}</b><p style="margin-top:4px; font-size:13.5px;">${cleanExtraIdTokens(a.desc)}</p>${a.date ? `<span style="font-size:11px; opacity:0.8;">📅 ${cleanExtraIdTokens(a.date)}</span>` : ''}</div>`).join('')
+        : `<div class="variety-card" style="padding:14px; text-align:center; color:#6b7280;">गूगल शीट (PestAlerts) में अभी अलर्ट उपलब्ध नहीं हैं।</div>`;
+
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-pest-alert', t.pestTitle);
       }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(items, ['title', 'desc'], draw);
-      }
     }
 
-    function showAiReportsScreen(isRefresh = false) {
+    async function showAiReportsScreen(isRefresh = false) {
       const container = document.getElementById('aiReportsContainer');
       const items = aiReportsRecords.map(rep => ({ ...rep }));
 
-      const draw = () => {
-        container.innerHTML = items.length > 0
-          ? items.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${cleanExtraIdTokens(rep.title)}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${cleanExtraIdTokens(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; color:#6b7280; display:block; margin-top:6px;">🕒 ${cleanExtraIdTokens(rep.date)}</span>` : ''}</div>`).join('')
-          : `<div class="variety-card" style="text-align:center; color:#6b7280;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
-      };
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        await translateObjectListNow(items, ['title', 'desc'], currentLang);
+      } else if (currentLang !== 'hi') {
+        applyCachedStringsToObjectList(items, ['title', 'desc']);
+      }
 
-      draw();
+      container.innerHTML = items.length > 0
+        ? items.map(rep => `<div class="variety-card" style="border-left:5px solid #16a34a;"><b>🌿 ${cleanExtraIdTokens(rep.title)}</b><p style="margin-top:6px; font-size:13.5px; line-height:1.5;">${cleanExtraIdTokens(rep.desc || '').replace(/\n/g, '<br>')}</p>${rep.date ? `<span style="font-size:11px; color:#6b7280; display:block; margin-top:6px;">🕒 ${cleanExtraIdTokens(rep.date)}</span>` : ''}</div>`).join('')
+        : `<div class="variety-card" style="text-align:center; color:#6b7280;">गूगल शीट (Diagnosis) में अभी कोई AI जांच रिपोर्ट नहीं है।</div>`;
+
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-ai-reports', t.reportsTitle);
-      }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(items, ['title', 'desc'], draw);
       }
     }
 
@@ -4711,66 +4796,65 @@
       goBack();
     }
 
-    function showAtoZCropsScreen(isRefresh = false) {
+    async function showAtoZCropsScreen(isRefresh = false) {
       const cropRows = Object.keys(atozGuideRecords)
         .filter(c => c && c.toLowerCase() !== 'crop')
         .sort()
         .map(c => ({ origCrop: c, displayCrop: cleanExtraIdTokens(c), rawCrop: atozGuideRecords[c].rawCrop || c }));
       const container = document.getElementById('atozCropsContainer');
 
-      const draw = () => {
-        container.innerHTML = '';
-        cropRows.forEach(item => {
-          container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${getCropEmoji(item.rawCrop)}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
-        });
-      };
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        await translateObjectListNow(cropRows, ['displayCrop'], currentLang);
+      } else if (currentLang !== 'hi') {
+        applyCachedStringsToObjectList(cropRows, ['displayCrop']);
+      }
 
-      draw();
+      container.innerHTML = '';
+      cropRows.forEach(item => {
+        container.innerHTML += `<div class="list-item" onclick="openAtoZDetail('${item.origCrop.replace(/'/g, "\\'")}')"><div class="list-left"><span class="list-icon">${getCropEmoji(item.rawCrop)}</span><span class="list-title">${cleanExtraIdTokens(item.displayCrop)}</span></div><span class="arrow">&gt;</span></div>`;
+      });
+
       const t = getT();
       if (!isRefresh) {
         openScreen('screen-atoz-crops', t.atozTitle);
       }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation(cropRows, ['displayCrop'], draw);
-      }
     }
 
-    function openAtoZDetail(crop, isRefresh = false) {
+    async function openAtoZDetail(crop, isRefresh = false) {
       currentActiveAtoZCrop = crop;
       const baseData = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
       const d = { ...baseData, titleText: cleanExtraIdTokens(crop) };
       const container = document.getElementById('atozDetailContainer');
 
-      const draw = () => {
-        container.innerHTML = `
-          <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
-            <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${cleanExtraIdTokens(d.titleText)}</h3>
-            <div class="schedule-step"><b>1. 🟫 मिट्टी</b><p>${cleanExtraIdTokens(d.soil)}</p></div>
-            <div class="schedule-step"><b>2. 🌱 बुवाई</b><p>${cleanExtraIdTokens(d.sowing)}</p></div>
-            <div class="schedule-step"><b>3. 📦 बीज दर</b><p>${cleanExtraIdTokens(d.seed)}</p></div>
-            <div class="schedule-step"><b>4. 🧪 खाद व उर्वरक</b><p>${cleanExtraIdTokens(d.fertilizer)}</p></div>
-            <div class="schedule-step"><b>5. 🌿 खरपतवार प्रबंधन</b><p>${cleanExtraIdTokens(d.weed)}</p></div>
-            <div class="schedule-step"><b>6. 💧 सिंचाई</b><p>${cleanExtraIdTokens(d.irrigation)}</p></div>
-            <div class="schedule-step"><b>7. 🛡️ फसल सुरक्षा</b><p>${cleanExtraIdTokens(d.care)}</p></div>
-            <div class="schedule-step"><b>8. ✂️ तुड़ाई / कटाई</b><p>${cleanExtraIdTokens(d.harvesting)}</p></div>
-            <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 भंडारण व मंडी</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
-          </div>`;
-      };
-
-      draw();
-      if (!isRefresh) {
-        openScreen('screen-atoz-detail', crop);
+      if (currentLang !== 'hi' && navigator.onLine) {
+        await translateUIBundleToCurrentLang();
+        await translateObjectListNow([d], ['titleText', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest'], currentLang);
+      } else if (currentLang !== 'hi') {
+        applyCachedStringsToObjectList([d], ['titleText', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest']);
       }
-      if (currentLang !== 'hi') {
-        runBackgroundTranslation([d], ['titleText', 'soil', 'sowing', 'seed', 'fertilizer', 'weed', 'irrigation', 'care', 'harvesting', 'postHarvest'], () => {
-          draw();
-          if (document.getElementById('screen-atoz-detail').classList.contains('active')) {
-            const cleanTitle = cleanExtraIdTokens(d.titleText);
-            document.getElementById('headerTitle').innerText = cleanTitle;
-            const curTop = navHistory[navHistory.length - 1];
-            if (curTop && curTop.id === 'screen-atoz-detail') curTop.title = cleanTitle;
-          }
-        });
+
+      const cleanTitle = cleanExtraIdTokens(d.titleText);
+      container.innerHTML = `
+        <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px;">
+          <h3 style="color:#1b5e20; font-size:18px; margin-bottom:12px;">${getCropEmoji(d.rawCrop || crop)} ${cleanTitle}</h3>
+          <div class="schedule-step"><b>1. 🟫 ${cleanExtraIdTokens(await translateSheetText('मिट्टी', currentLang))}</b><p>${cleanExtraIdTokens(d.soil)}</p></div>
+          <div class="schedule-step"><b>2. 🌱 ${cleanExtraIdTokens(await translateSheetText('बुवाई', currentLang))}</b><p>${cleanExtraIdTokens(d.sowing)}</p></div>
+          <div class="schedule-step"><b>3. 📦 ${cleanExtraIdTokens(await translateSheetText('बीज दर', currentLang))}</b><p>${cleanExtraIdTokens(d.seed)}</p></div>
+          <div class="schedule-step"><b>4. 🧪 ${cleanExtraIdTokens(await translateSheetText('खाद व उर्वरक', currentLang))}</b><p>${cleanExtraIdTokens(d.fertilizer)}</p></div>
+          <div class="schedule-step"><b>5. 🌿 ${cleanExtraIdTokens(await translateSheetText('खरपतवार प्रबंधन', currentLang))}</b><p>${cleanExtraIdTokens(d.weed)}</p></div>
+          <div class="schedule-step"><b>6. 💧 ${cleanExtraIdTokens(await translateSheetText('सिंचाई', currentLang))}</b><p>${cleanExtraIdTokens(d.irrigation)}</p></div>
+          <div class="schedule-step"><b>7. 🛡️ ${cleanExtraIdTokens(await translateSheetText('फसल सुरक्षा', currentLang))}</b><p>${cleanExtraIdTokens(d.care)}</p></div>
+          <div class="schedule-step"><b>8. ✂️ ${cleanExtraIdTokens(await translateSheetText('तुड़ाई / कटाई', currentLang))}</b><p>${cleanExtraIdTokens(d.harvesting)}</p></div>
+          <div class="schedule-step" style="background:#fef3c7;"><b style="color:#b45309;">9. 💰 ${cleanExtraIdTokens(await translateSheetText('भंडारण व मंडी', currentLang))}</b><p>${cleanExtraIdTokens(d.postHarvest)}</p></div>
+        </div>`;
+
+      if (!isRefresh) {
+        openScreen('screen-atoz-detail', cleanTitle);
+      } else if (document.getElementById('screen-atoz-detail').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = cleanTitle;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-atoz-detail') curTop.title = cleanTitle;
       }
     }
 
