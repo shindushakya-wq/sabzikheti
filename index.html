@@ -8,7 +8,6 @@
   <meta name="theme-color" content="#1b5e20">
 
   <style>
-    /* स्प्लैश स्क्रीन एनीमेशन स्टाइल */
     #splashScreen {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -66,7 +65,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
-    /* नॉन-ब्लॉकिंग टोस्ट नोटिफिकेशन */
     .app-toast {
       position: fixed;
       bottom: 135px;
@@ -111,7 +109,6 @@
       border-bottom-color: #b45309;
     }
 
-    /* डार्क मोड स्टाइल */
     body.dark-mode {
       background-color: #0f172a;
       color: #f8fafc;
@@ -264,7 +261,6 @@
       opacity: 0.8;
     }
 
-    /* टॉप हेडर */
     .app-header { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); color: white; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .back-btn { font-size: 20px; cursor: pointer; margin-right: 8px; display: none; }
     .header-title { font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
@@ -279,13 +275,11 @@
 
     .menu-bars-icon { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; font-weight: bold; }
 
-    /* स्मार्ट लोडिंग स्पाइनर ओवरले */
     .loader-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.82); z-index: 5000; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
     body.dark-mode .loader-overlay { background: rgba(15,23,42,0.88); }
     .spinner { width: 42px; height: 42px; border: 4px solid #bbf7d0; border-top: 4px solid #16a34a; border-radius: 50%; animation: spin 0.75s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* साइड मेन्यू ड्रॉअर */
     .drawer-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2100; backdrop-filter: blur(2px); }
     .drawer-overlay.active { display: block; }
     .drawer-content { position: fixed; top: 0; right: -300px; width: 285px; height: 100%; background: #ffffff; z-index: 2200; box-shadow: -4px 0 16px rgba(0,0,0,0.2); transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; display: flex; flex-direction: column; }
@@ -305,11 +299,9 @@
     .drawer-item:active { background: #f9fafb; color: #1b5e20; }
     .drawer-item span:first-child { font-size: 18px; }
 
-    /* स्क्रीन लेआउट */
     .screen { display: none; padding: 14px; max-width: 480px; margin: auto; }
     .screen.active { display: block; }
 
-    /* गोल स्टोरी बार */
     .stories-wrapper { display: flex; gap: 12px; overflow-x: auto; padding: 12px 4px; background: #ffffff; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); -webkit-overflow-scrolling: touch; }
     .stories-wrapper::-webkit-scrollbar { display: none; }
     .story-item { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; text-align: center; }
@@ -317,7 +309,6 @@
     .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* लाइव मौसम कार्ड */
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; transition: background 0.3s ease; }
     .weather-card.night-mode,
     body.dark-mode .weather-card { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; color: #f8fafc; }
@@ -330,17 +321,14 @@
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
 
-    /* 15 दिन मौसम पूर्वानुमान ग्रिड */
     .forecast-15-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
     .forecast-day-row { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; font-size: 13px; }
     body.dark-mode .forecast-day-row { background: #273548; border-color: #334155; }
 
-    /* त्वरित फसल टैग्स */
     .quick-crop-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; }
     .quick-crop-scroll::-webkit-scrollbar { display: none; }
     .quick-pill { background: white; border: 1.5px solid #d1d5db; border-radius: 20px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: #374151; white-space: nowrap; display: flex; align-items: center; gap: 5px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
 
-    /* सर्च बार */
     .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
     .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
@@ -348,7 +336,6 @@
     .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
     @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.25); } }
 
-    /* AI वॉइस असिस्टेंट कार्ड */
     @keyframes pulseAiBox {
       0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); border-color: #4ade80; }
       70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); border-color: #16a34a; }
@@ -385,7 +372,6 @@
       border-radius: 50%;
     }
 
-    /* 3-3 बटन ग्रिड + 1 नम्बर बॉटम ग्रेडिएंट फुल-कार्ड फोटो स्टाइल */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { position: relative; overflow: hidden; background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
     .menu-box .icon { position: relative; z-index: 1; font-size: 28px; margin-bottom: 6px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
@@ -457,7 +443,6 @@
     .modal-header h3 { font-size: 16px; color: #1b5e20; }
     .modal-close { font-size: 20px; cursor: pointer; border: none; background: none; }
 
-    /* भाषा चयन ग्रिड स्टाइल */
     .lang-grid-12 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
     .lang-choice-btn { padding: 10px 8px; border-radius: 10px; font-size: 13.5px; font-weight: 700; text-align: center; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1e293b; }
 
@@ -558,7 +543,6 @@
 </head>
 <body>
 
-  <!-- स्प्लैश स्क्रीन एनीमेशन -->
   <div id="splashScreen">
     <div class="splash-logo-box">
       <img src="https://i.postimg.cc/xCGvN3rt/IMG-20261116-WA7746.jpg" alt="Logo">
@@ -567,10 +551,8 @@
     <div class="splash-sub">🌾 कृषि सहायक ऐप</div>
   </div>
 
-  <!-- नॉन-ब्लॉकिंग टोस्ट -->
   <div class="app-toast" id="appToast"></div>
 
-  <!-- स्मार्ट लोडिंग स्पाइनर -->
   <div class="loader-overlay" id="appLoader">
     <div class="spinner"></div>
     <p style="font-size:13px; font-weight:bold; color:#166534;" id="txtLoading">🌾 डेटा लोड हो रहा है...</p>
@@ -624,7 +606,7 @@
     </div>
   </div>
 
-  <!-- भाषा चयन स्क्रीन मोडल (12 भाषाएं) -->
+  <!-- भाषा चयन स्क्रीन मोडल (11 भारतीय भाषाएं) -->
   <div class="login-modal-overlay" id="languageSelectModal">
     <div class="login-card" style="max-width: 390px;">
       <div style="text-align:center; margin-bottom:14px;">
@@ -699,10 +681,8 @@
     </div>
   </div>
 
-  <!-- ऑफलाइन सूचना बैनर -->
   <div class="offline-banner" id="offlineBanner">📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है</div>
 
-  <!-- नोटिफिकेशन मोडल -->
   <div class="modal-overlay" id="notificationModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -715,7 +695,6 @@
     </div>
   </div>
 
-  <!-- साइड मेन्यू ड्रॉअर -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
   <div class="drawer-content" id="drawerContent">
     <div class="drawer-header">
@@ -750,17 +729,15 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.3
+      CROP & SABZI DOCTOR • v11.4
     </div>
   </div>
 
-  <!-- तुरंत समाधान फ्लोटिंग बटन -->
   <button class="fab-solution" onclick="openSolutionModal()">
     <span>⚡</span>
     <span id="fabText">तुरंत समाधान</span>
   </button>
 
-  <!-- तुरंत समाधान मोडल -->
   <div class="modal-overlay" id="solutionModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -798,7 +775,6 @@
     </div>
   </div>
 
-  <!-- फ़ुल-स्क्रीन स्टोरी प्लेयर -->
   <div class="story-fullscreen-modal" id="storyPlayerModal">
     <div class="story-top-bar">
       <div class="story-progress-bg">
@@ -819,7 +795,6 @@
 
   <!-- SCREEN 1: होम स्क्रीन -->
   <div id="screen-home" class="screen active">
-
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
       <div style="font-size:13px; font-weight:bold; color:#1b5e20;" id="welcomeMsg">
         राम-राम, किसान भाई!
@@ -829,10 +804,8 @@
       </span>
     </div>
 
-    <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- AI वॉइस असिस्टेंट कार्ड -->
     <div class="ai-assistant-box" onclick="startVoiceAssistant()">
       <div style="flex: 1; padding-right: 8px;">
         <h4 style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="txtAiTitle">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
@@ -841,7 +814,6 @@
       <div style="background:#16a34a; color:white; min-width:38px; height:38px; border-radius:50%; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🗣️</div>
     </div>
 
-    <!-- लाइव मौसम कार्ड -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 श्रीगंगानगर</h4>
@@ -859,7 +831,6 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 फसल या किस्म लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -868,7 +839,6 @@
       </div>
     </div>
 
-    <!-- त्वरित फसल टैग्स -->
     <div class="quick-crop-scroll">
       <div class="quick-pill" onclick="filterByCrop('टमाटर')">🍅 <span class="tr-crop" data-orig="टमाटर">टमाटर</span></div>
       <div class="quick-pill" onclick="filterByCrop('खीरा')">🥒 <span class="tr-crop" data-orig="खीरा">खीरा</span></div>
@@ -878,7 +848,6 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 <span class="tr-crop" data-orig="भिंडी">भिंडी</span></div>
     </div>
 
-    <!-- 3-3 बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" id="menuCard_gCrops" onclick="showAllCategoriesScreen()">
         <div class="icon" id="menuIcon_gCrops" data-fallback="🌱">🌱</div>
@@ -918,7 +887,6 @@
       </div>
     </div>
 
-    <!-- प्ले स्टोर डायरेक्ट लिंक बैनर -->
     <div class="playstore-banner" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
       <div>
         <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
@@ -927,7 +895,6 @@
       <a href="https://play.google.com/store/apps" target="_blank" style="background:#2563eb; color:white; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:bold; text-decoration:none;" id="txtRateBtn">रेट करें</a>
     </div>
 
-    <!-- 4 वीडियो / रील्स सेक्शन -->
     <div style="margin-bottom: 15px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
         <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700;" id="txtVideoHead">📺 ताज़ा कृषि वीडियो व रील्स</h3>
@@ -936,7 +903,6 @@
       <div id="dynamicVideosContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
     </div>
 
-    <!-- सोशल मीडिया कार्ड -->
     <div class="social-box">
       <p style="font-size:13px; font-weight:bold; color:#374151;" id="txtSocialHead">हमारे साथ सोशल मीडिया पर जुड़ें</p>
       <div class="social-btn-group">
@@ -986,7 +952,7 @@
         </div>
         <input type="file" id="advCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleAdvisorPhoto(this)">
         <input type="file" id="advGalleryInput" accept="image/*" style="display:none;" onchange="handleAdvisorPhoto(this)">
-        <img id="advPreviewImg" class="preview-img" alt="फसल फोटो">
+        <img id="advPreviewImg" class="preview-img" alt="फसल फोटो" onclick="openImageModal(this.src)">
         <p id="advPhotoNote" style="display:none; font-size:11.5px; color:#b45309; background:#fffbeb; padding:6px 10px; border-radius:8px; border:1px solid #fde68a; margin-top:4px;">
           💡 WhatsApp खुलने के बाद कृपया वहां 📎 (अटैच) बटन दबाकर यह फोटो भी भेज दें।
         </p>
@@ -1106,15 +1072,9 @@
     </div>
   </div>
 
-  <!-- SCREEN: खेती कैसे करें - फसल सूची (A-Z) -->
-  <div id="screen-atoz-crops" class="screen">
-    <div id="atozCropsContainer"></div>
-  </div>
-
-  <!-- SCREEN: फसल की A से Z पूरी जानकारी -->
+  <div id="screen-atoz-crops" class="screen"><div id="atozCropsContainer"></div></div>
   <div id="screen-atoz-detail" class="screen"><div id="atozDetailContainer"></div></div>
 
-  <!-- SCREEN: किसान चर्चा -->
   <div id="screen-farmer-discussion" class="screen">
     <div class="variety-card" style="border-left:5px solid #0284c7; padding: 16px; margin-bottom: 14px;">
       <div class="form-group"><input type="text" id="discussionAuthor" class="form-control" placeholder="Name"></div>
@@ -1125,7 +1085,6 @@
     <div id="discussionPostsContainer"></div>
   </div>
 
-  <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
   <div id="screen-privacy" class="screen">
     <div class="variety-card" style="border-left:5px solid #0369a1; padding: 16px;">
       <div id="privacyContentBox">
@@ -1139,7 +1098,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: दवाइयाँ श्रेणियां -->
   <div id="screen-chemicals" class="screen">
     <div class="variety-card" style="border-left:5px solid #be185d;">
       <div class="list-item" onclick="filterChemicalsByCategory('कीटनाशक')">
@@ -1161,13 +1119,11 @@
     </div>
   </div>
 
-  <!-- SCREEN: चयनित श्रेणी की दवाइयां सूची -->
   <div id="screen-chemical-list" class="screen">
     <h3 style="font-size:16px; margin-bottom:12px; color:#be185d;" id="chemicalListTitle"></h3>
     <div id="chemicalListContainer"></div>
   </div>
 
-  <!-- SCREEN: अन्य सेवाएं -->
   <div id="screen-other-services" class="screen">
     <div class="list-item" onclick="showWeatherDetailScreen()">
       <div class="list-left"><span class="list-icon">🌦️</span><span class="list-title" id="s1">मौसम</span></div>
@@ -1207,7 +1163,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: बुवाई और कटाई कैलकुलेटर -->
   <div id="screen-sowing-calc" class="screen">
     <div class="variety-card" style="border-left:5px solid #d97706; padding:16px;">
       <div class="form-group">
@@ -1262,17 +1217,9 @@
     </div>
   </div>
 
-  <!-- SCREEN: मेरी AI रोग जांच रिपोर्ट -->
-  <div id="screen-ai-reports" class="screen">
-    <div id="aiReportsContainer"></div>
-  </div>
+  <div id="screen-ai-reports" class="screen"><div id="aiReportsContainer"></div></div>
+  <div id="screen-favorites" class="screen"><div id="favoritesContainer"></div></div>
 
-  <!-- SCREEN: मेरी पसंदीदा किस्में -->
-  <div id="screen-favorites" class="screen">
-    <div id="favoritesContainer"></div>
-  </div>
-
-  <!-- SCREEN: सरकारी योजनाएं -->
   <div id="screen-gov-schemes" class="screen">
     <div class="variety-card">
       <div class="schedule-step">
@@ -1287,7 +1234,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: मौसम (हवा, नमी और 15 दिन का पूर्वानुमान) -->
   <div id="screen-weather-detail" class="screen">
     <div class="variety-card" id="detailWeatherCard">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -1317,7 +1263,6 @@
     </div>
   </div>
 
-  <!-- SCREEN: मंडी भाव -->
   <div id="screen-mandi-bhav" class="screen">
     <div class="variety-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -1334,17 +1279,9 @@
     </div>
   </div>
 
-  <!-- SCREEN: एक्सपर्ट सुझाव -->
-  <div id="screen-expert-advice" class="screen">
-    <div id="tipsContainer"></div>
-  </div>
+  <div id="screen-expert-advice" class="screen"><div id="tipsContainer"></div></div>
+  <div id="screen-pest-alert" class="screen"><div id="alertsContainer"></div></div>
 
-  <!-- SCREEN: कीट अलर्ट -->
-  <div id="screen-pest-alert" class="screen">
-    <div id="alertsContainer"></div>
-  </div>
-
-  <!-- SCREEN: प्रोफाइल स्क्रीन -->
   <div id="screen-profile" class="screen">
     <div class="variety-card" style="padding:16px;">
       <div class="form-group"><input type="text" id="profNameInput" class="form-control" placeholder="किसान का नाम"></div>
@@ -1355,27 +1292,11 @@
     </div>
   </div>
 
-  <!-- SCREEN: श्रेणी की फसल सूची -->
-  <div id="screen-crops" class="screen">
-    <div id="cropsContainer"></div>
-  </div>
+  <div id="screen-crops" class="screen"><div id="cropsContainer"></div></div>
+  <div id="screen-seeds" class="screen"><div id="varietiesContainer"></div></div>
+  <div id="screen-protection-crops" class="screen"><div id="protectionCropsContainer"></div></div>
+  <div id="screen-schedule-crops" class="screen"><div id="scheduleCropsContainer"></div></div>
 
-  <!-- SCREEN: किस्में सूची -->
-  <div id="screen-seeds" class="screen">
-    <div id="varietiesContainer"></div>
-  </div>
-
-  <!-- SCREEN: फसल सुरक्षा - फसल सूची -->
-  <div id="screen-protection-crops" class="screen">
-    <div id="protectionCropsContainer"></div>
-  </div>
-
-  <!-- SCREEN: स्प्रे शेड्यूल - फसलें -->
-  <div id="screen-schedule-crops" class="screen">
-    <div id="scheduleCropsContainer"></div>
-  </div>
-
-  <!-- SCREEN: चयनित फसल का स्प्रे शेड्यूल -->
   <div id="screen-crop-schedule" class="screen">
     <div class="variety-card">
       <h3 style="color:#15803d; font-size:17px; margin-bottom:10px;" id="scheduleCropTitle"></h3>
@@ -1384,21 +1305,22 @@
     </div>
   </div>
 
-  <!-- SCREEN: फसल सुरक्षा - फसल के रोग -->
   <div id="screen-crop-diseases" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="cropDiseaseHeading"></h3>
     <div id="cropDiseasesContainer"></div>
   </div>
 
-  <!-- SCREEN: All कंपनी सूची -->
-  <div id="screen-companies" class="screen">
-    <div id="companiesContainer"></div>
-  </div>
+  <div id="screen-companies" class="screen"><div id="companiesContainer"></div></div>
 
-  <!-- SCREEN: चयनित कंपनी की फसलें -->
   <div id="screen-company-crops" class="screen">
     <h3 style="font-size:15px; margin-bottom:12px; color:#1b5e20;" id="compCropHeading"></h3>
     <div id="companyCropsContainer"></div>
+  </div>
+
+  <!-- इमेज प्रीव्यू मोडल -->
+  <div class="image-preview-modal" id="imagePreviewModal" onclick="closeImageModal()">
+    <button type="button" class="image-preview-close" onclick="event.stopPropagation(); closeImageModal()">✕</button>
+    <img id="fullScreenPreviewImg" class="image-preview-content" src="" alt="Preview" onclick="event.stopPropagation()">
   </div>
 
   <!-- बॉटम नेविगेशन -->
@@ -1516,6 +1438,26 @@
         el.classList.remove('show');
       }, 3200);
     }
+
+    function openImageModal(url) {
+      if (!url) return;
+      document.getElementById('fullScreenPreviewImg').src = url;
+      document.getElementById('imagePreviewModal').classList.add('active');
+    }
+
+    function closeImageModal() {
+      document.getElementById('imagePreviewModal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeImageModal();
+        closeSeedOrderModal();
+        closeSolutionModal();
+        closeNotificationModal();
+        closeDrawer();
+      }
+    });
 
     function syncBannerOffset() {
       const header = document.getElementById('mainAppHeader');
@@ -1980,7 +1922,7 @@
         txtSprayAdvice: "ସ୍ପ୍ରେ ପାଇଁ ସକାଳ ବା ସନ୍ଧ୍ୟା ସମୟ ବାଛନ୍ତୁ", searchPlaceholder: "🔍 ଫସଲ ବା କିସମ ଖୋଜନ୍ତୁ...",
         gCrops: "ସବୁ କିସମ", gProt: "ଫସଲ ସୁରକ୍ଷା", gSched: "ସ୍ପ୍ରେ ସିଡ୍ୟୁଲ୍", gAtoz: "ଚାଷ ଗାଇଡ୍ (A-Z)",
         gDisc: "ଚାଷୀ ଆଲୋଚନା", gAdv: "ପରାମର୍ଶଦାତା", gComp: "All କମ୍ପାନୀ ବିହନ", gChem: "ଔଷଧ Chemicals", gServ: "Other ସେବା",
-        fabText: "ତୁରନ୍ତ ସମାଧାନ", navHome: "ହୋମ୍", navCrops: "କିସମ", navSched: "ସିଡ୍ୟୁଲ୍", navProt: "ସୁରକ୍ଷା", navHelp: "ପରାମର୍ଶଦାତା",
+        fabText: "ତତ୍କ୍ଷଣାତ ସମାଧାନ", navHome: "ହୋମ୍", navCrops: "କିସମ", navSched: "ସିଡ୍ୟୁଲ୍", navProt: "ସୁରକ୍ଷା", navHelp: "ପରାମର୍ଶଦାତା",
         drawerHead: "📋 ମେନୁ", mProfile: "ମୋ ପ୍ରୋଫାଇଲ୍", mFav: "ପସନ୍ଦର କିସମ", mLogout: "ଲଗଆଉଟ୍",
         offlineBanner: "📴 ଅଫଲାଇନ୍ ମୋଡ୍: ସେଭ୍ ହୋଇଥିବା ଭାଷା ଓ ଡାଟା ଚାଲୁଛି"
       },
@@ -2143,17 +2085,12 @@
       if (!clean || targetLang === 'hi') return clean;
 
       if (clean === 'सब्जियां') {
-        if (targetLang === 'en') return 'Vegetables';
-        if (targetLang === 'mr') return 'भाज्या';
-        if (targetLang === 'bn') return 'সবজি';
-        if (targetLang === 'te') return 'కూరగాయలు';
-        if (targetLang === 'ta') return 'காய்கறிகள்';
-        if (targetLang === 'gu') return 'શાકભાજી';
-        if (targetLang === 'kn') return 'ತರಕಾರಿಗಳು';
-        if (targetLang === 'pa') return 'ਸਬਜ਼ੀਆਂ';
-        if (targetLang === 'ml') return 'പച്ചക്കറികൾ';
-        if (targetLang === 'or') return 'ପରିବା';
-        if (targetLang === 'as') return 'শাক-পাচলি';
+        const vegMap = {
+          en: 'Vegetables', mr: 'भाज्या', bn: 'সবজি', te: 'కూరగాయలు',
+          ta: 'காய்கறிகள்', gu: 'શાકભાજી', kn: 'ತರಕಾರಿಗಳು', pa: 'ਸਬਜ਼ੀਆਂ',
+          ml: 'പച്ചക്കറികൾ', or: 'ପରିବା', as: 'শাক-পাচলি'
+        };
+        if (vegMap[targetLang]) return vegMap[targetLang];
       }
 
       const cacheKey = `sheet_tr_${targetLang}_${clean}`;
@@ -2204,7 +2141,11 @@
         return clean;
       })();
 
-      return await pendingTranslations[cacheKey];
+      try {
+        return await pendingTranslations[cacheKey];
+      } finally {
+        delete pendingTranslations[cacheKey];
+      }
     }
 
     function applyCachedStringsToObjectList(items, fields) {
@@ -3604,8 +3545,8 @@
             const ctx = canvas.getContext('2d');
             const maxWidth = 800;
             const scale = Math.min(1, maxWidth / img.width);
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
             advisorPhotoDataUrl = canvas.toDataURL('image/jpeg', 0.75);
@@ -4338,8 +4279,8 @@
             const ctx = canvas.getContext('2d');
             const maxWidth = 800;
             const scale = Math.min(1, maxWidth / img.width);
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
             const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
@@ -4453,7 +4394,7 @@
     function openAtoZDetail(crop, isRefresh = false) {
       currentActiveAtoZCrop = crop;
       const baseData = atozGuideRecords[crop] || { soil: "-", sowing: "-", seed: "-", fertilizer: "-", weed: "-", irrigation: "-", care: "-", harvesting: "-", postHarvest: "-" };
-      const d = { ...baseData, titleText: crop };
+      const d = { ...baseData, rawCrop: baseData.rawCrop || crop, titleText: crop };
       const container = document.getElementById('atozDetailContainer');
 
       const draw = () => {
@@ -4515,8 +4456,8 @@
             const ctx = canvas.getContext('2d');
             const maxWidth = 600;
             const scale = Math.min(1, maxWidth / img.width);
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             savePost(author, text, canvas.toDataURL('image/jpeg', 0.7));
           };
@@ -4585,12 +4526,6 @@
           </div>`;
       });
     }
-
-    function openImageModal(url) {
-      document.getElementById('fullScreenPreviewImg').src = url;
-      document.getElementById('imagePreviewModal').classList.add('active');
-    }
-    function closeImageModal() { document.getElementById('imagePreviewModal').classList.remove('active'); }
 
     function openNotificationModal() {
       renderNotificationsUI();
@@ -4691,12 +4626,6 @@
       });
     }
   </script>
-
-  <!-- इमेज प्रीव्यू मोडल -->
-  <div class="image-preview-modal" id="imagePreviewModal" onclick="closeImageModal()">
-    <button class="image-preview-close" onclick="closeImageModal()">✕</button>
-    <img id="fullScreenPreviewImg" class="image-preview-content" src="" alt="Preview">
-  </div>
 
 </body>
 </html>
