@@ -776,7 +776,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v12.0
+      CROP & SABZI DOCTOR • v12.1
     </div>
   </div>
 
@@ -1432,8 +1432,8 @@
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v3';
-    const TR_CACHE_PREFIX = 'sheet_tr_v3_';
+    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v4';
+    const TR_CACHE_PREFIX = 'sheet_tr_v4_';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
@@ -3473,7 +3473,7 @@
       });
     }
 
-    function parseScheduleCSV(text, categoryName) {
+    function parseScheduleCSV(text, defaultCategoryName) {
       if (!text) return [];
       const list = [];
       parseCSV(text).forEach((cols, idx) => {
@@ -3485,14 +3485,11 @@
 
         const col4 = (cols[4] || '').trim();
         const col5 = (cols[5] || '').trim();
-        const hasExplicitCategory = col4 && !col4.startsWith('http') && !/^\d/.test(col4);
-        if (hasExplicitCategory && normalizeCategoryKey(col4) !== categoryName) {
-          return;
-        }
-
-        const photoUrl = col5.startsWith('http') ? col5 : (col4.startsWith('http') ? col4 : '');
+        const photoUrl = col4.startsWith('http') ? col4 : (col5.startsWith('http') ? col5 : '');
+        const rawCatF = col5 && !col5.startsWith('http') ? col5 : '';
+        const targetCategory = rawCatF ? normalizeCategoryKey(rawCatF) : defaultCategoryName;
         const stdCrop = getStandardCropName(rawCrop);
-        if (!stdCrop) return;
+        if (!stdCrop || !targetCategory) return;
 
         list.push({
           crop: stdCrop,
@@ -3500,7 +3497,7 @@
           med: cleanExtraIdTokens(cols[2] || ''),
           purpose: cleanExtraIdTokens(cols[3] || ''),
           photo: photoUrl,
-          category: categoryName
+          category: targetCategory
         });
       });
       return list;
@@ -5135,6 +5132,7 @@
       try {
         localStorage.removeItem('crop_sabzi_offline_sheets_v1');
         localStorage.removeItem('crop_sabzi_offline_sheets_v2');
+        localStorage.removeItem('crop_sabzi_offline_sheets_v3');
       } catch (e) {}
 
       if (localStorage.getItem('dark_mode') === 'true') {
