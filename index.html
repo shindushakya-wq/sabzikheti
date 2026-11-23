@@ -66,7 +66,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #f0fdf4; color: #1f2937; padding-bottom: 90px; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
-    /* नॉन-ब्लॉकिंग टोस्ट नोटिफिकेशन */
     .app-toast {
       position: fixed;
       bottom: 135px;
@@ -111,7 +110,6 @@
       border-bottom-color: #b45309;
     }
 
-    /* डार्क मोड स्टाइल */
     body.dark-mode {
       background-color: #0f172a;
       color: #f8fafc;
@@ -264,7 +262,6 @@
       opacity: 0.8;
     }
 
-    /* टॉप हेडर */
     .app-header { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); color: white; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .back-btn { font-size: 20px; cursor: pointer; margin-right: 8px; display: none; }
     .header-title { font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
@@ -279,13 +276,11 @@
 
     .menu-bars-icon { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.6); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; font-weight: bold; }
 
-    /* स्मार्ट लोडिंग स्पाइनर ओवरले */
     .loader-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.82); z-index: 5000; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
     body.dark-mode .loader-overlay { background: rgba(15,23,42,0.88); }
     .spinner { width: 42px; height: 42px; border: 4px solid #bbf7d0; border-top: 4px solid #16a34a; border-radius: 50%; animation: spin 0.75s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* साइड मेन्यू ड्रॉअर */
     .drawer-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2100; backdrop-filter: blur(2px); }
     .drawer-overlay.active { display: block; }
     .drawer-content { position: fixed; top: 0; right: -300px; width: 285px; height: 100%; background: #ffffff; z-index: 2200; box-shadow: -4px 0 16px rgba(0,0,0,0.2); transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; display: flex; flex-direction: column; }
@@ -305,11 +300,9 @@
     .drawer-item:active { background: #f9fafb; color: #1b5e20; }
     .drawer-item span:first-child { font-size: 18px; }
 
-    /* स्क्रीन लेआउट */
     .screen { display: none; padding: 14px; max-width: 480px; margin: auto; }
     .screen.active { display: block; }
 
-    /* गोल स्टोरी बार */
     .stories-wrapper { display: flex; gap: 12px; overflow-x: auto; padding: 12px 4px; background: #ffffff; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); -webkit-overflow-scrolling: touch; }
     .stories-wrapper::-webkit-scrollbar { display: none; }
     .story-item { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; text-align: center; }
@@ -317,7 +310,6 @@
     .story-ring img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .story-name { font-size: 11px; font-weight: 600; color: #374151; margin-top: 5px; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* लाइव मौसम कार्ड */
     .weather-card { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 14px; padding: 14px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid #bbf7d0; cursor: pointer; position: relative; overflow: hidden; transition: background 0.3s ease; }
     .weather-card.night-mode,
     body.dark-mode .weather-card { background: linear-gradient(135deg, #1e2937 0%, #0f172a 100%); border-color: #334155; color: #f8fafc; }
@@ -330,17 +322,14 @@
     .weather-body-row { display: flex; justify-content: space-between; align-items: center; }
     .weather-temp { font-size: 26px; font-weight: bold; color: #1b5e20; }
 
-    /* 15 दिन मौसम पूर्वानुमान ग्रिड */
     .forecast-15-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
     .forecast-day-row { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; font-size: 13px; }
     body.dark-mode .forecast-day-row { background: #273548; border-color: #334155; }
 
-    /* त्वरित फसल टैग्स */
     .quick-crop-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; }
     .quick-crop-scroll::-webkit-scrollbar { display: none; }
     .quick-pill { background: white; border: 1.5px solid #d1d5db; border-radius: 20px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: #374151; white-space: nowrap; display: flex; align-items: center; gap: 5px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
 
-    /* सर्च बार */
     .search-wrapper { position: relative; margin-bottom: 15px; display: flex; align-items: center; }
     .search-box { width: 100%; padding: 13px 85px 13px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; outline: none; font-size: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .search-actions { position: absolute; right: 8px; display: flex; align-items: center; gap: 4px; }
@@ -348,7 +337,6 @@
     .voice-btn.listening { animation: pulseMic 1s infinite alternate; color: #dc2626; }
     @keyframes pulseMic { 0% { transform: scale(1); } 100% { transform: scale(1.25); } }
 
-    /* AI वॉइस असिस्टेंट कार्ड */
     @keyframes pulseAiBox {
       0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); border-color: #4ade80; }
       70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); border-color: #16a34a; }
@@ -385,7 +373,6 @@
       border-radius: 50%;
     }
 
-    /* 3-3 बटन ग्रिड + 1 नम्बर बॉटम ग्रेडिएंट फुल-कार्ड फोटो स्टाइल */
     .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
     .menu-box { position: relative; overflow: hidden; background: #ffffff; padding: 10px 4px; border-radius: 14px; text-align: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; }
     .menu-box .icon { position: relative; z-index: 1; font-size: 28px; margin-bottom: 6px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
@@ -457,7 +444,6 @@
     .modal-header h3 { font-size: 16px; color: #1b5e20; }
     .modal-close { font-size: 20px; cursor: pointer; border: none; background: none; }
 
-    /* भाषा चयन ग्रिड स्टाइल */
     .lang-grid-12 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
     .lang-choice-btn { padding: 10px 8px; border-radius: 10px; font-size: 13.5px; font-weight: 700; text-align: center; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1e293b; }
 
@@ -576,7 +562,7 @@
     <p style="font-size:13px; font-weight:bold; color:#166534;" id="txtLoading">🌾 डेटा लोड हो रहा है...</p>
   </div>
 
-  <!-- लॉगिन के बाद लोकेशन मोडल (बिना लिस्ट के, GPS से ऑटो-फ़िल व सीधे एडिट करने योग्य) -->
+  <!-- लॉगिन के बाद लोकेशन मोडल -->
   <div class="login-modal-overlay" id="onboardingLocationModal">
     <div class="login-card" style="max-width: 390px;">
       <div style="text-align:center; margin-bottom:12px;">
@@ -790,7 +776,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.8
+      CROP & SABZI DOCTOR • v11.9
     </div>
   </div>
 
@@ -869,10 +855,8 @@
       </span>
     </div>
 
-    <!-- गोल स्टोरी बार -->
     <div class="stories-wrapper" id="storiesBarContainer"></div>
 
-    <!-- AI वॉइस असिस्टेंट कार्ड -->
     <div class="ai-assistant-box" onclick="startVoiceAssistant()">
       <div style="flex: 1; padding-right: 8px;">
         <h4 style="color:#166534; font-size:13.5px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="txtAiTitle">🎙️ AI कृषि डॉक्टर से बोलकर बात करें</h4>
@@ -881,7 +865,6 @@
       <div style="background:#16a34a; color:white; min-width:38px; height:38px; border-radius:50%; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🗣️</div>
     </div>
 
-    <!-- लाइव मौसम कार्ड -->
     <div class="weather-card" id="weatherCardMain" onclick="showWeatherDetailScreen()">
       <div class="weather-header-row">
         <h4 id="weatherPlace">📍 श्रीगंगानगर</h4>
@@ -899,7 +882,6 @@
       </div>
     </div>
 
-    <!-- सर्च बार -->
     <div class="search-wrapper">
       <input type="search" id="homeSearch" class="search-box" placeholder="🔍 फसल या किस्म लिखें..." onkeypress="handleSearchKeyPress(event)">
       <div class="search-actions">
@@ -908,7 +890,6 @@
       </div>
     </div>
 
-    <!-- त्वरित फसल टैग्स -->
     <div class="quick-crop-scroll">
       <div class="quick-pill" onclick="filterByCrop('टमाटर')">🍅 <span class="tr-crop" data-orig="टमाटर">टमाटर</span></div>
       <div class="quick-pill" onclick="filterByCrop('खीरा')">🥒 <span class="tr-crop" data-orig="खीरा">खीरा</span></div>
@@ -918,7 +899,6 @@
       <div class="quick-pill" onclick="filterByCrop('भिंडी')">🥒 <span class="tr-crop" data-orig="भिंडी">भिंडी</span></div>
     </div>
 
-    <!-- 3-3 बटन ग्रिड -->
     <div class="grid-menu">
       <div class="menu-box card-crops" id="menuCard_gCrops" onclick="showAllCategoriesScreen()">
         <div class="icon" id="menuIcon_gCrops" data-fallback="🌱">🌱</div>
@@ -958,7 +938,6 @@
       </div>
     </div>
 
-    <!-- प्ले स्टोर डायरेक्ट लिंक बैनर -->
     <div class="playstore-banner" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #bfdbfe; border-radius:14px; padding:14px; margin-bottom:15px; display:flex; align-items:center; justify-content:space-between;">
       <div>
         <h4 style="color:#1d4ed8; font-size:14px; font-weight:bold;">⭐ Google Play Store</h4>
@@ -967,7 +946,6 @@
       <a href="https://play.google.com/store/apps" target="_blank" style="background:#2563eb; color:white; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:bold; text-decoration:none;" id="txtRateBtn">रेट करें</a>
     </div>
 
-    <!-- 4 वीडियो / रील्स सेक्शन -->
     <div style="margin-bottom: 15px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
         <h3 style="font-size: 14px; color: #1b5e20; font-weight: 700;" id="txtVideoHead">📺 ताज़ा कृषि वीडियो व रील्स</h3>
@@ -976,7 +954,6 @@
       <div id="dynamicVideosContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
     </div>
 
-    <!-- सोशल मीडिया कार्ड -->
     <div class="social-box">
       <p style="font-size:13px; font-weight:bold; color:#374151;" id="txtSocialHead">हमारे साथ सोशल मीडिया पर जुड़ें</p>
       <div class="social-btn-group">
@@ -1266,6 +1243,8 @@
           <option value="करेला">🥒 करेला</option>
           <option value="लौकी">🥒 लौकी</option>
           <option value="तोरई">🥒 तोरई</option>
+          <option value="गिलकी">🥒 गिलकी</option>
+          <option value="टिंडा">🫛 टिंडा</option>
           <option value="कद्दू">🎃 कद्दू</option>
           <option value="मटर">🌱 मटर</option>
           <option value="मूली">🥕 मूली</option>
@@ -1327,7 +1306,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: मौसम (हवा, नमी और 15 दिन का पूर्वानुमान) -->
+  <!-- SCREEN: मौसम -->
   <div id="screen-weather-detail" class="screen">
     <div class="variety-card" id="detailWeatherCard">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -1453,7 +1432,8 @@
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v1';
+    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v2';
+    const TR_CACHE_PREFIX = 'sheet_tr_v2_';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
@@ -1501,11 +1481,75 @@
     let lastVarietiesList = [];
     let lastVarietiesTitle = "";
 
+    const EN_DICTIONARY = {
+      'सब्जियां': 'Vegetables',
+      'फल': 'Fruits',
+      'फूल': 'Flowers',
+      'अनाज': 'Grains',
+      'अन्य': 'Other',
+      'टमाटर': 'Tomato',
+      'मिर्च': 'Chili',
+      'शिमला मिर्च': 'Capsicum',
+      'तोरई': 'Ridge Gourd',
+      'गिलकी': 'Sponge Gourd',
+      'टिंडा': 'Tinda',
+      'खीरा': 'Cucumber',
+      'लौकी': 'Bottle Gourd',
+      'करेला': 'Bitter Gourd',
+      'कद्दू': 'Pumpkin',
+      'भिंडी': 'Ladyfinger / Okra',
+      'बैंगन': 'Brinjal',
+      'फूलगोभी': 'Cauliflower',
+      'पत्तागोभी': 'Cabbage',
+      'तरबूज': 'Watermelon',
+      'खरबूजा': 'Muskmelon',
+      'आलू': 'Potato',
+      'प्याज': 'Onion',
+      'गाजर': 'Carrot',
+      'मूली': 'Radish',
+      'मटर': 'Pea',
+      'स्वीट कॉर्न / मक्का': 'Sweet Corn / Maize',
+      'गेहूँ': 'Wheat',
+      'धान': 'Paddy',
+      'सरसों': 'Mustard',
+      'चना': 'Chickpea',
+      'सोयाबीन': 'Soybean',
+      'गन्ना': 'Sugarcane',
+      'जीरा': 'Cumin',
+      'गैंदा': 'Marigold',
+      'गुलाब': 'Rose',
+      'गुलदाउदी': 'Chrysanthemum',
+      'रजनीगंधा': 'Tuberose',
+      'आम': 'Mango',
+      'अमरूद': 'Guava',
+      'पपीता': 'Papaya',
+      'अनार': 'Pomegranate',
+      'केला': 'Banana',
+      'मिट्टी': 'Soil',
+      'बुवाई': 'Sowing',
+      'बीज दर': 'Seed Rate',
+      'खाद व उर्वरक': 'Fertilizer',
+      'खरपतवार प्रबंधन': 'Weed Management',
+      'सिंचाई': 'Irrigation',
+      'फसल सुरक्षा': 'Crop Protection',
+      'तुड़ाई / कटाई': 'Harvesting',
+      'भंडारण व मंडी': 'Storage & Mandi',
+      'साफ़ आसमान': 'Clear Sky',
+      'आंशिक बादल': 'Partly Cloudy',
+      'कोहरा / धुंध': 'Fog / Mist',
+      'बारिश की संभावना': 'Chance of Rain',
+      'गरज-चमक के साथ वर्षा': 'Thunderstorm',
+      'सामान्य मौसम': 'Normal Weather',
+      'आज': 'Today'
+    };
+
     const CROP_IMAGE_MAP = {
       'टमाटर': 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300',
       'मिर्च': 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=300',
       'शिमला मिर्च': 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=300',
       'तोरई': 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=300',
+      'गिलकी': 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=300',
+      'टिंडा': 'https://images.unsplash.com/photo-1598512752271-33f913a5af13?w=300',
       'खीरा': 'https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=300',
       'लौकी': 'https://images.unsplash.com/photo-1598512752271-33f913a5af13?w=300',
       'करेला': 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=300',
@@ -2310,7 +2354,10 @@
     function getCachedTranslation(text, targetLang) {
       if (!text || targetLang === 'hi') return cleanExtraIdTokens(text || '');
       const clean = cleanExtraIdTokens(text);
-      const cacheKey = `sheet_tr_${targetLang}_${clean}`;
+      if (targetLang === 'en' && EN_DICTIONARY[clean]) {
+        return EN_DICTIONARY[clean];
+      }
+      const cacheKey = `${TR_CACHE_PREFIX}${targetLang}_${clean}`;
       let saved = localStorage.getItem(cacheKey);
       if (!saved) return null;
 
@@ -2331,6 +2378,10 @@
       const clean = cleanExtraIdTokens(text);
       if (!clean || targetLang === 'hi') return clean;
 
+      if (targetLang === 'en' && EN_DICTIONARY[clean]) {
+        return EN_DICTIONARY[clean];
+      }
+
       if (clean === 'सब्जियां') {
         if (targetLang === 'en') return 'Vegetables';
         if (targetLang === 'mr') return 'भाज्या';
@@ -2345,7 +2396,7 @@
         if (targetLang === 'as') return 'শাক-পাচলি';
       }
 
-      const cacheKey = `sheet_tr_${targetLang}_${clean}`;
+      const cacheKey = `${TR_CACHE_PREFIX}${targetLang}_${clean}`;
       const cached = getCachedTranslation(clean, targetLang);
       if (cached) return cached;
 
@@ -2948,7 +2999,7 @@
     function getDaysToHarvestForCrop(crop) {
       const c = (crop || '').toLowerCase();
       if (c.includes('मूली')) return 40;
-      if (c.includes('खीरा') || c.includes('भिंडी') || c.includes('तोरई')) return 55;
+      if (c.includes('खीरा') || c.includes('भिंडी') || c.includes('तोरई') || c.includes('गिलकी') || c.includes('टिंडा')) return 55;
       if (c.includes('लौकी') || c.includes('करेला')) return 60;
       if (c.includes('पत्तागोभी') || c.includes('मटर')) return 70;
       if (c.includes('मिर्च') || c.includes('शिमला') || c.includes('बैंगन')) return 75;
@@ -3142,27 +3193,30 @@
       const c = cleanExtraIdTokens(raw);
       const low = c.toLowerCase();
 
-      if (low.includes('टमाटर') || low.includes('tomato')) return 'टमाटर';
       if (low.includes('शिमला') || low.includes('capsicum')) return 'शिमला मिर्च';
-      if (low.includes('मिर्च') || low.includes('chilli') || low.includes('chili') || low.includes('pepper')) return 'मिर्च';
+      if (low.includes('मिर्च') || low.includes('chilli') || low.includes('chili') || low.includes('pepper') || low.includes('mirch')) return 'मिर्च';
+      if (low.includes('टमाटर') || low.includes('tomato') || low.includes('tamatar')) return 'टमाटर';
       if (low.includes('फूलगोभी') || low.includes('cauliflower')) return 'फूलगोभी';
       if (low.includes('पत्तागोभी') || low.includes('cabbage')) return 'पत्तागोभी';
-      if (low.includes('खीरा') || low.includes('cucumber')) return 'खीरा';
-      if (low.includes('तरबूज') || low.includes('watermelon')) return 'तरबूज';
+      if (low.includes('खीरा') || low.includes('cucumber') || low.includes('kheera')) return 'खीरा';
+      if (low.includes('तरबूज') || low.includes('watermelon') || low.includes('tarbooj')) return 'तरबूज';
       if (low.includes('खरबूजा') || low.includes('muskmelon') || low.includes('melon')) return 'खरबूजा';
-      if (low.includes('भिंडी') || low.includes('okra')) return 'भिंडी';
-      if (low.includes('बैंगन') || low.includes('brinjal')) return 'बैंगन';
-      if (low.includes('कद्दू') || low.includes('pumpkin')) return 'कद्दू';
-      if (low.includes('लौकी') || low.includes('bottle gourd')) return 'लौकी';
-      if (low.includes('करेला') || low.includes('bitter gourd')) return 'करेला';
-      if (low.includes('तोरई') || low.includes('तोरी')) return 'तोरई';
+      if (low.includes('भिंडी') || low.includes('ladyfinger') || low.includes('okra') || low.includes('bhindi')) return 'भिंडी';
+      if (low.includes('बैंगन') || low.includes('brinjal') || low.includes('eggplant')) return 'बैंगन';
+      if (low.includes('गिलकी') || low.includes('sponge gourd') || low.includes('चिकनी तोरई')) return 'गिलकी';
+      if (low.includes('तोरई') || low.includes('ridge gourd') || low.includes('तोरी') || low.includes('torai')) return 'तोरई';
+      if (low.includes('टिंडा') || low.includes('tinda')) return 'टिंडा';
+      if (low.includes('करेला') || low.includes('bitter gourd') || low.includes('bitter') || low.includes('karela')) return 'करेला';
+      if (low.includes('लौकी') || low.includes('bottle gourd') || low.includes('bottle') || low.includes('lauki')) return 'लौकी';
+      if (low.includes('कद्दू') || low.includes('pumpkin') || low.includes('kaddu')) return 'कद्दू';
       if (low.includes('मटर') || low.includes('pea')) return 'मटर';
-      if (low.includes('स्वीट कॉर्न') || low.includes('मक्का') || low.includes('भुट्टा')) return 'स्वीट कॉर्न / मक्का';
+      if (low.includes('स्वीट कॉर्न') || low.includes('sweet corn') || low.includes('maize') || low.includes('मक्का') || low.includes('भुट्टा') || low.includes('corn')) return 'स्वीट कॉर्न / मक्का';
       if (low.includes('मूली') || low.includes('radish')) return 'मूली';
       if (low.includes('गाजर') || low.includes('carrot')) return 'गाजर';
       if (low.includes('प्याज') || low.includes('onion')) return 'प्याज';
+      if (low.includes('आलू') || low.includes('potato')) return 'आलू';
       if (low.includes('गेहूँ') || low.includes('wheat')) return 'गेहूँ';
-      if (low.includes('धान') || low.includes('paddy')) return 'धान';
+      if (low.includes('धान') || low.includes('paddy') || low.includes('rice')) return 'धान';
       if (low.includes('सरसों') || low.includes('mustard')) return 'सरसों';
       if (low.includes('सोयाबीन') || low.includes('soybean')) return 'सोयाबीन';
       if (low.includes('चना') || low.includes('chickpea')) return 'चना';
@@ -3193,10 +3247,13 @@
       if (c.includes('कद्दू') || c.includes('pumpkin')) return '🎃';
       if (c.includes('करेला') || c.includes('bitter') || c.includes('karela')) return '🥒';
       if (c.includes('लौकी') || c.includes('bottle')) return '🥒';
+      if (c.includes('तोरई') || c.includes('गिलकी') || c.includes('gourd')) return '🥒';
+      if (c.includes('टिंडा') || c.includes('tinda')) return '🫛';
       if (c.includes('गाजर') || c.includes('carrot')) return '🥕';
       if (c.includes('आलू') || c.includes('potato')) return '🥔';
       if (c.includes('प्याज') || c.includes('onion')) return '🧅';
       if (c.includes('बैंगन') || c.includes('brinjal')) return '🍆';
+      if (c.includes('मक्का') || c.includes('corn') || c.includes('maize')) return '🌽';
       if (c.includes('गेहूँ') || c.includes('wheat')) return '🌾';
       if (c.includes('धान') || c.includes('paddy') || c.includes('rice')) return '🌾';
       if (c.includes('सरसों') || c.includes('mustard')) return '🌼';
@@ -3264,18 +3321,54 @@
     function hideLoader() { document.getElementById('appLoader').style.display = 'none'; }
 
     function parseCSV(text) {
-      return text.split(/\r?\n/).map(row => {
-        const cols = [];
-        let inQ = false, cur = '';
-        for (let i = 0; i < row.length; i++) {
-          const ch = row[i];
-          if (ch === '"') inQ = !inQ;
-          else if (ch === ',' && !inQ) { cols.push(cur.trim().replace(/^"|"$/g, '')); cur = ''; }
-          else cur += ch;
+      if (!text) return [];
+      const rows = [];
+      let row = [];
+      let cur = '';
+      let inQ = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        const next = text[i + 1];
+
+        if (inQ) {
+          if (ch === '"' && next === '"') {
+            cur += '"';
+            i++;
+          } else if (ch === '"') {
+            inQ = false;
+          } else {
+            cur += ch;
+          }
+        } else {
+          if (ch === '"') {
+            inQ = true;
+          } else if (ch === ',') {
+            row.push(cur.trim());
+            cur = '';
+          } else if (ch === '\r' && next === '\n') {
+            row.push(cur.trim());
+            rows.push(row);
+            row = [];
+            cur = '';
+            i++;
+          } else if (ch === '\n' || ch === '\r') {
+            row.push(cur.trim());
+            rows.push(row);
+            row = [];
+            cur = '';
+          } else {
+            cur += ch;
+          }
         }
-        cols.push(cur.trim().replace(/^"|"$/g, ''));
-        return cols;
-      }).filter(r => r.length > 0);
+      }
+
+      if (cur.length > 0 || row.length > 0) {
+        row.push(cur.trim());
+        rows.push(row);
+      }
+
+      return rows.filter(r => r.length > 0 && r.some(cell => cell !== ''));
     }
 
     async function fetchRawCSV(sheetName) {
@@ -3336,10 +3429,12 @@
         const comp = cleanExtraIdTokens(cols[0] || 'अन्य कंपनी');
         const rawCrop = cleanExtraIdTokens(cols[1] || '');
         const varName = cleanExtraIdTokens(cols[2] || '');
-        const cat = cleanExtraIdTokens(cols[9] || cols[cols.length - 1] || 'सब्जियां');
+        const cat = cleanExtraIdTokens(cols[10] || cols[9] || 'सब्जियां');
 
         const photoList = [];
-        const rawPhotoCol = (cols[8] && cols[8].trim().startsWith('http')) ? cols[8] : '';
+        const rawPhotoCol = (cols[9] && cols[9].trim().startsWith('http'))
+          ? cols[9]
+          : ((cols[8] && cols[8].trim().startsWith('http')) ? cols[8] : '');
         if (rawPhotoCol) {
           rawPhotoCol.split(',').forEach(p => {
             const cleanUrl = p.trim();
@@ -3347,9 +3442,9 @@
           });
         }
 
-        const rawPrice = cleanExtraIdTokens(cols[10] || '');
-        const rawPackSize = cleanExtraIdTokens(cols[11] || '');
-        const rawDiscount = cleanExtraIdTokens(cols[12] || '');
+        const rawPrice = cleanExtraIdTokens(cols[11] || '');
+        const rawPackSize = cleanExtraIdTokens(cols[12] || '');
+        const rawDiscount = cleanExtraIdTokens(cols[13] || '');
 
         return {
           category: cat,
