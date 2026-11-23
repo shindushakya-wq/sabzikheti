@@ -7,6 +7,10 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1b5e20">
 
+  <!-- Firebase Compat SDK (Gmail Login) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
   <style>
     /* स्प्लैश स्क्रीन एनीमेशन स्टाइल */
     #splashScreen {
@@ -444,7 +448,7 @@
     .modal-header h3 { font-size: 16px; color: #1b5e20; }
     .modal-close { font-size: 20px; cursor: pointer; border: none; background: none; }
 
-    .lang-grid-12 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .lang-grid-8 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
     .lang-choice-btn { padding: 10px 8px; border-radius: 10px; font-size: 13.5px; font-weight: 700; text-align: center; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1e293b; }
 
     .upload-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
@@ -508,6 +512,7 @@
 
     .btn-action { display: block; width: 100%; padding: 12px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 14.5px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
     .btn-wa { background: #10b981; color: white; }
+    .btn-gmail { background: #ffffff; color: #1f2937; border: 1.5px solid #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
     .bookmark-btn { background: #f3f4f6; color: #b45309; border: 1px solid #fde68a; }
     .bookmark-btn.saved { background: #fef3c7; }
@@ -649,7 +654,7 @@
     </div>
   </div>
 
-  <!-- भाषा चयन स्क्रीन मोडल (12 भाषाएं) -->
+  <!-- भाषा चयन स्क्रीन मोडल (8 भाषाएं) -->
   <div class="login-modal-overlay" id="languageSelectModal">
     <div class="login-card" style="max-width: 390px;">
       <div style="text-align:center; margin-bottom:14px;">
@@ -658,24 +663,20 @@
         <p style="font-size:12px; color:#6b7280; margin-top:4px;">कृपया अपनी भाषा चुनें / Please select your language</p>
       </div>
 
-      <div class="lang-grid-12">
+      <div class="lang-grid-8">
         <button class="lang-choice-btn" style="background:#ecfdf5; border-color:#86efac; color:#166534;" onclick="setAppLanguage('hi')">हिंदी</button>
+        <button class="lang-choice-btn" style="background:#eff6ff; border-color:#60a5fa; color:#1e40af;" onclick="setAppLanguage('en')">English</button>
         <button class="lang-choice-btn" style="background:#eff6ff; border-color:#93c5fd; color:#1d4ed8;" onclick="setAppLanguage('mr')">मराठी</button>
+        <button class="lang-choice-btn" style="background:#f3e8ff; border-color:#d8b4fe; color:#6b21a8;" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+        <button class="lang-choice-btn" style="background:#fefce8; border-color:#facc15; color:#92400e;" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
         <button class="lang-choice-btn" style="background:#fff7ed; border-color:#fdba74; color:#c2410c;" onclick="setAppLanguage('bn')">বাংলা</button>
         <button class="lang-choice-btn" style="background:#fefce8; border-color:#fde047; color:#854d0e;" onclick="setAppLanguage('te')">తెలుగు</button>
         <button class="lang-choice-btn" style="background:#fdf2f8; border-color:#f9a8d4; color:#be185d;" onclick="setAppLanguage('ta')">தமிழ்</button>
-        <button class="lang-choice-btn" style="background:#f3e8ff; border-color:#d8b4fe; color:#6b21a8;" onclick="setAppLanguage('gu')">ગુજરાતી</button>
-        <button class="lang-choice-btn" style="background:#ecfdf5; border-color:#6ee7b7; color:#047857;" onclick="setAppLanguage('kn')">ಕನ್ನಡ</button>
-        <button class="lang-choice-btn" style="background:#fefce8; border-color:#facc15; color:#92400e;" onclick="setAppLanguage('pa')">ਪੰਜਾਬੀ</button>
-        <button class="lang-choice-btn" style="background:#eff6ff; border-color:#60a5fa; color:#1e40af;" onclick="setAppLanguage('en')">English</button>
-        <button class="lang-choice-btn" style="background:#fdf2f8; border-color:#f472b6; color:#9d174d;" onclick="setAppLanguage('ml')">മലയാളം</button>
-        <button class="lang-choice-btn" style="background:#fff7ed; border-color:#fb923c; color:#9a3412;" onclick="setAppLanguage('or')">ଓଡ଼ିଆ</button>
-        <button class="lang-choice-btn" style="background:#f3e8ff; border-color:#c084fc; color:#581c87;" onclick="setAppLanguage('as')">অসমীয়া</button>
       </div>
     </div>
   </div>
 
-  <!-- लॉगिन स्क्रीन मोडल -->
+  <!-- लॉगिन स्क्रीन मोडल (Firebase Gmail Sign-In + Skip) -->
   <div class="login-modal-overlay" id="loginScreenModal">
     <div class="login-card">
       <div style="text-align:center; margin-bottom:16px;">
@@ -684,23 +685,18 @@
         <p style="font-size:12px; color:#6b7280; margin-top:4px;" id="txtLoginSub">कृषि सहायता ऐप में आपका स्वागत है</p>
       </div>
 
-      <div class="form-group" id="phoneInputGroup">
-        <label id="txtPhoneLabel">अपना मोबाइल नंबर दर्ज करें:</label>
-        <div style="display:flex; gap:8px;">
-          <input type="text" value="+91" readonly style="width:55px; text-align:center; background:#f3f4f6;" class="form-control">
-          <input type="tel" id="loginPhone" class="form-control" maxlength="10" placeholder="उदा. 9876543210">
-        </div>
-        <button class="btn-action btn-wa" style="background:#1b5e20; margin-top:12px;" onclick="sendOtpCode()" id="txtOtpBtn">📲 ओटीपी (OTP) भेजें</button>
-      </div>
-
-      <div class="form-group" id="otpInputGroup" style="display:none;">
-        <label style="color:#16a34a; font-weight:bold;" id="txtOtpVer">🔐 ओटीपी (OTP) दर्ज हो रहा है...</label>
-        <input type="text" id="loginOtp" class="form-control" style="text-align:center; font-size:18px; letter-spacing:4px; font-weight:bold; background:#f0fdf4;" readonly>
-        <p style="font-size:11px; color:#166534; text-align:center; margin-top:6px;" id="txtOtpSuccess">सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!</p>
+      <div style="margin-bottom:12px;">
+        <button type="button" class="btn-gmail" onclick="signInWithGmailFirebase()" id="txtGmailBtn">
+          <span>G</span>
+          <span>Gmail से लॉगिन करें (Google)</span>
+        </button>
+        <p style="font-size:11px; color:#6b7280; text-align:center; margin-top:8px;" id="txtLoginPolicyNote">
+          लॉगिन वैकल्पिक है; केवल प्रोफ़ाइल पहचान के लिए Google Sign-In उपयोग होता है।
+        </p>
       </div>
 
       <div style="text-align:center; margin-top:14px; border-top:1px solid #f3f4f6; padding-top:12px;">
-        <button onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
+        <button type="button" onclick="skipLogin()" style="background:none; border:none; color:#6b7280; font-size:13px; font-weight:bold; cursor:pointer; text-decoration:underline;" id="txtSkipLogin">
           ⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें
         </button>
       </div>
@@ -776,7 +772,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v12.1
+      CROP & SABZI DOCTOR • v12.3
     </div>
   </div>
 
@@ -1430,10 +1426,34 @@
   </div>
 
   <script>
+    const APP_VERSION = '12.3';
+    const ALLOWED_LANGUAGES = ['hi', 'en', 'mr', 'gu', 'pa', 'bn', 'te', 'ta'];
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDoB-CCghRUdK3DVJqGkx3hQdJOA0YQB5s",
+      authDomain: "sabzi-doctor.firebaseapp.com",
+      databaseURL: "https://sabzi-doctor-default-rtdb.firebaseio.com",
+      projectId: "sabzi-doctor",
+      storageBucket: "sabzi-doctor.firebasestorage.app",
+      messagingSenderId: "991132609380",
+      appId: "1:991132609380:web:3ca08fe0cfb7953785e871",
+      measurementId: "G-ZWMM4F6N9N"
+    };
+
+    let firebaseAuth = null;
+    try {
+      if (window.firebase) {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig);
+        }
+        firebaseAuth = firebase.auth();
+      }
+    } catch (e) {}
+
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v4';
-    const TR_CACHE_PREFIX = 'sheet_tr_v4_';
+    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v6';
+    const TR_CACHE_PREFIX = 'sheet_tr_v6_';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
@@ -1466,7 +1486,9 @@
       lat: parseFloat(localStorage.getItem('farmer_lat') || '29.9038'),
       lon: parseFloat(localStorage.getItem('farmer_lon') || '73.8772')
     };
-    let currentLang = localStorage.getItem('app_lang') || 'hi';
+
+    const savedLangInit = localStorage.getItem('app_lang');
+    let currentLang = ALLOWED_LANGUAGES.includes(savedLangInit) ? savedLangInit : 'hi';
     let isTranslatingBackground = false;
     let isLoadingSheets = false;
     let storyTimerId = null;
@@ -1584,9 +1606,8 @@
     };
 
     const speechLangMap = {
-      hi: 'hi-IN', mr: 'mr-IN', bn: 'bn-IN', te: 'te-IN',
-      ta: 'ta-IN', gu: 'gu-IN', kn: 'kn-IN', pa: 'pa-IN',
-      en: 'en-IN', ml: 'ml-IN', or: 'or-IN', as: 'as-IN'
+      hi: 'hi-IN', en: 'en-IN', mr: 'mr-IN', gu: 'gu-IN',
+      pa: 'pa-IN', bn: 'bn-IN', te: 'te-IN', ta: 'ta-IN'
     };
 
     function cleanExtraIdTokens(text) {
@@ -2030,9 +2051,9 @@
         diagRepHead: "🌿 AI रिपोर्ट", wapBtn: "WhatsApp करें", chatYou: "आप", chatDoc: "डॉक्टर",
         chatThinking: "⏳ जवाब तैयार हो रहा है...", chatErr: "त्रुटि", chatNetErrHead: "नेटवर्क", chatNetErrDesc: "कनेक्शन समस्या",
         aiDocTitle: "AI डॉक्टर", loadingText: "🌾 डेटा लोड हो रहा है...",
-        txtLoginSub: "कृषि सहायता ऐप में आपका स्वागत है", txtPhoneLabel: "अपना मोबाइल नंबर दर्ज करें:",
-        txtOtpBtn: "📲 ओटीपी (OTP) भेजें", txtOtpVer: "🔐 ओटीपी (OTP) दर्ज हो रहा है...",
-        txtOtpSuccess: "सफलतापूर्वक ऑटो-वेरिफ़ाई हो गया!", txtSkipLogin: "⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें",
+        txtLoginSub: "कृषि सहायता ऐप में आपका स्वागत है", txtGmailBtn: "Gmail से लॉगिन करें (Google)",
+        txtLoginPolicyNote: "लॉगिन वैकल्पिक है; केवल प्रोफ़ाइल पहचान के लिए Google Sign-In उपयोग होता है।",
+        txtSkipLogin: "⏩ लॉगिन छोड़ें (Skip) और आगे बढ़ें",
         txtNotifHead: "🔔 ताज़ा अपडेट व सूचनाएं", catHeadTitle: "🌱 सभी किस्में श्रेणियां", catSubTitle: "फसल श्रेणी चुनें:",
         catItemVeg: "सब्जियां", catItemFruit: "फल", catItemFlower: "फूल", catItemGrain: "अनाज", catItemOther: "अन्य",
         protCatHead: "🛡️ फसल सुरक्षा", schedCatHead: "🗓️ स्प्रे शेड्यूल", chatHeadTitle: "👨‍⚕️ AI कृषि डॉक्टर",
@@ -2080,9 +2101,9 @@
         diagRepHead: "🌿 AI Report", wapBtn: "Send on WhatsApp", chatYou: "You", chatDoc: "Doctor",
         chatThinking: "⏳ Generating reply...", chatErr: "Error", chatNetErrHead: "Network", chatNetErrDesc: "Connection issue",
         aiDocTitle: "AI Doctor", loadingText: "🌾 Loading data...",
-        txtLoginSub: "Welcome to the Agri Support App", txtPhoneLabel: "Enter your mobile number:",
-        txtOtpBtn: "📲 Send OTP", txtOtpVer: "🔐 Verifying OTP...",
-        txtOtpSuccess: "Auto-verified successfully!", txtSkipLogin: "⏩ Skip Login and Continue",
+        txtLoginSub: "Welcome to the Agri Support App", txtGmailBtn: "Sign in with Gmail (Google)",
+        txtLoginPolicyNote: "Login is optional; Google Sign-In is used only for profile identification.",
+        txtSkipLogin: "⏩ Skip Login and Continue",
         txtNotifHead: "🔔 Latest Updates & Alerts", catHeadTitle: "🌱 All Variety Categories", catSubTitle: "Select crop category:",
         catItemVeg: "Vegetables", catItemFruit: "Fruits", catItemFlower: "Flowers", catItemGrain: "Grains", catItemOther: "Other",
         protCatHead: "🛡️ Crop Protection", schedCatHead: "🗓️ Spray Schedule", chatHeadTitle: "👨‍⚕️ AI Agri Doctor",
@@ -2119,6 +2140,26 @@
         drawerHead: "📋 मेनू", mProfile: "प्रोफाइल", mFav: "आवडत्या जाती", mLogout: "लॉगआउट",
         offlineBanner: "📴 ऑफलाइन मोड: जतन केलेली भाषा व डेटा सुरू आहे"
       },
+      gu: {
+        welcomeMsg: "રામ-રામ, ખેડૂત ભાઈ!", txtChangeProf: "✏️ પ્રોફાઇલ બદલો",
+        txtAiTitle: "🎙️ AI કૃષિ ડૉક્ટર સાથે વાત કરો", aiSubText: "ટેપ કરો અને પાક અથવા રોગનું નામ બોલો...",
+        txtSprayAdvice: "છંટકાવ માટે સવાર અથવા સાંજનો સમય પસંદ કરો", searchPlaceholder: "🔍 પાક અથવા જાત શોધો...",
+        gCrops: "બધી જાતો", gProt: "પાક રક્ષણ", gSched: "સ્પ્રે શેડ્યૂલ", gAtoz: "ખેતી માર્ગદર્શિકા (A-Z)",
+        gDisc: "ખેડૂત ચર્ચા", gAdv: "સલાહકાર", gComp: "All કંપની બિયારણ", gChem: "દવાઓ Chemicals", gServ: "Other સેવાઓ",
+        fabText: "ત્વરિત ઉકેલ", navHome: "હોમ", navCrops: "જાતો", navSched: "શેડ્યૂલ", navProt: "રક્ષણ", navHelp: "સલાહકાર",
+        drawerHead: "📋 મેનુ", mProfile: "મારી પ્રોફાઇલ", mFav: "મનપસંદ જાતો", mLogout: "લૉગઆઉટ",
+        offlineBanner: "📴 ઑફલાઇન મોડ: સાચવેલી ભાષા અને ડેટા ચાલી રહ્યો છે"
+      },
+      pa: {
+        welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!", txtChangeProf: "✏️ ਪ੍ਰੋਫਾਈਲ ਬਦਲੋ",
+        txtAiTitle: "🎙️ AI ਖੇਤੀ ਡਾਕਟਰ ਨਾਲ ਗੱਲ ਕਰੋ", aiSubText: "ਟੈਪ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਜਾਂ ਬਿਮਾਰੀ ਦਾ ਨਾਮ ਬੋਲੋ...",
+        txtSprayAdvice: "ਸਪਰੇਅ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ", searchPlaceholder: "🔍 ਫ਼ਸਲ ਜਾਂ ਕਿਸਮ ਲੱਭੋ...",
+        gCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ", gProt: "ਫ਼ਸਲ ਸੁਰੱਖਿਆ", gSched: "ਸਪਰੇਅ ਸ਼ਡਿਊਲ", gAtoz: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
+        gDisc: "ਕਿਸਾਨ ਚਰਚਾ", gAdv: "ਸਲਾਹਕਾਰ", gComp: "All ਕੰਪਨੀ ਬੀਜ", gChem: "ਦਵਾਈਆਂ Chemicals", gServ: "Other ਸੇਵਾਵਾਂ",
+        fabText: "ਤੁਰੰਤ ਹੱਲ", navHome: "ਹੋਮ", navCrops: "ਕਿਸਮਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਸਲਾਹਕਾਰ",
+        drawerHead: "📋 ਮੇਨੂ", mProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ", mFav: "ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ", mLogout: "ਲੌਗਆਊਟ",
+        offlineBanner: "📴 ਔਫਲਾਈਨ ਮੋਡ: ਸੇਵ ਕੀਤੀ ਭਾਸ਼ਾ ਅਤੇ ਡਾਟਾ ਚੱਲ ਰਿਹਾ ਹੈ"
+      },
       bn: {
         welcomeMsg: "নমস্কার, কৃষক ভাই!", txtChangeProf: "✏️ প্রোফাইল বদলান",
         txtAiTitle: "🎙️ AI কৃষি ডাক্তারের সাথে কথা বলুন", aiSubText: "ট্যাপ করুন এবং ফসল বা রোগের নাম বলুন...",
@@ -2148,66 +2189,6 @@
         fabText: "உடனடி தீர்வு", navHome: "முகப்பு", navCrops: "ரகங்கள்", navSched: "அட்டவணை", navProt: "பாதுகாப்பு", navHelp: "ஆலோசகர்",
         drawerHead: "📋 மெனு", mProfile: "என் சுயவிவரம்", mFav: "விருப்பமான ரகங்கள்", mLogout: "வெளியேறு",
         offlineBanner: "📴 ஆஃப்லைன் பயன்முறை: சேமிக்கப்பட்ட மொழி மற்றும் தரவு இயங்குகிறது"
-      },
-      gu: {
-        welcomeMsg: "રામ-રામ, ખેડૂત ભાઈ!", txtChangeProf: "✏️ પ્રોફાઇલ બદલો",
-        txtAiTitle: "🎙️ AI કૃષિ ડૉક્ટર સાથે વાત કરો", aiSubText: "ટેપ કરો અને પાક અથવા રોગનું નામ બોલો...",
-        txtSprayAdvice: "છંટકાવ માટે સવાર અથવા સાંજનો સમય પસંદ કરો", searchPlaceholder: "🔍 પાક અથવા જાત શોધો...",
-        gCrops: "બધી જાતો", gProt: "પાક રક્ષણ", gSched: "સ્પ્રે શેડ્યૂલ", gAtoz: "ખેતી માર્ગદર્શિકા (A-Z)",
-        gDisc: "ખેડૂત ચર્ચા", gAdv: "સલાહકાર", gComp: "All કંપની બિયારણ", gChem: "દવાઓ Chemicals", gServ: "Other સેવાઓ",
-        fabText: "ત્વરિત ઉકેલ", navHome: "હોમ", navCrops: "જાતો", navSched: "શેડ્યૂલ", navProt: "રક્ષણ", navHelp: "સલાહકાર",
-        drawerHead: "📋 મેનુ", mProfile: "મારી પ્રોફાઇલ", mFav: "મનપસંદ જાતો", mLogout: "લૉગઆઉટ",
-        offlineBanner: "📴 ઑફલાઇન મોડ: સાચવેલી ભાષા અને ડેટા ચાલી રહ્યો છે"
-      },
-      kn: {
-        welcomeMsg: "ನಮಸ್ಕಾರ, ರೈತ ಬಂಧು!", txtChangeProf: "✏️ ಪ್ರೊಫೈಲ್ ಬದಲಾಯಿಸಿ",
-        txtAiTitle: "🎙️ AI ಕೃಷಿ ವೈದ್ಯರೊಂದಿಗೆ ಮಾತನಾಡಿ", aiSubText: "ತಟ್ಟಿ ಬೆಳೆ ಅಥವಾ ರೋಗದ ಹೆಸರನ್ನು ಹೇಳಿ...",
-        txtSprayAdvice: "ಸಿಂಪರಣೆಗೆ ಬೆಳಿಗ್ಗೆ ಅಥವಾ ಸಂಜೆ ಸಮಯ ಆರಿಸಿ", searchPlaceholder: "🔍 ಬೆಳೆ ಅಥವಾ ತಳಿ ಹುಡುಕಿ...",
-        gCrops: "ಎಲ್ಲಾ ತಳಿಗಳು", gProt: "ಬೆಳೆ ರಕ್ಷಣೆ", gSched: "ಸ್ಪ್ರೇ ವೇಳಾಪಟ್ಟಿ", gAtoz: "ಕೃಷಿ ಮಾರ್ಗದರ್ಶಿ (A-Z)",
-        gDisc: "ರೈತ ಚರ್ಚೆ", gAdv: "ಸಲಹೆಗಾರ", gComp: "All ಕಂಪನಿ ಬೀಜಗಳು", gChem: "ಔಷಧಗಳು Chemicals", gServ: "Other ಸೇವೆಗಳು",
-        fabText: "ತ್ವರಿತ ಪರಿಹಾರ", navHome: "ಮುಖಪುಟ", navCrops: "ತಳಿಗಳು", navSched: "ವೇಳಾಪಟ್ಟಿ", navProt: "ರಕ್ಷಣೆ", navHelp: "ಸಲಹೆಗಾರ",
-        drawerHead: "📋 ಮೆನು", mProfile: "ನನ್ನ ಪ್ರೊಫೈಲ್", mFav: "ಮೆಚ್ಚಿನ ತಳಿಗಳು", mLogout: "ಲಾಗ್ ಔಟ್",
-        offlineBanner: "📴 ಆಫ್‌ಲೈನ್ ಮೋಡ್: ಉಳಿಸಿದ ಭಾಷೆ ಮತ್ತು ಡೇಟಾ ಚಾಲನೆಯಲ್ಲಿದೆ"
-      },
-      pa: {
-        welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!", txtChangeProf: "✏️ ਪ੍ਰੋਫਾਈਲ ਬਦਲੋ",
-        txtAiTitle: "🎙️ AI ਖੇਤੀ ਡਾਕਟਰ ਨਾਲ ਗੱਲ ਕਰੋ", aiSubText: "ਟੈਪ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਜਾਂ ਬਿਮਾਰੀ ਦਾ ਨਾਮ ਬੋਲੋ...",
-        txtSprayAdvice: "ਸਪਰੇਅ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ", searchPlaceholder: "🔍 ਫ਼ਸਲ ਜਾਂ ਕਿਸਮ ਲੱਭੋ...",
-        gCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ", gProt: "ਫ਼ਸਲ ਸੁਰੱਖਿਆ", gSched: "ਸਪਰੇਅ ਸ਼ਡਿਊਲ", gAtoz: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
-        gDisc: "ਕਿਸਾਨ ਚਰਚਾ", gAdv: "ਸਲਾਹਕਾਰ", gComp: "All ਕੰਪਨੀ ਬੀਜ", gChem: "ਦਵਾਈਆਂ Chemicals", gServ: "Other ਸੇਵਾਵਾਂ",
-        fabText: "ਤੁਰੰਤ ਹੱਲ", navHome: "ਹੋਮ", navCrops: "ਕਿਸਮਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਸਲਾਹਕਾਰ",
-        drawerHead: "📋 ਮੇਨੂ", mProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ", mFav: "ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ", mLogout: "ਲੌਗਆਊਟ",
-        offlineBanner: "📴 ਔਫਲਾਈਨ ਮੋਡ: ਸੇਵ ਕੀਤੀ ਭਾਸ਼ਾ ਅਤੇ ਡਾਟਾ ਚੱਲ ਰਿਹਾ ਹੈ"
-      },
-      ml: {
-        welcomeMsg: "നമസ്കാരം, കർഷക സഹോദരാ!", txtChangeProf: "✏️ പ്രൊഫൈൽ മാറ്റുക",
-        txtAiTitle: "🎙️ AI കാർഷിക ഡോക്ടറോട് സംസാരിക്കുക", aiSubText: "ടാപ്പ് ചെയ്ത് വിളയുടെയോ രോഗത്തിന്റെയോ പേര് പറയുക...",
-        txtSprayAdvice: "തളിക്കുന്നതിന് രാവിലെയോ വൈകുന്നേരമോ തിരഞ്ഞെടുക്കുക", searchPlaceholder: "🔍 വിള അല്ലെങ്കിൽ ഇനം തിരയുക...",
-        gCrops: "എല്ലാ ഇനങ്ങളും", gProt: "വിള സംരക്ഷണം", gSched: "സ്പ്രേ ഷെഡ്യൂൾ", gAtoz: "കൃഷി ഗൈഡ് (A-Z)",
-        gDisc: "കർഷക ചർച്ച", gAdv: "ഉപദേശകൻ", gComp: "All കമ്പനി വിത്തുകൾ", gChem: "മരുന്നുകൾ Chemicals", gServ: "Other സേവനങ്ങൾ",
-        fabText: "ഉടനടി പരിഹാരം", navHome: "ഹോം", navCrops: "ഇനങ്ങൾ", navSched: "ഷെഡ്യൂൾ", navProt: "സംരക്ഷണം", navHelp: "ഉപദേശകൻ",
-        drawerHead: "📋 മെനു", mProfile: "എന്റെ പ്രൊഫൈൽ", mFav: "ഇഷ്ടപ്പെട്ട ഇനങ്ങൾ", mLogout: "ലോഗ്ഔട്ട്",
-        offlineBanner: "📴 ഓഫ്‌ലൈൻ മോഡ്: സേവ് ചെയ്ത ഭാഷയും ഡാറ്റയും പ്രവർത്തിക്കുന്നു"
-      },
-      or: {
-        welcomeMsg: "ନମସ୍କାର, ଚାଷୀ ଭାଇ!", txtChangeProf: "✏️ ପ୍ରୋଫାଇଲ୍ ବଦଳାନ୍ତୁ",
-        txtAiTitle: "🎙️ AI କୃଷି ଡାକ୍ତରଙ୍କ ସହ କଥା ହୁଅନ୍ତୁ", aiSubText: "ଟ୍ୟାପ୍ କରନ୍ତୁ ଏବଂ ଫସଲ ବା ରୋଗର ନାମ କୁହନ୍ତୁ...",
-        txtSprayAdvice: "ସ୍ପ୍ରେ ପାଇଁ ସକାଳ ବା ସନ୍ଧ୍ୟା ସମୟ ବାଛନ୍ତୁ", searchPlaceholder: "🔍 ଫସଲ ବା କିସମ ଖୋଜନ୍ତୁ...",
-        gCrops: "ସବୁ କିସମ", gProt: "ଫସଲ ସୁରକ୍ଷା", gSched: "ସ୍ପ୍ରେ ସିଡ୍ୟୁଲ୍", gAtoz: "ଚାଷ ଗାଇଡ୍ (A-Z)",
-        gDisc: "ଚାଷୀ ଆଲୋଚନା", gAdv: "ପରାମର୍ଶଦାତା", gComp: "All କମ୍ପାନୀ ବିହନ", gChem: "ଔଷଧ Chemicals", gServ: "Other ସେବା",
-        fabText: "ତୁରନ୍ତ ସମାଧାନ", navHome: "ହୋମ୍", navCrops: "କିସମ", navSched: "ସିଡ୍ୟୁଲ୍", navProt: "ସୁରକ୍ଷା", navHelp: "ପରାମର୍ଶଦାତା",
-        drawerHead: "📋 ମେନୁ", mProfile: "ମୋ ପ୍ରୋଫାଇଲ୍", mFav: "ପସନ୍ଦର କିସମ", mLogout: "ଲଗଆଉଟ୍",
-        offlineBanner: "📴 ଅଫଲାଇନ୍ ମୋଡ୍: ସେଭ୍ ହୋଇଥିବା ଭାଷା ଓ ଡାଟା ଚାଲୁଛି"
-      },
-      as: {
-        welcomeMsg: "নমস্কাৰ, কৃষক বন্ধু!", txtChangeProf: "✏️ প্ৰফাইল সলনি কৰক",
-        txtAiTitle: "🎙️ AI কৃষি ডাক্তৰৰ সৈতে কথা পাতক", aiSubText: "টেপ কৰক আৰু শস্য বা ৰোগৰ নাম কওক...",
-        txtSprayAdvice: "স্প্ৰেৰ বাবে পুৱা বা গধূলিৰ সময় বাছনি কৰক", searchPlaceholder: "🔍 শস্য বা জাত বিচাৰক...",
-        gCrops: "সকলো জাত", gProt: "শস্য সুৰক্ষা", gSched: "স্প্ৰে সময়সূচী", gAtoz: "খেতিৰ গাইড (A-Z)",
-        gDisc: "কৃষক আলোচনা", gAdv: "পৰামৰ্শদাতা", gComp: "All কোম্পানী বীজ", gChem: "দৰব Chemicals", gServ: "Other সেৱা",
-        fabText: "তৎক্ষণাত সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুৰক্ষা", navHelp: "পৰামৰ্শদাতা",
-        drawerHead: "📋 মেনু", mProfile: "মোৰ প্ৰফাইল", mFav: "পছন্দৰ জাত", mLogout: "লগআউট",
-        offlineBanner: "📴 অফলাইন মোড: সংৰক্ষিত ভাষা আৰু ডাটা চলি আছে"
       }
     };
 
@@ -2221,7 +2202,7 @@
       'mProtection', 'mChems', 'mServices', 'mPrivacy', 'mRate', 'mShare',
       'mHelp', 'mLogout', 'solHead', 'camBtn', 'galBtn', 'diagBtn',
       'diagRepHead', 'wapBtn', 'loadingText',
-      'txtLoginSub', 'txtPhoneLabel', 'txtOtpBtn', 'txtOtpVer', 'txtOtpSuccess', 'txtSkipLogin',
+      'txtLoginSub', 'txtGmailBtn', 'txtLoginPolicyNote', 'txtSkipLogin',
       'txtNotifHead', 'catHeadTitle', 'catSubTitle', 'catItemVeg', 'catItemFruit',
       'catItemFlower', 'catItemGrain', 'catItemOther', 'protCatHead', 'schedCatHead',
       'chatHeadTitle', 'chatSubHead', 'chatSendBtn', 'lblCalcCrop', 'lblCalcDate',
@@ -2388,15 +2369,11 @@
       if (clean === 'सब्जियां') {
         if (targetLang === 'en') return 'Vegetables';
         if (targetLang === 'mr') return 'भाज्या';
+        if (targetLang === 'gu') return 'શાકભાજી';
+        if (targetLang === 'pa') return 'ਸਬਜ਼ੀਆਂ';
         if (targetLang === 'bn') return 'সবজি';
         if (targetLang === 'te') return 'కూరగాయలు';
         if (targetLang === 'ta') return 'காய்கறிகள்';
-        if (targetLang === 'gu') return 'શાકભાજી';
-        if (targetLang === 'kn') return 'ತರಕಾರಿಗಳು';
-        if (targetLang === 'pa') return 'ਸਬਜ਼ੀਆਂ';
-        if (targetLang === 'ml') return 'പച്ചക്കറികൾ';
-        if (targetLang === 'or') return 'ପରିବା';
-        if (targetLang === 'as') return 'শাক-পাচলি';
       }
 
       const cacheKey = `${TR_CACHE_PREFIX}${targetLang}_${clean}`;
@@ -2720,10 +2697,11 @@
       setText('txtLoading', t.loadingText);
 
       setText('txtLoginSub', t.txtLoginSub);
-      setText('txtPhoneLabel', t.txtPhoneLabel);
-      setText('txtOtpBtn', t.txtOtpBtn);
-      setText('txtOtpVer', t.txtOtpVer);
-      setText('txtOtpSuccess', t.txtOtpSuccess);
+      const gmailBtnEl = document.getElementById('txtGmailBtn');
+      if (gmailBtnEl && t.txtGmailBtn) {
+        gmailBtnEl.innerHTML = `<span>G</span><span>${cleanExtraIdTokens(t.txtGmailBtn)}</span>`;
+      }
+      setText('txtLoginPolicyNote', t.txtLoginPolicyNote);
       setText('txtSkipLogin', t.txtSkipLogin);
       setText('txtNotifHead', t.txtNotifHead);
 
@@ -2807,9 +2785,9 @@
     }
 
     async function setAppLanguage(langCode) {
-      currentLang = langCode;
-      localStorage.setItem('app_lang', langCode);
-      document.documentElement.lang = langCode;
+      currentLang = ALLOWED_LANGUAGES.includes(langCode) ? langCode : 'hi';
+      localStorage.setItem('app_lang', currentLang);
+      document.documentElement.lang = currentLang;
       document.getElementById('languageSelectModal').classList.remove('active');
 
       showLoader();
@@ -4712,7 +4690,10 @@
 
     function appLogout() {
       closeDrawer();
-      ['farmer_name', 'farmer_phone', 'is_logged_in'].forEach(k => localStorage.removeItem(k));
+      if (firebaseAuth) {
+        firebaseAuth.signOut().catch(() => {});
+      }
+      ['farmer_name', 'farmer_phone', 'farmer_email', 'is_logged_in'].forEach(k => localStorage.removeItem(k));
       updateProfileUI();
       showToast('लॉगआउट हो गया है');
       if (navigator.onLine) {
@@ -4766,27 +4747,41 @@
       }
     }
 
-    async function sendOtpCode() {
-      const phone = document.getElementById('loginPhone').value.trim();
-      if (!/^\d{10}$/.test(phone)) {
-        showToast('कृपया 10 अंकों का सही मोबाइल नंबर दर्ज करें');
+    async function signInWithGmailFirebase() {
+      if (!navigator.onLine) {
+        showToast('Gmail लॉगिन के लिए इंटरनेट आवश्यक है');
         return;
       }
-      document.getElementById('phoneInputGroup').style.display = 'none';
-      document.getElementById('otpInputGroup').style.display = 'block';
-      setTimeout(() => {
-        const generatedOtp = String(Math.floor(1000 + Math.random() * 9000));
-        document.getElementById('loginOtp').value = generatedOtp;
-        localStorage.setItem('farmer_phone', phone);
-        localStorage.setItem('is_logged_in', 'true');
-        updateProfileUI();
-        syncFarmerDataToGoogleSheet("नया किसान", phone, userCurrentCity, "");
-        setTimeout(() => {
+      if (!firebaseAuth) {
+        showToast('Firebase Auth उपलब्ध नहीं है');
+        return;
+      }
+
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        const result = await firebaseAuth.signInWithPopup(provider);
+        const user = result && result.user;
+
+        if (user) {
+          const displayName = cleanExtraIdTokens(user.displayName || 'किसान भाई');
+          const email = cleanExtraIdTokens(user.email || '');
+
+          localStorage.setItem('farmer_name', displayName);
+          if (email) localStorage.setItem('farmer_email', email);
+          localStorage.setItem('is_logged_in', 'true');
+
+          updateProfileUI();
+          syncFarmerDataToGoogleSheet(displayName, localStorage.getItem('farmer_phone') || '', userCurrentCity, localStorage.getItem('farmer_crops') || '');
           document.getElementById('loginScreenModal').classList.remove('active');
           openOnboardingLocationModal(false);
-        }, 600);
-      }, 900);
+          showToast('Gmail से लॉगिन सफल हुआ');
+        }
+      } catch (err) {
+        showToast(err && err.message ? err.message : 'Gmail लॉगिन रद्द या असफल रहा');
+      }
     }
+
     function skipLogin() {
       localStorage.setItem('is_logged_in', 'skipped');
       document.getElementById('loginScreenModal').classList.remove('active');
@@ -5133,6 +5128,8 @@
         localStorage.removeItem('crop_sabzi_offline_sheets_v1');
         localStorage.removeItem('crop_sabzi_offline_sheets_v2');
         localStorage.removeItem('crop_sabzi_offline_sheets_v3');
+        localStorage.removeItem('crop_sabzi_offline_sheets_v4');
+        localStorage.removeItem('crop_sabzi_offline_sheets_v5');
       } catch (e) {}
 
       if (localStorage.getItem('dark_mode') === 'true') {
@@ -5162,7 +5159,7 @@
       calculateCropSchedule();
 
       const savedLang = localStorage.getItem('app_lang');
-      if (!savedLang) {
+      if (!savedLang || !ALLOWED_LANGUAGES.includes(savedLang)) {
         document.getElementById('languageSelectModal').classList.add('active');
       } else {
         currentLang = savedLang;
@@ -5184,7 +5181,7 @@
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
+        navigator.serviceWorker.register(`./sw.js?v=${APP_VERSION}`).catch(() => {});
       });
     }
   </script>
