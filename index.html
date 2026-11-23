@@ -776,7 +776,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v11.9
+      CROP & SABZI DOCTOR • v12.0
     </div>
   </div>
 
@@ -1432,8 +1432,8 @@
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v2';
-    const TR_CACHE_PREFIX = 'sheet_tr_v2_';
+    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v3';
+    const TR_CACHE_PREFIX = 'sheet_tr_v3_';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
@@ -2285,6 +2285,9 @@
         notificationsList = Array.isArray(data.notificationsList) ? data.notificationsList : [];
         allSchedRowsGlobal = Array.isArray(data.allSchedRowsGlobal) ? data.allSchedRowsGlobal : [];
         allProtRowsGlobal = Array.isArray(data.allProtRowsGlobal) ? data.allProtRowsGlobal : [];
+
+        if (allSchedRowsGlobal.length > 0) rebuildScheduleMap(allSchedRowsGlobal);
+        if (allProtRowsGlobal.length > 0) rebuildProtectionMap(allProtRowsGlobal);
 
         renderGridButtonPhotos();
         renderCategoryListIcons();
@@ -3473,17 +3476,32 @@
     function parseScheduleCSV(text, categoryName) {
       if (!text) return [];
       const list = [];
-      parseCSV(text).forEach(cols => {
-        if (cols[0] && !cols[0].includes('Column A') && !cols[0].toLowerCase().includes('crop')) {
-          list.push({
-            crop: getStandardCropName(cols[0]),
-            time: cleanExtraIdTokens(cols[1] || ''),
-            med: cleanExtraIdTokens(cols[2] || ''),
-            purpose: cleanExtraIdTokens(cols[3] || ''),
-            photo: cols[4] || '',
-            category: categoryName
-          });
+      parseCSV(text).forEach((cols, idx) => {
+        const rawCrop = (cols[0] || '').trim();
+        if (!rawCrop) return;
+        const lowCrop = rawCrop.toLowerCase();
+        if (idx === 0 && (lowCrop === 'crop' || lowCrop.includes('column a') || lowCrop.includes('फसल'))) return;
+        if (lowCrop === 'crop' || lowCrop.includes('column a')) return;
+
+        const col4 = (cols[4] || '').trim();
+        const col5 = (cols[5] || '').trim();
+        const hasExplicitCategory = col4 && !col4.startsWith('http') && !/^\d/.test(col4);
+        if (hasExplicitCategory && normalizeCategoryKey(col4) !== categoryName) {
+          return;
         }
+
+        const photoUrl = col5.startsWith('http') ? col5 : (col4.startsWith('http') ? col4 : '');
+        const stdCrop = getStandardCropName(rawCrop);
+        if (!stdCrop) return;
+
+        list.push({
+          crop: stdCrop,
+          time: cleanExtraIdTokens(cols[1] || ''),
+          med: cleanExtraIdTokens(cols[2] || ''),
+          purpose: cleanExtraIdTokens(cols[3] || ''),
+          photo: photoUrl,
+          category: categoryName
+        });
       });
       return list;
     }
@@ -3491,22 +3509,29 @@
     function parseProtectionCSV(text, categoryName) {
       if (!text) return [];
       const list = [];
-      parseCSV(text).forEach(cols => {
-        if (cols[0] && !cols[0].includes('Crop') && !cols[0].toLowerCase().includes('crop')) {
-          let imgUrl = '';
-          for (let i = 0; i < cols.length; i++) {
-            const val = cols[i] ? cols[i].trim() : '';
-            if (val.startsWith('http')) { imgUrl = val; break; }
-          }
-          list.push({
-            crop: getStandardCropName(cols[0]),
-            name: cleanExtraIdTokens(cols[1] || ''),
-            symptoms: cleanExtraIdTokens(cols[2] || ''),
-            cure: cleanExtraIdTokens(cols[3] || ''),
-            photo: imgUrl,
-            category: categoryName
-          });
+      parseCSV(text).forEach((cols, idx) => {
+        const rawCrop = (cols[0] || '').trim();
+        if (!rawCrop) return;
+        const lowCrop = rawCrop.toLowerCase();
+        if (idx === 0 && (lowCrop === 'crop' || lowCrop.includes('फसल'))) return;
+        if (lowCrop === 'crop') return;
+
+        let imgUrl = '';
+        for (let i = 0; i < cols.length; i++) {
+          const val = cols[i] ? cols[i].trim() : '';
+          if (val.startsWith('http')) { imgUrl = val; break; }
         }
+        const stdCrop = getStandardCropName(rawCrop);
+        if (!stdCrop) return;
+
+        list.push({
+          crop: stdCrop,
+          name: cleanExtraIdTokens(cols[1] || ''),
+          symptoms: cleanExtraIdTokens(cols[2] || ''),
+          cure: cleanExtraIdTokens(cols[3] || ''),
+          photo: imgUrl,
+          category: categoryName
+        });
       });
       return list;
     }
@@ -3514,6 +3539,7 @@
     function rebuildScheduleMap(allSchedRows) {
       scheduleRecords = {};
       allSchedRows.forEach(s => {
+        if (!s || !s.category || !s.crop) return;
         if (!scheduleRecords[s.category]) scheduleRecords[s.category] = {};
         if (!scheduleRecords[s.category][s.crop]) scheduleRecords[s.category][s.crop] = [];
         scheduleRecords[s.category][s.crop].push({
@@ -3528,6 +3554,7 @@
     function rebuildProtectionMap(allProtRows) {
       protectionRecords = {};
       allProtRows.forEach(p => {
+        if (!p || !p.category || !p.crop) return;
         if (!protectionRecords[p.category]) protectionRecords[p.category] = {};
         if (!protectionRecords[p.category][p.crop]) protectionRecords[p.category][p.crop] = [];
         protectionRecords[p.category][p.crop].push({
@@ -5105,6 +5132,11 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
+      try {
+        localStorage.removeItem('crop_sabzi_offline_sheets_v1');
+        localStorage.removeItem('crop_sabzi_offline_sheets_v2');
+      } catch (e) {}
+
       if (localStorage.getItem('dark_mode') === 'true') {
         document.body.classList.add('dark-mode');
       }
@@ -5145,7 +5177,7 @@
           openOnboardingLocationModal(false);
         }
         if (navigator.onLine) {
-          loadAllSheetsData();
+          loadAllSheetsData(true);
         } else {
           refreshActiveScreenOnTranslation();
         }
