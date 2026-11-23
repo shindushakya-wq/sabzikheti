@@ -772,7 +772,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v12.3
+      CROP & SABZI DOCTOR • v12.5
     </div>
   </div>
 
@@ -1080,16 +1080,16 @@
         <div class="list-left"><span class="list-icon" id="schedCatIcon_सब्जियां" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_सब्जियां">सब्जियां</span></div>
         <span class="arrow">&gt;</span>
       </div>
-      <div class="list-item" onclick="showScheduleCropsListByCategory('अनाज')">
-        <div class="list-left"><span class="list-icon" id="schedCatIcon_अनाज" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_अनाज">अनाज</span></div>
-        <span class="arrow">&gt;</span>
-      </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फल')">
         <div class="list-left"><span class="list-icon" id="schedCatIcon_फल" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_फल">फल</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('फूल')">
         <div class="list-left"><span class="list-icon" id="schedCatIcon_फूल" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_फूल">फूल</span></div>
+        <span class="arrow">&gt;</span>
+      </div>
+      <div class="list-item" onclick="showScheduleCropsListByCategory('अनाज')">
+        <div class="list-left"><span class="list-icon" id="schedCatIcon_अनाज" data-fallback="🗓️">🗓️</span><span class="list-title" id="schedCatLabel_अनाज">अनाज</span></div>
         <span class="arrow">&gt;</span>
       </div>
       <div class="list-item" onclick="showScheduleCropsListByCategory('अन्य')">
@@ -1426,7 +1426,7 @@
   </div>
 
   <script>
-    const APP_VERSION = '12.3';
+    const APP_VERSION = '12.5';
     const ALLOWED_LANGUAGES = ['hi', 'en', 'mr', 'gu', 'pa', 'bn', 'te', 'ta'];
 
     const firebaseConfig = {
@@ -1452,8 +1452,8 @@
 
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v6';
-    const TR_CACHE_PREFIX = 'sheet_tr_v6_';
+    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v8';
+    const TR_CACHE_PREFIX = 'sheet_tr_v8_';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
@@ -1616,6 +1616,22 @@
         .replace(/<extra_id_\d+>/gi, '')
         .replace(/\s{2,}/g, ' ')
         .trim();
+    }
+
+    function setSafeTrCache(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        try {
+          const keysToRemove = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith('sheet_tr_')) keysToRemove.push(k);
+          }
+          keysToRemove.slice(0, 200).forEach(k => localStorage.removeItem(k));
+          localStorage.setItem(key, value);
+        } catch (err2) {}
+      }
     }
 
     let toastTimeoutId = null;
@@ -2061,6 +2077,9 @@
         lblCalcCrop: "🌱 फसल चुनें:", lblCalcDate: "📅 बुवाई की तारीख चुनें:", btnCalcRun: "📊 कैलकुलेट करें",
         lblWind: "💨 हवा की गति", lblHum: "💧 हवा में नमी", lblForecast15: "📅 अगले 15 दिनों का मौसम पूर्वानुमान",
         btnSaveProf: "💾 सहेजें", btnDocSpray: "💬 WhatsApp पर सलाह लें",
+        c1: "कीटनाशक", c2: "फफूंदनाशक", c3: "खरपतवारनाशक", c4: "टॉनिक",
+        s1: "मौसम", s2: "मंडी भाव", s3: "बुवाई कैलकुलेटर", s4: "एक्सपर्ट सुझाव", s5: "कीट अलर्ट",
+        s6: "सरकारी योजनाएं", s7: "AI जांच रिपोर्ट", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
         voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है",
         advFormTitle: "🎧 कृषि सलाहकार से सलाह लें", advFormSub: "नीचे अपनी फसल व रोग की जानकारी भरें और सीधे WhatsApp पर भेजें:",
@@ -2111,6 +2130,9 @@
         lblCalcCrop: "🌱 Select Crop:", lblCalcDate: "📅 Select Sowing Date:", btnCalcRun: "📊 Calculate",
         lblWind: "💨 Wind Speed", lblHum: "💧 Humidity", lblForecast15: "📅 Next 15 Days Weather Forecast",
         btnSaveProf: "💾 Save Profile", btnDocSpray: "💬 Ask on WhatsApp",
+        c1: "Insecticides", c2: "Fungicides", c3: "Herbicides", c4: "Tonics",
+        s1: "Weather", s2: "Mandi Prices", s3: "Sowing Calculator", s4: "Expert Tips", s5: "Pest Alerts",
+        s6: "Gov Schemes", s7: "AI Reports", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 Offline Mode: Showing saved language and data",
         voiceNotSupported: "Voice input is not supported on this browser",
         advFormTitle: "🎧 Ask Agri Advisor", advFormSub: "Fill in your crop and disease details below to send directly on WhatsApp:",
@@ -2138,6 +2160,9 @@
         gDisc: "शेतकरी चर्चा", gAdv: "सल्लागार", gComp: "All कंपनी बियाणे", gChem: "औषधे Chemicals", gServ: "Other सेवा",
         fabText: "तातडीने उपाय", navHome: "होम", navCrops: "जाती", navSched: "वेळापत्रक", navProt: "सुरक्षा", navHelp: "सल्लागार",
         drawerHead: "📋 मेनू", mProfile: "प्रोफाइल", mFav: "आवडत्या जाती", mLogout: "लॉगआउट",
+        c1: "कीटकनाशके", c2: "बुरशीनाशके", c3: "तणनाशके", c4: "टॉनिक",
+        s1: "हवामान", s2: "बाजार भाव", s3: "पेरणी कॅल्क्युलेटर", s4: "तज्ज्ञ सल्ला", s5: "कीड इशारा",
+        s6: "शासकीय योजना", s7: "AI तपासणी अहवाल", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 ऑफलाइन मोड: जतन केलेली भाषा व डेटा सुरू आहे"
       },
       gu: {
@@ -2148,6 +2173,9 @@
         gDisc: "ખેડૂત ચર્ચા", gAdv: "સલાહકાર", gComp: "All કંપની બિયારણ", gChem: "દવાઓ Chemicals", gServ: "Other સેવાઓ",
         fabText: "ત્વરિત ઉકેલ", navHome: "હોમ", navCrops: "જાતો", navSched: "શેડ્યૂલ", navProt: "રક્ષણ", navHelp: "સલાહકાર",
         drawerHead: "📋 મેનુ", mProfile: "મારી પ્રોફાઇલ", mFav: "મનપસંદ જાતો", mLogout: "લૉગઆઉટ",
+        c1: "કીટનાશક", c2: "ફૂગનાશક", c3: "નીંદણનાશક", c4: "ટોનિક",
+        s1: "હવામાન", s2: "માર્કેટ યાર્ડ ભાવ", s3: "વાવણી કેલ્ક્યુલેટર", s4: "નિષ્ણાત સલાહ", s5: "જીવાત ચેતવણી",
+        s6: "સરકારી યોજનાઓ", s7: "AI તપાસ રિપોર્ટ", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 ઑફલાઇન મોડ: સાચવેલી ભાષા અને ડેટા ચાલી રહ્યો છે"
       },
       pa: {
@@ -2158,6 +2186,9 @@
         gDisc: "ਕਿਸਾਨ ਚਰਚਾ", gAdv: "ਸਲਾਹਕਾਰ", gComp: "All ਕੰਪਨੀ ਬੀਜ", gChem: "ਦਵਾਈਆਂ Chemicals", gServ: "Other ਸੇਵਾਵਾਂ",
         fabText: "ਤੁਰੰਤ ਹੱਲ", navHome: "ਹੋਮ", navCrops: "ਕਿਸਮਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਸਲਾਹਕਾਰ",
         drawerHead: "📋 ਮੇਨੂ", mProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ", mFav: "ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ", mLogout: "ਲੌਗਆਊਟ",
+        c1: "ਕੀਟਨਾਸ਼ਕ", c2: "ਉੱਲੀਨਾਸ਼ਕ", c3: "ਨਦੀਨਨਾਸ਼ਕ", c4: "ਟੌਨਿਕ",
+        s1: "ਮੌਸਮ", s2: "ਮੰਡੀ ਭਾਅ", s3: "ਬਿਜਾਈ ਕੈਲਕੁਲੇਟਰ", s4: "ਮਾਹਰ ਸਲਾਹ", s5: "ਕੀੜਾ ਚੇਤਾਵਨੀ",
+        s6: "ਸਰਕਾਰੀ ਸਕੀਮਾਂ", s7: "AI ਜਾਂਚ ਰਿਪੋਰਟ", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 ਔਫਲਾਈਨ ਮੋਡ: ਸੇਵ ਕੀਤੀ ਭਾਸ਼ਾ ਅਤੇ ਡਾਟਾ ਚੱਲ ਰਿਹਾ ਹੈ"
       },
       bn: {
@@ -2168,6 +2199,9 @@
         gDisc: "কৃষক আলোচনা", gAdv: "পরামর্শদাতা", gComp: "All কোম্পানি বীজ", gChem: "ওষুধ Chemicals", gServ: "Other পরিষেবা",
         fabText: "তাত্ক্ষণিক সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুরক্ষা", navHelp: "পরামর্শদাতা",
         drawerHead: "📋 মেনু", mProfile: "আমার প্রোফাইল", mFav: "পছন্দের জাত", mLogout: "লগআউট",
+        c1: "কীটনাশক", c2: "ছত্রাকনাশক", c3: "আগাছানাশক", c4: "টনিক",
+        s1: "আবহাওয়া", s2: "বাজার দর", s3: "বপন ক্যালকুলেটর", s4: "বিশেষজ্ঞ পরামর্শ", s5: "পোকা সতর্কতা",
+        s6: "সরকারি প্রকল্প", s7: "AI রিপোর্ট", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 অফলাইন মোড: সংরক্ষিত ভাষা ও ডেটা চলছে"
       },
       te: {
@@ -2178,6 +2212,9 @@
         gDisc: "రైతు చర్చ", gAdv: "సలహాదారు", gComp: "All కంపెనీ విత్తనాలు", gChem: "మందులు Chemicals", gServ: "Other సేవలు",
         fabText: "తక్షణ పరిష్కారం", navHome: "హోమ్", navCrops: "రకాలు", navSched: "షెడ్యూల్", navProt: "రక్షణ", navHelp: "సలహాదారు",
         drawerHead: "📋 మెనూ", mProfile: "నా ప్రొఫైల్", mFav: "ఇష్టమైన రకాలు", mLogout: "లాగ్అవుట్",
+        c1: "పురుగుమందులు", c2: "శిలీంధ్రనాశకాలు", c3: "కలుపుమందులు", c4: "టానిక్",
+        s1: "వాతావరణం", s2: "మార్కెట్ ధరలు", s3: "విత్తన కాలిక్యులేటర్", s4: "నిపుణుల సలహా", s5: "కీటక హెచ్చరిక",
+        s6: "ప్రభుత్వ పథకాలు", s7: "AI నివేదిక", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 ఆఫ్‌లైన్ మోడ్: సేవ్ చేసిన భాష మరియు డేటా నడుస్తోంది"
       },
       ta: {
@@ -2188,6 +2225,9 @@
         gDisc: "விவசாயிகள் கலந்துரையாடல்", gAdv: "ஆலோசகர்", gComp: "All கம்பெனி விதைகள்", gChem: "மருந்துகள் Chemicals", gServ: "Other சேவைகள்",
         fabText: "உடனடி தீர்வு", navHome: "முகப்பு", navCrops: "ரகங்கள்", navSched: "அட்டவணை", navProt: "பாதுகாப்பு", navHelp: "ஆலோசகர்",
         drawerHead: "📋 மெனு", mProfile: "என் சுயவிவரம்", mFav: "விருப்பமான ரகங்கள்", mLogout: "வெளியேறு",
+        c1: "பூச்சிக்கொல்லிகள்", c2: "பூஞ்சாணக்கொல்லிகள்", c3: "களைக்கொல்லிகள்", c4: "டானிக்",
+        s1: "வானிலை", s2: "சந்தை விலை", s3: "விதைப்பு கணிப்பான்", s4: "நிபுணர் ஆலோசனை", s5: "பூச்சி எச்சரிக்கை",
+        s6: "அரசு திட்டங்கள்", s7: "AI அறிக்கை", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 ஆஃப்லைன் பயன்முறை: சேமிக்கப்பட்ட மொழி மற்றும் தரவு இயங்குகிறது"
       }
     };
@@ -2207,6 +2247,7 @@
       'catItemFlower', 'catItemGrain', 'catItemOther', 'protCatHead', 'schedCatHead',
       'chatHeadTitle', 'chatSubHead', 'chatSendBtn', 'lblCalcCrop', 'lblCalcDate',
       'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15', 'btnSaveProf', 'btnDocSpray',
+      'c1', 'c2', 'c3', 'c4', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9',
       'offlineBanner', 'voiceNotSupported',
       'advFormTitle', 'advFormSub', 'lblAdvName', 'lblAdvLocation', 'lblAdvCrop',
       'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa',
@@ -2347,7 +2388,7 @@
 
       if (/<extra_id_\d+>/i.test(saved)) {
         saved = cleanExtraIdTokens(saved);
-        try { localStorage.setItem(cacheKey, saved); } catch (e) {}
+        setSafeTrCache(cacheKey, saved);
       }
 
       if (clean === 'सब्जियां' && targetLang !== 'en' && saved.toLowerCase().includes('background')) {
@@ -2355,6 +2396,87 @@
         return null;
       }
       return saved;
+    }
+
+    async function translateSingleChunk(chunk, targetLang) {
+      const cleanChunk = cleanExtraIdTokens(chunk || '');
+      if (!cleanChunk || targetLang === 'hi') return cleanChunk;
+
+      const cacheKey = `${TR_CACHE_PREFIX}${targetLang}_${cleanChunk}`;
+      const cached = getCachedTranslation(cleanChunk, targetLang);
+      if (cached) return cached;
+
+      if (!navigator.onLine) return cleanChunk;
+
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 6000);
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(cleanChunk)}`;
+        const res = await fetch(url, { signal: controller.signal });
+        clearTimeout(timer);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && Array.isArray(data[0])) {
+            let translated = cleanExtraIdTokens(data[0].map(item => item[0]).join(''));
+            if (cleanChunk === 'सब्जियां' && translated.toLowerCase().includes('background')) {
+              translated = targetLang === 'en' ? 'Vegetables' : 'सब्जियां';
+            }
+            if (translated) {
+              setSafeTrCache(cacheKey, translated);
+              return translated;
+            }
+          }
+        }
+      } catch (err) {}
+
+      try {
+        const fallbackUrl = `${APPS_SCRIPT_URL}?action=translate&lang=${encodeURIComponent(targetLang)}&text=${encodeURIComponent(cleanChunk)}`;
+        const fRes = await fetch(fallbackUrl);
+        if (fRes.ok) {
+          const fJson = await fRes.json();
+          const rawOut = fJson && (fJson.result || fJson.translated || fJson.text);
+          if (rawOut) {
+            const tr = cleanExtraIdTokens(String(rawOut));
+            if (tr) {
+              setSafeTrCache(cacheKey, tr);
+              return tr;
+            }
+          }
+        }
+      } catch (e) {}
+
+      return cleanChunk;
+    }
+
+    function splitTextForTranslation(text) {
+      if (text.length <= 220) return [text];
+      const parts = text.split(/(?<=[।.!?\n])\s*/).filter(Boolean);
+      const chunks = [];
+      let current = '';
+      for (const part of parts) {
+        if (part.length > 220) {
+          if (current) {
+            chunks.push(current);
+            current = '';
+          }
+          const subParts = part.split(/,\s*/);
+          for (const sp of subParts) {
+            if ((current + ', ' + sp).length > 220 && current) {
+              chunks.push(current);
+              current = sp;
+            } else {
+              current = current ? `${current}, ${sp}` : sp;
+            }
+          }
+        } else if ((current + ' ' + part).length > 220 && current) {
+          chunks.push(current);
+          current = part;
+        } else {
+          current = current ? `${current} ${part}` : part;
+        }
+      }
+      if (current) chunks.push(current);
+      return chunks.length > 0 ? chunks : [text];
     }
 
     async function translateSheetText(text, targetLang) {
@@ -2385,42 +2507,19 @@
       if (pendingTranslations[cacheKey]) return await pendingTranslations[cacheKey];
 
       pendingTranslations[cacheKey] = (async () => {
-        try {
-          const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 3500);
-          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(clean)}`;
-          const res = await fetch(url, { signal: controller.signal });
-          clearTimeout(timer);
-          if (res.ok) {
-            const data = await res.json();
-            if (Array.isArray(data) && Array.isArray(data[0])) {
-              let translated = cleanExtraIdTokens(data[0].map(item => item[0]).join(''));
-              if (clean === 'सब्जियां' && translated.toLowerCase().includes('background')) {
-                translated = targetLang === 'en' ? 'Vegetables' : 'सब्जियां';
-              }
-              if (translated) {
-                try { localStorage.setItem(cacheKey, translated); } catch (e) {}
-                return translated;
-              }
-            }
-          }
-        } catch (err) {}
-
-        try {
-          const fallbackUrl = `${APPS_SCRIPT_URL}?action=translate&lang=${encodeURIComponent(targetLang)}&text=${encodeURIComponent(clean)}`;
-          const fRes = await fetch(fallbackUrl);
-          if (fRes.ok) {
-            const fJson = await fRes.json();
-            if (fJson && fJson.result) {
-              const tr = cleanExtraIdTokens(String(fJson.result));
-              if (tr) {
-                try { localStorage.setItem(cacheKey, tr); } catch (e) {}
-                return tr;
-              }
-            }
-          }
-        } catch (e) {}
-
+        const pieces = splitTextForTranslation(clean);
+        if (pieces.length === 1) {
+          return await translateSingleChunk(pieces[0], targetLang);
+        }
+        const translatedPieces = [];
+        for (const piece of pieces) {
+          translatedPieces.push(await translateSingleChunk(piece, targetLang));
+        }
+        const joined = cleanExtraIdTokens(translatedPieces.join(' '));
+        if (joined) {
+          setSafeTrCache(cacheKey, joined);
+          return joined;
+        }
         return clean;
       })();
 
@@ -2451,7 +2550,7 @@
 
       const strList = Array.from(uniqueStrings);
       const trMap = {};
-      const concurrency = 8;
+      const concurrency = 6;
       let idx = 0;
 
       async function worker() {
@@ -2518,17 +2617,13 @@
 
       const tasks = Array.from(uniqueStrings).map(str => translateSheetText(str, currentLang));
       isTranslatingBackground = true;
-      const concurrency = 8;
+      const concurrency = 6;
       let idx = 0;
 
       async function worker() {
         while (idx < tasks.length) {
           const curIdx = idx++;
           await tasks[curIdx];
-          if (curIdx % 8 === 0) {
-            applyCachedStringsToObjectList(items, fields);
-            if (onUpdate) onUpdate();
-          }
         }
       }
 
@@ -2726,6 +2821,20 @@
       setText('lblForecast15', t.lblForecast15);
       setText('btnSaveProf', t.btnSaveProf);
       setText('btnDocSpray', t.btnDocSpray);
+
+      setText('c1', t.c1);
+      setText('c2', t.c2);
+      setText('c3', t.c3);
+      setText('c4', t.c4);
+      setText('s1', t.s1);
+      setText('s2', t.s2);
+      setText('s3', t.s3);
+      setText('s4', t.s4);
+      setText('s5', t.s5);
+      setText('s6', t.s6);
+      setText('s7', t.s7);
+      setText('s8', t.s8);
+      setText('s9', t.s9);
 
       setText('advFormTitle', t.advFormTitle);
       setText('advFormSub', t.advFormSub);
@@ -3365,6 +3474,14 @@
       }
     }
 
+    async function fetchFirstAvailableCSV(sheetNames) {
+      for (const name of sheetNames) {
+        const csv = await fetchRawCSV(name);
+        if (csv && csv.trim().length > 0) return csv;
+      }
+      return '';
+    }
+
     function isPlaceholderOrHeaderRow(c0, c1, c2, index) {
       const s0 = (c0 || '').trim().toLowerCase();
       const s1 = (c1 || '').trim().toLowerCase();
@@ -3595,11 +3712,11 @@
           fetchRawCSV('CategoryPhotos'),
           fetchRawCSV('Privacy'),
           fetchRawCSV('Notifications'),
-          fetchRawCSV('Schedule'),
-          fetchRawCSV('Anaaj'),
-          fetchRawCSV('Phal'),
-          fetchRawCSV('Phool'),
-          fetchRawCSV('Other'),
+          fetchFirstAvailableCSV(['Schedule', 'Sabzi']),
+          fetchFirstAvailableCSV(['Anaaj', 'Cereal crop schedule', 'Cereal crops']),
+          fetchFirstAvailableCSV(['Phal', 'Fruit crop schedule', 'Fruit crops']),
+          fetchFirstAvailableCSV(['Phool', 'Flower crop schedule', 'Flower crops']),
+          fetchFirstAvailableCSV(['Other', 'other schedule', 'Other crops']),
           fetchRawCSV('Protection'),
           fetchRawCSV('Cereal crop protection'),
           fetchRawCSV('Fruit crop protection'),
@@ -5130,6 +5247,8 @@
         localStorage.removeItem('crop_sabzi_offline_sheets_v3');
         localStorage.removeItem('crop_sabzi_offline_sheets_v4');
         localStorage.removeItem('crop_sabzi_offline_sheets_v5');
+        localStorage.removeItem('crop_sabzi_offline_sheets_v6');
+        localStorage.removeItem('crop_sabzi_offline_sheets_v7');
       } catch (e) {}
 
       if (localStorage.getItem('dark_mode') === 'true') {
