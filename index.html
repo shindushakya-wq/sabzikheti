@@ -772,7 +772,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v12.5
+      CROP & SABZI DOCTOR • v12.6
     </div>
   </div>
 
@@ -1426,7 +1426,7 @@
   </div>
 
   <script>
-    const APP_VERSION = '12.5';
+    const APP_VERSION = '12.6';
     const ALLOWED_LANGUAGES = ['hi', 'en', 'mr', 'gu', 'pa', 'bn', 'te', 'ta'];
 
     const firebaseConfig = {
@@ -1452,8 +1452,8 @@
 
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
-    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v8';
-    const TR_CACHE_PREFIX = 'sheet_tr_v8_';
+    const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v9';
+    const TR_CACHE_PREFIX = 'sheet_tr_v9_';
     const MENU_BUTTON_KEYS = ['gCrops', 'gProt', 'gSched', 'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ'];
     const CATEGORY_LIST_KEYS = ['सब्जियां', 'अनाज', 'फल', 'फूल', 'अन्य'];
 
@@ -1465,6 +1465,7 @@
     let scheduleRecords = {};
     let protectionRecords = {};
     let chemicalsRecords = [];
+    let chemicalsRecordsByLang = {};
     let alertsRecords = [];
     let tipsRecords = [];
     let aiReportsRecords = [];
@@ -2274,7 +2275,8 @@
       try {
         const payload = {
           savedAt: Date.now(),
-          sheetRecords, cropPhotoSheetMap, buttonPhotoMap, categoryPhotoMap, scheduleRecords, protectionRecords, chemicalsRecords,
+          sheetRecords, cropPhotoSheetMap, buttonPhotoMap, categoryPhotoMap, scheduleRecords, protectionRecords,
+          chemicalsRecords, chemicalsRecordsByLang,
           alertsRecords, tipsRecords, aiReportsRecords, dailyStories,
           videoRecords, atozGuideRecords, privacyData, notificationsList,
           allSchedRowsGlobal, allProtRowsGlobal
@@ -2296,7 +2298,10 @@
         categoryPhotoMap = data.categoryPhotoMap && typeof data.categoryPhotoMap === 'object' ? data.categoryPhotoMap : {};
         scheduleRecords = data.scheduleRecords && typeof data.scheduleRecords === 'object' ? data.scheduleRecords : {};
         protectionRecords = data.protectionRecords && typeof data.protectionRecords === 'object' ? data.protectionRecords : {};
-        chemicalsRecords = Array.isArray(data.chemicalsRecords) ? data.chemicalsRecords : [];
+        chemicalsRecordsByLang = data.chemicalsRecordsByLang && typeof data.chemicalsRecordsByLang === 'object' ? data.chemicalsRecordsByLang : {};
+        chemicalsRecords = Array.isArray(chemicalsRecordsByLang[currentLang]) && chemicalsRecordsByLang[currentLang].length > 0
+          ? chemicalsRecordsByLang[currentLang]
+          : (Array.isArray(data.chemicalsRecords) ? data.chemicalsRecords : []);
         alertsRecords = Array.isArray(data.alertsRecords) ? data.alertsRecords : [];
         tipsRecords = Array.isArray(data.tipsRecords) ? data.tipsRecords : [];
         aiReportsRecords = Array.isArray(data.aiReportsRecords) ? data.aiReportsRecords : [];
@@ -2647,7 +2652,6 @@
         rebuildProtectionMap(allProtRowsGlobal);
         onRefresh();
       });
-      runBackgroundTranslation(chemicalsRecords, ['name', 'type', 'tech', 'use', 'dose'], onRefresh);
       runBackgroundTranslation(alertsRecords, ['title', 'desc'], onRefresh);
       runBackgroundTranslation(tipsRecords, ['title', 'desc'], onRefresh);
       runBackgroundTranslation(aiReportsRecords, ['title', 'desc'], onRefresh);
@@ -2914,6 +2918,7 @@
       }
 
       fetchLiveWeather();
+      await loadChemicalsForCurrentLang();
       await translateAllLoadedSheetsToCurrentLang();
       refreshActiveScreenOnTranslation();
       hideLoader();
@@ -3628,6 +3633,81 @@
       return list;
     }
 
+    function parseChemicalsCSV(text) {
+      if (!text) return [];
+      return parseCSV(text)
+        .map((cols, idx) => ({
+          idx,
+          name: cleanExtraIdTokens(cols[0] || ''),
+          type: cleanExtraIdTokens(cols[1] || ''),
+          tech: cleanExtraIdTokens(cols[2] || ''),
+          use: cleanExtraIdTokens(cols[3] || ''),
+          dose: cleanExtraIdTokens(cols[4] || ''),
+          photo: (cols[5] || '').trim()
+        }))
+        .filter(r => {
+          if (!r.name) return false;
+          const nLow = r.name.toLowerCase();
+          if (r.idx === 0 && (
+            nLow.includes('दवा') || nLow.includes('name') || nLow.includes('medicine') ||
+            nLow.includes('औषध') || nLow.includes('દવા') || nLow.includes('ਦਵਾਈ') ||
+            nLow.includes('ওষুধ') || nLow.includes('మందు') || nLow.includes('மருந்து')
+          )) {
+            return false;
+          }
+          return true;
+        })
+        .map(({ idx, ...rest }) => rest);
+    }
+
+    async function loadChemicalsForCurrentLang() {
+      const lang = ALLOWED_LANGUAGES.includes(currentLang) ? currentLang : 'hi';
+
+      if (!navigator.onLine) {
+        if (Array.isArray(chemicalsRecordsByLang[lang]) && chemicalsRecordsByLang[lang].length > 0) {
+          chemicalsRecords = chemicalsRecordsByLang[lang];
+        } else if (Array.isArray(chemicalsRecordsByLang['hi']) && chemicalsRecordsByLang['hi'].length > 0) {
+          chemicalsRecords = chemicalsRecordsByLang['hi'];
+        }
+        return chemicalsRecords;
+      }
+
+      const candidateTabs = lang === 'hi'
+        ? ['Chemicals_hi', 'Chemicals']
+        : [`Chemicals_${lang}`, 'Chemicals_hi', 'Chemicals'];
+
+      let parsedList = [];
+      let loadedFromLangTab = false;
+
+      for (const tabName of candidateTabs) {
+        const csv = await fetchRawCSV(tabName);
+        if (csv && csv.trim().length > 0) {
+          const parsed = parseChemicalsCSV(csv);
+          if (parsed.length > 0) {
+            parsedList = parsed;
+            if (tabName === `Chemicals_${lang}`) {
+              loadedFromLangTab = true;
+            }
+            break;
+          }
+        }
+      }
+
+      if (parsedList.length > 0) {
+        if (loadedFromLangTab) {
+          chemicalsRecordsByLang[lang] = parsedList;
+        } else {
+          chemicalsRecordsByLang['hi'] = parsedList;
+        }
+        chemicalsRecords = parsedList;
+        saveOfflineSheetsSnapshot();
+      } else if (Array.isArray(chemicalsRecordsByLang[lang]) && chemicalsRecordsByLang[lang].length > 0) {
+        chemicalsRecords = chemicalsRecordsByLang[lang];
+      }
+
+      return chemicalsRecords;
+    }
+
     function rebuildScheduleMap(allSchedRows) {
       scheduleRecords = {};
       allSchedRows.forEach(s => {
@@ -3703,7 +3783,7 @@
           csvSheet1, csvCropPhotos, csvButtonPhotos, csvCategoryPhotos, csvPriv, csvNotif,
           csvSchedSabzi, csvSchedAnaaj, csvSchedPhal, csvSchedPhool, csvSchedOther,
           csvProtSabzi, csvProtAnaaj, csvProtPhal, csvProtPhool, csvProtOther,
-          csvChem, csvAtoZ, csvStories, csvVideos,
+          csvAtoZ, csvStories, csvVideos,
           csvAlerts1, csvAlerts2, csvTips1, csvTips2, csvDiagnosis
         ] = await Promise.all([
           fetchRawCSV('Sheet1'),
@@ -3722,7 +3802,6 @@
           fetchRawCSV('Fruit crop protection'),
           fetchRawCSV('Flower crop protection'),
           fetchRawCSV('other Protection'),
-          fetchRawCSV('Chemicals'),
           fetchRawCSV('AtoZ'),
           fetchRawCSV('Stories'),
           fetchRawCSV('Videos'),
@@ -3732,6 +3811,8 @@
           fetchRawCSV('Tips'),
           fetchRawCSV('Diagnosis')
         ]);
+
+        await loadChemicalsForCurrentLang();
 
         const parsedCropPhotos = parseCropPhotosCSV(csvCropPhotos);
         if (Object.keys(parsedCropPhotos).length > 0) {
@@ -3811,16 +3892,6 @@
           allProtRowsGlobal = protRows;
           rebuildProtectionMap(allProtRowsGlobal);
         }
-
-        const parsedChems = csvChem ? parseCSV(csvChem).map(cols => ({
-          name: cleanExtraIdTokens(cols[0] || ''),
-          type: cleanExtraIdTokens(cols[1] || ''),
-          tech: cleanExtraIdTokens(cols[2] || ''),
-          use: cleanExtraIdTokens(cols[3] || ''),
-          dose: cleanExtraIdTokens(cols[4] || ''),
-          photo: cols[5] || ''
-        })).filter(r => r.name && !r.name.includes('दवा') && !r.name.toLowerCase().includes('name')) : [];
-        if (parsedChems.length > 0) chemicalsRecords = parsedChems;
 
         if (csvAtoZ) {
           const nextAtoZ = {};
@@ -4658,29 +4729,60 @@
       renderVarietiesList(sheetRecords.filter(r => r.company === comp && r.crop === crop), `${comp} - ${crop}`);
     }
 
-    function showChemicalsScreen() {
+    async function showChemicalsScreen() {
       const t = getT();
       openScreen('screen-chemicals', t.chemTitle);
+      if (navigator.onLine) {
+        loadChemicalsForCurrentLang();
+      }
+    }
+
+    const CHEMICAL_CATEGORY_ALIASES = {
+      'कीटनाशक': ['कीटनाशक', 'insecticide', 'कीटकनाशक', 'કીટનાશક', 'ਕੀਟਨਾਸ਼ਕ', 'কীটনাশক', 'పురుగుమందు', 'பூச்சிக்கொல்லி'],
+      'फफूंदनाशक': ['फफूंदनाशक', 'फफूँदनाशक', 'fungicide', 'बुरशीनाशक', 'ફૂગનાશક', 'ਉੱਲੀਨਾਸ਼ਕ', 'ছত্রাকনাশক', 'శిలీంధ్రనాశక', 'பூஞ்சாணக்கொல்லி'],
+      'खरपतवारनाशक': ['खरपतवारनाशक', 'herbicide', 'weedicide', 'तणनाशक', 'નીંદણનાશક', 'ਨਦੀਨਨਾਸ਼ਕ', 'আগাছানাশক', 'కలుపుమందు', 'களைக்கொல்லி'],
+      'टॉनिक': ['टॉनिक', 'tonic', 'plant growth', 'pgr', 'टॉनिक', 'ટોનિક', 'ਟੌਨਿਕ', 'টনিক', 'టానిక్', 'டானிக்']
+    };
+
+    function matchesChemicalCategory(itemType, baseCat) {
+      const tLow = (itemType || '').toLowerCase();
+      if (!tLow) return false;
+      const aliases = CHEMICAL_CATEGORY_ALIASES[baseCat] || [baseCat];
+      return aliases.some(a => tLow.includes(a.toLowerCase()));
     }
 
     async function filterChemicalsByCategory(cat, isRefresh = false) {
       currentActiveChemicalCat = cat;
       const container = document.getElementById('chemicalListContainer');
       const titleEl = document.getElementById('chemicalListTitle');
-      const list = chemicalsRecords.filter(c => (c.type || '').toLowerCase().includes(cat.toLowerCase())).map(c => ({ ...c }));
 
-      let headerTitleText = cleanExtraIdTokens(cat);
-      if (currentLang !== 'hi' && navigator.onLine) {
-        await translateUIBundleToCurrentLang();
-        headerTitleText = cleanExtraIdTokens(await translateSheetText(cat, currentLang));
-        await translateObjectListNow(list, ['name', 'type', 'tech', 'use', 'dose'], currentLang);
-      } else if (currentLang !== 'hi') {
-        headerTitleText = cleanExtraIdTokens(getCachedTranslation(cat, currentLang) || cat);
-        applyCachedStringsToObjectList(list, ['name', 'type', 'tech', 'use', 'dose']);
+      await translateUIBundleToCurrentLang();
+      const t = getT();
+      const catLabelMap = {
+        'कीटनाशक': t.c1 || 'कीटनाशक',
+        'फफूंदनाशक': t.c2 || 'फफूंदनाशक',
+        'खरपतवारनाशक': t.c3 || 'खरपतवारनाशक',
+        'टॉनिक': t.c4 || 'टॉनिक'
+      };
+      const headerTitleText = cleanExtraIdTokens(catLabelMap[cat] || cat);
+
+      if (!isRefresh) {
+        openScreen('screen-chemical-list', headerTitleText);
+      } else if (document.getElementById('screen-chemical-list').classList.contains('active')) {
+        document.getElementById('headerTitle').innerText = headerTitleText;
+        const curTop = navHistory[navHistory.length - 1];
+        if (curTop && curTop.id === 'screen-chemical-list') curTop.title = headerTitleText;
       }
 
-      const t = getT();
       titleEl.innerText = headerTitleText;
+      container.innerHTML = `<div class="variety-card" style="text-align:center; color:#6b7280;">⏳</div>`;
+
+      await loadChemicalsForCurrentLang();
+
+      const list = chemicalsRecords
+        .filter(c => matchesChemicalCategory(c.type, cat))
+        .map(c => ({ ...c }));
+
       container.innerHTML = '';
       if (list.length === 0) {
         container.innerHTML = `<div class="variety-card" style="text-align:center;">-</div>`;
@@ -4701,14 +4803,6 @@
             </div>
           </div>`;
       });
-
-      if (!isRefresh) {
-        openScreen('screen-chemical-list', headerTitleText);
-      } else if (document.getElementById('screen-chemical-list').classList.contains('active')) {
-        document.getElementById('headerTitle').innerText = headerTitleText;
-        const curTop = navHistory[navHistory.length - 1];
-        if (curTop && curTop.id === 'screen-chemical-list') curTop.title = headerTitleText;
-      }
     }
 
     function showOtherServicesScreen() {
@@ -5242,13 +5336,9 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       try {
-        localStorage.removeItem('crop_sabzi_offline_sheets_v1');
-        localStorage.removeItem('crop_sabzi_offline_sheets_v2');
-        localStorage.removeItem('crop_sabzi_offline_sheets_v3');
-        localStorage.removeItem('crop_sabzi_offline_sheets_v4');
-        localStorage.removeItem('crop_sabzi_offline_sheets_v5');
-        localStorage.removeItem('crop_sabzi_offline_sheets_v6');
-        localStorage.removeItem('crop_sabzi_offline_sheets_v7');
+        for (let v = 1; v <= 8; v++) {
+          localStorage.removeItem(`crop_sabzi_offline_sheets_v${v}`);
+        }
       } catch (e) {}
 
       if (localStorage.getItem('dark_mode') === 'true') {
