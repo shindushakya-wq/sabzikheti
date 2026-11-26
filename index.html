@@ -12,7 +12,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
   <style>
-    /* स्प्लैश स्क्रीन एनीमेशन स्टाइल */
     #splashScreen {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -487,6 +486,9 @@
     .payment-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .payment-mode-btn { padding: 10px 8px; border-radius: 10px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1f2937; font-size: 12.5px; font-weight: 700; text-align: center; }
     .payment-mode-btn.active { background: #dcfce7; border-color: #16a34a; color: #14532d; }
+    .upi-payment-box { display: none; background: #eff6ff; border: 1px solid #93c5fd; border-radius: 10px; padding: 10px 12px; margin-top: 10px; font-size: 12.5px; color: #1e3a8a; }
+    .upi-payment-box.show { display: block; }
+    body.dark-mode .upi-payment-box { background: #172554; border-color: #1d4ed8; color: #dbeafe; }
 
     .disease-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 14px; border: 1px solid #fecaca; box-shadow: 0 2px 5px rgba(0,0,0,0.04); border-left: 5px solid #dc2626; }
     .disease-title { font-size: 16px; font-weight: bold; color: #991b1b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
@@ -622,9 +624,14 @@
           <button type="button" class="payment-mode-btn active" id="payModeCod" onclick="selectSeedPaymentMode('Cash on Delivery (नकद पेमेंट)')">
             💵 Cash on Delivery (नकद)
           </button>
-          <button type="button" class="payment-mode-btn" id="payModeOnline" onclick="selectSeedPaymentMode('ऑनलाइन पेमेंट (UPI / GPay / PhonePe)')">
+          <button type="button" class="payment-mode-btn" id="payModeOnline" onclick="selectSeedPaymentMode('ऑनलाइन पेमेंट (UPI)')">
             📲 ऑनलाइन पेमेंट
           </button>
+        </div>
+        <div class="upi-payment-box" id="upiPaymentBox">
+          <div><b>📲 UPI ID:</b> <span id="sellerUpiDisplay">kisan.seeds@upi</span></div>
+          <div style="margin-top:4px; font-size:11.5px;">पेमेंट करने के बाद नीचे UTR / ट्रांज़ैक्शन नंबर लिखें:</div>
+          <input type="text" id="orderUtrInput" class="form-control" style="margin-top:6px; padding:8px 10px; font-size:13px;" placeholder="UTR / Ref नंबर (वैकल्पिक)">
         </div>
       </div>
 
@@ -648,8 +655,8 @@
         <textarea id="orderFarmerAddress" class="form-control" rows="2" placeholder="पूरा डिलीवरी पता लिखें..."></textarea>
       </div>
 
-      <button type="button" class="btn-action btn-wa" style="background:#15803d;" onclick="confirmSeedOrderOnWhatsApp()">
-        📲 WhatsApp पर ऑर्डर भेजें
+      <button type="button" class="btn-action btn-wa" style="background:#15803d;" id="btnConfirmSeedOrder" onclick="confirmSeedOrderOnWhatsApp()">
+        📲 ऑर्डर दर्ज करें व WhatsApp भेजें
       </button>
     </div>
   </div>
@@ -676,7 +683,7 @@
     </div>
   </div>
 
-  <!-- लॉगिन स्क्रीन मोडल (Firebase Gmail Sign-In + Skip) -->
+  <!-- लॉगिन स्क्रीन मोडल -->
   <div class="login-modal-overlay" id="loginScreenModal">
     <div class="login-card">
       <div style="text-align:center; margin-bottom:16px;">
@@ -758,6 +765,7 @@
     <ul class="drawer-menu-list">
       <li class="drawer-item" onclick="openProfileScreen()"><span>👨‍🌾</span><span id="mProfile">मेरी प्रोफाइल / सेटिंग्स</span></li>
       <li class="drawer-item" onclick="closeDrawer(); openOnboardingLocationModal(true);"><span>📍</span><span id="mChangeLoc">स्थान / पिनकोड बदलें</span></li>
+      <li class="drawer-item" onclick="closeDrawer(); showTrackOrderScreen();" style="color:#15803d; font-weight:bold;"><span>📦</span><span id="mTrackOrder">बीज ऑर्डर ट्रैक करें</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showFavoritesScreen();" style="color:#d97706; font-weight:bold;"><span>⭐</span><span id="mFav">मेरी पसंदीदा किस्में (Bookmarks)</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showAllCategoriesScreen();"><span>🌱</span><span id="mCrops">सभी किस्में</span></li>
       <li class="drawer-item" onclick="closeDrawer(); showProtectionCategoriesScreen();"><span>🛡️</span><span id="mProtection">फसल सुरक्षा (रोग निदान)</span></li>
@@ -772,7 +780,7 @@
     </ul>
 
     <div style="margin-top:auto; padding:16px; text-align:center; font-size:11px; color:#9ca3af; border-top:1px solid #f3f4f6;">
-      CROP & SABZI DOCTOR • v12.6
+      CROP & SABZI DOCTOR • v12.7
     </div>
   </div>
 
@@ -1127,15 +1135,28 @@
   <!-- SCREEN: फसल की A से Z पूरी जानकारी -->
   <div id="screen-atoz-detail" class="screen"><div id="atozDetailContainer"></div></div>
 
-  <!-- SCREEN: किसान चर्चा -->
+  <!-- SCREEN: किसान चर्चा (KisanCharcha + Drive फोटो) -->
   <div id="screen-farmer-discussion" class="screen">
     <div class="variety-card" style="border-left:5px solid #0284c7; padding: 16px; margin-bottom: 14px;">
-      <div class="form-group"><input type="text" id="discussionAuthor" class="form-control" placeholder="Name"></div>
-      <div class="form-group"><textarea id="discussionText" class="form-control" rows="3" placeholder="..."></textarea></div>
+      <div class="form-group"><input type="text" id="discussionAuthor" class="form-control" placeholder="किसान का नाम"></div>
+      <div class="form-group"><textarea id="discussionText" class="form-control" rows="3" placeholder="अपना सवाल या अनुभव लिखें..."></textarea></div>
       <div class="form-group"><input type="file" id="discussionImageInput" accept="image/*" class="form-control" style="padding:6px;"></div>
-      <button class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" onclick="submitDiscussionPost()" id="btnDiscPost">📤 पोस्ट करें</button>
+      <button type="button" class="btn-action btn-wa" style="background:#0284c7; margin-top:8px;" id="btnDiscPost" onclick="submitDiscussionPost()">📤 पोस्ट करें</button>
     </div>
     <div id="discussionPostsContainer"></div>
+  </div>
+
+  <!-- SCREEN: बीज ऑर्डर ट्रैकिंग (SeedOrders) -->
+  <div id="screen-track-order" class="screen">
+    <div class="variety-card" style="border-left:5px solid #16a34a; padding:16px; margin-bottom:14px;">
+      <h3 style="color:#1b5e20; font-size:16px; margin-bottom:6px;">📦 अपना बीज ऑर्डर ट्रैक करें</h3>
+      <p style="font-size:12.5px; color:#4b5563; margin-bottom:12px;">10 अंकों का मोबाइल नंबर या Order ID (जैसे SEED...) डालकर ताज़ा स्थिति व Speed Post नंबर देखें:</p>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="trackOrderQueryInput" class="form-control" placeholder="मोबाइल नंबर या Order ID लिखें...">
+        <button type="button" class="btn-action btn-wa" style="background:#16a34a; width:auto; padding:10px 16px;" onclick="trackSeedOrderFromBackend()">🔍 खोजें</button>
+      </div>
+    </div>
+    <div id="trackOrderResultContainer"></div>
   </div>
 
   <!-- SCREEN: नियम व शर्तें एवं गोपनीयता नीति -->
@@ -1182,6 +1203,10 @@
 
   <!-- SCREEN: अन्य सेवाएं -->
   <div id="screen-other-services" class="screen">
+    <div class="list-item" onclick="showTrackOrderScreen()">
+      <div class="list-left"><span class="list-icon">📦</span><span class="list-title" style="color:#15803d; font-weight:bold;" id="sTrack">बीज ऑर्डर ट्रैक करें</span></div>
+      <span class="arrow">&gt;</span>
+    </div>
     <div class="list-item" onclick="showWeatherDetailScreen()">
       <div class="list-left"><span class="list-icon">🌦️</span><span class="list-title" id="s1">मौसम</span></div>
       <span class="arrow">&gt;</span>
@@ -1426,7 +1451,7 @@
   </div>
 
   <script>
-    const APP_VERSION = '12.6';
+    const APP_VERSION = '12.7';
     const ALLOWED_LANGUAGES = ['hi', 'en', 'mr', 'gu', 'pa', 'bn', 'te', 'ta'];
 
     const firebaseConfig = {
@@ -1450,7 +1475,7 @@
       }
     } catch (e) {}
 
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYn5k-p4KhYlFbGglz4bNXiYPCiOYgpTEHWNFoGVbNI9rZCDMdVKUotehLAKuhoqA/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAL07-rB5fhtMhiJsxVwLNeoULqGA8JZ60VHhhVYrzEYyyuzVvdUFI8JuFgNxVFcS63g/exec";
     const BASE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1F6RufBWk0pIaRutCf_Na7fqsc8y7bNgNyQjOkl3Gc7Y/gviz/tq?tqx=out:csv&sheet=';
     const OFFLINE_SHEETS_CACHE_KEY = 'crop_sabzi_offline_sheets_v9';
     const TR_CACHE_PREFIX = 'sheet_tr_v9_';
@@ -1812,6 +1837,8 @@
       selectedSeedPaymentMode = "Cash on Delivery (नकद पेमेंट)";
       document.getElementById('payModeCod').classList.add('active');
       document.getElementById('payModeOnline').classList.remove('active');
+      document.getElementById('upiPaymentBox').classList.remove('show');
+      document.getElementById('orderUtrInput').value = '';
 
       document.getElementById('orderQtyInput').value = '1';
       document.getElementById('orderFarmerName').value = localStorage.getItem('farmer_name') || '';
@@ -1829,8 +1856,10 @@
 
     function selectSeedPaymentMode(mode) {
       selectedSeedPaymentMode = mode;
-      document.getElementById('payModeCod').classList.toggle('active', mode.includes('Cash on Delivery'));
-      document.getElementById('payModeOnline').classList.toggle('active', mode.includes('ऑनलाइन'));
+      const isOnline = mode.includes('ऑनलाइन');
+      document.getElementById('payModeCod').classList.toggle('active', !isOnline);
+      document.getElementById('payModeOnline').classList.toggle('active', isOnline);
+      document.getElementById('upiPaymentBox').classList.toggle('show', isOnline);
     }
 
     function updateSeedOrderSummary() {
@@ -1856,13 +1885,14 @@
       `;
     }
 
-    function confirmSeedOrderOnWhatsApp() {
+    async function confirmSeedOrderOnWhatsApp() {
       if (!activeSeedOrderItem) return;
       const v = activeSeedOrderItem;
       const qty = Math.max(1, parseInt(document.getElementById('orderQtyInput').value || '1', 10));
       const farmerName = cleanExtraIdTokens(document.getElementById('orderFarmerName').value || '');
       const farmerPhone = cleanExtraIdTokens(document.getElementById('orderFarmerPhone').value || '');
       const farmerAddress = cleanExtraIdTokens(document.getElementById('orderFarmerAddress').value || '');
+      const utrNo = cleanExtraIdTokens((document.getElementById('orderUtrInput') && document.getElementById('orderUtrInput').value) || '');
 
       if (!farmerName) {
         showToast('कृपया अपना नाम लिखें');
@@ -1886,19 +1916,57 @@
       updateProfileUI();
 
       const pInfo = parsePriceAndDiscount(v.price, v.discount);
+      const totalAmount = pInfo.unitPrice > 0 ? (pInfo.finalUnitPrice * qty) : 0;
       const totalLine = pInfo.unitPrice > 0
-        ? `💵 *कुल राशि:* ₹${pInfo.finalUnitPrice * qty}`
+        ? `💵 *कुल राशि:* ₹${totalAmount}`
         : `💵 *रेट:* WhatsApp पर पूछें`;
+
+      const paymentDetailStr = utrNo
+        ? `${selectedSeedPaymentMode} | UTR: ${utrNo}`
+        : selectedSeedPaymentMode;
+
+      const itemsSummary = `${cleanExtraIdTokens(v.company || '-')} - ${cleanExtraIdTokens(v.crop || '-')} (${cleanExtraIdTokens(v.variety || '-')}) | ${cleanExtraIdTokens(v.packSize || 'मानक')} x ${qty} पैकेट | ${paymentDetailStr}`;
+
+      const btn = document.getElementById('btnConfirmSeedOrder');
+      const prevBtnText = btn ? btn.innerText : '';
+      if (btn) { btn.disabled = true; btn.innerText = '⏳ ऑर्डर सेव हो रहा है...'; }
+
+      let orderId = 'SEED' + Date.now().toString().slice(-7) + Math.floor(10 + Math.random() * 89);
+
+      if (navigator.onLine) {
+        try {
+          const res = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'placeSeedOrder',
+              farmerName,
+              phone: farmerPhone,
+              address: farmerAddress,
+              items: itemsSummary,
+              totalAmount,
+              paymentMode: paymentDetailStr,
+              lang: currentLang
+            })
+          });
+          const data = await res.json();
+          if (data && data.orderId) {
+            orderId = data.orderId;
+          }
+        } catch (err) {}
+      }
+
+      if (btn) { btn.disabled = false; btn.innerText = prevBtnText; }
 
       const lines = [
         '🛒 *CROP & SABZI DOCTOR - बीज ऑर्डर*',
+        `🆔 *Order ID:* ${orderId}`,
         `🏢 *कंपनी:* ${cleanExtraIdTokens(v.company || '-')}`,
         `🌱 *फसल व किस्म:* ${cleanExtraIdTokens(v.crop || '-')} - ${cleanExtraIdTokens(v.variety || '-')}`,
         `📦 *पैकेट साइज:* ${cleanExtraIdTokens(v.packSize || 'मानक पैकेट')}`,
         `🔢 *संख्या:* ${qty} पैकेट`,
-        `💰 *दर:* ${pInfo.displayFinalPriceText}${pInfo.hasDiscount ? ` (${pInfo.discountLabel}, मूल ${pInfo.displayPriceText})` : ''}`,
         totalLine,
-        `💳 *पेमेंट मोड:* ${selectedSeedPaymentMode}`,
+        `💳 *पेमेंट मोड:* ${paymentDetailStr}`,
         `👤 *किसान का नाम:* ${farmerName}`,
         `📞 *मोबाइल:* ${farmerPhone}`,
         `📍 *पूरा पता:* ${farmerAddress}`
@@ -1906,7 +1974,80 @@
 
       const waUrl = `https://wa.me/916378475002?text=${encodeURIComponent(lines.join('\n'))}`;
       closeSeedOrderModal();
+      showToast(`ऑर्डर दर्ज: ${orderId}`);
       window.open(waUrl, '_blank');
+    }
+
+    function showTrackOrderScreen() {
+      const savedPhone = localStorage.getItem('farmer_phone') || '';
+      const inputEl = document.getElementById('trackOrderQueryInput');
+      if (inputEl && !inputEl.value && savedPhone) {
+        inputEl.value = savedPhone;
+      }
+      openScreen('screen-track-order', 'बीज ऑर्डर ट्रैक करें');
+      if (inputEl && inputEl.value.trim()) {
+        trackSeedOrderFromBackend();
+      }
+    }
+
+    async function trackSeedOrderFromBackend() {
+      const query = cleanExtraIdTokens((document.getElementById('trackOrderQueryInput') && document.getElementById('trackOrderQueryInput').value) || '').trim();
+      const resultBox = document.getElementById('trackOrderResultContainer');
+      if (!resultBox) return;
+
+      if (!query) {
+        showToast('कृपया मोबाइल नंबर या Order ID लिखें');
+        return;
+      }
+
+      if (!navigator.onLine) {
+        resultBox.innerHTML = '<div class="variety-card" style="text-align:center; color:#6b7280;">📴 ऑफ़लाइन मोड: ऑर्डर ट्रैक करने के लिए इंटरनेट आवश्यक है।</div>';
+        return;
+      }
+
+      resultBox.innerHTML = '<div class="variety-card" style="text-align:center;">⏳ ऑर्डर की स्थिति जांची जा रही है...</div>';
+
+      const digitsOnly = query.replace(/\D/g, '');
+      const isPhone = digitsOnly.length >= 10;
+      const params = new URLSearchParams({ action: 'trackSeedOrder' });
+      if (isPhone) {
+        params.set('phone', digitsOnly.slice(-10));
+      } else {
+        params.set('orderId', query.toUpperCase());
+      }
+
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
+        const data = await res.json();
+        const orders = Array.isArray(data.orders) ? data.orders : [];
+
+        if (orders.length === 0) {
+          resultBox.innerHTML = '<div class="variety-card" style="text-align:center; color:#6b7280;">इस मोबाइल नंबर या Order ID से कोई ऑर्डर नहीं मिला।</div>';
+          return;
+        }
+
+        resultBox.innerHTML = orders.map(ord => `
+          <div class="variety-card" style="border-left:5px solid #16a34a;">
+            <div class="var-header-row">
+              <span class="badge-variety">🆔 ${cleanExtraIdTokens(ord.orderId || '-')}</span>
+              <span class="badge-company">📦 ${cleanExtraIdTokens(ord.status || 'ऑर्डर प्राप्त हुआ')}</span>
+            </div>
+            <div class="var-info-row">👤 <b>किसान:</b> <span>${cleanExtraIdTokens(ord.farmerName || '-')}</span></div>
+            <div class="var-info-row">📞 <b>मोबाइल:</b> <span>${cleanExtraIdTokens(ord.phone || '-')}</span></div>
+            <div class="var-info-row">🌱 <b>बीज विवरण:</b> <span>${cleanExtraIdTokens(ord.items || '-')}</span></div>
+            <div class="var-info-row">💰 <b>कुल राशि:</b> <span>₹${ord.totalAmount || 0}</span></div>
+            <div class="var-info-row">📍 <b>पता:</b> <span>${cleanExtraIdTokens(ord.address || '-')}</span></div>
+            <div class="var-info-row">📅 <b>समय:</b> <span>${cleanExtraIdTokens(ord.timestamp || '-')}</span></div>
+            ${ord.trackingNo ? `
+              <div class="price-highlight-box" style="margin-top:8px;">
+                <div>🚚 <b>Speed Post:</b> <span style="color:#1d4ed8; font-weight:bold;">${cleanExtraIdTokens(ord.trackingNo)}</span></div>
+                <a href="https://www.indiapost.gov.in/_layouts/15/dop.portal.tracking/trackconsignment.aspx" target="_blank" style="background:#2563eb; color:white; padding:6px 10px; border-radius:6px; font-size:12px; text-decoration:none; font-weight:bold;">🔍 डाक ट्रैक करें</a>
+              </div>` : ''}
+          </div>
+        `).join('');
+      } catch (err) {
+        resultBox.innerHTML = '<div class="variety-card" style="text-align:center; color:#dc2626;">ऑर्डर जानकारी लाने में समस्या आई, कृपया दोबारा प्रयास करें।</div>';
+      }
     }
 
     function normalizeMenuKey(rawKey) {
@@ -2061,7 +2202,7 @@
         favoritesTitle: "पसंदीदा किस्में", atozTitle: "खेती गाइड (A-Z)", discTitle: "किसान चर्चा", privacyTitle: "गोपनीयता नीति",
         reportsTitle: "AI जांच रिपोर्ट", schemesTitle: "सरकारी योजनाएं", expertTitle: "एक्सपर्ट सुझाव", pestTitle: "कीट अलर्ट",
         calcTitle: "बुवाई कैलकुलेटर", drawerHead: "📋 मेन्यू", completeProfileText: "प्रोफाइल पूरी करें >",
-        mProfile: "मेरी प्रोफाइल", mChangeLoc: "स्थान / पिनकोड बदलें", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
+        mProfile: "मेरी प्रोफाइल", mChangeLoc: "स्थान / पिनकोड बदलें", mTrackOrder: "बीज ऑर्डर ट्रैक करें", mFav: "पसंदीदा किस्में", mCrops: "सभी किस्में", mSchedule: "स्प्रे शेड्यूल",
         mProtection: "फसल सुरक्षा", mChems: "दवाइयाँ Chemicals", mServices: "Other सेवाएं", mPrivacy: "गोपनीयता नीति",
         mRate: "Play Store रेट करें", mShare: "ऐप शेयर करें", mHelp: "सलाहकार से पूछें", mLogout: "लॉगआउट",
         solHead: "⚡ तुरंत समाधान", camBtn: "कैमरा", galBtn: "गैलरी", diagBtn: "🔍 रोग पहचानें",
@@ -2079,7 +2220,7 @@
         lblWind: "💨 हवा की गति", lblHum: "💧 हवा में नमी", lblForecast15: "📅 अगले 15 दिनों का मौसम पूर्वानुमान",
         btnSaveProf: "💾 सहेजें", btnDocSpray: "💬 WhatsApp पर सलाह लें",
         c1: "कीटनाशक", c2: "फफूंदनाशक", c3: "खरपतवारनाशक", c4: "टॉनिक",
-        s1: "मौसम", s2: "मंडी भाव", s3: "बुवाई कैलकुलेटर", s4: "एक्सपर्ट सुझाव", s5: "कीट अलर्ट",
+        sTrack: "बीज ऑर्डर ट्रैक करें", s1: "मौसम", s2: "मंडी भाव", s3: "बुवाई कैलकुलेटर", s4: "एक्सपर्ट सुझाव", s5: "कीट अलर्ट",
         s6: "सरकारी योजनाएं", s7: "AI जांच रिपोर्ट", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 ऑफ़लाइन मोड: सेव्ड भाषा और डेटा चल रहा है",
         voiceNotSupported: "इस ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है",
@@ -2114,7 +2255,7 @@
         favoritesTitle: "Favorites", atozTitle: "Farming Guide (A-Z)", discTitle: "Discussion", privacyTitle: "Privacy Policy",
         reportsTitle: "AI Reports", schemesTitle: "Gov Schemes", expertTitle: "Expert Tips", pestTitle: "Pest Alerts",
         calcTitle: "Sowing Calculator", drawerHead: "📋 Menu", completeProfileText: "Complete profile >",
-        mProfile: "My Profile", mChangeLoc: "Change Location / Pin", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
+        mProfile: "My Profile", mChangeLoc: "Change Location / Pin", mTrackOrder: "Track Seed Order", mFav: "Favorites", mCrops: "All Varieties", mSchedule: "Spray Schedule",
         mProtection: "Crop Protection", mChems: "Chemicals", mServices: "Other Services", mPrivacy: "Privacy Policy",
         mRate: "Rate Play Store", mShare: "Share App", mHelp: "Ask Advisor", mLogout: "Logout",
         solHead: "⚡ Instant Solution", camBtn: "Camera", galBtn: "Gallery", diagBtn: "🔍 Diagnose",
@@ -2132,7 +2273,7 @@
         lblWind: "💨 Wind Speed", lblHum: "💧 Humidity", lblForecast15: "📅 Next 15 Days Weather Forecast",
         btnSaveProf: "💾 Save Profile", btnDocSpray: "💬 Ask on WhatsApp",
         c1: "Insecticides", c2: "Fungicides", c3: "Herbicides", c4: "Tonics",
-        s1: "Weather", s2: "Mandi Prices", s3: "Sowing Calculator", s4: "Expert Tips", s5: "Pest Alerts",
+        sTrack: "Track Seed Order", s1: "Weather", s2: "Mandi Prices", s3: "Sowing Calculator", s4: "Expert Tips", s5: "Pest Alerts",
         s6: "Gov Schemes", s7: "AI Reports", s8: "Google Play Store", s9: "Share",
         offlineBanner: "📴 Offline Mode: Showing saved language and data",
         voiceNotSupported: "Voice input is not supported on this browser",
@@ -2152,114 +2293,10 @@
         lblMaturity: "Maturity", lblDisease: "Disease", lblBuySeed: "Buy Seeds", lblSaved: "Saved",
         lblRemove: "Remove", lblNoFav: "No favorite varieties saved", lblSymptoms: "Symptoms", lblCure: "Cure",
         lblTime: "Time", lblMed: "Medicine", lblPurpose: "Purpose", lblTech: "Technical", lblUse: "Usage", lblDose: "Dosage"
-      },
-      mr: {
-        welcomeMsg: "राम-राम, शेतकरी बंधू!", txtChangeProf: "✏️ प्रोफाइल बदला",
-        txtAiTitle: "🎙️ AI कृषी डॉक्टरशी बोला", aiSubText: "टॅप करा आणि पिकाचे वा रोगाचे नाव बोला...",
-        txtSprayAdvice: "फवारणीसाठी सकाळ किंवा संध्याकाळ निवडा", searchPlaceholder: "🔍 पीक किंवा वाण शोधा...",
-        gCrops: "सर्व जाती", gProt: "पीक सुरक्षा", gSched: "फवारणी वेळापत्रक", gAtoz: "शेती मार्गदर्शक (A-Z)",
-        gDisc: "शेतकरी चर्चा", gAdv: "सल्लागार", gComp: "All कंपनी बियाणे", gChem: "औषधे Chemicals", gServ: "Other सेवा",
-        fabText: "तातडीने उपाय", navHome: "होम", navCrops: "जाती", navSched: "वेळापत्रक", navProt: "सुरक्षा", navHelp: "सल्लागार",
-        drawerHead: "📋 मेनू", mProfile: "प्रोफाइल", mFav: "आवडत्या जाती", mLogout: "लॉगआउट",
-        c1: "कीटकनाशके", c2: "बुरशीनाशके", c3: "तणनाशके", c4: "टॉनिक",
-        s1: "हवामान", s2: "बाजार भाव", s3: "पेरणी कॅल्क्युलेटर", s4: "तज्ज्ञ सल्ला", s5: "कीड इशारा",
-        s6: "शासकीय योजना", s7: "AI तपासणी अहवाल", s8: "Google Play Store", s9: "Share",
-        offlineBanner: "📴 ऑफलाइन मोड: जतन केलेली भाषा व डेटा सुरू आहे"
-      },
-      gu: {
-        welcomeMsg: "રામ-રામ, ખેડૂત ભાઈ!", txtChangeProf: "✏️ પ્રોફાઇલ બદલો",
-        txtAiTitle: "🎙️ AI કૃષિ ડૉક્ટર સાથે વાત કરો", aiSubText: "ટેપ કરો અને પાક અથવા રોગનું નામ બોલો...",
-        txtSprayAdvice: "છંટકાવ માટે સવાર અથવા સાંજનો સમય પસંદ કરો", searchPlaceholder: "🔍 પાક અથવા જાત શોધો...",
-        gCrops: "બધી જાતો", gProt: "પાક રક્ષણ", gSched: "સ્પ્રે શેડ્યૂલ", gAtoz: "ખેતી માર્ગદર્શિકા (A-Z)",
-        gDisc: "ખેડૂત ચર્ચા", gAdv: "સલાહકાર", gComp: "All કંપની બિયારણ", gChem: "દવાઓ Chemicals", gServ: "Other સેવાઓ",
-        fabText: "ત્વરિત ઉકેલ", navHome: "હોમ", navCrops: "જાતો", navSched: "શેડ્યૂલ", navProt: "રક્ષણ", navHelp: "સલાહકાર",
-        drawerHead: "📋 મેનુ", mProfile: "મારી પ્રોફાઇલ", mFav: "મનપસંદ જાતો", mLogout: "લૉગઆઉટ",
-        c1: "કીટનાશક", c2: "ફૂગનાશક", c3: "નીંદણનાશક", c4: "ટોનિક",
-        s1: "હવામાન", s2: "માર્કેટ યાર્ડ ભાવ", s3: "વાવણી કેલ્ક્યુલેટર", s4: "નિષ્ણાત સલાહ", s5: "જીવાત ચેતવણી",
-        s6: "સરકારી યોજનાઓ", s7: "AI તપાસ રિપોર્ટ", s8: "Google Play Store", s9: "Share",
-        offlineBanner: "📴 ઑફલાઇન મોડ: સાચવેલી ભાષા અને ડેટા ચાલી રહ્યો છે"
-      },
-      pa: {
-        welcomeMsg: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ, ਕਿਸਾਨ ਵੀਰ!", txtChangeProf: "✏️ ਪ੍ਰੋਫਾਈਲ ਬਦਲੋ",
-        txtAiTitle: "🎙️ AI ਖੇਤੀ ਡਾਕਟਰ ਨਾਲ ਗੱਲ ਕਰੋ", aiSubText: "ਟੈਪ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਜਾਂ ਬਿਮਾਰੀ ਦਾ ਨਾਮ ਬੋਲੋ...",
-        txtSprayAdvice: "ਸਪਰੇਅ ਲਈ ਸਵੇਰ ਜਾਂ ਸ਼ਾਮ ਦਾ ਸਮਾਂ ਚੁਣੋ", searchPlaceholder: "🔍 ਫ਼ਸਲ ਜਾਂ ਕਿਸਮ ਲੱਭੋ...",
-        gCrops: "ਸਾਰੀਆਂ ਕਿਸਮਾਂ", gProt: "ਫ਼ਸਲ ਸੁਰੱਖਿਆ", gSched: "ਸਪਰੇਅ ਸ਼ਡਿਊਲ", gAtoz: "ਖੇਤੀ ਗਾਈਡ (A-Z)",
-        gDisc: "ਕਿਸਾਨ ਚਰਚਾ", gAdv: "ਸਲਾਹਕਾਰ", gComp: "All ਕੰਪਨੀ ਬੀਜ", gChem: "ਦਵਾਈਆਂ Chemicals", gServ: "Other ਸੇਵਾਵਾਂ",
-        fabText: "ਤੁਰੰਤ ਹੱਲ", navHome: "ਹੋਮ", navCrops: "ਕਿਸਮਾਂ", navSched: "ਸ਼ਡਿਊਲ", navProt: "ਸੁਰੱਖਿਆ", navHelp: "ਸਲਾਹਕਾਰ",
-        drawerHead: "📋 ਮੇਨੂ", mProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ", mFav: "ਪਸੰਦੀਦਾ ਕਿਸਮਾਂ", mLogout: "ਲੌਗਆਊਟ",
-        c1: "ਕੀਟਨਾਸ਼ਕ", c2: "ਉੱਲੀਨਾਸ਼ਕ", c3: "ਨਦੀਨਨਾਸ਼ਕ", c4: "ਟੌਨਿਕ",
-        s1: "ਮੌਸਮ", s2: "ਮੰਡੀ ਭਾਅ", s3: "ਬਿਜਾਈ ਕੈਲਕੁਲੇਟਰ", s4: "ਮਾਹਰ ਸਲਾਹ", s5: "ਕੀੜਾ ਚੇਤਾਵਨੀ",
-        s6: "ਸਰਕਾਰੀ ਸਕੀਮਾਂ", s7: "AI ਜਾਂਚ ਰਿਪੋਰਟ", s8: "Google Play Store", s9: "Share",
-        offlineBanner: "📴 ਔਫਲਾਈਨ ਮੋਡ: ਸੇਵ ਕੀਤੀ ਭਾਸ਼ਾ ਅਤੇ ਡਾਟਾ ਚੱਲ ਰਿਹਾ ਹੈ"
-      },
-      bn: {
-        welcomeMsg: "নমস্কার, কৃষক ভাই!", txtChangeProf: "✏️ প্রোফাইল বদলান",
-        txtAiTitle: "🎙️ AI কৃষি ডাক্তারের সাথে কথা বলুন", aiSubText: "ট্যাপ করুন এবং ফসল বা রোগের নাম বলুন...",
-        txtSprayAdvice: "স্প্রের জন্য সকাল বা সন্ধ্যা বেছে নিন", searchPlaceholder: "🔍 ফসল বা জাত খুঁজুন...",
-        gCrops: "সব জাত", gProt: "ফসল সুরক্ষা", gSched: "স্প্রে সময়সূচী", gAtoz: "চাষের গাইড (A-Z)",
-        gDisc: "কৃষক আলোচনা", gAdv: "পরামর্শদাতা", gComp: "All কোম্পানি বীজ", gChem: "ওষুধ Chemicals", gServ: "Other পরিষেবা",
-        fabText: "তাত্ক্ষণিক সমাধান", navHome: "হোম", navCrops: "জাত", navSched: "সময়সূচী", navProt: "সুরক্ষা", navHelp: "পরামর্শদাতা",
-        drawerHead: "📋 মেনু", mProfile: "আমার প্রোফাইল", mFav: "পছন্দের জাত", mLogout: "লগআউট",
-        c1: "কীটনাশক", c2: "ছত্রাকনাশক", c3: "আগাছানাশক", c4: "টনিক",
-        s1: "আবহাওয়া", s2: "বাজার দর", s3: "বপন ক্যালকুলেটর", s4: "বিশেষজ্ঞ পরামর্শ", s5: "পোকা সতর্কতা",
-        s6: "সরকারি প্রকল্প", s7: "AI রিপোর্ট", s8: "Google Play Store", s9: "Share",
-        offlineBanner: "📴 অফলাইন মোড: সংরক্ষিত ভাষা ও ডেটা চলছে"
-      },
-      te: {
-        welcomeMsg: "నమస్కారం, రైతు సోదరా!", txtChangeProf: "✏️ ప్రొఫైల్ మార్చండి",
-        txtAiTitle: "🎙️ AI వ్యవసాయ డాక్టర్‌తో మాట్లాడండి", aiSubText: "నొక్కి పంట లేదా వ్యాధి పేరు చెప్పండి...",
-        txtSprayAdvice: "పిచికారీకి ఉదయం లేదా సాయంత్రం ఎంచుకోండి", searchPlaceholder: "🔍 పంట లేదా రకం వెతకండి...",
-        gCrops: "అన్ని రకాలు", gProt: "పంట రక్షణ", gSched: "స్ప్రే షెడ్యూల్", gAtoz: "సాగు గైడ్ (A-Z)",
-        gDisc: "రైతు చర్చ", gAdv: "సలహాదారు", gComp: "All కంపెనీ విత్తనాలు", gChem: "మందులు Chemicals", gServ: "Other సేవలు",
-        fabText: "తక్షణ పరిష్కారం", navHome: "హోమ్", navCrops: "రకాలు", navSched: "షెడ్యూల్", navProt: "రక్షణ", navHelp: "సలహాదారు",
-        drawerHead: "📋 మెనూ", mProfile: "నా ప్రొఫైల్", mFav: "ఇష్టమైన రకాలు", mLogout: "లాగ్అవుట్",
-        c1: "పురుగుమందులు", c2: "శిలీంధ్రనాశకాలు", c3: "కలుపుమందులు", c4: "టానిక్",
-        s1: "వాతావరణం", s2: "మార్కెట్ ధరలు", s3: "విత్తన కాలిక్యులేటర్", s4: "నిపుణుల సలహా", s5: "కీటక హెచ్చరిక",
-        s6: "ప్రభుత్వ పథకాలు", s7: "AI నివేదిక", s8: "Google Play Store", s9: "Share",
-        offlineBanner: "📴 ఆఫ్‌లైన్ మోడ్: సేవ్ చేసిన భాష మరియు డేటా నడుస్తోంది"
-      },
-      ta: {
-        welcomeMsg: "வணக்கம், விவசாய சகோதரா!", txtChangeProf: "✏️ சுயவிவரத்தை மாற்றவும்",
-        txtAiTitle: "🎙️ AI வேளாண் மருத்துவரிடம் பேசுங்கள்", aiSubText: "தட்டி பயிர் அல்லது நோய் பெயரைச் சொல்லுங்கள்...",
-        txtSprayAdvice: "தெளிப்பதற்கு காலை அல்லது மாலை நேரத்தைத் தேர்ந்தெடுக்கவும்", searchPlaceholder: "🔍 பயிர் அல்லது ரகத்தைத் தேடுங்கள்...",
-        gCrops: "அனைத்து ரகங்கள்", gProt: "பயிர் பாதுகாப்பு", gSched: "தெளிப்பு அட்டவணை", gAtoz: "சாகுபடி வழிகாட்டி (A-Z)",
-        gDisc: "விவசாயிகள் கலந்துரையாடல்", gAdv: "ஆலோசகர்", gComp: "All கம்பெனி விதைகள்", gChem: "மருந்துகள் Chemicals", gServ: "Other சேவைகள்",
-        fabText: "உடனடி தீர்வு", navHome: "முகப்பு", navCrops: "ரகங்கள்", navSched: "அட்டவணை", navProt: "பாதுகாப்பு", navHelp: "ஆலோசகர்",
-        drawerHead: "📋 மெனு", mProfile: "என் சுயவிவரம்", mFav: "விருப்பமான ரகங்கள்", mLogout: "வெளியேறு",
-        c1: "பூச்சிக்கொல்லிகள்", c2: "பூஞ்சாணக்கொல்லிகள்", c3: "களைக்கொல்லிகள்", c4: "டானிக்",
-        s1: "வானிலை", s2: "சந்தை விலை", s3: "விதைப்பு கணிப்பான்", s4: "நிபுணர் ஆலோசனை", s5: "பூச்சி எச்சரிக்கை",
-        s6: "அரசு திட்டங்கள்", s7: "AI அறிக்கை", s8: "Google Play Store", s9: "Share",
-        offlineBanner: "📴 ஆஃப்லைன் பயன்முறை: சேமிக்கப்பட்ட மொழி மற்றும் தரவு இயங்குகிறது"
       }
     };
 
-    const TRANSLATABLE_UI_KEYS = [
-      'headerTitle', 'welcomeMsg', 'txtChangeProf', 'txtAiTitle', 'aiSubText',
-      'txtSprayAdvice', 'searchPlaceholder', 'gCrops', 'gProt', 'gSched',
-      'gAtoz', 'gDisc', 'gAdv', 'gComp', 'gChem', 'gServ', 'txtPlaySub',
-      'txtRateBtn', 'txtVideoHead', 'txtSeeAll', 'txtSocialHead', 'fabText',
-      'navHome', 'navCrops', 'navSched', 'navProt', 'navHelp', 'drawerHead',
-      'completeProfileText', 'mProfile', 'mChangeLoc', 'mFav', 'mCrops', 'mSchedule',
-      'mProtection', 'mChems', 'mServices', 'mPrivacy', 'mRate', 'mShare',
-      'mHelp', 'mLogout', 'solHead', 'camBtn', 'galBtn', 'diagBtn',
-      'diagRepHead', 'wapBtn', 'loadingText',
-      'txtLoginSub', 'txtGmailBtn', 'txtLoginPolicyNote', 'txtSkipLogin',
-      'txtNotifHead', 'catHeadTitle', 'catSubTitle', 'catItemVeg', 'catItemFruit',
-      'catItemFlower', 'catItemGrain', 'catItemOther', 'protCatHead', 'schedCatHead',
-      'chatHeadTitle', 'chatSubHead', 'chatSendBtn', 'lblCalcCrop', 'lblCalcDate',
-      'btnCalcRun', 'lblWind', 'lblHum', 'lblForecast15', 'btnSaveProf', 'btnDocSpray',
-      'c1', 'c2', 'c3', 'c4', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9',
-      'offlineBanner', 'voiceNotSupported',
-      'advFormTitle', 'advFormSub', 'lblAdvName', 'lblAdvLocation', 'lblAdvCrop',
-      'lblAdvDisease', 'lblAdvPhoto', 'txtAdvCam', 'txtAdvGal', 'btnAdvSubmitWa',
-      'txtLocHead', 'txtLocSub', 'btnAutoGpsLoc', 'lblLocState', 'lblLocDistrict',
-      'lblLocCity', 'lblLocPin', 'btnSaveLocModal',
-      'lblRate', 'lblAskWhatsApp', 'lblCompany', 'lblCrop', 'lblSegment', 'lblPackSize',
-      'lblFeatures', 'lblWeight', 'lblMaturity', 'lblDisease', 'lblBuySeed', 'lblSaved',
-      'lblRemove', 'lblNoFav', 'lblSymptoms', 'lblCure', 'lblTime', 'lblMed',
-      'lblPurpose', 'lblTech', 'lblUse', 'lblDose'
-    ];
-
+    const TRANSLATABLE_UI_KEYS = Object.keys(OFFLINE_LANG_PACKS.hi);
     let activeTranslatedBundle = { ...OFFLINE_LANG_PACKS.hi };
 
     function updateOfflineBanner() {
@@ -2776,6 +2813,7 @@
       setText('txtCompleteProfile', t.completeProfileText);
       setText('mProfile', t.mProfile);
       setText('mChangeLoc', t.mChangeLoc);
+      setText('mTrackOrder', t.mTrackOrder);
       setText('mFav', t.mFav);
       setText('mCrops', t.mCrops);
       setText('mSchedule', t.mSchedule);
@@ -2830,6 +2868,7 @@
       setText('c2', t.c2);
       setText('c3', t.c3);
       setText('c4', t.c4);
+      setText('sTrack', t.sTrack);
       setText('s1', t.s1);
       setText('s2', t.s2);
       setText('s3', t.s3);
@@ -3608,10 +3647,19 @@
       const list = [];
       parseCSV(text).forEach((cols, idx) => {
         const rawCrop = (cols[0] || '').trim();
+        const rawDisease = (cols[1] || '').trim();
         if (!rawCrop) return;
         const lowCrop = rawCrop.toLowerCase();
-        if (idx === 0 && (lowCrop === 'crop' || lowCrop.includes('फसल'))) return;
-        if (lowCrop === 'crop') return;
+        const lowDisease = rawDisease.toLowerCase();
+        if (
+          lowCrop === 'crop' ||
+          lowCrop === 'a' ||
+          lowCrop.includes('फसल') ||
+          lowDisease.includes('b (disease') ||
+          lowDisease === 'disease'
+        ) {
+          return;
+        }
 
         let imgUrl = '';
         for (let i = 0; i < cols.length; i++) {
@@ -3623,7 +3671,7 @@
 
         list.push({
           crop: stdCrop,
-          name: cleanExtraIdTokens(cols[1] || ''),
+          name: cleanExtraIdTokens(rawDisease),
           symptoms: cleanExtraIdTokens(cols[2] || ''),
           cure: cleanExtraIdTokens(cols[3] || ''),
           photo: imgUrl,
@@ -4741,7 +4789,7 @@
       'कीटनाशक': ['कीटनाशक', 'insecticide', 'कीटकनाशक', 'કીટનાશક', 'ਕੀਟਨਾਸ਼ਕ', 'কীটনাশক', 'పురుగుమందు', 'பூச்சிக்கொல்லி'],
       'फफूंदनाशक': ['फफूंदनाशक', 'फफूँदनाशक', 'fungicide', 'बुरशीनाशक', 'ફૂગનાશક', 'ਉੱਲੀਨਾਸ਼ਕ', 'ছত্রাকনাশক', 'శిలీంధ్రనాశక', 'பூஞ்சாணக்கொல்லி'],
       'खरपतवारनाशक': ['खरपतवारनाशक', 'herbicide', 'weedicide', 'तणनाशक', 'નીંદણનાશક', 'ਨਦੀਨਨਾਸ਼ਕ', 'আগাছানাশক', 'కలుపుమందు', 'களைக்கொல்லி'],
-      'टॉनिक': ['टॉनिक', 'tonic', 'plant growth', 'pgr', 'टॉनिक', 'ટોનિક', 'ਟੌਨਿਕ', 'টনিক', 'టానిక్', 'டானிக்']
+      'टॉनिक': ['टॉनिक', 'tonic', 'plant growth', 'pgr', 'टॉनिक', 'ટોનિક', 'ਟੌনਿਕ', 'টনিক', 'టానిక్', 'டானிக்']
     };
 
     function matchesChemicalCategory(itemType, baseCat) {
@@ -5183,102 +5231,222 @@
       }
     }
 
+    /* किसान चर्चा (KisanCharcha + Drive फोटो + कमेंट) */
     function openFarmerDiscussionScreen() {
-      document.getElementById('discussionAuthor').value = localStorage.getItem('farmer_name') || '';
-      loadDiscussionPosts();
+      const authorEl = document.getElementById('discussionAuthor');
+      if (authorEl && !authorEl.value) {
+        authorEl.value = localStorage.getItem('farmer_name') || '';
+      }
       const t = getT();
       openScreen('screen-farmer-discussion', t.discTitle);
-    }
-
-    function submitDiscussionPost() {
-      const author = cleanExtraIdTokens(document.getElementById('discussionAuthor').value || '');
-      const text = cleanExtraIdTokens(document.getElementById('discussionText').value || '');
-      const fileInput = document.getElementById('discussionImageInput');
-      if (!author || !text) {
-        showToast('कृपया नाम और संदेश लिखें');
-        return;
-      }
-
-      if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.src = e.target.result;
-          img.onload = function () {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const maxWidth = 600;
-            const scale = Math.min(1, maxWidth / img.width);
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            savePost(author, text, canvas.toDataURL('image/jpeg', 0.7));
-          };
-        };
-        reader.readAsDataURL(file);
-      } else {
-        savePost(author, text, "");
-      }
-    }
-
-    function savePost(author, text, imgUrl) {
-      const posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
-      posts.unshift({ id: Date.now(), author, text, image: imgUrl, comments: [], date: 'आज' });
-      localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
-      document.getElementById('discussionText').value = '';
-      document.getElementById('discussionImageInput').value = '';
       loadDiscussionPosts();
-      showToast('चर्चा पोस्ट प्रकाशित हुई');
     }
 
-    function addCommentToPost(postId) {
-      const commentInput = document.getElementById(`commentInput_${postId}`);
-      const commentText = cleanExtraIdTokens(commentInput.value || '');
-      const authorName = cleanExtraIdTokens(localStorage.getItem('farmer_name') || 'किसान साथी');
-      if (!commentText) return;
-
-      const posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
-      const post = posts.find(p => p.id === postId);
-      if (post) {
-        if (!post.comments) post.comments = [];
-        post.comments.push({ author: authorName, text: commentText, time: 'अभी' });
-        localStorage.setItem('farmer_discussions_list', JSON.stringify(posts));
-        commentInput.value = '';
-        loadDiscussionPosts();
-      }
-    }
-
-    function loadDiscussionPosts() {
+    function renderDiscussionPostsList(posts) {
       const container = document.getElementById('discussionPostsContainer');
-      let posts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
-      if (posts.length === 0) {
-        posts = [{ id: 1, author: "रामेश्वर लाल", text: "🍅 टमाटर की नर्सरी में झुलसा रोग से बचाव के लिए क्या करें?", image: "", comments: [], date: "आज" }];
-      }
+      if (!container) return;
+
+      const list = Array.isArray(posts) && posts.length > 0
+        ? posts
+        : [{
+            postId: 'default_1',
+            farmerName: 'रामेश्वर लाल',
+            question: '🍅 टमाटर की नर्सरी में झुलसा रोग से बचाव के लिए क्या करें?',
+            photoUrl: '',
+            replies: [],
+            timestamp: 'आज'
+          }];
+
       container.innerHTML = '';
-      posts.forEach(p => {
-        const imgHtml = p.image ? `<div style="margin-top:8px; text-align:center;"><img src="${p.image}" style="max-height:200px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #e5e7eb; cursor:pointer;" onclick="openImageModal('${p.image}')"></div>` : '';
+      list.forEach(p => {
+        const postId = String(p.postId || p.id || '');
+        const author = cleanExtraIdTokens(p.farmerName || p.author || 'किसान भाई');
+        const question = cleanExtraIdTokens(p.question || p.text || '');
+        const photoUrl = (p.photoUrl || p.image || '').trim();
+        const timestamp = cleanExtraIdTokens(p.timestamp || p.date || '');
+
+        const imgHtml = photoUrl
+          ? `<div style="margin-top:8px; text-align:center;"><img src="${photoUrl}" style="max-height:220px; width:100%; object-fit:contain; border-radius:8px; border:1px solid #e5e7eb; cursor:pointer;" onclick="openImageModal('${photoUrl.replace(/'/g, "\\'")}')" onerror="this.parentElement.style.display='none';"></div>`
+          : '';
+
+        const replies = Array.isArray(p.replies) ? p.replies : (Array.isArray(p.comments) ? p.comments : []);
         let commentsHtml = '<div style="margin-top:10px; border-top:1px dashed #cbd5e1; padding-top:8px;">';
-        if (p.comments && p.comments.length > 0) {
-          p.comments.forEach(cm => {
-            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cleanExtraIdTokens(cm.author)}:</b> ${cleanExtraIdTokens(cm.text)}</div>`;
+        if (replies.length > 0) {
+          replies.forEach(cm => {
+            const cAuthor = cleanExtraIdTokens(cm.farmerName || cm.author || 'किसान साथी');
+            const cText = cleanExtraIdTokens(cm.reply || cm.text || '');
+            commentsHtml += `<div class="discussion-comment-item" style="background:#f8fafc; padding:6px 10px; border-radius:6px; margin-bottom:5px; font-size:12.5px;"><b style="color:#1e2937;">💬 ${cAuthor}:</b> ${cText}</div>`;
           });
         }
+
         commentsHtml += `
           <div style="display:flex; gap:6px; margin-top:8px;">
-            <input type="text" id="commentInput_${p.id}" class="form-control" placeholder="कमेंट लिखें..." style="padding:6px 10px; font-size:13px;">
-            <button class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost(${p.id})">➤</button>
+            <input type="text" id="commentInput_${postId}" class="form-control" placeholder="कमेंट लिखें..." style="padding:6px 10px; font-size:13px;">
+            <button type="button" class="btn-action btn-wa" style="padding:6px 12px; font-size:12px; width:auto;" onclick="addCommentToPost('${postId.replace(/'/g, "\\'")}')">➤</button>
           </div>
         </div>`;
 
         container.innerHTML += `
           <div class="variety-card" style="border-left:4px solid #0284c7;">
-            <b style="color:#0369a1; font-size:14px;">👤 ${cleanExtraIdTokens(p.author)}</b>
-            <p style="margin:6px 0; color:#1f2937; font-size:14px;">${cleanExtraIdTokens(p.text)}</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <b style="color:#0369a1; font-size:14px;">👤 ${author}</b>
+              ${timestamp ? `<span style="font-size:11px; color:#6b7280;">${timestamp}</span>` : ''}
+            </div>
+            <p style="margin:6px 0; color:#1f2937; font-size:14px; line-height:1.45;">${question}</p>
             ${imgHtml}
             ${commentsHtml}
           </div>`;
       });
+    }
+
+    async function loadDiscussionPosts() {
+      const container = document.getElementById('discussionPostsContainer');
+      if (container && navigator.onLine) {
+        container.innerHTML = '<div class="variety-card" style="text-align:center; color:#6b7280;">⏳ चर्चा लोड हो रही है...</div>';
+      }
+
+      if (navigator.onLine) {
+        try {
+          const url = `${APPS_SCRIPT_URL}?action=getCommunityPosts&lang=${encodeURIComponent(currentLang)}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          if (data && Array.isArray(data.posts)) {
+            try { localStorage.setItem('farmer_discussions_list', JSON.stringify(data.posts)); } catch (e) {}
+            renderDiscussionPostsList(data.posts);
+            return;
+          }
+        } catch (err) {}
+      }
+
+      let cachedPosts = [];
+      try {
+        cachedPosts = JSON.parse(localStorage.getItem('farmer_discussions_list') || '[]');
+      } catch (e) {}
+      renderDiscussionPostsList(cachedPosts);
+    }
+
+    function compressDiscussionFile(file) {
+      return new Promise((resolve) => {
+        if (!file) return resolve({ base64: '', mimeType: 'image/jpeg' });
+        const reader = new FileReader();
+        reader.onerror = () => resolve({ base64: '', mimeType: 'image/jpeg' });
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onerror = () => resolve({ base64: '', mimeType: 'image/jpeg' });
+          img.onload = () => {
+            try {
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              const maxWidth = 640;
+              const scale = Math.min(1, maxWidth / (img.width || maxWidth));
+              canvas.width = Math.max(1, Math.round((img.width || maxWidth) * scale));
+              canvas.height = Math.max(1, Math.round((img.height || maxWidth) * scale));
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              const dataUrl = canvas.toDataURL('image/jpeg', 0.65);
+              resolve({ base64: dataUrl.split(',')[1] || '', mimeType: 'image/jpeg' });
+            } catch (err) {
+              resolve({ base64: '', mimeType: 'image/jpeg' });
+            }
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function submitDiscussionPost() {
+      const authorEl = document.getElementById('discussionAuthor');
+      const textEl = document.getElementById('discussionText');
+      const fileInput = document.getElementById('discussionImageInput');
+      const btn = document.getElementById('btnDiscPost');
+
+      const farmerName = cleanExtraIdTokens((authorEl && authorEl.value) || localStorage.getItem('farmer_name') || 'किसान भाई');
+      const question = cleanExtraIdTokens((textEl && textEl.value) || '');
+
+      if (!question) {
+        showToast('कृपया अपना सवाल या संदेश लिखें');
+        if (textEl) textEl.focus();
+        return;
+      }
+
+      if (!navigator.onLine) {
+        showToast('चर्चा पोस्ट करने के लिए इंटरनेट आवश्यक है');
+        return;
+      }
+
+      const file = fileInput && fileInput.files && fileInput.files[0];
+      const prevBtnText = btn ? btn.innerText : '';
+      if (btn) { btn.disabled = true; btn.innerText = '⏳ पोस्ट हो रहा है...'; }
+
+      try {
+        const photoPayload = file ? await compressDiscussionFile(file) : { base64: '', mimeType: 'image/jpeg' };
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'createCommunityPost',
+            farmerName,
+            question,
+            imageBase64: photoPayload.base64,
+            mimeType: photoPayload.mimeType,
+            lang: currentLang
+          })
+        });
+        const data = await res.json();
+        if (data && data.status === 'सफलता') {
+          if (textEl) textEl.value = '';
+          if (fileInput) fileInput.value = '';
+          showToast('चर्चा पोस्ट प्रकाशित हुई');
+          await loadDiscussionPosts();
+        } else {
+          showToast((data && data.result) || 'पोस्ट करने में समस्या आई');
+        }
+      } catch (err) {
+        showToast('पोस्ट भेजने में समस्या आई');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = prevBtnText; }
+      }
+    }
+
+    async function addCommentToPost(postId) {
+      const commentInput = document.getElementById(`commentInput_${postId}`);
+      if (!commentInput) return;
+      const replyText = cleanExtraIdTokens(commentInput.value || '');
+      const farmerName = cleanExtraIdTokens(localStorage.getItem('farmer_name') || document.getElementById('discussionAuthor')?.value || 'किसान साथी');
+
+      if (!replyText) {
+        showToast('कृपया कमेंट लिखें');
+        return;
+      }
+
+      if (String(postId) === 'default_1' || !navigator.onLine) {
+        showToast(navigator.onLine ? 'इस पोस्ट पर कमेंट नहीं जुड़ सकता' : 'कमेंट के लिए इंटरनेट आवश्यक है');
+        return;
+      }
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'addCommunityReply',
+            postId,
+            farmerName,
+            reply: replyText,
+            lang: currentLang
+          })
+        });
+        const data = await res.json();
+        if (data && data.status === 'सफलता') {
+          commentInput.value = '';
+          showToast('कमेंट जुड़ गया');
+          await loadDiscussionPosts();
+        } else {
+          showToast((data && data.result) || 'कमेंट जोड़ने में समस्या आई');
+        }
+      } catch (err) {
+        showToast('कमेंट भेजने में समस्या आई');
+      }
     }
 
     function openImageModal(url) {
